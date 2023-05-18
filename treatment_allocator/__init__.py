@@ -3,7 +3,7 @@ import itertools
 
 
 doc = """
-Your app description
+The first link, that sends participants to the different treatments
 """
 
 
@@ -12,16 +12,27 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
     TRAJECTORIES_LINKS = [
-        "http://localhost:8000/room/trajectory_1", # Trajectory - Traditional 1, Plan 1
-        "http://localhost:8000/room/trajectory_2", # Trajectory - Traditional 1, Plan 2
-        "http://localhost:8000/room/trajectory_3", # Trajectory - Traditional 2, Plan 1
-        "http://localhost:8000/room/trajectory_4", # Trajectory - Traditional 2, Plan 2
-        "http://localhost:8000/room/trajectory_5", # Trajectory - Menu 1, Plan 1
-        "http://localhost:8000/room/trajectory_6", # Trajectory - Menu 1, Plan 2
-        "http://localhost:8000/room/trajectory_7", # Trajectory - Menu 2, Plan 1
-        "http://localhost:8000/room/trajectory_8", # Trajectory - Menu 2, Plan 2
-        "http://localhost:8000/room/trajectory_9",  # Trajectory - Null
-        "http://localhost:8000/room/trajectory_10"  # Trajectory - Null B
+        # change to # when uploading to heroku
+        # "http://localhost:8000/room/trajectory_1",  # Traditional, Mech-Prop, single
+        "https://semd22.herokuapp.com/room/trajectory_1",
+        # "http://localhost:8000/room/trajectory_2",  # Traditional, Mech-Prop, double
+        "https://semd22.herokuapp.com/room/trajectory_2",
+        # "http://localhost:8000/room/trajectory_3",  # Traditional, Prop-Mech, single
+        "https://semd22.herokuapp.com/room/trajectory_3",
+        # "http://localhost:8000/room/trajectory_4",  # Traditional, Prop-Mech, double
+        "https://semd22.herokuapp.com/room/trajectory_4",
+        # "http://localhost:8000/room/trajectory_5",  # Menu, Mech-Prop, single
+        "https://semd22.herokuapp.com/room/trajectory_5",
+        # "http://localhost:8000/room/trajectory_6",  # Menu, Mech-Prop, double
+        "https://semd22.herokuapp.com/room/trajectory_6",
+        # "http://localhost:8000/room/trajectory_7",  # Menu, Prop-Mech, single
+        "https://semd22.herokuapp.com/room/trajectory_7",
+        # "http://localhost:8000/room/trajectory_8",  # Menu, Prop-Mech, double
+        "https://semd22.herokuapp.com/room/trajectory_8",
+        # "http://localhost:8000/room/trajectory_9",       # Null, single
+        "https://semd22.herokuapp.com/room/trajectory_9",
+        # "http://localhost:8000/room/trajectory_10"        # Null, double
+        "https://semd22.herokuapp.com/room/trajectory_10",
     ]
 
 class Subsession(BaseSubsession):

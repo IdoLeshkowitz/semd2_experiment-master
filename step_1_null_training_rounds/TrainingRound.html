@@ -1,6 +1,6 @@
 {{ block title }}
 <!-- null training rounds -->
-    Training Round {{ player.round_number }}/2
+    Training Round {{ player.round_number }}/3
 {{ endblock }}
 
 {{ block styles}}
@@ -9,6 +9,11 @@
 {{ endblock }}
 
 {{ block content }}
+<p style="text-align:right;">
+    Your current bonus is {{player.payoff}}
+    <br>
+</p>
+
 <!--first general pop up window-->
 <button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
     <div id="GenModal" class="modal">
@@ -34,13 +39,18 @@ need to program conditions
 -->
 
 <section id="step-1">
-    <br>
-    <h4>Step 1: Round Information</h4>
 <div class="explain">
     <p>This is a training round. <br>
     Everything is <b>the same</b> as in the real rounds you will play later on,
         except that you will earn <b>30p</b> for completing the round, no matter what prize you get.</p>
 </div>
+    <div class="btn-container">
+        <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+
+<section id="step-1a">
+<h4>Step 1: Round Information</h4>
     <p>
         In this round, your <b>prizes</b> are:
     </p>
@@ -100,7 +110,7 @@ need to program conditions
              These priorities can affect the allocation of prizes. </p>
             <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
             <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
-              For example, the column under <b>Prize</b> A shows its priorities.
+              For example, the column under <b>Prize A</b> shows its priorities.
               Prize A has Ruth in the 1st priority (the highest),
               Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
               So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
@@ -165,6 +175,10 @@ need to program conditions
             Since this is a training round, your total earnings increase by <b>30p</b>.
         </p>
     </div>
+<!--    {{if player.round_number == C.NUM_ROUNDS}}-->
+<!--        <p> You completed the training rounds. <br> Click the button below to proceed to real rounds of the game.</p>-->
+<!--    {{else}}-->
+<!--    {{endif}}-->
     <div style="text-align: center">
         {{ next_button }}
     </div>

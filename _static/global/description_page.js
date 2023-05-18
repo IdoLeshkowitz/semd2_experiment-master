@@ -1,7 +1,7 @@
 function liveRecv(data) {
     $("#prize-won").text(data.prize);
     $("#points-won").text(data.value);
-    $("#load").slideUp();
+    //$("#load").slideUp();
     $("#round-results").slideDown();
 }
 
@@ -80,7 +80,35 @@ $("#proceed-step-13-btn").click(function () {
 $("#proceed-step-14-btn").click(function () {
     $(this).hide();
     $("#step-14").slideDown();
-/*    button = document.getElementById('proceed-step-15-btn');
+    /*change the timing of the timer*/
+    setTimeout(() => {
+      $("#load").slideUp();
+    }, 3000);
+    button = document.getElementById('proceed-step-15-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-15-btn").click(function () {
+    $(this).hide();
+    $("#step-15").slideDown();
+    button = document.getElementById('proceed-step-16-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-16-btn").click(function () {
+    $(this).hide();
+    $("#step-16").slideDown();
+    button = document.getElementById('proceed-step-17-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-17-btn").click(function () {
+    $(this).hide();
+    $("#step-17").slideDown();
+    button = document.getElementById('proceed-step-18-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-18-btn").click(function () {
+    $(this).hide();
+/*    $("#step-13").slideDown();
+    button = document.getElementById('proceed-step-14-btn');
     button.scrollIntoView(true);*/
 });
 /*
@@ -143,6 +171,10 @@ $("#step-11").hide();
 $("#step-12").hide();
 $("#step-13").hide();
 $("#step-14").hide();
+$("#step-15").hide();
+$("#step-16").hide();
+$("#step-17").hide();
+
 /*
 $("#step-15").hide();
 */

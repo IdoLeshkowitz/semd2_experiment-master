@@ -1,0 +1,124 @@
+.page-header {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    padding-top: 20px;
+}
+.dButton {
+    @extend .btn;
+    text-align: center;
+    color: black;
+    border: none;
+    border-radius: .35rem;
+    padding: .2rem .75rem;
+    font-size: 1rem;
+    line-height: 0.7;
+    background-color: transparent;
+}
+.dButtonTop {
+    @extend .btn;
+    text-align: center;
+    color: black;
+    border-style: solid;
+    border-color: transparent;
+    border-radius: .35rem;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 0.7;
+    background-color: transparent;
+}
+.dButtonMatched {
+    @extend .btn;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: .35rem;
+    padding: .375rem .75rem;
+    font-size: 1rem;
+    line-height: 0.7;
+    background-color: #ae85ed;
+}
+.iButton {
+    @extend .btn;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: .7rem;
+    padding: .375rem .75rem;
+    font-size: 25px;
+    line-height: 0.7;
+    background-color: #ae85ed;
+}
+.iButton:hover {
+    background-color: blueviolet;
+}
+.iButtonSelected {
+    @extend .btn;
+    text-align: center;
+    color: white;
+    border-style: solid;
+    border-color: palevioletred;
+    border-radius: .7rem;
+    border-width: medium;
+    padding: .375rem .75rem;
+    font-size: 25px;
+    line-height: 0.7;
+    background-color: blueviolet;
+}
+.iButtonSelected:hover {
+    background-color: palevioletred;
+}
+.pButton {
+    @extend .btn;
+    text-align: center;
+    /*vertical-align: middle;*/
+    color: palevioletred;
+    border-style: solid;
+    border-color: palevioletred;
+    border-radius: .7rem;
+    padding: .375rem .75rem;
+    font-size: 25px;
+    line-height: 0.7;
+    background-color: transparent;
+}
+.pButton:hover {
+    background-color: palevioletred;
+    color: white;
+}
+.offButton {
+    @extend .btn;
+    text-align: center;
+    color: gray;
+    border-style: solid;
+    border-color: gray;
+    border-radius: .7rem;
+    padding: .375rem .75rem;
+    font-size: 25px;
+    line-height: 0.7;
+    background-color: transparent;
+}
+.submitButton {
+    @extend .btn;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: .7rem;
+    padding: .375rem .75rem;
+    line-height: 0.7;
+    background-color: #527fd4;
+}
+.submitButton:hover {
+    background-color: #0b1ae3;
+}
+.cancelButton {
+    @extend .btn;
+    text-align: center;
+    color: white;
+    border: none;
+    border-radius: .7rem;
+    padding: .375rem .75rem;
+    line-height: 0.7;
+    background-color: #6ed3cb;
+}
+.cancelButton:hover {
+    background-color: #00e9c4;
+}

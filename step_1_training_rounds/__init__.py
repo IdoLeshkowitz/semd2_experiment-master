@@ -7,6 +7,22 @@ doc = """
 Your app description
 """
 
+
+# def questions_answers():
+#     return {"independence": "False", "value-table": "False",
+#             "self-rank-independence": "False", "competitors-rank-independence": "False"}
+
+
+def make_boolean_field(label):
+    return models.BooleanField(
+        choices = [
+            [True, "True"],
+            [False, "False"]
+        ],
+        label = label,
+        widget = widgets.RadioSelect
+    )
+
 def generate_prizes_values():
     """
     Returns a randomly generated list of the values (in pennies)
@@ -158,6 +174,11 @@ class C(BaseConstants):
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
     PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
     PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
+    # QUESTIONS_ANSWERS = questions_answers()
+    QUESTIONS_ANSWERS = {"independence": "False",
+                         "value_table": "False",
+                         "self_rank_independence": "False",
+                         "competitors_rank_independence": "False"}
 
 
 class Subsession(BaseSubsession):
@@ -175,16 +196,56 @@ class Player(BasePlayer):
     third_priority = make_priority_field("Third:")
     fourth_priority = make_priority_field("Fourth:")
 
+    # for questions
+    independence = make_boolean_field(
+        label = "Answer:"
+    )
+    value_table = make_boolean_field(
+        label = "Answer:"
+    )
+    self_rank_independence = make_boolean_field(
+        label = "Answer:"
+    )
+    competitors_rank_independence = make_boolean_field(
+        label = "Answer:"
+    )
+    # Fields for saving each question's incorrect submitted answers
+    incorrect_seq_independence = models.LongStringField(blank = True)
+    incorrect_seq_value_table = models.LongStringField(blank = True)
+    incorrect_seq_self_rank_independence = models.LongStringField(blank = True)
+    incorrect_seq_competitors_rank_independence = models.LongStringField(blank = True)
 
 # PAGES
-class RoundPage(Page):
+class TrainingRoundWithQuestions(Page):
     form_model = "player"
-    form_fields = [
-        "first_priority",
-        "second_priority",
-        "third_priority",
-        "fourth_priority"
-    ]
+
+    @staticmethod
+    def get_form_fields(player: Player):
+        priorities = [
+            "first_priority",
+            "second_priority",
+            "third_priority",
+            "fourth_priority"
+        ]
+        if player.round_number == 1:
+            training_questions = [
+                    "independence",
+                    "value_table",
+                    "self_rank_independence",
+                    "competitors_rank_independence"
+                ]
+            # Fields for tracking incorrect answers for round 1 only.
+            incorrect_answers = [
+                "incorrect_seq_independence",
+                "incorrect_seq_value_table",
+                "incorrect_seq_self_rank_independence",
+                "incorrect_seq_competitors_rank_independence"
+            ]
+            return priorities + training_questions + incorrect_answers
+        else:
+            return priorities
+
+        # return priorities + training_questions + incorrect_answers
 
     @staticmethod
     def js_vars(player: Player):
@@ -193,9 +254,10 @@ class RoundPage(Page):
             prizes_values = C.PRIZES_VALUES[player.round_number - 1],
             prizes_priorities = C.PRIZES_PRIORITIES[player.round_number - 1],
             players = C.PLAYERS,
-            players_rankings = C.PLAYERS_RANKINGS[player.round_number - 1]
+            players_rankings = C.PLAYERS_RANKINGS[player.round_number - 1],
+            questions_answers = C.QUESTIONS_ANSWERS
         )
-    
+
     @staticmethod
     def live_method(player: Player, data):
         """
@@ -236,4 +298,4 @@ class RoundPage(Page):
         return {0: response}
 
 
-page_sequence = [RoundPage]
+page_sequence = [TrainingRoundWithQuestions]

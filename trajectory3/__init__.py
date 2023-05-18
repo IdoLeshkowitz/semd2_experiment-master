@@ -8,11 +8,11 @@ There are 10 different apps like this, each with a matching variable.
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'PassVars1'
+    NAME_IN_URL = 'PassVars3'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
-    trajectory_num = 1  # Traditional, Mech-Prop, single
+    trajectory_num = 3  # Traditional, Prop-Mech, single
 
 
 class Subsession(BaseSubsession):

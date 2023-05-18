@@ -1,6 +1,6 @@
 function expectedRankingString(prizes, ranking) {
     var orderedPrizes = ranking.map(i => prizes[i]);
-    return orderedPrizes.join("-");
+    return orderedPrizes.join("–");
 }
 
 function liveRecv(data) {
@@ -8,8 +8,7 @@ function liveRecv(data) {
     $("#points-won").text(data.value)
     $("#load").slideUp();
     $("#round-results").slideDown();
-    $("#training-questions").slideDown();
-    
+
     var firstQuestion = $(".question").first();
     firstQuestion.slideDown();
 
@@ -17,23 +16,49 @@ function liveRecv(data) {
     subQuestions.first().slideDown();
 }
 
+/*FRAMES*/
+$("#proceed-step-1a-btn").click(function () {
+    $(this).hide();
+    $("#step-1a").slideDown();
+    button = document.getElementById('proceed-step-2-btn');
+    button.scrollIntoView(true);
+});
 $("#proceed-step-2-btn").click(function () {
     $(this).hide();
     $("#step-2").slideDown();
+    button = document.getElementById('proceed-step-3-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-3-btn").click(function () {
+    $(this).hide();
+    $("#step-3").slideDown();
+    button = document.getElementById('proceed-step-4-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-4-btn").click(function () {
+    $(this).hide();
+    $("#step-4").slideDown();
+    button = document.getElementById('proceed-step-5-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-step-5-btn").click(function () {
+    $(this).hide();
+    $("#training-questions").slideDown();
+    button.scrollIntoView(true);
 });
 
-$("#ranking-submit-btn").click(function () {
-    $("#step-2 .incorrect-msg").hide();
-
+/*SUBMIT (frame, button, validation*/
+$("#submit-btn").click(function () {
+    $("#step-3 .incorrect-msg").hide();
     var humanPlayerRanking = [
         parseInt(forminputs.first_priority.value) - 1,
         parseInt(forminputs.second_priority.value) - 1,
         parseInt(forminputs.third_priority.value) - 1,
         parseInt(forminputs.fourth_priority.value) - 1
-    ];
+    ]
 
     if (humanPlayerRanking.toString() !== playerExpectedRanking.toString()) {
-        $("#step-2 .incorrect-msg").show();
+        $("#step-3 .incorrect-msg").show();
         return;
     }
 
@@ -47,8 +72,11 @@ $("#ranking-submit-btn").click(function () {
     ],
     "prizes": prizes});
 
-    $("#step-3").slideDown();
+    $("#step-4").slideDown();
+    button = document.getElementById('proceed-step-5-btn');
+    button.scrollIntoView(true);
 });
+
 
 $(".btn-question").click(function () {
     var currQuestion = $(this).parents(".question").first();
@@ -95,8 +123,11 @@ var questionsAnswers = js_vars.questions_answers;
 
 var currQuestionIncorrectAnswers = [];
 
+$("#step-1a").hide();
 $("#step-2").hide();
 $("#step-3").hide();
+$("#step-4").hide();
+$("#step-5").hide();
 $("#round-results").hide();
 $("#training-questions").hide();
 $("#next").hide();
@@ -107,3 +138,53 @@ $(".correct-msg").hide();
 $(".incorrect-msg").hide();
 
 $(".expected-rank").text(expectedRanknigString);
+
+/*POP UPS (REMINDERS)*/
+/*first - general*/
+var modal = document.getElementById("GenModal"); // Get the modal
+var btn = document.getElementById("GenBtn"); // Get the button that opens the modal
+var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
+btn.onclick = function() {modal.style.display = "block";} // When the user clicks the button, open the modal
+span.onclick = function() {modal.style.display = "none";}// When the user clicks on <span> (x), close the modal
+window.onclick = function(event) {if (event.target == modal) {modal.style.display = "none";}}// When the user clicks anywhere outside of the modal, close it
+
+/*second*/
+var modal1 = document.getElementById("GenModal1");
+var btn1 = document.getElementById("GenBtn1");
+var span1 = document.getElementsByClassName("close1")[0];
+btn1.onclick = function() {modal1.style.display = "block";}
+span1.onclick = function() {modal1.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal1) {modal1.style.display = "none";}}
+
+/*third*/
+var modal2 = document.getElementById("GenModal2");
+var btn2 = document.getElementById("GenBtn2");
+var span2 = document.getElementsByClassName("close2")[0];
+btn2.onclick = function() {modal2.style.display = "block";}
+span2.onclick = function() {modal2.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal2) {modal2.style.display = "none";}}
+
+/*fourth*/
+var modal3 = document.getElementById("GenModal3");
+var btn3 = document.getElementById("GenBtn3");
+var span3 = document.getElementsByClassName("close3")[0];
+btn3.onclick = function() {modal3.style.display = "block";}
+span3.onclick = function() {modal3.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal3) {modal3.style.display = "none";}}
+
+/*fifth*/
+var modal4 = document.getElementById("GenModal4");
+var btn4 = document.getElementById("GenBtn4");
+var span4 = document.getElementsByClassName("close4")[0];
+btn4.onclick = function() {modal4.style.display = "block";}
+span4.onclick = function() {modal4.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal4) {modal4.style.display = "none";}}
+
+/*sixth*/
+var modal5 = document.getElementById("GenModal5");
+var btn5 = document.getElementById("GenBtn5");
+var span5 = document.getElementsByClassName("close5")[0];
+btn5.onclick = function() {modal5.style.display = "block";}
+span5.onclick = function() {modal5.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal5) {modal5.style.display = "none";}}
+

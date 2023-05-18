@@ -62,9 +62,9 @@ def expected_rankings_list():
 def questions_answers():
     first_round = {
         "general-property": "True",
-        "self-rank-independence": "False",
-        "competitors-rank-independence": "True",
-        "mechanism-misconception-1": "True",
+        # "self-rank-independence": "False",
+        # "competitors-rank-independence": "True",
+        "mechanism-misconception-1": "False",
         "mechanism-misconception-2": "False",
         "different-rank-outcome": "4"
     }
@@ -252,13 +252,13 @@ class Player(BasePlayer):
         label = "Answer:"
     )
 
-    self_rank_independence = make_boolean_field(
-        label = "Answer:"
-    )
-
-    competitors_rank_independence = make_boolean_field(
-        label = "Answer:"
-    )
+    # self_rank_independence = make_boolean_field(
+    #     label = "Answer:"
+    # )
+    #
+    # competitors_rank_independence = make_boolean_field(
+    #     label = "Answer:"
+    # )
 
     mechanism_misconception_1 = make_boolean_field(
         label = "Answer:"
@@ -312,8 +312,8 @@ class Player(BasePlayer):
 
     # Fields for saving each question's incorrect submitted answers
     incorrect_seq_general_property = models.LongStringField(blank = True)
-    incorrect_seq_self_rank_independence = models.LongStringField(blank = True)
-    incorrect_seq_competitors_rank_independence = models.LongStringField(blank = True)
+    # incorrect_seq_self_rank_independence = models.LongStringField(blank = True)
+    # incorrect_seq_competitors_rank_independence = models.LongStringField(blank = True)
     incorrect_seq_mechanism_misconception_1 = models.LongStringField(blank = True)
     incorrect_seq_mechanism_misconception_2 = models.LongStringField(blank = True)
     incorrect_seq_different_rank_outcome = models.LongStringField(blank = True)
@@ -332,10 +332,10 @@ class Player(BasePlayer):
 
 def different_rank_outcome_choices(player: Player):
     choices = [
-        [1, "It's certain that every possible ranking I could submit would've gotten me Prize A."],
-        [2, "There might be some alternative ranking I could've submitted that would've gotten me Prize B."],
-        [3, "There might be some alternative ranking I could've submitted that would've gotten me Prize C."],
-        [4, "There might be some alternative ranking I could've submitted that would've gotten me Prize D."]
+        [1, "It is certain that every possible ranking I could have submitted would have gotten me Prize A."],
+        [2, "There might be some alternative ranking I could have submitted that would have gotten me Prize B."],
+        [3, "There might be some alternative ranking I could have submitted that would have gotten me Prize C."],
+        [4, "There might be some alternative ranking I could have submitted that would have gotten me Prize D."]
     ]
 
     random.shuffle(choices)
@@ -363,8 +363,8 @@ class TrainingRound(Page):
         # Training question for the round 1 only.
         training_questions = [
                 "general_property",
-                "self_rank_independence",
-                "competitors_rank_independence",
+                # "self_rank_independence",
+                # "competitors_rank_independence",
                 "mechanism_misconception_1",
                 "mechanism_misconception_2",
                 "different_rank_outcome"
@@ -373,8 +373,8 @@ class TrainingRound(Page):
         # Fields for tracking incorrect answers for round 1 only.
         incorrect_answers = [
             "incorrect_seq_general_property",
-            "incorrect_seq_self_rank_independence",
-            "incorrect_seq_competitors_rank_independence",
+            # "incorrect_seq_self_rank_independence",
+            # "incorrect_seq_competitors_rank_independence",
             "incorrect_seq_mechanism_misconception_1",
             "incorrect_seq_mechanism_misconception_2",
             "incorrect_seq_different_rank_outcome"
@@ -460,4 +460,13 @@ class TrainingRound(Page):
         return {0: response}
 
 
-page_sequence = [ExplanationPage, TrainingRound]
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):  # show only on last round number
+        if player.round_number == C.NUM_ROUNDS:
+            return True
+        else:
+            return False
+
+
+page_sequence = [ExplanationPage, TrainingRound, EndTraining]

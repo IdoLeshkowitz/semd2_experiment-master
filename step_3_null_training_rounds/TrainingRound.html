@@ -32,11 +32,7 @@
       </div>
     </div>
 
-<!--
-need to program conditions
-<button id="1" class="button-2">Click for a reminder on the important principle of the allocation</button>
-<button id="2" class="button-2">Click for a reminder on the technical details of the allocation process</button>
--->
+<!-- no buttons because this is only null treatment -->
 
 <section id="step-1">
 <div class="explain">
@@ -175,10 +171,10 @@ need to program conditions
             Since this is a training round, your total earnings increase by <b>30p</b>.
         </p>
     </div>
-    {{if player.round_number == C.NUM_ROUNDS}}
-        <p> You completed the training rounds. <br> Click the button below to proceed to real rounds of the game.</p>
-    {{else}}
-    {{endif}}
+<!--    {{if player.round_number == C.NUM_ROUNDS}}-->
+<!--        <p> You completed the training rounds. <br> Click the button below to proceed to real rounds of the game.</p>-->
+<!--    {{else}}-->
+<!--    {{endif}}-->
     <div style="text-align: center">
         {{ next_button }}
     </div>

@@ -150,7 +150,7 @@ def da(preferences):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'step_1_null_training_rounds'
+    NAME_IN_URL = 'step_3_null_training_rounds'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 3
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]

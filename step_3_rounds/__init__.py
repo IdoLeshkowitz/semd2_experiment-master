@@ -152,7 +152,7 @@ def da(preferences):
 class C(BaseConstants):
     NAME_IN_URL = 'step_3_rounds'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 10
+    NUM_ROUNDS = 2  # change to 10 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
@@ -237,7 +237,7 @@ class RoundPage(Page):
 
     @staticmethod  # so page count will continue to 30
     def vars_for_template(player: Player):
-        return {"num_rounds": player.round_number+20}
+        return {"adj_num_rounds": player.round_number+20}
 
 
 page_sequence = [RoundPage]

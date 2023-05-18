@@ -3,12 +3,68 @@ function liveRecv(data) {
     $("#points-won").text(data.value);
     $("#load").slideUp();
     $("#round-results").slideDown();
+//    var firstQuestion = $(".question").first();
+//    firstQuestion.slideDown();
+//
+//    var subQuestions = firstQuestion.find(".question");
+//    subQuestions.first().slideDown();
 }
 
 /*FRAMES*/
-$("#proceed-step-2-btn").click(function () {
+$("#proceed-step-1a-btn").click(function () {
     $(this).hide();
+    $("#step-1a").slideDown();
+    button = document.getElementById('proceed-question1-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-question1-btn").click(function () {
+    $(this).hide();
+    $("#question1").slideDown();
+    button = document.getElementById('question1-btn');
+    button.scrollIntoView(true);
+});
+$("#question1-btn").click(function () {
+    var formInputName = "independence";
+    if (forminputs[formInputName].value != "False"){
+        $("#question1 .incorrect-msg").show();
+        return;
+    }
+    $("#question1-btn").hide();
+    $("#question1 .incorrect-msg").hide();
+    $("#question1 .correct-msg").show();
+    $("#question2").slideDown();
+    button = document.getElementById('question2-btn');
+    button.scrollIntoView(true);
+});
+$("#question2-btn").click(function () {
+    var formInputName = "value_table";
+    if (forminputs[formInputName].value != "False"){
+        $("#question2 .incorrect-msg").show();
+        return;
+    }
+    $("#question2-btn").hide();
+    $("#question2 .incorrect-msg").hide();
+    $("#question2 .correct-msg").show();
     $("#step-2").slideDown();
+    button = document.getElementById('proceed-question3-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-question3-btn").click(function () {
+    $(this).hide();
+    $("#question3").slideDown();
+    button = document.getElementById('question3-btn');
+    button.scrollIntoView(true);
+});
+$("#question3-btn").click(function () {
+    var formInputName = "self_rank_independence";
+    if (forminputs[formInputName].value != "False"){
+        $("#question3 .incorrect-msg").show();
+        return;
+    }
+    $("#question3-btn").hide();
+    $("#question3 .incorrect-msg").hide();
+    $("#question3 .correct-msg").show();
+    $("#step-3").slideDown();
     button = document.getElementById('proceed-step-3-btn');
     button.scrollIntoView(true);
 });
@@ -21,9 +77,9 @@ $("#proceed-step-3-btn").click(function () {
 $("#proceed-step-4-btn").click(function () {
     $(this).hide();
     $("#step-4").slideDown();
+    button = document.getElementById('proceed-step-5-btn');
     button.scrollIntoView(true);
 });
-
 /*SUBMIT (frame, button, validation*/
 $("#submit-btn").click(function () {
     $("#step-3 .incorrect-msg").hide();
@@ -51,11 +107,91 @@ $("#submit-btn").click(function () {
     ],
     "prizes": prizes,
     "values": prizesValues});
-
     $("#step-4").slideDown();
-    button = document.getElementById('proceed-step-5-btn');
+    button = document.getElementById('proceed-step-4-btn');
     button.scrollIntoView(true);
 });
+$("#proceed-step-4-btn").click(function () {
+    $(this).hide();
+    $("#question4").slideDown();
+    button = document.getElementById('proceed-question4-btn');
+    button.scrollIntoView(true);
+});
+$("#proceed-question4-btn").click(function () {
+    $(this).hide();
+    $("#question4").slideDown();
+    button = document.getElementById('question4-btn');
+    button.scrollIntoView(true);
+});
+$("#question4-btn").click(function () {
+    var formInputName = "competitors_rank_independence";
+    if (forminputs[formInputName].value != "False"){
+        $("#question4 .incorrect-msg").show();
+        return;
+    }
+    $("#question4-btn").hide();
+    $("#question4 .incorrect-msg").hide();
+    $("#question4 .correct-msg").show();
+    $("#next").slideDown();
+/*    button = document.getElementById('proceed-step-3-btn');
+    button.scrollIntoView(true);*/
+});
+$("#next").click(function () {
+    $(this).hide();
+});
+
+
+
+//buttons with submit
+//    var currQuestion = $(this).parents(".question").first();
+//    var currQuestionID = currQuestion.attr("id");
+
+//    currQuestion.children(".incorrect-msg").hide();
+//    if (forminputs[formInputName].value !== questionsAnswers[currQuestionID]) {
+//        currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
+//        currQuestion.children(".incorrect-msg").slideDown();
+//        return;
+//    }
+
+//    var incorrectSequenceFieldName = `incorrect_seq_${formInputName}`;
+//    forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
+//    currQuestionIncorrectAnswers = [];
+
+
+
+//$(".btn-question").click(function () {
+//alert(3)
+//    var currQuestion = $(this).parents(".question").first();
+//    var currQuestionID = currQuestion.attr("id");
+//    var formInputName = currQuestionID.replaceAll("-", "_");
+//    var nextQuestionIndex;
+//
+//    currQuestion.children(".incorrect-msg").hide();
+//    if (forminputs[formInputName].value !== questionsAnswers[currQuestionID]) {
+//        currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
+//        currQuestion.children(".incorrect-msg").slideDown();
+//        return;
+//    }
+//
+//    var incorrectSequenceFieldName = `incorrect_seq_${formInputName}`;
+//    forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
+//    currQuestionIncorrectAnswers = [];
+
+//    $(this).hide();
+//    currQuestion.children(".correct-msg").slideDown();
+//    nextQuestionIndex = currQuestion.index(".question") + 1;
+//
+//    var nextQuestion = $(".question").eq(nextQuestionIndex);
+//    if (nextQuestion.length === 0) {
+//        $("#next").show();
+//        return;
+//    }
+//alert(4)
+//
+//    nextQuestion.slideDown();
+//    nextQuestion.find(".question").first().slideDown();
+//});
+
 
 var players = js_vars.players;
 var prizes = js_vars.prizes;
@@ -65,12 +201,36 @@ var prizesPriorities = js_vars.prizes_priorities;
 
 var otherPlayersRankings = js_vars.players_rankings;
 
+//stuff for the questions
+var questionsAnswers = js_vars.questions_answers;
+
+var currQuestionIncorrectAnswers = [];
+$("#step-1a").hide();
 $("#step-2").hide();
 $("#step-3").hide();
 $("#step-4").hide();
 $("#step-5").hide();
+$("#step-6").hide();
+$("#next").hide();
+$("#question1").hide();
+$("#question2").hide();
+$("#question3").hide();
+$("#question4").hide();
 $("#round-results").hide();
 $(".incorrect-msg").hide();
+$(".correct-msg").hide();
+//stuff for the questions
+$(".correct-msg").hide();
+$("#training-questions").hide();
+$("#next").hide();
+$(".question").hide();
+$(".sub-question").hide();
+$(".sub-question").hide();
+$(".incorrect_seq_independence").hide();
+$(".incorrect_seq_value_table").hide();
+$(".incorrect_seq_self_rank_independence").hide();
+$(".incorrect_seq_competitors_rank_independence").hide();
+
 
 /*POP UPS (REMINDERS)*/
 /*first - general*/

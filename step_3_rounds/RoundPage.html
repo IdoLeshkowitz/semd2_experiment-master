@@ -1,5 +1,6 @@
 {{ block title }}
-    Round {{ num_rounds }}/30
+<!--this is a copy of rounds page from step 2 from after the buttons (line 49)-->
+    Round {{ adj_num_rounds }}/30
 {{ endblock }}
 
 {{ block styles}}
@@ -17,20 +18,41 @@
               are playing rounds of a game for four prizes. <br>
               Each prize is worth money, but is worth a different amount of money for each participant.
             </p>
-            <p>In each round, you and the computerized participants each rank the 4 prizes from most preferred to least preferred.<br>
+            <p>In each round, you and the computerized participants each rank the four prizes from most preferred to least preferred.<br>
             Then, an <b>allocation process</b> uses these rankings to allocate the prizes—one prize for each participant.
             </p>
             <p>The allocation process tries to give each participant a prize that they ranked higher rather
                 than a prize that they ranked lower, while taking into account the rankings of all participants.
             </p>
       </div>
-    </div>
+    </div><br>
 
-<!--
-need to program conditions
-<button id="1" class="button-2">Click for a reminder on the important principle of the allocation</button>
-<button id="2" class="button-2">Click for a reminder on the technical details of the allocation process</button>
--->
+<!--reminders for prop & mech. if not null treatment, in stage 3 they see them both-->
+{{if player.participant.trajectory_num == 9 or player.participant.trajectory_num == 10}}
+{{else}}
+<button id="GenBtn4" class="button-2">Click for a reminder on the important principle of the allocation</button><br>
+    <div id="GenModal4" class="modal">
+      <div class="modal-content">
+        <span class="close4">&times;</span>
+          <p>important principle of the allocation</p>
+<!--          <embed src="{{ static 'global/example.txt' }}">-->
+      </div>
+    </div><br>
+<button id="GenBtn5" class="button-2">Click for a reminder on the technical details of the allocation process</button>
+    <div id="GenModal5" class="modal">
+      <div class="modal-content">
+        <span class="close5">&times;</span>
+          <p>technical details of the allocation process</p>
+      </div>
+    </div><br>
+{{endif}}
+
+<section>
+    <div class="explain">
+    <p><b>This is a real round!</b> <br>
+    Your total earnings will increase according to the prize you will get at the end of the round.</p>
+    </div>
+</section>
 
 <section id="step-1">
     <br>
@@ -57,8 +79,10 @@ need to program conditions
             <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
                 Each prize is worth money, but might be worth a different amount of money for each participant. </p>
             <p>In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.</p>
-            <p>The computerized participants <b>do not know</b> the money amounts shown in your table,
-                and the allocation process is not affected by these money amounts. </p>
+            <p>The money amounts shown in your table can be different in different rounds of the game,
+                and they were <b>determined beforehand</b>. <br>
+                You and the other participants <b>cannot affect the money amounts</b> shown in your table.
+            </p>
       </div>
     </div><br>
 
@@ -92,12 +116,13 @@ need to program conditions
              These priorities can affect the allocation of prizes. </p>
             <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
             <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
-              For example, the column under <b>Prize</b> A shows its priorities.
+              For example, the column under <b>Prize A</b> shows its priorities.
               Prize A has Ruth in the 1st priority (the highest),
               Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
               So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
-            <p>The prize-priorities table is chosen <b>completely at random</b>, with each possible table being equally likely.<br>
-              You and the other participants <b>cannot affect the prize priorities</b>.</p>
+            <p>The prize priorities can be different in different rounds of the game,
+                and they were <b>determined beforehand</b>. <br>
+                You and the other participants <b>cannot affect the prize priorities</b>.</p>
       </div>
     </div>
 

@@ -40,4 +40,9 @@ class ConsentForm(Page):
     form_fields = ["consent", "prolific_id"]
 
 
-page_sequence = [ConsentForm]
+class Exit(Page):
+    pass
+
+
+page_sequence = [ConsentForm #, Exit
+                 ]

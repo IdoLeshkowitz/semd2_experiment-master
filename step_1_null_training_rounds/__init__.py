@@ -150,9 +150,9 @@ def da(preferences):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'step_1_training_rounds'
+    NAME_IN_URL = 'step_1_null_training_rounds'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 3
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
@@ -185,6 +185,15 @@ class TrainingRound(Page):
         "third_priority",
         "fourth_priority"
     ]
+
+    @staticmethod
+    def is_displayed(player: Player):  # show only on last round number
+        if player.participant.full_training:
+            return True
+        elif player.round_number == 1:  # not full training - only do 1 round of training
+            return True
+        else:
+            return False
 
     @staticmethod
     def js_vars(player: Player):
@@ -235,5 +244,18 @@ class TrainingRound(Page):
 
         return {0: response}
 
+    @staticmethod  # so page count will continue to 30
+    def vars_for_template(player: Player):
+        return {"num_rounds": player.round_number+2}
 
-page_sequence = [TrainingRound]
+
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):  # show only on last round number
+        if player.round_number == C.NUM_ROUNDS:
+            return True
+        else:
+            return False
+
+
+page_sequence = [TrainingRound, EndTraining]

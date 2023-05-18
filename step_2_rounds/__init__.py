@@ -152,7 +152,7 @@ def da(preferences):
 class C(BaseConstants):
     NAME_IN_URL = 'step_2_rounds'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 2  # change to 20 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)

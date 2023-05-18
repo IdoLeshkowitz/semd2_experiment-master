@@ -5,21 +5,64 @@
 
 {{ block styles}}
     <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
-    <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 {{ endblock }}
 
 {{ block content }}
+<!--first general pop up window-->
+<button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
+    <div id="GenModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+            <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
+              are playing rounds of a game for four prizes. <br>
+              Each prize is worth money, but is worth a different amount of money for each participant.
+            </p>
+            <p>In each round, you and the computerized participants each rank the four prizes from most preferred to least preferred.<br>
+            Then, an <b>allocation process</b> uses these rankings to allocate the prizes—one prize for each participant.
+            </p>
+            <p>The allocation process tries to give each participant a prize that they ranked higher rather
+                than a prize that they ranked lower, while taking into account the rankings of all participants.
+            </p>
+      </div>
+    </div><br>
+
+
+<!-- everyone in properties should see this -->
+<button id="GenBtn4" class="button-2">Click for a reminder on the important principle of the allocation</button><br>
+    <div id="GenModal4" class="modal">
+      <div class="modal-content">
+        <span class="close4">&times;</span>
+          <p>important principle of the allocation</p>
+      </div>
+    </div><br>
+<!-- MENU TREATMENTS - only those who see properties after mech should see mech reminder as well -->
+{{if player.participant.trajectory_num == 5 or player.participant.trajectory_num == 6}}
+<button id="GenBtn5" class="button-2">Click for a reminder on the technical details of the allocation process</button>
+    <div id="GenModal5" class="modal">
+      <div class="modal-content">
+        <span class="close5">&times;</span>
+          <p>technical details of the allocation process</p>
+      </div>
+    </div><br>
+{{else}}
+{{endif}}
+
+
 <section id="step-1">
-<h4>Step 1: Round Information</h4>
-    <div class="explain">
+<div class="explain">
     <p>
         This is a training round.<br>
         Please follow the instructions and answer the questions shown to you as best you can.<br>
-        The prizes are not worth money this round, but <b>you will earn 30p</b> for completing it.
-    </p>
+        The prizes are not worth money this round, but <b>you will earn 30p</b> for completing it.</p>
+</div>
+    <div class="btn-container">
+        <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
+</section>
 
+<section id="step-1a">
+<h4>Step 1: Round Information</h4>
     <p>
         In this round, the <b>prizes</b> are:
     </p>
@@ -40,7 +83,27 @@
                 </tr>
             </tbody>
         </table><br>
+<!--second pop up window-->
+<button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
+    <div id="GenModal1" class="modal">
+      <div class="modal-content">
+        <span class="close1">&times;</span>
+            <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
+                Each prize is worth money, but might be worth a different amount of money for each participant. </p>
+            <p>In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.</p>
+            <p>The money amounts shown in your table can be different in different rounds of the game,
+                and they were <b>determined beforehand</b>. <br>
+                You and the other participants <b>cannot affect the money amounts</b> shown in your table.
+            </p>
+      </div>
+    </div><br>
 
+    <div class="btn-container">
+        <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+
+<section id="step-2">
         <p>
             The <b>prize priorities</b> for you and for the other participants are:
         </p>
@@ -56,13 +119,32 @@
                 </tr>
             </thead>
         </table><br>
+<!--third pop up window-->
+<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
+    <div id="GenModal2" class="modal">
+      <div class="modal-content">
+        <span class="close2">&times;</span>
+            <p>All four participants have some <b>priority</b> at each of the four prizes. <br>
+             These priorities can affect the allocation of prizes. </p>
+            <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
+            <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
+              For example, the column under <b>Prize A</b> shows its priorities.
+              Prize A has Ruth in the 1st priority (the highest),
+              Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
+              So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+            <p>The prize priorities can be different in different rounds of the game,
+                and they were <b>determined beforehand</b>. <br>
+                You and the other participants <b>cannot affect the prize priorities</b>.</p>
+      </div>
+    </div>
 
         <div class="btn-container">
-            <button id="proceed-step-2-btn" type="button" class="btn btn-primary">Proceed</button>
+            <button id="proceed-step-3-btn" type="button" class="btn btn-primary">Proceed</button>
         </div>
 </section>
 
-<section id="step-2">
+<section id="step-3">
+    <br>
 <h4>Step 2: Submit Your Ranking</h4>
 
         <p>
@@ -74,18 +156,31 @@
             <li>{{ formfield 'third_priority' }}</li>
             <li>{{ formfield 'fourth_priority' }}</li>
         </ul>
+
+<!-- fourth general pop up window-->
+<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
+    <div id="GenModal3" class="modal">
+      <div class="modal-content">
+        <span class="close3">&times;</span>
+            <p>In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.</p>
+            <p>The computerized participants simultaneously submit their own rankings. </p>
+            <p>Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.<br>
+                  Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
+      </div>
+    </div>
+
     <div class="btn-container">
         <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="ranking-submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
+        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
     </div>
     <div class="incorrect-msg">
         <p>
             Please make sure your ranking follows the instructions.
         </p>
     </div>
-</section>
+</section><br>
 
-<section id="step-3">
+<section id="step-4">
 <h4>Step 3: Allocation Process</h4>
     <div id="load">
         <p>
@@ -98,13 +193,24 @@
             <b>You get prize <span class="prize-won"></span></b>.
         </p>
     </div>
+            <div class="btn-container">
+            <button id="proceed-step-5-btn" type="button" class="btn btn-primary">Proceed</button>
+        </div>
 </section>
 
-    <section id="training-questions">
+<section id="training-questions">
+    <div class="explain">
+        <p>
+            In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome. <br>
+            Please answer these questions as best you can.
+        </p>
+    </div>
+    <p>Please determine whether the following statements are true or false:</p>
+
         {{ if player.round_number == 1 }}
             <ol>
                 <li id="general-property" class="question">
-                    Imagine the computer determined some prize priorities and rankings of the other, computerized participants.
+                    Imagine the computer determined some prize priorities and rankings of the other, computerized participants. <br>
                     The computer determines the Obtainable Prizes, which <b>I cannot affect with my own ranking</b>.
                     I always get the Obtainable Prize that is placed highest in the ranking I submitted. 
 
@@ -113,80 +219,24 @@
                     <div class="incorrect-seq-field">
                         {{ formfield 'incorrect_seq_general_property' }}
                     </div>
-
                     <div class="btn-container">
-                        <button type="button" class="btn btn-primary btn-question">Submit</button>
+                        <button type="button" class="btn btn-danger btn-question">Submit</button>
                     </div>
-
                     <div class="incorrect-msg">
                         <p>
                             Incorrect answer. Please try again.
                         </p>
                     </div>
-
                     <div class="correct-msg">
                         <p>
-                            Correct! In the allocation process, the computer determines some group of Obtainable Prizes which you might receive,
-                            <b>using only the other participants' rankings and the prize priorities</b>. Then, no ranking would get you a non-Obtainable Prize,
+                            Correct! In the allocation process, the computer determines some group of Obtainable Prizes that you might receive,
+                            using <b>only the other participants' rankings and the prize priorities</b>. Then, no ranking would get you a non-Obtainable Prize,
                             and among the Obtainable Prizes, you get the one that you ranked highest.
                         </p>
                     </div>
                 </li>
-                <li id="self-rank-independence" class="question">
-                    If I place a prize <b>very low</b> in my ranking, then <b>my priority</b> at that prize might decrease.
-                    If I place a prize <b>very high</b> in my ranking, then <b>my priority</b> at that prize might increase.
-
-                    {{ formfield 'self_rank_independence' }}
-
-                    <div class="incorrect-seq-field">
-                        {{ formfield 'incorrect_seq_self_rank_independence' }}
-                    </div>
-
-                    <div class="btn-container" class="question">
-                        <button type="button" class="btn btn-primary btn-question">Submit</button>
-                    </div>
-
-                    <div class="incorrect-msg">
-                        <p>
-                            Incorrect answer. Please try again.
-                        </p>
-                    </div>
-
-                    <div class="correct-msg">
-                        <p>
-                            Correct! Your own ranking <b>cannot affect the prize priorities</b>, which are determined at random.
-                        </p>
-                    </div>
-                </li>
-                <li id="competitors-rank-independence" class="question">
-                    Imagine the computer determined some prize priorities.
-                    Imagine you submitted the ranking A-B-C-D and got Prize B.
-                    It is <b>impossible</b> that if you had submitted a different ranking, 
-                    your ranking would have affected the other participants' rankings such that you would have gotten Prize A.
-
-                    {{ formfield 'competitors_rank_independence' }}
-
-                    <div class="incorrect-seq-field">
-                        {{ formfield 'incorrect_seq_competitors_rank_independence' }}
-                    </div>
-
-                    <div class="btn-container" class="question">
-                        <button type="button" class="btn btn-primary btn-question">Submit</button>
-                    </div>
-
-                    <div class="incorrect-msg">
-                        <p>
-                            Incorrect answer. Please try again.
-                        </p>
-                    </div>
-
-                    <div class="correct-msg">
-                        <p>
-                            Correct! Your own ranking <b>cannot affect the other participants' rankings</b>. Instead, these are determined at random.
-                        </p>
-                    </div>
-                </li>
                 <li id="mechanism-misconception-1" class="question">
+                    Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br>
                     Submitting some ranking <b>cannot</b> ensure that I will get the <b>most</b> preferred prize in that ranking,
                     but it <b>does</b> ensure that I will <b>not</b> get the <b>least</b> preferred prize in that ranking.
 
@@ -197,7 +247,7 @@
                     </div>
 
                     <div class="btn-container" class="question">
-                        <button type="button" class="btn btn-primary btn-question">Submit</button>
+                        <button type="button" class="btn btn-danger btn-question">Submit</button>
                     </div>
 
                     <div class="incorrect-msg">
@@ -209,14 +259,15 @@
                     <div class="correct-msg">
                         <p>
                             Correct! The allocation process only ensures that <b>out of the Obtainable Prizes</b> (which you cannot affect with your own ranking),
-                            you get the one that you ranked highest. On some occasions, <b>your least preferred prize may be the only Obtainable Prize</b>.
+                            you get the one that you ranked highest. On some occasions, <b>your least preferred prize may be the only Obtainable Prize</b> and hence you would get it.
                         </p>
                     </div>
                 </li>
                 <li id="mechanism-misconception-2" class="question">
+                    Imagine the computer determined some prize priorities and rankings of the other, computerized participants. <br>
                     Imagine I have a low priority at Prize <span class="prize-won"></span>, which is the prize I want the most,
                     but I have a high priority at Prize B, which I want the second most.
-                    Then, submitting a ranking that places Prize A first and Prize B second may lead to missing out on both Prizes A and B,
+                    Then, submitting a ranking that places Prize A first and Prize B second may lead to missing out on both prizes A and B,
                     while submitting a different ranking could have gotten me Prize B.
 
                     {{ formfield 'mechanism_misconception_2' }}
@@ -226,7 +277,7 @@
                     </div>
 
                     <div class="btn-container" class="question">
-                        <button type="button" class="btn btn-primary btn-question">Submit</button>
+                        <button type="button" class="btn btn-danger btn-question">Submit</button>
                     </div>
 
                     <div class="incorrect-msg">
@@ -239,15 +290,19 @@
                         <p>
                             Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B.
                             This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes,
-                            and cannot get you neither of these prizes. This is true <b>regardless of your priorities at these prizes</b>.
+                            and cannot get you neither of these prizes.
+                            Hence, no alternative ranking can get you Prize A or Prize B.
+                            This is true <b>regardless of your priorities at these prizes</b>.
                         </p>
                     </div>
                 </li>
+
                 <li id="different-rank-outcome" class="question">
+                    <p>Please answer the following question:</p>
                     Remember: You submitted the ranking <span class="expected-rank"></span> (from most to least preferred),
                     and ended up getting Prize <span class="prize-won"></span>. Imagine you had instead submitted a different ranking,
-                    while nothing else changed (in particular, all prize priorities and other participants' rankings remain the same).
-                    Which of the following might be true? (select one answer)
+                    while all prize priorities and other participants’ rankings remained the same. <br>
+                    Which of the following might be true? (select one answer) <br>
                     (Hint: think about what the set of Obtainable Prizes could possibly be.)
 
                     {{ formfield 'different_rank_outcome' }}
@@ -257,7 +312,7 @@
                     </div>
 
                     <div class="btn-container" class="question">
-                        <button type="button" class="btn btn-primary btn-question">Submit</button>
+                        <button type="button" class="btn btn-danger btn-question">Submit</button>
                     </div>
 
                     <div class="incorrect-msg">
@@ -281,13 +336,14 @@
             <ol>
                 <li id="ranking-change" class="question">
                     Remember: You submitted the ranking <span class="expected-rank"></span> (from most to least preferred),
-                    and ended up getting Prize <span class="prize-won"></span>. Imagine you had instead submitted a different ranking,
-                    while nothing else changed (in particular, all prize priorities and other participants' rankings remain the same).
-                    Given the <b>important property</b> behind the allocation process, which of the following might be true?
+                    and ended up getting Prize <span class="prize-won"></span>. <br><br>
+                    Imagine you had instead submitted a different ranking, while all prize priorities and other participants’
+                    rankings remained the same.<br>
+                    Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
     
                     <ul>
                         <li id="ranking-change-1" class="question">
-                            If I had instead submitted A-D-B-C, then it is possible that I would have gotten Prize A instead.
+                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A instead.
 
                             {{ formfield 'ranking_change_1' }}
 
@@ -296,7 +352,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -309,7 +365,7 @@
                                 <p>
                                     {{ if player.round_number == 2 }}
                                         Correct! Given that you originally ranked Prize A above Prize B but got Prize B,
-                                        Prize A is an not Obtainable Prize. Hence, no ranking <b>could</b> possibly get you Prize A.
+                                        Prize A is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize A.
                                     {{ endif }}
 
                                     {{ if player.round_number == 3 }}
@@ -320,7 +376,7 @@
                             </div>
                         </li>
                         <li id="ranking-change-2" class="question">
-                            If I had instead submitted A-D-B-C, then it is possible that I would have gotten Prize D instead.
+                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D instead.
 
                             {{ formfield 'ranking_change_2' }}
 
@@ -329,7 +385,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -341,7 +397,7 @@
                             <div class="correct-msg">
                                 <p>
                                     {{ if player.round_number == 2 }}
-                                        Correct! Given that you originally ranked Prize B above Prize D but got Prize B, Prize D could be an Obtainable Prize.
+                                        Correct! Given that you originally ranked Prize B above Prize D but got Prize B, Prize D <b>could</b> be an Obtainable Prize.
                                         Hence, an alternative ranking could possibly get you Prize D.
                                     {{ endif }}
 
@@ -353,7 +409,7 @@
                             </div>
                         </li>
                         <li id="ranking-change-3" class="question">
-                            If I had instead submitted A-D-B-C, then it is possible that I would have gotten Prize C instead.
+                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C instead.
 
                             {{ formfield 'ranking_change_3' }}
 
@@ -362,7 +418,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -386,7 +442,7 @@
                             </div>
                         </li>
                         <li id="ranking-change-4" class="question">
-                            If I had instead submitted C-A-B-D, then it is possible that I would have gotten Prize A instead.
+                            If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A instead.
 
                             {{ formfield 'ranking_change_4' }}
 
@@ -395,7 +451,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -408,7 +464,7 @@
                                 <p>
                                     {{ if player.round_number == 2 }}
                                         Correct! Given that you originally ranked Prize A above Prize B but got Prize B,
-                                        Prize A is an not Obtainable Prize. Hence, no ranking <b>could</b> possibly get you Prize A.
+                                        Prize A is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize A.
                                     {{ endif }}
 
                                     {{ if player.round_number == 3 }}
@@ -419,7 +475,7 @@
                             </div>
                         </li>
                         <li id="ranking-change-5" class="question">
-                            If I had instead submitted C-A-B-D, then it is possible that I would have gotten Prize C instead.
+                            If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C instead.
 
                             {{ formfield 'ranking_change_5' }}
 
@@ -428,7 +484,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -440,7 +496,7 @@
                             <div class="correct-msg">
                                 <p>
                                     {{ if player.round_number == 2 }}
-                                        Correct! Given that you originally ranked Prize B above Prize C but got Prize B, Prize C could be an Obtainable Prize.
+                                        Correct! Given that you originally ranked Prize B above Prize C but got Prize B, Prize C <b>could</b> be an Obtainable Prize.
                                         Hence, an alternative ranking could possibly get you Prize C.
                                     {{ endif }}
 
@@ -456,7 +512,7 @@
                 <li id="brute-force" class="question">
                     <p>
                         Imagine you are able to try submitting many different possible rankings,
-                        while the prize priorities and other participants' rankings remain the same.
+                        while the prize priorities and other participants' rankings remain the same. <br><br>
                         Imagine that you try out and submit <b>every</b> possible ranking.
                         After each such submission, you write down the prize that this submission gets you.
                         You end up with a log including some of the Prizes A, B, C and D.
@@ -466,7 +522,10 @@
                         <b>possibly</b> included in the log, or <b>certainly not</b> included in the log?
                         Choose the correct answer below:
                     </p>
-
+                    <p>
+                        (Remember: You submitted the ranking <span class="expected-rank"></span> (from most to least preferred),
+                        and ended up getting Prize <span class="prize-won"></span>.)
+                    </p>
                     <ul>
                         <li id="brute-force-1" class="question">
                             Prize A:
@@ -478,7 +537,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -491,7 +550,7 @@
                                 <p>
                                     {{ if player.round_number == 2 }}
                                         Correct! Given that you originally ranked Prize A above Prize B but got Prize B, 
-                                        Prize A is an not Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize A.
+                                        Prize A is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize A.
                                     {{ endif }}
 
                                     {{ if player.round_number == 3 }}
@@ -510,7 +569,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -527,7 +586,7 @@
 
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize B above Prize A but got Prize A, 
-                                        Prize B is an not Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize B.
+                                        Prize B is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize B.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -542,7 +601,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -554,13 +613,13 @@
                             <div class="correct-msg">
                                 <p>
                                     {{ if player.round_number == 2 }}
-                                        Correct! Given that you originally ranked Prize B above Prize C but got Prize B, Prize C could be an Obtainable Prize.
+                                        Correct! Given that you originally ranked Prize B above Prize C but got Prize B, Prize C <b>could</b> be an Obtainable Prize.
                                         Hence, an alternative ranking could possibly get you Prize C.
                                     {{ endif }}
 
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize C above Prize A but got Prize A, 
-                                        Prize C is an not Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize C.
+                                        Prize C is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize C.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -575,7 +634,7 @@
                             </div>
     
                             <div class="btn-container">
-                                <button type="button" class="btn btn-primary btn-question">Submit</button>
+                                <button type="button" class="btn btn-danger btn-question">Submit</button>
                             </div>
             
                             <div class="incorrect-msg">
@@ -587,13 +646,13 @@
                             <div class="correct-msg">
                                 <p>
                                     {{ if player.round_number == 2 }}
-                                        Correct! Given that you originally ranked Prize B above Prize D but got Prize B, Prize D could be an Obtainable Prize.
+                                        Correct! Given that you originally ranked Prize B above Prize D but got Prize B, Prize D <b>could</b> be an Obtainable Prize.
                                         Hence, an alternative ranking could possibly get you Prize D.
                                     {{ endif }}
 
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize D above Prize A but got Prize A, 
-                                        Prize D is an not Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize D.
+                                        Prize D is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize D.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -605,12 +664,20 @@
     </section>
 
     <section id="next">
-        <p>
-            You have completed this training round! You get <b><span id="points-won"></span>p</b>.
-            Click the button below to proceed.
-        </p>
+    {{ if player.round_number == 3 }}
+        In this training round you get <b><span id="points-won"></span>p</b>.
+        You completed the training rounds!
+        Click the button below to proceed to real rounds of the game.
+    {{else}}
+    <p>
+        You have completed this training round! You get <b><span id="points-won"></span>p</b>.
+        Click the button below to proceed.
+    </p>
+    {{endif}}
 
+    <div style="text-align: center">
         {{ next_button }}
+    </div>
     </section>
 {{ endblock }}
 

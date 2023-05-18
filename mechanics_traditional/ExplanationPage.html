@@ -23,15 +23,8 @@
 </section>
 <section id="step-2">
     <div class="explain_mech">
-        <p class="indent">
-            In the first step, each participant is paired to thier <b>highest-rank</b> prize.
-        </p>
-        <p class="indent">
-            If two (or more) participants are paired to the same prize, there is a <b>conflict</b>.
-        </p>
-        <p class="indent">
-            To solve the conflict, only the participant with the highest
-            priority at that prize remains paired to that prize. The others get unpaired.
+        <p>
+            In the first step, each participant is paired to their <b>highest-rank</b> prize.
         </p>
     </div>
     <div class="btn-container">
@@ -41,23 +34,23 @@
 
 <section id="step-3">
     <div class="explain_mech">
-        <p class="indent">
-            In the second step, all unpaired participants can only get paired to prizes
-            that they were not paired with before.
+        <p>
+            In the next step, possible conflicts are detected and solved.
+        </br></br>
+            If two (or more) participants are paired to the same prize, this is a conflict.
         </p>
-         <p class="indent">
-            Each unpaired participant is paired to thier highest-rank prize, among the prizes they <b>were not yet paired
-            with</b>.
-        </p>
-        <p class="indent">
-            Like before, if two (or more) participants are paired to the same
-            prize as a result, there is a <b>conflict</b>.
-        </p>
-        <p class="indent">
-            To solve the conflict, only the participant with the highest priority at that prize
-            remains paired to that prize. The others get unpaired, <b>even if they
-            successfully got paired to that prize in the first step.</b>
-        </p>
+              </p>
+      <p class="indent_all">
+         Each conflict is solved in two steps:</br>
+      <ul>
+      <li><b> Unpair:</b> only the participant with the highest priority at that prize remains paired to
+         that prize. The others get unpaired.<br/>
+      </li>
+      <li><b> Re-pair:</b> all unpaired participants can only get re-paired to prizes
+         that they were not paired with before. Each unpaired participant is re-paired to
+         its highest-rank prize, among the prizes they <b>were not yet paired with.</b>
+      </li>
+      </p>
     </div>
     <div class="btn-container">
         <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
@@ -66,19 +59,28 @@
 
 <section id="step-4">
     <div class="explain_mech">
-        <p class="indent">
-            Later steps continue in the same way. Each step, every unpaired participant is paired
-            to thier highest-rank prize, among the prizes they
-            <b>were not previously paired with</b>.
-        </p>
-        <p class="indent">
-            If there are conflicts, only the participant with the highest priority at a prize remains
-            paired to that prize and the others get unpaired, including paired participants from previous steps.
-        </p>
+       <p>
+         Later steps continue in the same way, by detecting and solving new conflicts.
+         </br></br>
+         Like before, if two (or more) participants are paired to the same prize, this is a conflict.
+      </p>
+      <p class="indent_all">
+      <ul>
+         Like before, each conflict is solved in two steps:</br>
+         <li><b> Unpair:</b> only the participant with the highest priority at that prize
+            remains paired to that prize. The others get unpaired, <b>even if they successfully
+            got paired to that prize in the first step.</b> </br>
+         </li>
+         <li><b> Re-pair:</b> Every unpaired participant get re-paired to their highest-rank
+            prize, among the prizes they <b>were not previously paired with.</b>
+         </li>
+      </ul>
+      </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
     </div>
+
 </section>
 
 <section id="step-5">
@@ -87,8 +89,7 @@
             When there are no more conflicts, the process is over. The result is each participant, being paired to a different prize.
         </p>
         <p>
-            Each prize is then allocated to the
-            participant paired to it.
+            Each prize is then allocated to the participant paired to it.
         </p>
     </div>
     <div class="btn-container">
@@ -105,8 +106,9 @@
             process. Click the button below to proceed to these rounds.
         </p>
     </div>
-    <div style="text-align: center">
-        {{ next_button }}
+    <div class="btn-container">
+        <!-- class="btn btn-danger btn-container" for submit button-->
+        <button type="button" class="btn btn-primary btn-container">Next</button>
     </div>
 </section>
 
