@@ -1,6 +1,7 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 <!-- this is where it is most updated!! change all other round pages from here-->
-    Round {{ player.round_number }}/{{if player.participant.trajectory_num == 1
+Round {{ player.round_number }}/{{if player.participant.trajectory_num == 1
 or player.participant.trajectory_num == 3
 or player.participant.trajectory_num == 5
 or player.participant.trajectory_num == 7
@@ -9,59 +10,59 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
 {{ endblock }}
 
 {{ block styles}}
-    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
-    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
+<link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+<script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 {{ endblock }}
 
 {{ block content }}
 <!--first general pop up window-->
 <button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
-    <div id="GenModal" class="modal">
-      <div class="modal-content">
+<div id="GenModal" class="modal">
+    <div class="modal-content">
         <span class="close">&times;</span>
-            <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
-              are playing rounds of a game for four prizes. <br>
-              Each prize is worth money, but is worth a different amount of money for each participant.
-            </p>
-            <p>In each round, you and the computerized participants each rank the four prizes from most preferred to least preferred.<br>
-            Then, an <b>allocation process</b> uses these rankings to allocate the prizes—one prize for each participant.
-            </p>
-            <p>The allocation process tries to give each participant a prize that they ranked higher rather
-                than a prize that they ranked lower, while taking into account the rankings of all participants.
-            </p>
-      </div>
-    </div><br>
+        <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
+           are playing rounds of a game for four prizes. <br>
+           Each prize is worth money, but is worth a different amount of money for each participant.
+        </p>
+        <p>In each round, you and the computerized participants each rank the four prizes from most preferred to least
+           preferred.<br>
+           Then, an <b>allocation process</b> uses these rankings to allocate the prizes—one prize for each participant.
+        </p>
+        <p>The allocation process tries to give each participant a prize that they ranked higher rather
+           than a prize that they ranked lower, while taking into account the rankings of all participants.
+        </p>
+    </div>
+</div><br>
 
 {{if player.participant.trajectory_num == 9 or player.participant.trajectory_num == 10}}
 {{else}}
 <button id="GenBtn4" class="button-2">
-            <!--  after properties 3,4,7,8-->
-            {{if player.participant.trajectory_num == 3 or player.participant.trajectory_num == 4
-            or player.participant.trajectory_num == 7 or player.participant.trajectory_num == 8}}
-            Click for a reminder on the important principle of the allocation
-            <!--  after mechanics 1,2,5,6  -->
-            {{else}}
-            Click for a reminder on the technical details of the allocation process
-            {{endif}}
+    <!--  after properties 3,4,7,8-->
+    {{if player.participant.trajectory_num == 3 or player.participant.trajectory_num == 4
+    or player.participant.trajectory_num == 7 or player.participant.trajectory_num == 8}}
+    Click for a reminder on the important principle of the allocation
+    <!--  after mechanics 1,2,5,6  -->
+    {{else}}
+    Click for a reminder on the technical details of the allocation process
+    {{endif}}
 </button><br>
-    <div id="GenModal4" class="modal">
-      <div class="modal-content">
+<div id="GenModal4" class="modal">
+    <div class="modal-content">
         <span class="close4">&times;</span>
-            {{if player.participant.trajectory_num == 3 or player.participant.trajectory_num == 4
-            or player.participant.trajectory_num == 7 or player.participant.trajectory_num == 8}}
-                  <p>important principle of the allocation</p>
-            {{else}}
-                  <p>technical details of the allocation process</p>
-            {{endif}}
-      </div>
-    </div><br>
+        {{if player.participant.trajectory_num == 3 or player.participant.trajectory_num == 4
+        or player.participant.trajectory_num == 7 or player.participant.trajectory_num == 8}}
+        <p>important principle of the allocation</p>
+        {{else}}
+        <p>technical details of the allocation process</p>
+        {{endif}}
+    </div>
+</div><br>
 {{endif}}
-
 
 <section>
     <div class="explain">
-    <p><b>This is a real round!</b> <br>
-    Your total earnings will increase according to the prize you will get at the end of the round.</p>
+        <p><b>This is a real round!</b> <br>
+            Your total earnings will increase according to the prize you will get at the end of the round.</p>
     </div>
 </section>
 
@@ -73,29 +74,33 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
     </p>
     <table id="prize-table">
         <thead>
-            <tr>
-                <th>Prize</th>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-                <th>D</th>
-            </tr>
+        <tr>
+            <th>Prize</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+        </tr>
         </thead>
-    </table><br>
-<!--second pop up window-->
-<button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
+    </table>
+    <br>
+    <!--second pop up window-->
+    <button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button>
+    <br>
     <div id="GenModal1" class="modal">
-      <div class="modal-content">
-        <span class="close1">&times;</span>
+        <div class="modal-content">
+            <span class="close1">&times;</span>
             <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
-                Each prize is worth money, but might be worth a different amount of money for each participant. </p>
-            <p>In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.</p>
+               Each prize is worth money, but might be worth a different amount of money for each participant. </p>
+            <p>In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b>
+               earnings.</p>
             <p>The money amounts shown in your table can be different in different rounds of the game,
-                and they were <b>determined beforehand</b>. <br>
-                You and the other participants <b>cannot affect the money amounts</b> shown in your table.
+               and they were <b>determined beforehand</b>. <br>
+               You and the other participants <b>cannot affect the money amounts</b> shown in your table.
             </p>
-      </div>
-    </div><br>
+        </div>
+    </div>
+    <br>
 
     <div class="btn-container">
         <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
@@ -108,37 +113,42 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
     </p>
     <table id="priorities-table">
         <thead>
-            <tr>
-                <th>Prize</th>
-                <th>A</th>
-                <th>B</th>
-                <th>C</th>
-                <th>D</th>
-            </tr>
+        <tr>
+            <th>Prize</th>
+            <th>A</th>
+            <th>B</th>
+            <th>C</th>
+            <th>D</th>
+        </tr>
         </thead>
-    </table><br>
+    </table>
+    <br>
 
-<!--third pop up window-->
-<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
+    <!--third pop up window-->
+    <button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button>
+    <br>
     <div id="GenModal2" class="modal">
-      <div class="modal-content">
-        <span class="close2">&times;</span>
+        <div class="modal-content">
+            <span class="close2">&times;</span>
             <p>All four participants have some <b>priority</b> at each of the four prizes. <br>
-             These priorities can affect the allocation of prizes. </p>
-            <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
+               These priorities can affect the allocation of prizes. </p>
+            <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the
+               process.</p>
             <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
-              For example, the column under <b>Prize A</b> shows its priorities.
-              Prize A has Ruth in the 1st priority (the highest),
-              Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
-              So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+               For example, the column under <b>Prize A</b> shows its priorities.
+               Prize A has Ruth in the 1st priority (the highest),
+               Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
+               So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A
+               this round.</p>
             <p>The prize priorities can be different in different rounds of the game,
-                and they were <b>determined beforehand</b>. <br>
-                You and the other participants <b>cannot affect the prize priorities</b>.</p>
-      </div>
+               and they were <b>determined beforehand</b>. <br>
+               You and the other participants <b>cannot affect the prize priorities</b>.</p>
+        </div>
     </div>
 
     <div class="btn-container">
-        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container">Proceed</button><br>
+        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <br>
     </div>
 </section>
 
@@ -154,21 +164,24 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
         <li>{{ formfield 'fourth_priority' }}</li>
     </ul>
 
-<!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
+    <!-- fourth general pop up window-->
+    <button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button>
+    <br>
     <div id="GenModal3" class="modal">
-      <div class="modal-content">
-        <span class="close3">&times;</span>
+        <div class="modal-content">
+            <span class="close3">&times;</span>
             <p>In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.</p>
             <p>The computerized participants simultaneously submit their own rankings. </p>
-            <p>Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.<br>
-                  Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
-      </div>
+            <p>Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally
+               likely.<br>
+               Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
+        </div>
     </div>
 
     <div class="btn-container">
         <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button><br>
+        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
+        <br>
     </div>
     <div class="incorrect-msg">
         <p>
@@ -188,16 +201,17 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
     <div id="round-results">
         <p>
             <b>You get Prize <span id="prize-won"></span></b>,
-            and your total earnings increase by <b><span id="points-won"></span>p</b>.
+                                                             and your total earnings increase by
+            <b><span id="points-won"></span>p</b>.
         </p>
     </div>
     <div class="next_btn" style="text-align: center">
         {{ next_button }}
     </div>
-{{ endblock }}
+    {{ endblock }}
 
-{{ block scripts }}
+    {{ block scripts }}
     <script src="{{ static 'global/round_page.js' }}"></script>
     <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-{{ endblock }}
+    {{ endblock }}

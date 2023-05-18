@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 <p> How the Allocation Process Works </p>
 {{ endblock }}
 {{ block styles}}
@@ -8,158 +9,166 @@
 {{ endblock }}
 {{ block content }}
 <section id="step-1">
-   <div class="explain">
-      <p>
-         You will now learn the full technical details of the allocation process.
-      </p>
-      <p>
-         The allocation process begins with a multi-step  process which does <b>not</b> involve
-         your own submitted ranking, as follows:
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
-   </div>
+    <div class="explain">
+        <p>
+            You will now learn the full technical details of the allocation process.
+        </p>
+        <p>
+            The allocation process begins with a multi-step process which does <b>not</b> involve
+            your own submitted ranking, as follows:
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-2">
-   <div class="explain_mech">
-      <p>
-         In the first step, each prize is paired to its <b>highest-priority</b> participant,
-         among all participants <b>except for you</b>.
-      </p>
-      <p>
-         To solve the conflict, only the prize with the highest
-         rank at that participant’s ranking remains paired to that participant. The others get unpaired.
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
-   </div>
+    <div class="explain_mech">
+        <p>
+            In the first step, each prize is paired to its <b>highest-priority</b> participant,
+            among all participants <b>except for you</b>.
+        </p>
+        <p>
+            To solve the conflict, only the prize with the highest
+            rank at that participant’s ranking remains paired to that participant. The others get unpaired.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-3">
-   <div class="explain_mech">
-      <p>
-         In the next step, possible conflicts are detected and solved.
-      </p>
-      <p>
-         If two (or more) prizes are paired to the same
-         participant, this is a <b>conflict</b>.
-      </p>
-      <p class="indent_all">
-         Each conflict is solved in two steps:</br>
-      <ul>
-      <li><b> Unpair:</b> only the prize with the highest rank at that participant’s ranking remains paired to
-         that participant. The others get unpaired.<br/>
-      </li>
-      <li><b> Re-pair:</b> all unpaired prizes can only get re-paired to participants
-         that they were not paired with before. Each unpaired prize is re-paired to
-         its highest-priority participant, among the participants they
-         <b>were not yet paired with and except for you.</b>
-      </li>
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
-   </div>
+    <div class="explain_mech">
+        <p>
+            In the next step, possible conflicts are detected and solved.
+        </p>
+        <p>
+            If two (or more) prizes are paired to the same
+            participant, this is a <b>conflict</b>.
+        </p>
+        <p class="indent_all">
+            Each conflict is solved in two steps:</br>
+        <ul>
+            <li><b> Unpair:</b> only the prize with the highest rank at that participant’s ranking remains paired to
+                                that participant. The others get unpaired.<br/>
+            </li>
+            <li><b> Re-pair:</b> all unpaired prizes can only get re-paired to participants
+                                 that they were not paired with before. Each unpaired prize is re-paired to
+                                 its highest-priority participant, among the participants they
+                <b>were not yet paired with and except for you.</b>
+            </li>
+            </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-4">
-   <div class="explain_mech">
-      <p>
-         Later steps continue in the same way, by detecting and solving new conflicts.
-         </br></br>
-         Like before, if two (or more) prizes are paired to the same participant, this is a conflict.
-      </p>
-      <p class="indent_all">
-      <ul>
-         Like before, each conflict is solved in two steps:</br>
-         <li><b> Unpair:</b> only the prize with the highest rank at that participant’s
-            ranking remains paired to that participant. The others get unpaired, <b>even if they successfully
-            got paired to that participant in the first step.</b> </br>
-         </li>
-         <li><b> Re-pair:</b> Every unpaired prize get re-paired to its highest-priority
-            participant, among the participants they  <b>were not previously paired with and except for you.</b>
-         </li>
-      </ul>
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
-   </div>
+    <div class="explain_mech">
+        <p>
+            Later steps continue in the same way, by detecting and solving new conflicts.
+            </br></br>
+            Like before, if two (or more) prizes are paired to the same participant, this is a conflict.
+        </p>
+        <p class="indent_all">
+        <ul>
+            Like before, each conflict is solved in two steps:</br>
+            <li><b> Unpair:</b> only the prize with the highest rank at that participant’s
+                                ranking remains paired to that participant. The others get unpaired, <b>even if they
+                                                                                                        successfully
+                                                                                                        got paired to
+                                                                                                        that participant
+                                                                                                        in the first
+                                                                                                        step.</b> </br>
+            </li>
+            <li><b> Re-pair:</b> Every unpaired prize get re-paired to its highest-priority
+                                 participant, among the participants they <b>were not previously paired with and except
+                                                                             for you.</b>
+            </li>
+        </ul>
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-5">
-   <div class="explain_mech">
-      <p>
-         During the process, one prize will encounter a conflict with each participant, except for you, and will get unpaired from all of them. That prize will remain unpaired at the end of the process.
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-6-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
-   </div>
+    <div class="explain_mech">
+        <p>
+            During the process, one prize will encounter a conflict with each participant, except for you, and will get
+            unpaired from all of them. That prize will remain unpaired at the end of the process.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-6-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-6">
-   <div class="explain">
-      <p>
-         When there are no more conflicts and when one prize was unpaired from all participants, the process is over.
-         The result is each prize, except for the unpaired one, being paired to a different participant, except for you.
-      </p>
-      <p>
-         Each prize except for the unpaired one is then temporarily allocated to the participant it is paired to.
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-7-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
-   </div>
+    <div class="explain">
+        <p>
+            When there are no more conflicts and when one prize was unpaired from all participants, the process is over.
+            The result is each prize, except for the unpaired one, being paired to a different participant, except for
+            you.
+        </p>
+        <p>
+            Each prize except for the unpaired one is then temporarily allocated to the participant it is paired to.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-7-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-7">
-   <div class="explain">
-      <p>
-         In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you,
-         the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes</b>.</br></br>
-         To determine which prize is allocated to you, the computer first determines which
-         prizes you can obtain in principle. These are the <b>Obtainable Prizes</b>.
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-8-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
-   </div>
+    <div class="explain">
+        <p>
+            In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you,
+            the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable
+                                                                                                     Prizes</b>.</br></br>
+            To determine which prize is allocated to you, the computer first determines which
+            prizes you can obtain in principle. These are the <b>Obtainable Prizes</b>.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-8-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-8">
-   <div class="explain">
-      <p>
-         You can obtain two kinds of prizes:<br/>
-         <span class="indent"><b> 1. Any prize at which your priority is higher</b> than the participant it is
+    <div class="explain">
+        <p>
+            You can obtain two kinds of prizes:<br/>
+            <span class="indent"><b> 1. Any prize at which your priority is higher</b> than the participant it is
          temporarily allocated to.</span><br/>
-         <span class="indent"><b> 2. The prize that was left unpaired in the temporary allocation.</b></span><br/>
-         <span>
+            <span class="indent"><b> 2. The prize that was left unpaired in the temporary allocation.</b></span><br/>
+            <span>
          You cannot obtain any other prizes.
          </span>
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-9-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
-   </div>
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-9-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-9">
-   <div class="explain">
-      <p>
-         At the end, among the Obtainable Prizes, you get the one that you ranked the highest.
-      </p>
-   </div>
-   <div class="btn-container">
-      <button id="proceed-step-10-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
-   </div>
+    <div class="explain">
+        <p>
+            At the end, among the Obtainable Prizes, you get the one that you ranked the highest.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-10-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
 </section>
 <section id="step-10">
-   <div class="explain">
-      <p>
-         On the next screens you will play training rounds of the game to master your understanding
-         of the allocation process. Click the button below to proceed to these rounds.
-      </p>
-   </div>
-   <div class="btn-container">
-      <!-- class="btn btn-danger btn-container" for submit button-->
-      <button id="Next" type="button" class="btn btn-primary btn-container">Proceed to training rounds</button>
-   </div>
+    <div class="explain">
+        <p>
+            On the next screens you will play training rounds of the game to master your understanding
+            of the allocation process. Click the button below to proceed to these rounds.
+        </p>
+    </div>
+    <div class="btn-container">
+        <!-- class="btn btn-danger btn-container" for submit button-->
+        <button id="Next" type="button" class="btn btn-primary btn-container">Proceed to training rounds</button>
+    </div>
 </section>
 {{ endblock }}
 {{ block scripts }}
