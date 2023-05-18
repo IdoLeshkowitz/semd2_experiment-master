@@ -1,19 +1,14 @@
-{{ block title }}
-<!-- null training rounds -->
-    Training Round {{ player.round_number }}/3
-{{ endblock }}
-
 {{ block styles}}
     <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
     <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 {{ endblock }}
 
-{{ block content }}
-<p style="text-align:right;">
-    Your current bonus is {{player.payoff}}
-    <br>
-</p>
+{{ block title }}
+<!-- null training rounds -->
+    Training Round {{ player.round_number }}/3
+{{ endblock }}
 
+{{ block content }}
 <!--first general pop up window-->
 <button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
     <div id="GenModal" class="modal">
