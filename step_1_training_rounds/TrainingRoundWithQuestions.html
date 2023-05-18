@@ -1,0 +1,329 @@
+{{ block title }}
+<!-- null training rounds -->
+    Training Round {{ player.round_number }}/2
+{{ endblock }}
+
+{{ block styles}}
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
+{{ endblock }}
+
+{{ block content }}
+<!--first general pop up window-->
+<button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
+    <div id="GenModal" class="modal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+            <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
+              are playing rounds of a game for four prizes. <br>
+              Each prize is worth money, but is worth a different amount of money for each participant.
+            </p>
+            <p>In each round, you and the computerized participants each rank the four prizes from most preferred to least preferred.<br>
+            Then, an <b>allocation process</b> uses these rankings to allocate the prizes—one prize for each participant.
+            </p>
+            <p>The allocation process tries to give each participant a prize that they ranked higher rather
+                than a prize that they ranked lower, while taking into account the rankings of all participants.
+            </p>
+      </div>
+    </div>
+
+<!--
+need to program conditions
+<button id="1" class="button-2">Click for a reminder on the important principle of the allocation</button>
+<button id="2" class="button-2">Click for a reminder on the technical details of the allocation process</button>
+-->
+
+<section id="step-1">
+<div class="explain">
+    This is a training round. <br>
+        {{ if player.round_number == 1 }}
+    Everything is <b>the same</b> as in the real rounds you will play later on,
+        except that we will ask you a few questions along the way,
+        and that you will earn <b>30p</b> for completing the round, no matter what prize you get. <br>
+        Please answer the questions shown to you as best you can.
+        {{else}}
+    Everything is <b>the same</b> as in the real rounds you will play later on,
+    except that you will earn <b>30p</b> for completing the round, no matter what prize you get.
+        {{endif}}
+</div>
+    <div class="btn-container">
+        <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+
+<section id="step-1a">
+<h4>Step 1: Round Information</h4>
+    <p>
+        In this round, your <b>prizes</b> are:
+    </p>
+    <table id="prize-table">
+        <thead>
+            <tr>
+                <th>Prize</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+            </tr>
+        </thead>
+    </table><br>
+<!--second pop up window-->
+<button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
+    <div id="GenModal1" class="modal">
+      <div class="modal-content">
+        <span class="close1">&times;</span>
+            <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
+                Each prize is worth money, but might be worth a different amount of money for each participant. </p>
+            <p>In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.</p>
+            <p>The money amounts shown in your table can be different in different rounds of the game,
+                and they were <b>determined beforehand</b>. <br>
+                You and the other participants <b>cannot affect the money amounts</b> shown in your table.
+            </p>
+      </div>
+    </div><br>
+
+    {{ if player.round_number == 1 }}
+    <div class="btn-container">
+        <button id="proceed-question1-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+
+<section id="question1">
+    <li id="independence">
+    Please determine whether the following statement is true or false:<br>
+        If I win some prize which I rank very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above.
+        If I win some prize which I rank very <b>high</b>, I may earn <b>more</b> than its money worth.
+        {{ formfield 'independence' }}
+           <div class="incorrect_seq_independence">
+                {{ formfield 'incorrect_seq_independence' }}
+            </div>
+            <div class="btn-container">
+                <button id="question1-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+            </div>
+            <div class="incorrect-msg">
+                <p>
+                    Incorrect answer. Please try again.
+                </p>
+            </div>
+            <div class="correct-msg">
+                <p>
+                    Correct! Your own ranking cannot affect the money amounts shown in your table, which are determined beforehand.
+                </p>
+            </div>
+    </li>
+</section>
+<section id="question2">
+    <li id="value_table">
+    Please determine whether the following statement is true or false:<br>
+    Every participant, including me and the computerized participants, has the same earnings table.
+        {{ formfield 'value_table' }}
+           <div class="incorrect_seq_value_table">
+                {{ formfield 'incorrect_seq_value_table' }}
+            </div>
+            <div class="btn-container">
+                <button id="question2-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+            </div>
+            <div class="incorrect-msg">
+                <p>
+                    Incorrect answer. Please try again.
+                </p>
+            </div>
+            <div class="correct-msg">
+                <p>
+                    Correct! Each prize might be worth a different amount for each participant
+                </p>
+            </div>
+    </li>
+</section>
+    {{else}}
+    <div class="btn-container">
+        <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+    {{endif}}
+
+<section id="step-2">
+    <p>
+        The <b>prize priorities</b> for you and for the other participants are:
+    </p>
+    <table id="priorities-table">
+        <thead>
+            <tr>
+                <th>Prize</th>
+                <th>A</th>
+                <th>B</th>
+                <th>C</th>
+                <th>D</th>
+            </tr>
+        </thead>
+    </table><br>
+
+<!--third pop up window-->
+<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
+        <div id="GenModal2" class="modal">
+      <div class="modal-content">
+        <span class="close2">&times;</span>
+            <p>All four participants have some <b>priority</b> at each of the four prizes. <br>
+             These priorities can affect the allocation of prizes. </p>
+            <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
+            <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
+              For example, the column under <b>Prize</b> A shows its priorities.
+              Prize A has Ruth in the 1st priority (the highest),
+              Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
+              So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+            <p>The prize priorities can be different in different rounds of the game,
+                and they were <b>determined beforehand</b>. <br>
+                You and the other participants <b>cannot affect the prize priorities</b>.</p>
+      </div>
+    </div> <br>
+    <div class="btn-container">
+        <button id="proceed-question3-btn" type="button" class="btn btn-primary btn-container">Proceed</button><br>
+    </div>
+</section>
+
+    {{ if player.round_number == 1 }}
+<section id="question3">
+    <li id="self_rank_independence" class="question">
+        Please determine whether the following statement is true or false:<br>
+        If I place a prize very <b>low</b> in my ranking, then my priority at that prize might <b>decrease</b>.
+        If I place a prize very <b>high</b> in my ranking, then my priority at that prize might <b>increase</b>.
+
+        {{ formfield 'self_rank_independence' }}
+        <div class="incorrect_seq_self_rank_independence">
+            {{ formfield 'incorrect_seq_self_rank_independence' }}
+        </div>
+        <div class="btn-container">
+                <button id="question3-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+        </div>
+        <div class="incorrect-msg">
+            <p>
+                Incorrect answer. Please try again.
+            </p>
+        </div>
+        <div class="correct-msg">
+            <p>
+                Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.
+            </p>
+        </div>
+    </li>
+</section>
+    {{else}}
+    {{endif}}
+    <div class="btn-container">
+        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container">Proceed</button><br>
+    </div>
+</section>
+
+
+<section id="step-3">
+    <h4>Step 2: Submit Your Ranking</h4>
+    <p>
+        Please rank the four prizes from most preferred to least preferred.
+    </p>
+    <ul>
+        <li>{{ formfield 'first_priority' }}</li>
+        <li>{{ formfield 'second_priority' }}</li>
+        <li>{{ formfield 'third_priority' }}</li>
+        <li>{{ formfield 'fourth_priority' }}</li>
+    </ul>
+
+<!-- fourth general pop up window-->
+<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
+    <div id="GenModal3" class="modal">
+      <div class="modal-content">
+        <span class="close3">&times;</span>
+            <p>In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.</p>
+            <p>The computerized participants simultaneously submit their own rankings. </p>
+            <p>Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.<br>
+                  Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
+      </div>
+    </div>
+
+    <div class="btn-container">
+        <!-- class="btn btn-danger btn-container" for submit button-->
+        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button><br>
+    </div>
+    <div class="incorrect-msg">
+        <p>
+            You submitted an invalid ranking. Please resubmit.
+        </p>
+    </div>
+</section>
+
+<section id="step-4">
+    <h4>Step 3: Allocation Process</h4>
+    <div id="load">
+        <p>
+            Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+        </p>
+    </div>
+
+    {{ if player.round_number == 1 }}
+    <div class="explain">
+        <p>
+            Remember:
+        </p>
+        <p>
+            The allocation process will try to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
+            while taking into account the rankings of all participants.
+        </p>
+        <p>
+            The prize priorities can affect the allocation of prizes. <br>
+            The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.
+        </p>
+    </div>
+    {{else}}
+    {{endif}}
+
+    <div id="round-results">
+        <p>
+            <b>You get Prize <span id="prize-won"></span></b>.
+            If this were a real round, your total earning would increase by <b><span id="points-won"></span>p</b>. <br>
+            Since this is a training round, your total earnings increase by <b>30p</b>.
+        </p>
+    </div>
+
+    {{ if player.round_number == 1 }}
+<!--    <div class="btn-container">-->
+<!--        <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container">Proceed</button><br>-->
+<!--    </div>-->
+<!--</section>-->
+
+<!--<section id="step-5">-->
+    <li id="competitors_rank_independence" class="question">
+        Please determine whether the following statement is true or false:<br>
+        I just submitted some ranking and got some prize. It is possible that if you had submitted a different ranking,
+        your ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.
+
+        {{ formfield 'competitors_rank_independence' }}
+        <div class="incorrect_seq_competitors_rank_independence">
+            {{ formfield 'incorrect_seq_competitors_rank_independence' }}
+        </div>
+        <div class="btn-container">
+            <button type="button" class="btn btn-danger btn-question">Submit</button>
+        </div>
+        <div class="incorrect-msg">
+            <p>
+                Incorrect answer. Please try again.
+            </p>
+        </div>
+        <div class="correct-msg">
+            <p>
+                Correct! Your own ranking cannot affect the other participants' rankings. Instead, these are determined beforehand.
+            </p>
+        </div>
+    </li>
+    {{else}}
+    {{endif}}
+
+    <div style="text-align: center">
+        {{ next_button }}
+    </div>
+</section>
+{{ endblock }}
+
+{{ block scripts }}
+    <script src="{{ static 'global/training_page_with_questions.js' }}"></script>
+    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+{{ endblock }}

@@ -1,0 +1,122 @@
+{{ block title }}
+    How the Allocation Process Works
+{{ endblock }}
+{{ block styles}}
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+<!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+{{ endblock }}
+
+{{ block content }}
+<section id="step-1">
+    <div class="explain">
+        <p>
+            You will now learn the full technical details of the allocation process.
+        </p>
+        <p>
+            The allocation process is a multi-step process, as follows:
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+<section id="step-2">
+    <div class="explain_mech">
+        <p class="indent">
+            In the first step, each participant is paired to thier <b>highest-rank</b> prize.
+        </p>
+        <p class="indent">
+            If two (or more) participants are paired to the same prize, there is a <b>conflict</b>.
+        </p>
+        <p class="indent">
+            To solve the conflict, only the participant with the highest
+            priority at that prize remains paired to that prize. The others get unpaired.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+    </div>
+</section>
+
+<section id="step-3">
+    <div class="explain_mech">
+        <p class="indent">
+            In the second step, all unpaired participants can only get paired to prizes
+            that they were not paired with before.
+        </p>
+         <p class="indent">
+            Each unpaired participant is paired to thier highest-rank prize, among the prizes they <b>were not yet paired
+            with</b>.
+        </p>
+        <p class="indent">
+            Like before, if two (or more) participants are paired to the same
+            prize as a result, there is a <b>conflict</b>.
+        </p>
+        <p class="indent">
+            To solve the conflict, only the participant with the highest priority at that prize
+            remains paired to that prize. The others get unpaired, <b>even if they
+            successfully got paired to that prize in the first step.</b>
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+    </div>
+</section>
+
+<section id="step-4">
+    <div class="explain_mech">
+        <p class="indent">
+            Later steps continue in the same way. Each step, every unpaired participant is paired
+            to thier highest-rank prize, among the prizes they
+            <b>were not previously paired with</b>.
+        </p>
+        <p class="indent">
+            If there are conflicts, only the participant with the highest priority at a prize remains
+            paired to that prize and the others get unpaired, including paired participants from previous steps.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+
+<section id="step-5">
+    <div class="explain">
+        <p>
+            When there are no more conflicts, the process is over. The result is each participant, being paired to a different prize.
+        </p>
+        <p>
+            Each prize is then allocated to the
+            participant paired to it.
+        </p>
+    </div>
+    <div class="btn-container">
+        <button id="proceed-step-6-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+    </div>
+</section>
+
+
+
+<section id="step-6">
+    <div class="explain">
+        <p>
+            On the next screens you will play training rounds of the game to master your understanding of the allocation
+            process. Click the button below to proceed to these rounds.
+        </p>
+    </div>
+    <div style="text-align: center">
+        {{ next_button }}
+    </div>
+</section>
+
+
+
+
+{{ endblock }}
+
+{{ block scripts }}
+    <script src="{{ static 'global/description_page.js' }}"></script>
+    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+{{ endblock }}

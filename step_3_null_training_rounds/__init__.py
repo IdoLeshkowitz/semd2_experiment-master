@@ -25,22 +25,34 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly. 
-    return [27, 7, 12, 57]
+    return [27, 57, 12, 7]
 
-def generate_prizes_priorities():
-    return [
-        [1, 2, 0, 3],
-        [2, 0, 3, 1],
-        [3, 2, 0, 1],
-        [0, 3, 1, 2]
-    ]
+def generate_prizes_values_list(num_rounds):
+    return [generate_prizes_values() for _ in range(num_rounds)]
 
-def generate_players_rankings():
-    return [
-        [1, 0, 2, 3],
-        [2, 1, 3, 0],
-        [0, 1, 2, 3]
-    ]
+def generate_priorities(first_group, second_group):
+    """
+    Returns a randomly generated list of preferences of the first group
+    on the second group.
+
+    Parameters
+    ----------
+    first_group: list
+        An ordered list of objects where each elements represent an individual.
+    second_group: list
+        An ordered list of objects where each elements represent an individual.
+
+    Returns
+    -------
+    list
+        a list of lists of indices where each index is the location of individual i
+        in second_group.
+    """
+    players_indices = list(range(len(second_group)))
+    return [random.sample(players_indices, len(second_group)) for _ in first_group]
+
+def generate_priorities_list(first_group, second_group, num_rounds):
+    return [generate_priorities(first_group, second_group) for _ in range(num_rounds)]
 
 def make_priority_field(label):
     return models.IntegerField(
@@ -52,6 +64,7 @@ def make_priority_field(label):
         ],
         label = label
     )
+
 
 def da(preferences):
     """
@@ -137,14 +150,14 @@ def da(preferences):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'step_2_null_description'
+    NAME_IN_URL = 'step_1_null_training_rounds'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 1
+    NUM_ROUNDS = 3
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
-    PRIZES_VALUES = generate_prizes_values()
-    PRIZES_PRIORITIES = generate_prizes_priorities()
-    PLAYERS_RANKINGS = generate_players_rankings()
+    PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
+    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
+    PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
 
 
 class Subsession(BaseSubsession):
@@ -156,6 +169,7 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
+    # Player's ranking variables
     first_priority = make_priority_field("First:")
     second_priority = make_priority_field("Second:")
     third_priority = make_priority_field("Third:")
@@ -163,7 +177,7 @@ class Player(BasePlayer):
 
 
 # PAGES
-class NullDescription(Page):
+class TrainingRound(Page):
     form_model = "player"
     form_fields = [
         "first_priority",
@@ -172,14 +186,14 @@ class NullDescription(Page):
         "fourth_priority"
     ]
 
-    staticmethod
+    @staticmethod
     def js_vars(player: Player):
         return dict(
             prizes = C.PRIZES,
-            prizes_values = C.PRIZES_VALUES,
-            prizes_priorities = C.PRIZES_PRIORITIES,
+            prizes_values = C.PRIZES_VALUES[player.round_number - 1],
+            prizes_priorities = C.PRIZES_PRIORITIES[player.round_number - 1],
             players = C.PLAYERS,
-            players_rankings = C.PLAYERS_RANKINGS
+            players_rankings = C.PLAYERS_RANKINGS[player.round_number - 1]
         )
     
     @staticmethod
@@ -221,5 +235,18 @@ class NullDescription(Page):
 
         return {0: response}
 
+    @staticmethod  # so page count will continue to 30
+    def vars_for_template(player: Player):
+        return {"num_rounds": player.round_number+2}
 
-page_sequence = [NullDescription]
+
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):  # show only on last round number
+        if player.round_number == C.NUM_ROUNDS:
+            return True
+        else:
+            return False
+
+
+page_sequence = [TrainingRound, EndTraining]

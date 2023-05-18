@@ -1,0 +1,25 @@
+{{ block title }}
+    Demographic Questions
+{{ endblock }}
+
+{{ block content }}
+<style>
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+</style>
+
+<p>
+    We are almost done. This is the last part of the study. <br>
+    We just have a few more questions to get a little background information for statistical purposes.
+</p>
+
+    {{ formfields }}
+
+<div style="text-align: center">
+<button class="btn btn-primary btn-container" id="Next">
+        Next
+</button>
+</div>
+
+
+
+{{ endblock }}
