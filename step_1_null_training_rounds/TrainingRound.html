@@ -43,7 +43,7 @@ need to program conditions
 <div class="explain">
     <p>This is a training round. <br>
     Everything is <b>the same</b> as in the real rounds you will play later on,
-        except that you will earn <b>30p</b> for completing the round, no matter what prize you get.</p>
+        except that you will earn <span class="money-amount fw-bold">{{ 0.3 | cu }}</span> for completing the round, no matter what prize you get.</p>
 </div>
     <div class="btn-container">
         <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
@@ -173,7 +173,7 @@ need to program conditions
         <p>
             <b>You get Prize <span id="prize-won"></span></b>.
             If this were a real round, your total earning would increase by <b><span id="points-won"></span>p</b>. <br>
-            Since this is a training round, your total earnings increase by <b>30p</b>.
+            Since this is a training round, your total earnings increase by <span class="money-amount">{{ 0.3 | cu }}</span>.
         </p>
     </div>
 <!--    {{if player.round_number == C.NUM_ROUNDS}}-->
