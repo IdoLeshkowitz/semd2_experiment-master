@@ -1,19 +1,8 @@
-{{ block scripts }}
-<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
-<script src="{{ static 'global/DAalghoInterface.js' }}"></script>
-{{ endblock}}
-
-{{ block styles }}
-<link rel="stylesheet" href="{{ static 'global/globalstyle.css' }}">
-<link rel="stylesheet" href="{{ static 'global/DAalghoInterface.css' }}">
-{{ endblock }}
-
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 How the Allocation Process Works:<br>
 Training Round {{player.round_number}}/3
 {{ endblock }}
-
 {{ block content }}
 {% load index %}
 <button id="GenBtn" class="button-2" type="button">Click for a general reminder on how the allocation process works
@@ -24,6 +13,10 @@ Training Round {{player.round_number}}/3
         <p>filler</p>
     </div>
 </div>
+<script src="{{ static 'global/DAalghoInterface.js' }}"></script>
+<link rel="stylesheet" href="{{ static 'global/globalstyle.css' }}">
+<link rel="stylesheet" href="{{ static 'global/DAalghoInterface.css' }}">
+
 {{ if player.round_number == 1 }}
 <section id="step-1">
     In this training round, you will perform the allocation process by yourself, instead of the computer. <br><br>
@@ -34,7 +27,6 @@ Training Round {{player.round_number}}/3
     </div>
     <br>
 </section>
-
 <section id="step-2">
     In this training round, we will guide you through the multi-step allocation process.<br><br>
     On the upper left part of the dashboard below you see the Prize Priorities.<br>
@@ -50,7 +42,6 @@ Training Round {{player.round_number}}/3
     </div>
     <br>
 </section>
-
 <section id="step-3">
     First, pair each participant to their highest-rank prize.<br><br>
 
@@ -252,7 +243,6 @@ Training Round {{player.round_number}}/3
         </p>
     </div>
 </section>
-
 <section id="step-10">
     <p>Is the process over?</p>
     {{ formfield 'question_4' }}
@@ -310,7 +300,6 @@ Training Round {{player.round_number}}/3
         </p>
     </div>
 </section>
-
 <section id="step-12">
     <p>Is the process over?</p>
     {{ formfield 'question_5' }}
@@ -358,6 +347,7 @@ Training Round {{player.round_number}}/3
     </div>
     <br>
 </section>
+
 {{ endif }}
 {{ if player.round_number > 1 }}
 <section id="step-1-rounds">
