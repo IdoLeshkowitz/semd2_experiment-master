@@ -1,50 +1,54 @@
 {{ block title }}
-    Final questions (4/4)
+{{ include "components/bonus_indicator.html" }}
+Final questions (4/4)
 {{ endblock }}
 
 {{ block content }}
 <style>
-.instructions {
-	width: 100%;
-	height: 100%;
-	background: rgb(252, 255, 255);
-	margin: 40px auto;
-    padding: 20px 20px 10px 20px;
+    .instructions {
+        width: 100%;
+        height: 100%;
+        background: rgb(252, 255, 255);
+        margin: 40px auto;
+        padding: 20px 20px 10px 20px;
 
-    position:relative;
-    -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
-       -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
-            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+        position: relative;
+        -webkit-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+        -moz-box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
+        box-shadow: 0 1px 5px rgba(0, 0, 0, 0.2), 0 0 20px rgba(0, 0, 0, 0.05) inset;
 
-    -moz-border-radius: 5px;
-         border-radius: 5px;
-}
-.btn.btn-default {
-   text-align: center;
-   vert-align: middle;
-   color: white;
-   border: none;
-   border-radius: .35rem;
-   padding: .375rem .75rem;
-   font-size: 1rem;
-   line-height: 1.5;
-   background-color: cornflowerblue;
-}
-btn.btn-default:hover {
-    background-color: #2885ef;
-}
+        -moz-border-radius: 5px;
+        border-radius: 5px;
+    }
+
+    .btn.btn-default {
+        text-align: center;
+        vert-align: middle;
+        color: white;
+        border: none;
+        border-radius: .35rem;
+        padding: .375rem .75rem;
+        font-size: 1rem;
+        line-height: 1.5;
+        background-color: cornflowerblue;
+    }
+
+    btn.btn-default:hover {
+        background-color: #2885ef;
+    }
 </style>
 
 <div class="instructions">
     <p>
-        We are almost done. This is the last part of the study. We just have a few more questions to get a little background information for statistical purposes.
+        We are almost done. This is the last part of the study. We just have a few more questions to get a little
+        background information for statistical purposes.
     </p>
 
     {{ formfields }}
 
     <div style="text-align: center">
         <button class="btn btn-default" id="Next">
-                Next
+            Next
         </button>
     </div>
 
