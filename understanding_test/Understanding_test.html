@@ -1,12 +1,16 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-Final questions (1/4)
-{{ endblock }}
+{{ block scripts}}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+{{ endblock}}
 
 {{ block styles}}
 <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
 <!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+{{ endblock }}
+
+{{ block title }}
+{{ include "components/bonus_indicator.html" }}
+Final questions (1/4)
 {{ endblock }}
 
 {{ block content }}
@@ -159,13 +163,11 @@ Final questions (1/4)
 <div style="text-align: center">
     {{ next_button }}
 </div>
-
 <script>
     for (let ele of document.getElementsByTagName('textarea')) {
         ele.rows = 20;
         ele.cols = 2;
     }
 </script>
-
 </div>
 {{ endblock }}

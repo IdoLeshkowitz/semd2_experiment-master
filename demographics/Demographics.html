@@ -1,3 +1,7 @@
+{{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+{{ endblock }}
+
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 Final questions (4/4)
@@ -37,7 +41,6 @@ Final questions (4/4)
         background-color: #2885ef;
     }
 </style>
-
 <div class="instructions">
     <p>
         We are almost done. This is the last part of the study. We just have a few more questions to get a little
@@ -53,5 +56,4 @@ Final questions (4/4)
     </div>
 
 </div>
-
 {{ endblock }}

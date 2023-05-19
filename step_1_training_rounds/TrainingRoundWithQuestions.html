@@ -1,3 +1,14 @@
+{{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+{{if player.round_number == 1}}
+<script src="{{ static 'global/training_page_with_questions.js' }}"></script>
+{{else}}
+<script src="{{ static 'global/round_page.js' }}"></script>
+{{endif}}
+<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+{{ endblock }}
+
 {{ block styles}}
 <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
 <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
@@ -508,12 +519,4 @@ need to program conditions
 
 {{ endblock }}
 
-{{ block scripts }}
-{{if player.round_number == 1}}
-<script src="{{ static 'global/training_page_with_questions.js' }}"></script>
-{{else}}
-<script src="{{ static 'global/round_page.js' }}"></script>
-{{endif}}
-<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
-<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-{{ endblock }}
+

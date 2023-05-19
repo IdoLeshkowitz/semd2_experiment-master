@@ -1,12 +1,21 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-<p> How the Allocation Process Works </p>
+{{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'global/menu_description_page.js' }}"></script>
+<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}
+
 {{ block styles}}
 <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
 <!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
 {{ endblock }}
+
+{{ block title }}
+{{ include "components/bonus_indicator.html" }}
+<p> How the Allocation Process Works </p>
+{{ endblock }}
+
 {{ block content }}
 <section id="step-1">
     <div class="explain">
@@ -170,9 +179,4 @@
         <button id="Next" type="button" class="btn btn-primary btn-container">Proceed to training rounds</button>
     </div>
 </section>
-{{ endblock }}
-{{ block scripts }}
-<script src="{{ static 'global/menu_description_page.js' }}"></script>
-<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
-<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

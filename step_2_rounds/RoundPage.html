@@ -1,3 +1,15 @@
+{{ block scripts }}
+<script src="{{ static 'global/round_page.js' }}"></script>
+<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+{{ endblock }}
+
+{{ block styles}}
+<link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+<script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
+{{ endblock }}
+
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 <!-- this is where it is most updated!! change all other round pages from here-->
@@ -7,11 +19,6 @@ or player.participant.trajectory_num == 5
 or player.participant.trajectory_num == 7
 or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
 <!--there is a difference between double and single treatments in the overall number of rounds-->
-{{ endblock }}
-
-{{ block styles}}
-<link rel="stylesheet" href="{{ static 'global/styles.css' }}">
-<script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 {{ endblock }}
 
 {{ block content }}
@@ -209,9 +216,6 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
         {{ next_button }}
     </div>
     {{ endblock }}
+</section>
 
-    {{ block scripts }}
-    <script src="{{ static 'global/round_page.js' }}"></script>
-    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
-    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-    {{ endblock }}
+

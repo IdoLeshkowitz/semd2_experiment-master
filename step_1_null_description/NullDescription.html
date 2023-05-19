@@ -1,7 +1,8 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-<!--this is the most updated, step 3 copies this one (except the beginning)-->
-The Basics
+{{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'global/description_page.js' }}"></script>
+<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}
 
 {{ block styles}}
@@ -10,12 +11,13 @@ The Basics
 <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
 {{ endblock }}
 
-{{ block content }}
-<!--<p style="text-align:right;">-->
-<!--    Your current bonus is {{player.payoff}}-->
-<!--    <br>-->
-<!--</p>-->
+{{ block title }}
+{{ include "components/bonus_indicator.html" }}
+<!--this is the most updated, step 3 copies this one (except the beginning)-->
+The Basics
+{{ endblock }}
 
+{{ block content }}
 <section id="step-1">
     <div class="explain">
         <p>
@@ -119,6 +121,7 @@ The Basics
         <button id="proceed-step-7-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
 </section>
+
 <section id="step-7">
     <div class="explain">
         <p>
@@ -208,6 +211,7 @@ The Basics
         </p>
     </div>
 </section>
+
 <section id="step-12">
     <div class="explain">
         <p>
@@ -222,6 +226,7 @@ The Basics
         <button id="proceed-step-13-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
 </section>
+
 <section id="step-13">
     <h4>Step 3: Allocation Process</h4>
     <div class="explain">
@@ -233,6 +238,7 @@ The Basics
         <button id="proceed-step-14-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
 </section>
+
 <section id="step-14">
     <div id="load">
         <p>
@@ -286,7 +292,6 @@ The Basics
     <div class="explain">
         <p>
             That's it! <br>Click on the button below to proceed to training rounds.
-
         </p>
     </div>
     <div style="text-align: center">
@@ -295,8 +300,4 @@ The Basics
 </section>
 {{ endblock }}
 
-{{ block scripts }}
-<script src="{{ static 'global/description_page.js' }}"></script>
-<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
-<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-{{ endblock }}
+

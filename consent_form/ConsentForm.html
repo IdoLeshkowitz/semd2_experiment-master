@@ -1,10 +1,17 @@
+{{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+{{ endblock }}
+
+{{ block styles }}
+<link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+{{ endblock }}
+
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 Welcome
 {{ endblock }}
 
 {{ block content }}
-
 <!-- Introduction -->
 <div>
     <p>
@@ -12,17 +19,18 @@ Welcome
     </p>
 
     <p>
-        You begin this survey with <b>£1.50</b> in your total earnings.
-        Your total earnings can increase <b>up to £6.00</b> during the survey, depending on your outcomes.
+        You begin this survey with
+        <span class="money-amount fw-bold">{{ 0.5 | cu }}</span>
+        in your total earnings. Your total earnings can increase
+        <b>up to <span class="money-amount fw-bold">{{ 6 | cu }}</span></b>
+        during the survey, depending on your outcomes.
         You can always see your total earnings in the upper right corner of the window.
     </p>
-
     <p>
         Please <b>maximize this window</b> on your screen to properly view the survey.
         Make sure to copy the <b>completion code</b> in the last page of the survey.
     </p>
 </div>
-
 <br>
 
 <!-- Consent -->
@@ -43,7 +51,6 @@ Welcome
         Responding without adequate effort may result in a rejection of your submission.
     </p>
 </div>
-
 <br>
 
 <!-- Additional Information -->
@@ -66,5 +73,5 @@ Welcome
 <div style="text-align: center">
     {{ next_button }}
 </div>
-
 {{ endblock }}
+

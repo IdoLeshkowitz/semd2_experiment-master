@@ -1,11 +1,18 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-How the Allocation Process Works
+{{ block scripts }}
+<script src="{{ static 'global/description_page.js' }}"></script>
+<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}
+
 {{ block styles}}
 <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
 <!-- Font Awesome -->
 <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+{{ endblock }}
+
+{{ block title }}
+{{ include "components/bonus_indicator.html" }}
+How the Allocation Process Works
 {{ endblock }}
 
 {{ block content }}
@@ -22,6 +29,7 @@ How the Allocation Process Works
         <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
 </section>
+
 <section id="step-2">
     <div class="explain_mech">
         <p>
@@ -112,11 +120,6 @@ How the Allocation Process Works
         <button type="button" class="btn btn-primary btn-container">Next</button>
     </div>
 </section>
-
 {{ endblock }}
 
-{{ block scripts }}
-<script src="{{ static 'global/description_page.js' }}"></script>
-<script src="{{ static 'global/generate_prizes_table.js' }}"></script>
-<script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-{{ endblock }}
+
