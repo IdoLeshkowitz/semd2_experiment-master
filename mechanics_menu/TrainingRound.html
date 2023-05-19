@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
     The Key Principle of the Allocation Process: <br>
     Training Round {{ player.round_number }}/3
 {{ endblock }}
@@ -179,6 +180,7 @@ Only after properties or mechanics
 {{ endblock }}
 
 {{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/mechanics_training_round_page.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

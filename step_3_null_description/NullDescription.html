@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 <!--every change on "step_1_null_description" should be changed here as well (identical from section 4!!!)-->
     The Basics
 {{ endblock }}
@@ -282,6 +283,7 @@
 {{ endblock }}
 
 {{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/description_page.js' }}"></script>
     <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>

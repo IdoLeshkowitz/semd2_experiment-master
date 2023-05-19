@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 <!--this is a copy of rounds page from step 2 from after the buttons (line 49)-->
     Round {{ adj_num_rounds }}/30
 {{ endblock }}
@@ -187,6 +188,7 @@
 {{ endblock }}
 
 {{ block scripts }}
+<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/round_page.js' }}"></script>
     <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
