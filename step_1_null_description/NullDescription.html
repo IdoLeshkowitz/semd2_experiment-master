@@ -1,14 +1,14 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 <!--this is the most updated, step 3 copies this one (except the beginning)-->
-    The Basics
+The Basics
 {{ endblock }}
 
-    {{ block styles}}
+{{ block styles}}
         <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
     <!-- Font Awesome -->
         <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
-    {{ endblock }}
+{{ endblock }}
 
 {{ block content }}
 <!--<p style="text-align:right;">-->
@@ -44,7 +44,7 @@
         </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
 </section>
 
@@ -55,7 +55,7 @@
         </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
     </div>
 </section>
 
@@ -85,6 +85,13 @@
                 <th>C</th>
                 <th>D</th>
             </tr>
+        <tr>
+            <td>Addition to your earnings if you get this prize</td>
+            <td class="money-amount">{{ prize_value_1 | cu }}</td>
+            <td class="money-amount">{{ prize_value_2 | cu }}</td>
+            <td class="money-amount">{{ prize_value_3 | cu }}</td>
+            <td class="money-amount">{{ prize_value_4 | cu }}</td>
+        </tr>
         </thead>
     </table><br>
     <div class="btn-container">
@@ -178,25 +185,7 @@
 </section>
 
 <section id="step-11">
-    <p>
-        Please rank the four prizes from most preferred to least preferred.
-    </p>
-    <ul>
-        <li>{{ formfield 'first_priority' }}</li>
-        <li>{{ formfield 'second_priority' }}</li>
-        <li>{{ formfield 'third_priority' }}</li>
-        <li>{{ formfield 'fourth_priority' }}</li>
-    </ul>
-
-    <div class="btn-container">
-        <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
-    </div>
-    <div class="incorrect-msg">
-        <p>
-            You submitted an invalid ranking. Please resubmit.
-        </p>
-    </div>
+    {{ include_sibling 'ranking_form.html' }}
 </section>
 <section id="step-12">
     <div class="explain">
@@ -261,8 +250,10 @@
         </p>
     </div>
     <div id="round-results">
-        <p>
-            <b>You get Prize <span id="prize-won" class="money-amount">{{ 0.3 | cu}}</span></b>, and your total earnings increase by <b><span id="points-won"></span>p</b>.
+           <p>
+            <b>You get Prize <span id="prize-won"></span></b>.
+            If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>. <br>
+            Since this is a training round, your total earnings increase by <span class="money-amount">{{ 0.3 | cu }}</span>
         </p>
     </div>
     <div class="btn-container">
@@ -274,7 +265,7 @@
     <div class="explain">
         <p>
             That's it! <br>Click on the button below to proceed to training rounds.
-
+        </p>
         </p>
     </div>
     <div style="text-align: center">
@@ -282,10 +273,9 @@
     </div>
 </section>
 {{ endblock }}
-
 {{ block scripts }}
-<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+    <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/description_page.js' }}"></script>
-    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+<!--    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>-->
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

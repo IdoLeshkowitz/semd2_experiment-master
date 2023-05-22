@@ -1,0 +1,17 @@
+<p>
+            Please rank the four prizes <b>in the arbitrary order <span class="">{{ expected_ranking_string }}</span></b> (from most to least preferred).
+</p>
+{{ include "components/ranking_form.html"}}
+<div class="btn-container">
+             <button id="submit-btn"
+                     type="button"
+                     class="btn btn-danger btn-container"
+             >
+            Submit ranking
+        </button><br>
+</div>
+<div class="incorrect-msg">
+        <p>
+            Please make sure your ranking follows the instructions.
+        </p>
+</div>

@@ -1,7 +1,7 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
-    The Key Principle of the Allocation Process: <br>
-    Training Round {{ player.round_number }}/3
+The Key Principle of the Allocation Process: <br>
+Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}
 {{ endblock }}
 
 {{ block styles}}
@@ -84,7 +84,7 @@
                 </tr>
             </tbody>
         </table><br>
-<!--second pop up window-->
+    <!--second pop up window-->
 <button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
     <div id="GenModal1" class="modal">
       <div class="modal-content">
@@ -120,8 +120,8 @@
                 </tr>
             </thead>
         </table><br>
-<!--third pop up window-->
-<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
+    <!--third pop up window-->
+<button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button><br>
     <div id="GenModal2" class="modal">
       <div class="modal-content">
         <span class="close2">&times;</span>
@@ -147,19 +147,8 @@
 <section id="step-3">
     <br>
 <h4>Step 2: Submit Your Ranking</h4>
-
-        <p>
-            Please rank the four prizes <b>in the arbitrary order <span class="expected-rank"></span></b> (from most to least preferred).
-        </p>
-        <ul>
-            <li>{{ formfield 'first_priority' }}</li>
-            <li>{{ formfield 'second_priority' }}</li>
-            <li>{{ formfield 'third_priority' }}</li>
-            <li>{{ formfield 'fourth_priority' }}</li>
-        </ul>
-
-<!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
+    <!-- fourth general pop up window-->
+<button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button><br>
     <div id="GenModal3" class="modal">
       <div class="modal-content">
         <span class="close3">&times;</span>
@@ -169,16 +158,7 @@
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-
-    <div class="btn-container">
-        <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
-    </div>
-    <div class="incorrect-msg">
-        <p>
-            Please make sure your ranking follows the instructions.
-        </p>
-    </div>
+    {{ include_sibling "ranking_form.html" }}
 </section><br>
 
 <section id="step-4">
@@ -207,7 +187,7 @@
         </p>
     </div>
     <p>Please determine whether the following statements are true or false:</p>
-
+    <!--        Round 1 True / False          -->
         {{ if player.round_number == 1 }}
             <ol>
                 <li id="general-property" class="question">
@@ -324,15 +304,19 @@
 
                     <div class="correct-msg">
                         <p>
-                            Correct! You always get your highest-ranked Obtainable Prize, in this case, Prize <span class="prize-won"></span>.
-                            If your Obtainable Prizes included Prize C and/or Prize B, which you ranked higher than Prize <span class="prize-won"></span>, you would have gotten one of them instead.
+                            Correct! You always get your highest-ranked Obtainable Prize, in this case, Prize <span
+                                class="prize-won"></span>.
+                            If your Obtainable Prizes included Prize C and/or Prize B, which you ranked higher than Prize <span
+                                class="prize-won"></span>, you would have gotten one of them instead.
                             Thus, the Obtainable Prizes can only include Prize <span class="prize-won"></span>, and possibly Prize D, but <b>do not</b> include Prize C nor Prize B.
-                            Your ranking does not affect your Obtainable Prizes, so submitting a different ranking could have only gotten you Prize <span class="prize-won"></span> or Prize D. 
+                            Your ranking does not affect your Obtainable Prizes, so submitting a different ranking could have only gotten you Prize <span
+                                class="prize-won"></span> or Prize D.
                         </p>
                     </div>
                 </li>
             </ol>
         {{ endif }}
+    <!--True / False Round > 1-->
         {{ if player.round_number > 1 }}
             <ol>
                 <li id="ranking-change" class="question">
@@ -373,6 +357,9 @@
                                         Correct! Given that you originally ranked Prize A last and got it, it is the only Obtainable Prize.
                                         Hence every possible alternative ranking would only get you Prize A.
                                     {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                        Correct! Given that you originally ranked Prize D above Prize A but got Prize D, Prize A <b>could</b> be an Obtainable Prize. Hence, an alternative ranking could possibly get you Prize A.
+                                    {{ endif }}
                                 </p>
                             </div>
                         </li>
@@ -405,6 +392,9 @@
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize A last and got it, it is the only Obtainable Prize.
                                         Hence every possible alternative ranking would only get you Prize A.
+                                    {{ endif }}
+                                    {{ if player.round_number == 4}}
+                                        Correct! Given that you originally ranked Prize D first and got it, Prize D is an Obtainable Prize. Hence an alternative ranking that ranks Prize D lower could still possibly get you Prize D, but it may also get you a different, higher-ranked, prize if that prize is also an Obtainable Prize.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -439,6 +429,9 @@
                                         Correct! Given that you originally ranked Prize A last and got it, it is the only Obtainable Prize.
                                         Hence every possible alternative ranking would only get you Prize A.
                                     {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                    Correct! Given that you originally got Prize D, Prize D is an Obtainable Prize. Since you still rank Prize D above Prize C, you cannot possibly get Prize C.
+                                    {{ endif }}
                                 </p>
                             </div>
                         </li>
@@ -472,6 +465,9 @@
                                         Correct! Given that you originally ranked Prize A last and got it, it is the only Obtainable Prize.
                                         Hence every possible alternative ranking would only get you Prize A.
                                     {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                        Correct! Given that you originally ranked Prize D above Prize A but got Prize D, Prize A <b>could</b> be an Obtainable Prize. Hence, an alternative ranking could possibly get you Prize A.
+                                    {{ endif }}
                                 </p>
                             </div>
                         </li>
@@ -504,6 +500,9 @@
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize A last and got it, it is the only Obtainable Prize.
                                         Hence every possible alternative ranking would only get you Prize A.
+                                    {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                     Correct! Given that you originally ranked Prize D above Prize C but got Prize D, Prize C <b>could</b> be an Obtainable Prize. Hence, an alternative ranking could possibly get you Prize C.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -557,6 +556,9 @@
                                     {{ if player.round_number == 3 }}
                                         Correct! The ranking that you originally submitted gets you Prize A.
                                     {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                         Correct! Given that you originally ranked Prize D above Prize A but got Prize D, Prize A <b>could</b> be an Obtainable Prize. Hence, an alternative ranking could possibly get you Prize A.
+                                    {{ endif }}
                                 </p>
                             </div>
                         </li>
@@ -588,6 +590,9 @@
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize B above Prize A but got Prize A, 
                                         Prize B is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize B.
+                                    {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                     Correct! Given that you originally ranked Prize D above Prize C but got Prize D, Prize C <b>could</b> be an Obtainable Prize. Hence, an alternative ranking could possibly get you Prize C.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -621,6 +626,9 @@
                                     {{ if player.round_number == 3 }}
                                         Correct! Given that you originally ranked Prize C above Prize A but got Prize A, 
                                         Prize C is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize C.
+                                    {{ endif }}
+                                    {{ if player.round_number == 4 }}
+                                        Correct! Given that you originally ranked Prize D first and got it, Prize D is an Obtainable Prize. Hence an alternative ranking that ranks Prize D lower could still possibly get you Prize D, but it may also get you a different, higher-ranked, prize if that prize is also an Obtainable Prize.
                                     {{ endif }}
                                 </p>
                             </div>
@@ -665,13 +673,13 @@
     </section>
 
     <section id="next">
-    {{ if player.round_number == 3 }}
-        In this training round you get <b><span id="points-won"></span>p</b>.
+    {{ if player.round_number == C.NUM_ROUNDS }}
+        In this training round you get <b><span class="money-amount">{{ 0.3 | cu }}</span></b>.
         You completed the training rounds!
         Click the button below to proceed to real rounds of the game.
     {{else}}
     <p>
-        You have completed this training round! You get <b><span id="points-won"></span>p</b>.
+        You have completed this training round! You get <b><span class="money-amount">{{ 0.3 | cu }}</span></b>.
         Click the button below to proceed.
     </p>
     {{endif}}
@@ -683,7 +691,7 @@
 {{ endblock }}
 
 {{ block scripts }}
-<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/property_training_round_page.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

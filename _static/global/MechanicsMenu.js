@@ -531,9 +531,6 @@ function updateCurrentMatching() {
             }
         }
     }
-
-
-
 }
 function openPlus() {
     for (let i = 0; i < js_vars.schools_number; i++) {

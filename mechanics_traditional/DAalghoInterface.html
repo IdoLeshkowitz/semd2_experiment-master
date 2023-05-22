@@ -1,5 +1,5 @@
 {{ block scripts }}
-<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
 {{ endblock }}
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
@@ -382,7 +382,7 @@
                                      {{ endif }}>
                                     <div style="flex-direction: column;justify-content: flex-start;align-items: center;align-content: center;">
                                         {{ for name_or_student in school}}
-                                            {{ if forloop.counter0 == 0}}
+                                            {{ if forloop.counter0 == 0 }}
                                                 <div class="dButtonTopBox">
                                                     <button type="button" class="dButtonTop" id="School{{ name_or_student }}" disabled="disabled">
                                                         <b>{{ name_or_student }}</b>

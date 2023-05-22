@@ -26,6 +26,7 @@
         </div>
         <br>
     </section>
+
     <section id="step-2">
         On the upper left part of the dashboard below you see the <b>Participant Rankings</b>.<br>
         Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.<br><br>
@@ -44,6 +45,7 @@
         </div>
         <br>
     </section>
+
     <section id="step-3">
         First, pair each prize to its <b>highest-priority</b> participant.<br><br>
 
@@ -183,7 +185,6 @@
         </div>
     </section>
 
-
     <section id ="step-8">
         <p>Is the process over?</p>
         {{ formfield 'question_3' }}
@@ -236,6 +237,7 @@
             </p>
         </div>
     </section>
+    
     <section id ="step-10">
         <p>Is the process over?</p>
         {{ formfield 'question_4' }}
@@ -285,6 +287,7 @@
             </p>
         </div>
     </section>
+    
     <section id ="step-12">
         <p>Is the process over?</p>
         {{ formfield 'question_5' }}
@@ -334,6 +337,7 @@
             </p>
         </div>
     </section>
+    
     <section id ="step-14">
         <p>Is the process over?</p>
         {{ formfield 'question_6' }}
@@ -384,6 +388,7 @@
             </p>
         </div>
     </section>
+    
     <section id ="step-16">
         <p>Is the process over?</p>
         {{ formfield 'question_7' }}
@@ -471,6 +476,7 @@
             </div>
         <br>
     </section>
+    
     <section id ="step-19">
         {{formfield "prize_b_obtainable"}}
 
@@ -492,6 +498,7 @@
         </div>
         <br>
     </section>
+    
     <section id ="step-20">
         {{formfield "prize_c_obtainable"}}
 
@@ -567,7 +574,6 @@
         </div>
         <br>
     </section>
-
     {{ endif }}
     {{ if player.round_number > 1 }}
     <section id="step-1-rounds">
@@ -638,6 +644,7 @@
         <br>
 
     </section>
+
     <section id="step-4-rounds">
         <p>Finally, select <b>the prize that will be allocated to you</b> out of the Obtainable Prizes.</p>
 
@@ -661,6 +668,7 @@
         </div>
         <br>
     </section>
+
     <section id="step-5-rounds">
         {{ if player.round_number == 2 }}
         <p></p>
@@ -676,9 +684,6 @@
         <br>
     </section>
     {{ endif }}
-
-
-
     <div class="container-fluid" style="border: 5px solid gray;">
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: baseline;">
             <div class="column" style="flex: 1 2 auto;">
@@ -698,7 +703,7 @@
 <!--                    Schools:-->
 <!--                </b>-->
                 <div class="container-fluid">
-                    <div class="row" style="justify-content: center;align-items: flex-start;align-content: flex-start;">
+                    <div class="row participant-ranking" style="justify-content: center;align-items: flex-start;align-content: flex-start;">
                         {{ for school in participant.schoolsAPC }}
                             <div class="flexItemButtonsBackground" id="SchoolBackground{{ forloop.counter }}">
                                 <div {{ if forloop.counter0 == 0 }}
@@ -799,6 +804,7 @@
                                                         {{ else }}
                                                             Y
                                                         {{ endif }}
+                                                    </button>
                                                 </div>
                                             {{ endif }}
                                         {{ endfor }}
@@ -810,8 +816,7 @@
                 </div>
             </div>
         </div>
-
-        <hr width="100%" />
+        <hr />
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: flex-end;">
             <div class="column" style="flex: 1 1 auto;width: 200%;">
                 <b style="font-size: 1.5rem;">
@@ -839,7 +844,8 @@
                     </div>
             {{ endfor }}
         </div>
-        <hr width="100%" />
+        <hr />
+       <div class="participants-rows">
         {{ for school in participant.schools_alphabet }}
             <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
                 <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
@@ -882,10 +888,10 @@
                 </div>
             </div>
         {{ endfor }}
+           </div>
+        </div>
     </div>
     <center>Allocation Dashboard</center>
-
-
 <!---
     <div style="text-align: center">
         <button type="button" class="submitButton" onclick="submitButton()">Submit Matching</button>
@@ -920,7 +926,7 @@
     --->
 {{ endblock }}
 {{ block scripts }}
-<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/MechanicsMenu.js' }}"></script>
 {{ endblock }}
 

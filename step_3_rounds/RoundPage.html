@@ -1,7 +1,7 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 <!--this is a copy of rounds page from step 2 from after the buttons (line 49)-->
-    Round {{ adj_num_rounds }}/30
+Round {{ adj_num_rounds }}/30
 {{ endblock }}
 
 {{ block styles}}
@@ -36,7 +36,7 @@
       <div class="modal-content">
         <span class="close4">&times;</span>
           <p>important principle of the allocation</p>
-<!--          <embed src="{{ static 'global/example.txt' }}">-->
+          <!--          <embed src="{{ static 'global/example.txt' }}">-->
       </div>
     </div><br>
 <button id="GenBtn5" class="button-2">Click for a reminder on the technical details of the allocation process</button>
@@ -71,8 +71,17 @@
                 <th>D</th>
             </tr>
         </thead>
+        <tbody>
+        <tr>
+            <td>Addition to your earnings if you get this prize</td>
+            <td class="money-amount">{{ first_prize | cu }}</td>
+            <td class="money-amount">{{ second_prize | cu }}</td>
+            <td class="money-amount">{{ third_prize | cu }}</td>
+            <td class="money-amount">{{ fourth_prize | cu }}</td>
+        </tr>
+        </tbody>
     </table><br>
-<!--second pop up window-->
+    <!--second pop up window-->
 <button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
     <div id="GenModal1" class="modal">
       <div class="modal-content">
@@ -107,9 +116,9 @@
             </tr>
         </thead>
     </table><br>
-
-<!--third pop up window-->
-<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
+    
+    <!--third pop up window-->
+<button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button><br>
     <div id="GenModal2" class="modal">
       <div class="modal-content">
         <span class="close2">&times;</span>
@@ -134,18 +143,8 @@
 
 <section id="step-3">
     <h4>Step 2: Submit Your Ranking</h4>
-    <p>
-        Please rank the four prizes from most preferred to least preferred.
-    </p>
-    <ul>
-        <li>{{ formfield 'first_priority' }}</li>
-        <li>{{ formfield 'second_priority' }}</li>
-        <li>{{ formfield 'third_priority' }}</li>
-        <li>{{ formfield 'fourth_priority' }}</li>
-    </ul>
-
-<!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
+    <!-- fourth general pop up window-->
+<button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button><br>
     <div id="GenModal3" class="modal">
       <div class="modal-content">
         <span class="close3">&times;</span>
@@ -155,16 +154,7 @@
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-
-    <div class="btn-container">
-        <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button><br>
-    </div>
-    <div class="incorrect-msg">
-        <p>
-            You submitted an invalid ranking. Please resubmit.
-        </p>
-    </div>
+    {{ include_sibling "ranking_form.html" }}
 </section>
 
 <section id="step-4">
@@ -178,7 +168,7 @@
     <div id="round-results">
         <p>
             <b>You get Prize <span id="prize-won"></span></b>,
-            and your total earnings increase by <b><span id="points-won"></span>p</b>.
+            and your total earnings increase by <b><span id="points-won"></span></b>.
         </p>
     </div>
     <div style="text-align: center">
@@ -188,8 +178,7 @@
 {{ endblock }}
 
 {{ block scripts }}
-<script src="{{ static 'utils/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/round_page.js' }}"></script>
-    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

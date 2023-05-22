@@ -4,13 +4,15 @@ function getMoneyAmountsElementsFromDom() {
 }
 
 function getMoneyStringByAmountAndCurrency(moneyAmount, currency) {
+    /* convert the money amount to cents/pence */
+    const convertedMoneyAmount = (moneyAmount * 100).toFixed(0);
     /* get the money string by amount and currency */
     /* if currency is USD convert the money to cents */
     if (currency === 'USD') {
-        return `${moneyAmount * 100}¢`;
+        return `${convertedMoneyAmount}¢`;
     }
     if (currency === "GBP") {
-        return `${moneyAmount * 100}p`;
+        return `${convertedMoneyAmount}p`;
     }
 }
 
@@ -38,9 +40,9 @@ function getMoneyAmountFromMoneyString(moneyString) {
 
 function replaceMoneyAmountsInDom(moneyAmountsElements) {
     /*
-        replace the money amounts in the DOM
-        if the money amount is less than one
-     */
+       replace the money amounts in the DOM
+       if the money amount is less than one
+    */
     moneyAmountsElements.forEach((moneyAmountElement) => {
         /* get the value of the money amount */
         const moneyValue = getMoneyAmountFromMoneyString(moneyAmountElement.innerText);
@@ -55,4 +57,7 @@ function replaceMoneyAmountsInDom(moneyAmountsElements) {
     });
 }
 
-replaceMoneyAmountsInDom(getMoneyAmountsElementsFromDom());
+
+window.addEventListener('DOMContentLoaded', () => {
+    replaceMoneyAmountsInDom(getMoneyAmountsElementsFromDom());
+});

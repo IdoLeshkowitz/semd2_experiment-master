@@ -456,8 +456,8 @@ class DAalghoInterface(Page):
                         player.id_in_group: {'information_type': 'canceled_rematch', 'student': data['student'],
                             'school': data['school']}}
                 else:
-                    player.Clicks = player.Clicks + str(data['student']) + ':'
                     return{player.id_in_group:{'information_type':'ready_for_rematch','student':data['student'],'school':data['school']}} # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
+                    player.Clicks = player.Clicks + str(data['student']) + ':'
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

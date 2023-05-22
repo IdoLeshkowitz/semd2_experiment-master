@@ -155,13 +155,17 @@ class NullDescription(Page):
     form_fields = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
 
     @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        player.payoff += .3
-
-    @staticmethod
     def js_vars(player: Player):
         return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES, prizes_priorities=C.PRIZES_PRIORITIES,
-            players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS)
+                    players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS)
+
+    def before_next_page(player: Player, timeout_happened):
+        player.payoff += 0.3
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {"prize_value_1": C.PRIZES_VALUES[0] / 100, "prize_value_2": C.PRIZES_VALUES[1] / 100,
+                "prize_value_3": C.PRIZES_VALUES[2] / 100, "prize_value_4": C.PRIZES_VALUES[3] / 100}
 
     @staticmethod
     def live_method(player: Player, data):
@@ -195,8 +199,9 @@ class NullDescription(Page):
         values = data["values"]
         matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
         user_prize = matching[0][0]
-        response = dict(prize=prizes[user_prize], value=values[user_prize])
-
+        # since prize is in cents convert to dollars
+        payoff = round(values[user_prize] / 100, 2)
+        response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
 
 

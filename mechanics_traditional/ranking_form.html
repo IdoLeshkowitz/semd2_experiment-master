@@ -1,0 +1,46 @@
+<p class="ms-1">
+        Please rank the four prizes from most preferred to least preferred.
+</p>
+{{ include "components/ranking_form.html"}}
+<div class="btn-container">
+        
+        <button id="submit-btn"
+                type="button"
+                class="btn btn-danger btn-container"
+                onclick="onSubmit()"
+        >
+            Submit ranking
+        </button><br>
+</div>
+<div class="incorrect-msg">
+        <p>
+            You submitted an invalid ranking. Please resubmit.
+        </p>
+</div>
+
+<script>
+/* on submit event handler */
+function onSubmit() {
+    /* grab the priorities input elements from the DOM */
+    const first_priority_element = document.querySelector('#first_priority');
+    const second_priority_element = document.querySelector('#second_priority');
+    const third_priority_element = document.querySelector('#third_priority');
+    const fourth_priority_element = document.querySelector('#fourth_priority');
+    /* check if they are all valid */
+    const allElements = [first_priority_element, second_priority_element, third_priority_element, fourth_priority_element];
+    const allElementsAreValid = allElements.every((element) => {
+        return element.value.match(/^[1-4]$/);
+    });
+    /* if not
+    /* check if they are ordered correctly C->B->A->D */
+    const correctOrderedPriorities = ['3', '2', '1', '4'];
+    const isOrderedCorrectly = allElements.every((element, index) => {
+        return element.value == correctOrderedPriorities[index];
+    });
+    /* if they are all valid, then disable the input element */
+    if (allElementsAreValid) {
+        const inputElement = document.querySelector('#id_player_bid_text');
+        inputElement.disabled = true;
+    }
+}
+</script>

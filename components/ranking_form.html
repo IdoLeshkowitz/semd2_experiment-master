@@ -1,16 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>Baic input box demo</title>
     <link rel="stylesheet" href="./style.css">
-
     <script>
         function removeEnDash(str) {
             return str.replace(/–/g, '');
         }
 
         function addEnDash(str) {
-            console.log(str);
             /* add en dash between each character */
             return str.split('').join('–');
         }
@@ -44,8 +41,8 @@
 
         let cachedInput = '';
         window.onload = function () {
-            var bidNumberField = document.querySelector('#id_player_bid_text');
-            bidNumberField.addEventListener('input', (e) => {
+            const rankingInputElement = document.querySelector('#id_player_bid_text');
+            rankingInputElement.addEventListener('input', (e) => {
                 const uppercasedCleanedInput = removeEnDash(e.target.value).toUpperCase();
                 const isChangeValid = validateInput(uppercasedCleanedInput);
                 if (!isChangeValid) {
@@ -67,15 +64,16 @@
         };
     </script>
 </head>
-<body>
+<div style="display: flex; justify-content: center;">
 <input type="text"
-       class="form-control bid-text"
-       id="id_player_bid_text"
+        style="flex-basis: 10rem;text-align: center;"
+        class="form-control fw-bold fs-5 mt-2 mb-3 "
+        id="id_player_bid_text"
 />
-<!--invisible inputs -->
+</div>
+    <!--invisible inputs -->
 <input type="hidden" name="first_priority" id="first_priority" required/>
 <input type="hidden" name="second_priority" id="second_priority" required/>
 <input type="hidden" name="third_priority" id="third_priority" required/>
 <input type="hidden" name="fourth_priority" id="fourth_priority" required/>
-</body>
 </html>

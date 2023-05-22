@@ -122,7 +122,7 @@ SESSION_CONFIGS = [
                       "understanding_test", "reflection", "cognitive_abilities", "demographics", "exit"
                       ]
     ),
-    # Null, double  N_D
+    # Null, double  N_D'
     dict(
         name="N_D",
         display_name="N_D",
