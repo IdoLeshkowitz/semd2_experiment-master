@@ -514,17 +514,15 @@ class TrainingRound(Page):
             SchoolsAlphabetPreferencesCombined.append(L)
         player.participant.schoolsAPC = SchoolsAlphabetPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a school: its first entery is the name/letter of the school, and the other enteries are the students' numbers according to the school's preferences.
         StudentsNumberPreferencesCombined = []
-        print("schools alphabet", player.participant.schools_alphabet)
-        print("students lists", player.participant.students_lists)
         # iterates over the prizes
         for i in range(player.StudentsNumber):
-            print(i)
             L = [i + 1]
             # itertas over the participants
             for j in range(player.SchoolsNumber):
-                L.append("A")
-                # if player.participant.students_lists[i][j]:
-                #     L.append(player.participant.schools_alphabet[player.participant.students_lists[i][j]])
+                if j in player.participant.students_lists[i]:
+                    L.append(player.participant.schools_alphabet[player.participant.students_lists[i][j]])
+                else:
+                    L.append("X")
             StudentsNumberPreferencesCombined.append(L)
         player.participant.studentsAPC = StudentsNumberPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a students: its first entery is the name/number of the student, and the other enteries are the schools' numbers according to the student's preferences.
 
