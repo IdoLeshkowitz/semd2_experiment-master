@@ -1,6 +1,7 @@
-from otree.api import *
 import random
 import string
+
+from otree.api import *
 
 doc = """
 Your app description
@@ -8,48 +9,21 @@ Your app description
 
 
 def prizes_priorities_list():
-    first_round_priorities = [
-        [1, 2, 3, 0],
-        [1, 2, 0, 3],
-        [2, 3, 1, 0],
-        [0, 3, 2, 1]
-    ]
+    first_round_priorities = [[1, 2, 3, 0], [1, 2, 0, 3], [2, 3, 1, 0], [0, 3, 2, 1]]
 
-    second_round_priorities = [
-        [1, 2, 3, 0],
-        [1, 0, 2, 3],
-        [3, 0, 2, 1],
-        [3, 2, 1, 0]
-    ]
+    second_round_priorities = [[1, 2, 3, 0], [1, 0, 2, 3], [3, 0, 2, 1], [3, 2, 1, 0]]
 
-    third_round_priorities = [
-        [1, 0, 2, 3],
-        [2, 0, 3, 1],
-        [1, 0, 3, 2],
-        [2, 3, 0, 1]
-    ]
+    third_round_priorities = [[1, 0, 2, 3], [2, 0, 3, 1], [1, 0, 3, 2], [2, 3, 0, 1]]
 
     return [first_round_priorities, second_round_priorities, third_round_priorities]
 
 
 def players_rankings_list():
-    first_round_rankings = [
-        [0, 2, 3, 1],
-        [1, 0, 2, 3],
-        [2, 1, 0, 3]
-    ]
+    first_round_rankings = [[0, 2, 3, 1], [1, 0, 2, 3], [2, 1, 0, 3]]
 
-    second_round_rankings = [
-        [0, 2, 3, 1],
-        [1, 0, 2, 3],
-        [3, 1, 0, 2]
-    ]
+    second_round_rankings = [[0, 2, 3, 1], [1, 0, 2, 3], [3, 1, 0, 2]]
 
-    third_round_rankings = [
-        [2, 3, 0, 1],
-        [1, 0, 2, 3],
-        [3, 1, 0, 2]
-    ]
+    third_round_rankings = [[2, 3, 0, 1], [1, 0, 2, 3], [3, 1, 0, 2]]
 
     return [first_round_rankings, second_round_rankings, third_round_rankings]
 
@@ -111,112 +85,49 @@ class Group(BaseGroup):
 
 
 def make_question_1():
-    return models.IntegerField(
-        choices=[
-            [1, "It is determined at random"],
-            [2, "The prize who got paired to Ruth first"],
-            [3, "The prize at which Ruth is in the highest priority."],
-            [4, "The prize highest in Ruth’s ranking."]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "It is determined at random"], [2, "The prize who got paired to Ruth first"],
+                                        [3, "The prize at which Ruth is in the highest priority."],
+                                        [4, "The prize highest in Ruth’s ranking."]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_2():
-    return models.IntegerField(
-        choices=[
-            [1, "A random participant that is currently unpaired to any prize"],
-            [2,
-             "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
-            [3, "Its highest-priority participant"]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "A random participant that is currently unpaired to any prize"],
+                                        [2, "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
+                                        [3, "Its highest-priority participant"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_3():
-    return models.IntegerField(
-        choices=[
-            [1, "No, there are new conflicts: two (or more) prizes are paired to the same participant"],
-            [2, "No, some prizes are paired to participants that are not in their highest priority"],
-            [3,
-             "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
-            [4, "Yes, there are no more conflicts"]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "No, there are new conflicts: two (or more) prizes are paired to the same participant"],
+                                        [2, "No, some prizes are paired to participants that are not in their highest priority"], [3,
+                                                                                                                                   "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
+                                        [4, "Yes, there are no more conflicts"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_4():
-    return models.IntegerField(
-        choices=[
-            [1, "No"],
-            [2, "Yes"]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_5():
-    return models.IntegerField(
-        choices=[
-            [1, "No"],
-            [2, "Yes"]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_6():
-    return models.IntegerField(
-        choices=[
-            [1, "No"],
-            [2, "Yes"]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_7():
-    return models.IntegerField(
-        choices=[
-            [1, "No"],
-            [2, "Yes"]
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_8():
-    return models.IntegerField(
-        choices=[
-            [1, "All four prizes, since I can in principle obtain all of them."],
-            [2, "Any prize at which my priority is higher than the participant it is temporarily allocated to."],
-            [3, "Only the prize that was left unpaired in the temporary allocation."],
-            [4,
-             "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."],
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "All four prizes, since I can in principle obtain all of them."],
+                                        [2, "Any prize at which my priority is higher than the participant it is temporarily allocated to."],
+                                        [3, "Only the prize that was left unpaired in the temporary allocation."], [4,
+                                                                                                                    "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."], ], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_prize(label):
-    return models.IntegerField(
-        choices=[
-            [1, "Obtainable"],
-            [2, "Unobtainable"]
-        ],
-        label=label,
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "Obtainable"], [2, "Unobtainable"]], label=label, widget=widgets.RadioSelect)
 
 
 def make_prize_a():
@@ -236,28 +147,13 @@ def make_prize_d():
 
 
 def make_prize_question():
-    return models.IntegerField(
-        choices=[
-            [1, "The prize that was left unpaired in the temporary allocation"],
-            [2, "The prize that other participants placed last in rankings on average"],
-            [3, "The prize that I ranked the highest"],
-            [4, "The prize at which I have the highest priority"],
-        ],
-        label='Answer',
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "The prize that was left unpaired in the temporary allocation"],
+                                        [2, "The prize that other participants placed last in rankings on average"], [3, "The prize that I ranked the highest"],
+                                        [4, "The prize at which I have the highest priority"], ], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_priority_field(label):
-    return models.IntegerField(
-        choices=[
-            [1, "A"],
-            [2, "B"],
-            [3, "C"],
-            [4, "D"]
-        ],
-        label=label
-    )
+    return models.IntegerField(choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
 
 
 class Player(BasePlayer):
@@ -314,17 +210,16 @@ class Player(BasePlayer):
 
 def variablesFunction(player):
     d = {
-        'schools_number': player.SchoolsNumber,
-        # This sets the number of schools. This of course can be determined randomly or according to some rule.
-        'students_number': player.StudentsNumber,  # Same as above but regarding the number of students.
-        'schools_lists': player.participant.schools_lists,
-        'students_lists': player.participant.students_lists,
-        'matchingalgho': player.participant.matchingalgho,
-        'partialmatching': player.participant.partialmatching,
-        'schools_alphabet': player.participant.schools_alphabet,
+        'schools_number':          player.SchoolsNumber, # This sets the number of schools. This of course can be determined randomly or according to some rule.
+        'students_number':         player.StudentsNumber,  # Same as above but regarding the number of students.
+        'schools_lists':           player.participant.schools_lists,
+        'students_lists':          player.participant.students_lists,
+        'matchingalgho':           player.participant.matchingalgho,
+        'partialmatching':         player.participant.partialmatching,
+        'schools_alphabet':        player.participant.schools_alphabet,
         'max_students_per_school': player.participant.max_students_per_school,
-        'matched_number': player.participant.matched_number,
-        'correct_answers': C.CORRECT_ANSWERS[player.round_number - 1],
+        'matched_number':          player.participant.matched_number,
+        'correct_answers':         C.CORRECT_ANSWERS[player.round_number - 1],
     }
     # for i in range(player.SchoolsNumber):
     #     for j in range(player.StudentsNumber):
@@ -371,38 +266,16 @@ class DAalghoInterface(Page):
     @staticmethod
     def get_form_fields(player: Player):
         if player.round_number == 1:
-            questions = ["question_1",
-                         "question_2",
-                         "question_3",
-                         "question_4",
-                         "question_5",
-                         "question_6",
-                         "question_7",
-                         "question_8",
-                         "prize_a_obtainable",
-                         "prize_b_obtainable",
-                         "prize_c_obtainable",
-                         "prize_d_obtainable",
-                         "question_prize"]
+            questions = ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6", "question_7", "question_8", "prize_a_obtainable",
+                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "question_prize"]
 
-            incorrect_answers = ["incorrect_seq_question_1",
-                                 "incorrect_seq_question_2",
-                                 "incorrect_seq_question_3",
-                                 "incorrect_seq_question_4",
-                                 "incorrect_seq_question_5",
-                                 "incorrect_seq_question_6",
-                                 "incorrect_seq_question_7",
-                                 "incorrect_seq_question_8"]
+            incorrect_answers = ["incorrect_seq_question_1", "incorrect_seq_question_2", "incorrect_seq_question_3", "incorrect_seq_question_4",
+                                 "incorrect_seq_question_5", "incorrect_seq_question_6", "incorrect_seq_question_7", "incorrect_seq_question_8"]
 
             return questions + incorrect_answers
 
         else:
-            questions = [
-                "prize_a_obtainable",
-                "prize_b_obtainable",
-                "prize_c_obtainable",
-                "prize_d_obtainable",
-                "obtainable_prize"]
+            questions = ["prize_a_obtainable", "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "obtainable_prize"]
             return questions
 
     @staticmethod
@@ -499,23 +372,13 @@ class TrainingRound(Page):
 
     @staticmethod
     def get_form_fields(player: Player):
-        priorities = [
-            "first_priority",
-            "second_priority",
-            "third_priority",
-            "fourth_priority",
-        ]
+        priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority", ]
         return priorities
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(
-            prizes=C.PRIZES,
-            prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1],
-            players=C.PLAYERS,
-            players_rankings=C.PLAYERS_RANKINGS[player.round_number - 1],
-            player_expected_ranking=C.EXPECTED_RANKINGS[player.round_number - 1],
-        )
+        return dict(prizes=C.PRIZES, prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1], players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS[
+            player.round_number - 1], player_expected_ranking=C.EXPECTED_RANKINGS[player.round_number - 1], )
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

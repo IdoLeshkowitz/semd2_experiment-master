@@ -1,0 +1,49 @@
+  <div class="participants-rows">
+        {{ for school in participant.schools_alphabet }}
+            <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
+                <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
+                    <b style="font-size: 1.5rem;">
+                        {{ if school == 'A' }}
+                            R:
+                        {{ elif school == 'B' }}
+                            S:
+                        {{ elif school == 'C' }}
+                            T:
+                        {{ elif school == 'D' }}
+                        <span style="color: grey;">Y:</span>
+                        {{ elif school == "E"}}
+                            <span style="color: grey;">Unpaired::</span>
+                        {{ endif }}
+                    </b>
+                </div>
+                <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;order: 20;" id="plusButtonSchool{{ school }}">
+                    <button type="button" class="pButton" value="{{ forloop.counter }}" onclick="matchToSchool(this.value)">
+                        <b>+</b>
+                    </button>
+                </div>
+                {{ for student in participant.students_names }}
+                    <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;" id="School{{ school }}MatchedToStudent{{ student }}">
+                        <button type="button" class="iButton" value="{{ school }}" onclick="rematchStudent(this.value,this.innerText)" id="School{{ school }}MatchedToStudent{{ student }}Button">
+                            {{ if student == 1 }}
+                                <b>A</b>
+                            {{ elif student == 2 }}
+                                <b>B</b>
+                            {{ elif student == 3 }}
+                                <b>C</b>
+                            {{ else }}
+                                <b>D</b>
+                            {{ endif }}
+                        </button>
+                    </div>
+                {{ endfor }}
+                <div class="column" style="flex: 1 0 auto;text-align: right;order: 100">
+                    <b style="font-size: 1.2rem;color: transparent;">
+                        ::
+                    </b>
+                </div>
+            </div>
+        {{ endfor }}
+<!--      Unpairable students:-->
+      <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
+      </div>
+           </div>
