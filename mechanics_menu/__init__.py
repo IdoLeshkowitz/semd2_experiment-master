@@ -3,6 +3,7 @@ import string
 
 from otree.api import *
 
+# STUDENT --> PRIZE | SCHOOL --> PARTICIPANT
 doc = """
 Your app description
 """
@@ -37,33 +38,28 @@ def expected_rankings_list():
 
 
 def make_obtainable_field_round_2(label):
-    return models.IntegerField(
-        choices=[
-            [1, "A"],
-            [2, "B"]
-        ],
-        label=label,
-        widget=widgets.RadioSelect
-    )
+    return models.IntegerField(choices=[[1, "A"], [2, "B"]], label=label, widget=widgets.RadioSelect)
 
 
 class C(BaseConstants):
     NAME_IN_URL = 'mechanics_menu'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 3
-    MAX_SCHOOLS = 5
+    MAX_SCHOOLS = 6
     MAX_STUDENTS = 9
-    SCHOOLS_LETTERS = ['A', 'B', 'C', 'D']  # Change if MAX_SCHOOLS is changed !!!
+    SCHOOLS_LETTERS = ['A', 'B', 'C', 'D' , 'E']  # Change if MAX_SCHOOLS is changed !!!
     STUDENTS_LETTERS = ['R', 'S', 'T', 'Y']
     STAGE_1 = [1, -10, -10, -10]
-    STAGES = {0: [-10, -10, -10, -10],
-              1: [1, -10, -10, -10],
-              2: [1, 1, 2, 3],
-              3: [1, 2, 2, 3],
-              4: [1, 3, 2, 3],
-              5: [1, 3, 2, 2],
-              6: [1, 3, 2, 1],
-              7: [1, 3, 2, -10]}
+    STAGES = {
+        0: [-10, -10, -10, -10],
+        1: [1, -10, -10, -10],
+        2: [1, 1, 2, 3],
+        3: [1, 2, 2, 3],
+        4: [1, 3, 2, 3],
+        5: [1, 3, 2, 2],
+        6: [1, 3, 2, 1],
+        7: [1, 3, 2, -10]
+    }
     ALLOCATION_2 = [-10, 2, 3, 1]
     ALLOCATION_3 = [2, -10, 1, 3]
 
@@ -165,8 +161,7 @@ class Player(BasePlayer):
     TimeStamps = models.LongStringField()
     FinalMatching = models.LongStringField()
     CorrectMatching = models.BooleanField()
-    MaxStudentsA = models.StringField(label="Number of students school A can accept", choices=[i for i in range(0,
-                                                                                                                19)])  # might need to be changed if C.LETTERS_SCHOOLS is changed.
+    MaxStudentsA = models.StringField(label="Number of students school A can accept", choices=[i for i in range(0,19)])  # might need to be changed if C.LETTERS_SCHOOLS is changed.
     MaxStudentsB = models.StringField(label="Number of students school B can accept", choices=[i for i in range(1, 19)])
     MaxStudentsC = models.StringField(label="Number of students school C can accept", choices=[i for i in range(1, 19)])
     MaxStudentsD = models.StringField(label="Number of students school D can accept", choices=[i for i in range(1, 19)])
@@ -210,7 +205,8 @@ class Player(BasePlayer):
 
 def variablesFunction(player):
     d = {
-        'schools_number':          player.SchoolsNumber, # This sets the number of schools. This of course can be determined randomly or according to some rule.
+        'schools_number':          player.SchoolsNumber,
+        # This sets the number of schools. This of course can be determined randomly or according to some rule.
         'students_number':         player.StudentsNumber,  # Same as above but regarding the number of students.
         'schools_lists':           player.participant.schools_lists,
         'students_lists':          player.participant.students_lists,
@@ -287,31 +283,65 @@ class DAalghoInterface(Page):
             player.TimeStamps = player.TimeStamps + '|F:' + data['time']
             player.Clicks = player.Clicks + '||'
             player.FinalMatching = str(player.participant.partialmatching)
-            return {player.id_in_group: {'information_type': 'submit', }}
+            return {
+                player.id_in_group: {
+                    'information_type': 'submit',
+                }
+            }
         elif data['information_type'] == 'matching_update':
             stage = data['stage']
             if data['matching'] == C.STAGES[stage]:
-                return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
-                                             'status': True}}
+                return {
+                    player.id_in_group: {
+                        'information_type': 'matching_status',
+                        'round':            player.round_number,
+                        'status':           True
+                    }
+                }
             else:
-                return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
-                                             'status': False,
-                                             'matching': C.STAGES[stage - 1]}}
+                return {
+                    player.id_in_group: {
+                        'information_type': 'matching_status',
+                        'round':            player.round_number,
+                        'status':           False,
+                        'matching':         C.STAGES[stage - 1]
+                    }
+                }
         elif data['information_type'] == 'training_rounds':
             if player.round_number == 2:
                 if data['matching'] == C.ALLOCATION_2:
-                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
-                                                 'status': True}}
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'matching_status',
+                            'round':            player.round_number,
+                            'status':           True
+                        }
+                    }
                 else:
-                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
-                                                 'status': False}}
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'matching_status',
+                            'round':            player.round_number,
+                            'status':           False
+                        }
+                    }
             if player.round_number == 3:
                 if data['matching'] == C.ALLOCATION_3:
-                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
-                                                 'status': True}}
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'matching_status',
+                            'round':            player.round_number,
+                            'status':           True
+                        }
+                    }
                 else:
-                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
-                                                 'status': False}}
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'matching_status',
+                            'round':            player.round_number,
+                            'status':           False
+                        }
+                    }
         elif data['information_type'] == "reset_button":
             # reset matched_number
             player.participant.matched_number = [0, 0, 0, 0]
@@ -319,45 +349,84 @@ class DAalghoInterface(Page):
             player.participant.partialmatching = [-10, -10, -10, -10]
             # add reset to clicks
             player.Clicks = player.Clicks + 'reset|'
-            return {player.id_in_group: {'information_type': 'reset'}}
+            return {
+                player.id_in_group: {
+                    'information_type': 'reset'
+                }
+            }
         else:
             print(data['student'])
-            pystudent = int(data['student']) -1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
-            if data['information_type'] == 'student_button': # An unmatched student button was pressed
-                if player.Clicks[-2:] == data['student'] + ':': # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
-                    if player.participant.partialmatching[pystudent] > 0: # If the student was already matched.
+            pystudent = int(data['student']) - 1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
+            if data['information_type'] == 'student_button':  # An unmatched student button was pressed
+                if player.Clicks[-2:] == data[
+                    'student'] + ':':  # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
+                    if player.participant.partialmatching[pystudent] > 0:  # If the student was already matched.
                         oldschool = player.participant.partialmatching[pystudent] - 1
                         player.participant.matched_number[oldschool] -= 1
                     player.Clicks = player.Clicks + data['student'] + '|'
                     player.participant.partialmatching[pystudent] = -10
-                    return {player.id_in_group: {'information_type': 'student_unmatched', 'student': data['student'],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,}}
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'student_unmatched',
+                            'student':          data['student'],
+                            'matched_number':   player.participant.matched_number,
+                            'partialmatching':  player.participant.partialmatching,
+                        }
+                    }
                 else:
                     player.Clicks = player.Clicks + data['student'] + ':'
-                    return {player.id_in_group:{'information_type':'student_matching','student':data['student']}}
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'student_matching',
+                            'student':          data['student']
+                        }
+                    }
             elif data['information_type'] == 'school_plus_button':
+                # check if the prize was assigned to a participant already, if so decrement the amount of prizes assigned to the old participant
                 if player.participant.partialmatching[pystudent] > 0:
+                    # if the prize was assigned to a participant already
                     oldschool = player.participant.partialmatching[pystudent] - 1
+                    # decrement the amount of prizes assigned to the old participant
                     player.participant.matched_number[oldschool] -= 1
                 player.Clicks = player.Clicks + str(data['school']) + '|'
+                # assign the prize to the new participant
                 player.participant.partialmatching[pystudent] = int(data['school'])
-                pyschool = int(data['school']) - 1 # This is the integer returned to javascript!!
+                pyschool = int(data['school']) - 1  # This is the integer returned to javascript!!
                 player.participant.matched_number[pyschool] += 1
-                return {player.id_in_group:{'information_type': 'student_matched', 'student': data['student'],'school':pyschool,'student_order':player.participant.matched_number[pyschool],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,}}
+                return {
+                    player.id_in_group: {
+                        'information_type': 'student_matched',
+                        'student':          data['student'],
+                        'school':           pyschool,
+                        'student_order':    player.participant.matched_number[pyschool],
+                        'matched_number':   player.participant.matched_number,
+                        'partialmatching':  player.participant.partialmatching,
+                    }
+                }
             elif data['information_type'] == 'rematch_button':
                 if player.Clicks[-2:] == str(data['student']) + ':':
                     school = player.participant.schools_alphabet.index(data['school']) + 1
                     player.Clicks = player.Clicks + str(school) + '|'
                     return {
-                        player.id_in_group: {'information_type': 'canceled_rematch', 'student': data['student'],
-                            'school': data['school']}}
+                        player.id_in_group: {
+                            'information_type': 'canceled_rematch',
+                            'student':          data['student'],
+                            'school':           data['school']
+                        }
+                    }
                 else:
-                    return{player.id_in_group:{'information_type':'ready_for_rematch','student':data['student'],'school':data['school']}} # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
+                    return {
+                        player.id_in_group: {
+                            'information_type': 'ready_for_rematch',
+                            'student':          data['student'],
+                            'school':           data['school']
+                        }
+                    }  # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
                     player.Clicks = player.Clicks + str(data['student']) + ':'
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        pass
-        # Here one can compare the submitted matching with the DA matching for example.
+        pass  # Here one can compare the submitted matching with the DA matching for example.
 
 
 class MechanicsIntro(Page):
@@ -382,36 +451,33 @@ class TrainingRound(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        player.SchoolsNumber = 4
-        player.StudentsNumber = 4
+        player.SchoolsNumber = 5  # participants number
+        player.StudentsNumber = 4  # prizes number
         player.MaxStudentsA = '4'
         player.MaxStudentsB = '4'
         player.MaxStudentsC = '4'
         player.MaxStudentsD = '0'
+        player.MaxStudentsE = '0'
 
         player.TimeStamps = 'L:'  # Setting the field so that it is not empty.
         player.Clicks = '||'  # Setting the field so that it is not empty.
 
         player.participant.max_students_per_school = []  # The nth number in the list represents the maximal number of students that can be matched to the nth school.
         for i in range(player.SchoolsNumber):
-            codi = "player.participant.max_students_per_school.append(int(player.MaxStudents" + C.SCHOOLS_LETTERS[
-                i] + "))"
+            codi = "player.participant.max_students_per_school.append(int(player.MaxStudents" + C.SCHOOLS_LETTERS[i] + "))"
             exec(codi)  # executing the code inside the string
         player.participant.matched_number = []  # The number of matched students per school.
-        player.participant.schools_range = list(
-            range(player.SchoolsNumber))  # A list [0,1,...,n-1] where n is the number of schools.
+        player.participant.schools_range = list(range(player.SchoolsNumber))  # A list [0,1,...,n-1] where n is the number of schools.
         SchoolsAlphabet = list(string.ascii_uppercase)
         player.participant.schools_alphabet = SchoolsAlphabet[
                                               0:player.SchoolsNumber]  # A list [A,B,...,X] where X is the nth letter of the alphabet and n is the number of schools.
         # player.participant.students_alphabet = ['R', 'S', 'T', 'Y']
-        player.participant.students_range = list(
-            range(player.StudentsNumber))  # A list [0,1,...,m-1] where m is the number of students.
-        player.participant.students_names = list(
-            range(1, (player.StudentsNumber + 1)))  # A list [1,2,...,m] where m is the number of students.
+        player.participant.students_range = list(range(player.StudentsNumber))  # A list [0,1,...,m-1] where m is the number of students.
+        player.participant.students_names = list(range(1, (player.StudentsNumber + 1)))  # A list [1,2,...,m] where m is the number of students.
         # player.participant.students_names = C.STUDENTS_LETTERS.copy()
         player.participant.matchingalgho = '|'  # History of the participant's choices until that point. To be presented somehow on the screen.
-        player.participant.partialmatching = [-10 for i in range(
-            player.StudentsNumber)]  # The current partial matching according to the participant's choices until that point. The length of the list equals the number of students. The value of each entery is the number of the school that the student has been matched too. Equals -10 if the student hasn't been matched yet.
+        player.participant.partialmatching = [-10 for i in
+                                              range(player.StudentsNumber)]  # The current partial matching according to the participant's choices until that point. The length of the list equals the number of students. The value of each entery is the number of the school that the student has been matched too. Equals -10 if the student hasn't been matched yet.
         schools_lists = list()
         for i in range(player.SchoolsNumber):  # Each school has a preference list over...
             schools_lists.append(list(range(player.StudentsNumber)))  # ...the different students.
@@ -419,11 +485,11 @@ class TrainingRound(Page):
             player.participant.matched_number.append(0)
         # mechanics traditional (prizes)-
         if player.round_number == 1:
-            schools_lists = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 3, 0, 2], [2, 1, 0, 3]]
+            schools_lists = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 3, 0, 2], [2, 1, 0, 3],[-1,-1,-1,-1]]
         if player.round_number == 2:
-            schools_lists = [[3, 0, 1, 2], [2, 1, 0, 3], [2, 3, 0, 1], [3, 2, 1, 0]]
+            schools_lists = [[3, 0, 1, 2], [2, 1, 0, 3], [2, 3, 0, 1], [3, 2, 1, 0],[-1,-1,-1,-1]]
         if player.round_number == 3:
-            schools_lists = [[2, 0, 1, 3], [0, 3, 2, 1], [0, 3, 1, 2], [2, 3, 0, 1]]
+            schools_lists = [[2, 0, 1, 3], [0, 3, 2, 1], [0, 3, 1, 2], [2, 3, 0, 1],[-1,-1,-1,-1]]
         player.participant.schools_lists = schools_lists  # This is a list of sublist. Each sublist corresponds to a school: the nth sublist represents the nth school's preferences: The first number represents the most preferred student by the school, the second entery represents the second-best preferred student etc.
         player.SchoolsPreferences = str(player.participant.schools_lists)  # saving this informtion.
         students_lists = list()
@@ -448,10 +514,17 @@ class TrainingRound(Page):
             SchoolsAlphabetPreferencesCombined.append(L)
         player.participant.schoolsAPC = SchoolsAlphabetPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a school: its first entery is the name/letter of the school, and the other enteries are the students' numbers according to the school's preferences.
         StudentsNumberPreferencesCombined = []
+        print("schools alphabet", player.participant.schools_alphabet)
+        print("students lists", player.participant.students_lists)
+        # iterates over the prizes
         for i in range(player.StudentsNumber):
+            print(i)
             L = [i + 1]
+            # itertas over the participants
             for j in range(player.SchoolsNumber):
-                L.append(player.participant.schools_alphabet[player.participant.students_lists[i][j]])
+                L.append("A")
+                # if player.participant.students_lists[i][j]:
+                #     L.append(player.participant.schools_alphabet[player.participant.students_lists[i][j]])
             StudentsNumberPreferencesCombined.append(L)
         player.participant.studentsAPC = StudentsNumberPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a students: its first entery is the name/number of the student, and the other enteries are the schools' numbers according to the student's preferences.
 
