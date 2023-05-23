@@ -2,10 +2,11 @@ from otree.api import *
 import random
 import string
 
-
 doc = """
 Your app description
 """
+
+
 def prizes_priorities_list():
     first_round_priorities = [
         [1, 2, 3, 0],
@@ -63,12 +64,12 @@ def expected_rankings_list():
 
 def make_obtainable_field_round_2(label):
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "A"],
             [2, "B"]
         ],
-        label = label,
-        widget = widgets.RadioSelect
+        label=label,
+        widget=widgets.RadioSelect
     )
 
 
@@ -78,7 +79,7 @@ class C(BaseConstants):
     NUM_ROUNDS = 3
     MAX_SCHOOLS = 5
     MAX_STUDENTS = 9
-    SCHOOLS_LETTERS = ['A','B','C','D'] # Change if MAX_SCHOOLS is changed !!!
+    SCHOOLS_LETTERS = ['A', 'B', 'C', 'D']  # Change if MAX_SCHOOLS is changed !!!
     STUDENTS_LETTERS = ['R', 'S', 'T', 'Y']
     STAGE_1 = [1, -10, -10, -10]
     STAGES = {0: [-10, -10, -10, -10],
@@ -92,13 +93,14 @@ class C(BaseConstants):
     ALLOCATION_2 = [-10, 2, 3, 1]
     ALLOCATION_3 = [2, -10, 1, 3]
 
-    CORRECT_ANSWERS = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [1,1,2,2,1],[1,1,2,2,1]]
+    CORRECT_ANSWERS = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [1, 1, 2, 2, 1], [1, 1, 2, 2, 1]]
 
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_PRIORITIES = prizes_priorities_list()
     PLAYERS_RANKINGS = players_rankings_list()
     EXPECTED_RANKINGS = expected_rankings_list()
+
 
 class Subsession(BaseSubsession):
     pass
@@ -108,98 +110,101 @@ class Group(BaseGroup):
     pass
 
 
-
 def make_question_1():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "It is determined at random"],
             [2, "The prize who got paired to Ruth first"],
             [3, "The prize at which Ruth is in the highest priority."],
             [4, "The prize highest in Ruth’s ranking."]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
 def make_question_2():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "A random participant that is currently unpaired to any prize"],
-            [2, "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
+            [2,
+             "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
             [3, "Its highest-priority participant"]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
 def make_question_3():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "No, there are new conflicts: two (or more) prizes are paired to the same participant"],
             [2, "No, some prizes are paired to participants that are not in their highest priority"],
-            [3, "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
+            [3,
+             "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
             [4, "Yes, there are no more conflicts"]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
 def make_question_4():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "No"],
             [2, "Yes"]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
 def make_question_5():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "No"],
             [2, "Yes"]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
+
 
 def make_question_6():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "No"],
             [2, "Yes"]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
 def make_question_7():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "No"],
             [2, "Yes"]
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
 def make_question_8():
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "All four prizes, since I can in principle obtain all of them."],
             [2, "Any prize at which my priority is higher than the participant it is temporarily allocated to."],
             [3, "Only the prize that was left unpaired in the temporary allocation."],
-            [4, "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."],
+            [4,
+             "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."],
         ],
-        label = 'Answer',
-        widget = widgets.RadioSelect
+        label='Answer',
+        widget=widgets.RadioSelect
     )
 
 
@@ -245,29 +250,31 @@ def make_prize_question():
 
 def make_priority_field(label):
     return models.IntegerField(
-        choices = [
+        choices=[
             [1, "A"],
             [2, "B"],
             [3, "C"],
             [4, "D"]
         ],
-        label = label
+        label=label
     )
 
+
 class Player(BasePlayer):
-    SchoolsNumber = models.IntegerField(choices=[i for i in range(1,C.MAX_SCHOOLS + 1)])
-    StudentsNumber = models.IntegerField(choices=[i for i in range(1,C.MAX_STUDENTS + 1)])
+    SchoolsNumber = models.IntegerField(choices=[i for i in range(1, C.MAX_SCHOOLS + 1)])
+    StudentsNumber = models.IntegerField(choices=[i for i in range(1, C.MAX_STUDENTS + 1)])
     SchoolsPreferences = models.LongStringField()
     StudentsPreferences = models.LongStringField()
     Clicks = models.LongStringField()
     TimeStamps = models.LongStringField()
     FinalMatching = models.LongStringField()
     CorrectMatching = models.BooleanField()
-    MaxStudentsA = models.StringField(label="Number of students school A can accept",choices=[i for i in range(0,19)]) # might need to be changed if C.LETTERS_SCHOOLS is changed.
-    MaxStudentsB = models.StringField(label="Number of students school B can accept",choices=[i for i in range(1,19)])
-    MaxStudentsC = models.StringField(label="Number of students school C can accept",choices=[i for i in range(1,19)])
-    MaxStudentsD = models.StringField(label="Number of students school D can accept",choices=[i for i in range(1,19)])
-    MaxStudentsE = models.StringField(label="Number of students school E can accept",choices=[i for i in range(1,19)])
+    MaxStudentsA = models.StringField(label="Number of students school A can accept", choices=[i for i in range(0,
+                                                                                                                19)])  # might need to be changed if C.LETTERS_SCHOOLS is changed.
+    MaxStudentsB = models.StringField(label="Number of students school B can accept", choices=[i for i in range(1, 19)])
+    MaxStudentsC = models.StringField(label="Number of students school C can accept", choices=[i for i in range(1, 19)])
+    MaxStudentsD = models.StringField(label="Number of students school D can accept", choices=[i for i in range(1, 19)])
+    MaxStudentsE = models.StringField(label="Number of students school E can accept", choices=[i for i in range(1, 19)])
 
     question_1 = make_question_1()
     question_2 = make_question_2()
@@ -305,19 +312,19 @@ class Player(BasePlayer):
 # FUNCTIONS
 
 
-
 def variablesFunction(player):
     d = {
-        'schools_number':player.SchoolsNumber, # This sets the number of schools. This of course can be determined randomly or according to some rule.
-        'students_number':player.StudentsNumber, # Same as above but regarding the number of students.
+        'schools_number': player.SchoolsNumber,
+        # This sets the number of schools. This of course can be determined randomly or according to some rule.
+        'students_number': player.StudentsNumber,  # Same as above but regarding the number of students.
         'schools_lists': player.participant.schools_lists,
         'students_lists': player.participant.students_lists,
         'matchingalgho': player.participant.matchingalgho,
         'partialmatching': player.participant.partialmatching,
-        'schools_alphabet':player.participant.schools_alphabet,
-        'max_students_per_school':player.participant.max_students_per_school,
-        'matched_number':player.participant.matched_number,
-        'correct_answers':C.CORRECT_ANSWERS[player.round_number - 1],
+        'schools_alphabet': player.participant.schools_alphabet,
+        'max_students_per_school': player.participant.max_students_per_school,
+        'matched_number': player.participant.matched_number,
+        'correct_answers': C.CORRECT_ANSWERS[player.round_number - 1],
     }
     # for i in range(player.SchoolsNumber):
     #     for j in range(player.StudentsNumber):
@@ -338,19 +345,21 @@ def GetParticpantNumber(char):
     else:
         return 4
 
+
 # PAGES
 class DAalghoIntro(Page):
     form_model = 'player'
-    form_fields = ['SchoolsNumber', 'StudentsNumber',]
+    form_fields = ['SchoolsNumber', 'StudentsNumber', ]
 
     @staticmethod
-    def before_next_page(player: Player, timeout_happened): # EXPLANATION:
+    def before_next_page(player: Player, timeout_happened):  # EXPLANATION:
         player.TimeStamps = 'L:'  # Setting the field so that it is not empty.
         player.Clicks = '||'  # Setting the field so that it is not empty.
 
 
 class DAalghoInterface(Page):
     form_model = "player"
+
     @staticmethod
     def vars_for_template(player: Player):
         return variablesFunction(player)
@@ -389,16 +398,15 @@ class DAalghoInterface(Page):
 
         else:
             questions = [
-                         "prize_a_obtainable",
-                         "prize_b_obtainable",
-                         "prize_c_obtainable",
-                         "prize_d_obtainable",
-                         "obtainable_prize"]
+                "prize_a_obtainable",
+                "prize_b_obtainable",
+                "prize_c_obtainable",
+                "prize_d_obtainable",
+                "obtainable_prize"]
             return questions
 
     @staticmethod
     def live_method(player: Player, data):
-        print(data)
         if data['information_type'] == 'onload':
             player.TimeStamps = player.TimeStamps + '|R:' + data['time']
             player.Clicks = player.Clicks + '||'
@@ -410,21 +418,35 @@ class DAalghoInterface(Page):
         elif data['information_type'] == 'matching_update':
             stage = data['stage']
             if data['matching'] == C.STAGES[stage]:
-                return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
+                return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                             'status': True}}
             else:
-                return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'status': False,
-                                             'matching': C.STAGES[stage-1]}}
+                return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                             'status': False,
+                                             'matching': C.STAGES[stage - 1]}}
         elif data['information_type'] == 'training_rounds':
             if player.round_number == 2:
                 if data['matching'] == C.ALLOCATION_2:
-                    return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                                 'status': True}}
                 else:
-                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'status': False}}
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                                 'status': False}}
             if player.round_number == 3:
                 if data['matching'] == C.ALLOCATION_3:
-                    return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                                 'status': True}}
                 else:
-                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'status': False}}
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                                 'status': False}}
+        elif data['information_type'] == "reset_button":
+            # reset matched_number
+            player.participant.matched_number = [0, 0, 0, 0]
+            # reset partial_matching
+            player.participant.partialmatching = [-10, -10, -10, -10]
+            # add reset to clicks
+            player.Clicks = player.Clicks + 'reset|'
+            return {player.id_in_group: {'information_type': 'reset'}}
         else:
             print(data['student'])
             pystudent = int(data['student']) -1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
@@ -484,6 +506,7 @@ class TrainingRound(Page):
             "fourth_priority",
         ]
         return priorities
+
     @staticmethod
     def js_vars(player: Player):
         return dict(
@@ -570,4 +593,4 @@ class TrainingRound(Page):
         player.participant.studentsAPC = StudentsNumberPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a students: its first entery is the name/number of the student, and the other enteries are the schools' numbers according to the student's preferences.
 
 
-page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface,]
+page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface, ]

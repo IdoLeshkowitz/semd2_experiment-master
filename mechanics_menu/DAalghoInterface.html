@@ -16,6 +16,7 @@
     <link rel="stylesheet" href="{{ static 'global/globalstyle.css' }}">
     <link rel="stylesheet" href="{{ static 'global/DAalghoInterface.css' }}">
 
+    
 {{ if player.round_number ==  1 }}
     <section id="step-1">
         The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer. <br><br>
@@ -684,7 +685,16 @@
         <br>
     </section>
     {{ endif }}
-    <div class="container-fluid" style="border: 5px solid gray;">
+    <div class="container-fluid position-relative" style="border: 5px solid gray;">
+    {{ if player.round_number > 1 }}
+    <button class="position-absolute btn btn-outline-dark" id="reset-button" style="right: 0">
+        reset
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+        </svg>
+    </button>
+    {{ endif }}
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: baseline;">
             <div class="column" style="flex: 1 2 auto;">
                 <b style="font-size: 1.5rem;">
@@ -891,7 +901,8 @@
            </div>
         </div>
     </div>
-    <center>Allocation Dashboard</center>
+
+
 <!---
     <div style="text-align: center">
         <button type="button" class="submitButton" onclick="submitButton()">Submit Matching</button>

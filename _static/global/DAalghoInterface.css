@@ -140,13 +140,10 @@
     touch-action: manipulation;
 }
 
-.participant-ranking > :last-child {
-    background: lightslategrey;
+.participant-ranking .verticalLeft button {
+    color : grey;
 }
 
 .participants-rows > :last-child {
-    background: lightslategrey;
-    border-top: 1px dashed black;
-    border-top-left-radius: .2rem;
-    border-top-right-radius: .2rem;
+    color : grey;
 }
