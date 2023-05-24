@@ -344,7 +344,7 @@ class DAalghoInterface(Page):
                     }
         elif data['information_type'] == "reset_button":
             # reset matched_number
-            player.participant.matched_number = [0, 0, 0, 0]
+            player.participant.matched_number = [0 for school in range(player.SchoolsNumber)]
             # reset partial_matching
             player.participant.partialmatching = [-10, -10, -10, -10]
             # add reset to clicks
@@ -355,7 +355,6 @@ class DAalghoInterface(Page):
                 }
             }
         else:
-            print(data['student'])
             pystudent = int(data['student']) - 1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
             if data['information_type'] == 'student_button':  # An unmatched student button was pressed
                 if player.Clicks[-2:] == data[
@@ -457,7 +456,7 @@ class TrainingRound(Page):
         player.MaxStudentsB = '4'
         player.MaxStudentsC = '4'
         player.MaxStudentsD = '0'
-        player.MaxStudentsE = '0'
+        player.MaxStudentsE = '4'
 
         player.TimeStamps = 'L:'  # Setting the field so that it is not empty.
         player.Clicks = '||'  # Setting the field so that it is not empty.

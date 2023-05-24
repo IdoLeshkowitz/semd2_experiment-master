@@ -1,20 +1,18 @@
-var M;
-var student = 0; // Very important variable ! Equals the number of the student if selected. Otherwise equyals to 0.
-var containment; // The number of matched students per school.
-var partial; // The current partial matching according to the participant's choices until that point. The length of the list equals the number of students. The value of each entery is the number of the school that the student has been matched too. Equals -10 if the student hasn't been matched yet.
-var max_students; // # The nth number in the list represents the maximal number of students that can be matched to the nth school.
-const alpha = Array.from(Array(js_vars.schools_number)).map((e, i) => i + 65);
-const alphabet = alpha.map((x) => String.fromCharCode(x));
-var stage = 1; // the stage of the mechanism we are at
-var student_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
-var schools_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
+let M;
+let currentPickedPrize = 0; // holds the state of currently picked prize. If no prize is picked equals 0 .
+let numberOfPrizesPerParticipant; // array.each item represents participant's number of prizes.
+let matchingPerPrize; // array. each item represents which participant was matched to the prize. if not matched equals -10.
+let maxPrizesPerParticipant; // array. each item represents the max number of prizes per participant.
+const alphabet = Array.from(Array(js_vars.schools_number)).map((e, i) => i + 65).map((x) => String.fromCharCode(x)); // array of alphabetical letters. length is the number of schools.
+let stage = 1; // the stage of the mechanism we are at
+let student_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
+let schools_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5}
 
-var modal = document.getElementById("GenModal"); // Get the modal
-var btn = document.getElementById("GenBtn"); // Get the button that opens the modal
-var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
-let resetButton = document.getElementById("reset-button");
-
-var currQuestionIncorrectAnswers = [];
+let modal = document.getElementById("GenModal"); // Get the modal
+let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
+let span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
+let resetButton;
+let currQuestionIncorrectAnswers = [];
 let initialState;
 btn.onclick = function () {
     modal.style.display = "block";
@@ -29,14 +27,14 @@ window.onclick = function (event) {
 }// When the user clicks anywhere outside of the modal, close it
 
 window.onload = function () {
-    containment = js_vars.matched_number;
-    partial = js_vars.partialmatching;
-    max_students = js_vars.max_students_per_school;
+    numberOfPrizesPerParticipant = js_vars.matched_number;
+    matchingPerPrize = js_vars.partialmatching;
+    maxPrizesPerParticipant = js_vars.max_students_per_school;
     /* set initialState */
     initialState = {
-        'containment': containment,
-        'partial': partial,
-        'student': student,
+        'containment': numberOfPrizesPerParticipant,
+        'partial': matchingPerPrize,
+        'student': currentPickedPrize,
 
     }
     updateCurrentMatching();
@@ -130,7 +128,7 @@ window.onload = function () {
     });
 
     $("#proceed-step-3-btn-rounds").click(function () {
-        liveSend({'information_type': 'training_rounds', 'matching': partial})
+        liveSend({'information_type': 'training_rounds', 'matching': matchingPerPrize})
     });
 
     $("#proceed-step-4-btn-rounds").click(function () {
@@ -170,16 +168,16 @@ window.onload = function () {
 
 
     $("#proceed-step-4-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
     $("#proceed-step-5-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
     $("#proceed-step-6-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_1";
-        var formInputName = "question_1";
+        let incorrectSequenceFieldName = "incorrect_seq_question_1";
+        let formInputName = "question_1";
         if (forminputs[formInputName].value != js_vars.correct_answers[0]) {
             $("#step-5 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -197,8 +195,8 @@ window.onload = function () {
     });
 
     $("#proceed-step-7-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_2";
-        var formInputName = "question_2";
+        let incorrectSequenceFieldName = "incorrect_seq_question_2";
+        let formInputName = "question_2";
         if (forminputs[formInputName].value != js_vars.correct_answers[1]) {
             $("#step-6 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -215,11 +213,11 @@ window.onload = function () {
     });
 
     $("#proceed-step-8-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
     $("#proceed-step-9-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_3";
-        var formInputName = "question_3";
+        let incorrectSequenceFieldName = "incorrect_seq_question_3";
+        let formInputName = "question_3";
         if (forminputs[formInputName].value != js_vars.correct_answers[2]) {
             $("#step-8 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -235,12 +233,12 @@ window.onload = function () {
         }, 5000);
     });
     $("#proceed-step-10-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
     $("#proceed-step-11-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_4";
-        var formInputName = "question_4";
+        let incorrectSequenceFieldName = "incorrect_seq_question_4";
+        let formInputName = "question_4";
         if (forminputs[formInputName].value != js_vars.correct_answers[3]) {
             $("#step-10 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -257,12 +255,12 @@ window.onload = function () {
     });
 
     $("#proceed-step-12-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
     $("#proceed-step-13-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_5";
-        var formInputName = "question_5";
+        let incorrectSequenceFieldName = "incorrect_seq_question_5";
+        let formInputName = "question_5";
         if (forminputs[formInputName].value != js_vars.correct_answers[4]) {
             $("#step-12 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -279,12 +277,12 @@ window.onload = function () {
     });
 
     $("#proceed-step-14-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
     $("#proceed-step-15-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_6";
-        var formInputName = "question_6";
+        let incorrectSequenceFieldName = "incorrect_seq_question_6";
+        let formInputName = "question_6";
         if (forminputs[formInputName].value != js_vars.correct_answers[5]) {
             $("#step-12 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -301,12 +299,12 @@ window.onload = function () {
     });
 
     $("#proceed-step-16-btn").click(function () {
-        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+        liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
     $("#proceed-step-17-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_7";
-        var formInputName = "question_7";
+        let incorrectSequenceFieldName = "incorrect_seq_question_7";
+        let formInputName = "question_7";
         if (forminputs[formInputName].value != js_vars.correct_answers[6]) {
             $("#step-16 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -323,8 +321,8 @@ window.onload = function () {
     });
 
     $("#proceed-step-18-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_8";
-        var formInputName = "question_8";
+        let incorrectSequenceFieldName = "incorrect_seq_question_8";
+        let formInputName = "question_8";
         if (forminputs[formInputName].value != js_vars.correct_answers[7]) {
             $("#step-16 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
@@ -341,7 +339,7 @@ window.onload = function () {
     });
 
     $("#prize-a-btn").click(function () {
-        var formInputName = "prize_a_obtainable";
+        let formInputName = "prize_a_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[8]) {
             $("#step-18 .incorrect-msg").show();
             return;
@@ -356,7 +354,7 @@ window.onload = function () {
     });
 
     $("#prize-b-btn").click(function () {
-        var formInputName = "prize_b_obtainable";
+        let formInputName = "prize_b_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[9]) {
             $("#step-19 .incorrect-msg").show();
             return;
@@ -371,7 +369,7 @@ window.onload = function () {
     });
 
     $("#prize-c-btn").click(function () {
-        var formInputName = "prize_c_obtainable";
+        let formInputName = "prize_c_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[10]) {
             $("#step-20 .incorrect-msg").show();
             return;
@@ -386,7 +384,7 @@ window.onload = function () {
     });
 
     $("#prize-d-btn").click(function () {
-        var formInputName = "prize_d_obtainable";
+        let formInputName = "prize_d_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[11]) {
             $("#step-21 .incorrect-msg").show();
         }
@@ -404,7 +402,7 @@ window.onload = function () {
     });
 
     $("#prize_question").click(function () {
-        var formInputName = "question_prize";
+        let formInputName = "question_prize";
         if (forminputs[formInputName].value != js_vars.correct_answers[12]) {
             $("#step-22 .incorrect-msg").show();
             return;
@@ -422,13 +420,16 @@ window.onload = function () {
     $("#submit-page").click(function () {
         document.getElementById("form").submit();
     });
-    resetButton.addEventListener('click', onRese);
+    resetButton = document.getElementById("reset-button");
+    if (resetButton) {
+        resetButton.addEventListener("click", onReset)
+    }
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    containment = js_vars.matched_number;
-    partial = js_vars.partialmatching;
-    max_students = js_vars.max_students_per_school;
+    numberOfPrizesPerParticipant = js_vars.matched_number;
+    matchingPerPrize = js_vars.partialmatching;
+    maxPrizesPerParticipant = js_vars.max_students_per_school;
     updateCurrentMatching();
     let d = new Date();
     M = d.getTime();
@@ -452,10 +453,10 @@ function confirmSubmission() {
 
 function updateMatching(matching) {
     if (matching[0] != -10) {
-        if (partial[0] == -10) {
+        if (matchingPerPrize[0] == -10) {
             liveSend({'information_type': 'student_button', 'student': '1',});
         } else {
-            liveSend({'information_type': 'rematch_button', 'school': partial[0], 'student': '1',});
+            liveSend({'information_type': 'rematch_button', 'school': matchingPerPrize[0], 'student': '1',});
         }
         liveSend({'information_type': 'school_plus_button', 'school': matching[0], 'student': '1',});
     } else {
@@ -463,10 +464,10 @@ function updateMatching(matching) {
         liveSend({'information_type': 'student_button', 'student': '1',});
     }
     if (matching[1] != -10) {
-        if (partial[01] == -10) {
+        if (matchingPerPrize[01] == -10) {
             liveSend({'information_type': 'student_button', 'student': '2',});
         } else {
-            liveSend({'information_type': 'rematch_button', 'school': partial[1], 'student': '2',});
+            liveSend({'information_type': 'rematch_button', 'school': matchingPerPrize[1], 'student': '2',});
         }
         liveSend({'information_type': 'school_plus_button', 'school': matching[1], 'student': '2',});
     } else {
@@ -474,10 +475,10 @@ function updateMatching(matching) {
         liveSend({'information_type': 'student_button', 'student': '2',});
     }
     if (matching[2] != -10) {
-        if (partial[2] == -10) {
+        if (matchingPerPrize[2] == -10) {
             liveSend({'information_type': 'student_button', 'student': '3',});
         } else {
-            liveSend({'information_type': 'rematch_button', 'school': partial[2], 'student': '3',});
+            liveSend({'information_type': 'rematch_button', 'school': matchingPerPrize[2], 'student': '3',});
         }
         liveSend({'information_type': 'school_plus_button', 'school': matching[2], 'student': '3',});
     } else {
@@ -485,10 +486,10 @@ function updateMatching(matching) {
         liveSend({'information_type': 'student_button', 'student': '3',});
     }
     if (matching[3] != -10) {
-        if (partial[3] == -10) {
+        if (matchingPerPrize[3] == -10) {
             liveSend({'information_type': 'student_button', 'student': '4',});
         } else {
-            liveSend({'information_type': 'rematch_button', 'school': partial[3], 'student': '4',});
+            liveSend({'information_type': 'rematch_button', 'school': matchingPerPrize[3], 'student': '4',});
         }
         liveSend({'information_type': 'school_plus_button', 'school': matching[3], 'student': '4',});
     } else {
@@ -504,8 +505,8 @@ function matchStudent(val) {
 }
 
 function matchToSchool(val) {
-    console.log(`matchToSchool\ninformation_type=schoolplusbutton\nschool=${val}\nstudent=${student}`)
-    liveSend({'information_type': 'school_plus_button', 'school': val, 'student': student,});
+    console.log(`matchToSchool\ninformation_type=schoolplusbutton\nschool=${val}\nstudent=${currentPickedPrize}`)
+    liveSend({'information_type': 'school_plus_button', 'school': val, 'student': currentPickedPrize,});
 }
 
 function rematchStudent(val, text) {
@@ -514,20 +515,23 @@ function rematchStudent(val, text) {
 }
 
 function updateCurrentMatching() {
+    /* iterate over prizes */
     for (let j = 1; j <= js_vars.students_number; j++) {
-        if (j === parseInt(student)) { // a student's button is selected
+        /* check if the prize is currently selected */
+        console.log(matchingPerPrize)
+        if (j === parseInt(currentPickedPrize)) {
             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackgroundSelected';
-            if (partial[j - 1] > 0) {
+            if (matchingPerPrize[j - 1] > 0) {
                 document.getElementById('ButtonStudent'.concat(j)).className = 'pButton';
                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
-                document.getElementById('School'.concat(alphabet[partial[j - 1] - 1], 'MatchedToStudent', student, 'Button')).className = 'iButtonSelected';
+                document.getElementById('School'.concat(alphabet[matchingPerPrize[j - 1] - 1], 'MatchedToStudent', currentPickedPrize, 'Button')).className = 'iButtonSelected';
             } else {
-                document.getElementById('ButtonStudent'.concat(student)).className = 'iButtonSelected';
+                document.getElementById('ButtonStudent'.concat(currentPickedPrize)).className = 'iButtonSelected';
                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
             }
         } else { // no student button is selected.
             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackground';
-            if (partial[j - 1] > 0) {
+            if (matchingPerPrize[j - 1] > 0) {
                 document.getElementById('ButtonStudent'.concat(j)).className = 'offButton';
                 document.getElementById('ButtonStudent'.concat(j)).disabled = true;
             } else {
@@ -540,51 +544,58 @@ function updateCurrentMatching() {
         document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'none';
         for (let l = 1; l <= js_vars.students_number; l++) {
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
-            if (partial[l - 1] === i + 1) {
-                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = containment[i];
+            if (matchingPerPrize[l - 1] === i + 1) {
+                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = numberOfPrizesPerParticipant[i];
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'inline-block';
-                document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButtonMatched';
-                document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButtonMatched';
+                const plusButtonElement = document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i]))
+                if (plusButtonElement) {
+                    plusButtonElement.className = 'dButtonMatched';
+                }
             } else {
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
-                document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButton';
-                document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButton';
+                const plusButtonElement = document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i]))
+                if (plusButtonElement) {
+                    plusButtonElement.className = 'dButton';
+                }
             }
         }
     }
 }
 
 function openPlus() {
-    for (let i = 0; i < js_vars.schools_number; i++) {
-        if (i + 1 !== partial[student - 1] && containment[i] < max_students[i]) {
-            document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'inline-block'; // Display plus button in the lines where the student is not already matched to, and for schools which didn't attain their quotas yet..
-        }
+    for (let participantNumber = 0; participantNumber < js_vars.schools_number; participantNumber++) {
+        /* check if the chosen prize was already matched to the participant */
+        if (matchingPerPrize[currentPickedPrize - 1] === participantNumber + 1) continue;
+        /* check if the current participant passed the max prizes allowed */
+        if (numberOfPrizesPerParticipant[participantNumber] >= maxPrizesPerParticipant[participantNumber]) continue;
+        /* display the plus button */
+        document.getElementById('plusButtonSchool'.concat(alphabet[participantNumber])).style.display = 'inline-block';
     }
 }
 
 function liveRecv(data) {
     console.log("liveRecv", data)
     if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
-        student = data['student'];
+        currentPickedPrize = data['student'];
         updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.
         openPlus();
     } else if (data['information_type'] === 'student_unmatched') { // The student was unmatched if it was previously matched. Else, it wasn't matched.
-        containment = data['matched_number'];
-        partial = data['partialmatching'];
-        student = 0; // before the update function is executed.
+        numberOfPrizesPerParticipant = data['matched_number'];
+        matchingPerPrize = data['partialmatching'];
+        currentPickedPrize = 0; // before the update function is executed.
         updateCurrentMatching();
     } else if (data['information_type'] === 'student_matched') { // student was matched by clicking on a plus button.
-        containment = data['matched_number'];
-        partial = data['partialmatching'];
-        student = 0; // before the update function is executed.
+        numberOfPrizesPerParticipant = data['matched_number'];
+        matchingPerPrize = data['partialmatching'];
+        currentPickedPrize = 0; // before the update function is executed.
         updateCurrentMatching();
     } else if (data['information_type'] === 'ready_for_rematch') { // A matched student's button was pressed, ready to remach.
-        student = data['student']; // before the update function is executed.
+        currentPickedPrize = data['student']; // before the update function is executed.
         updateCurrentMatching(); // It is important for this function to be executed first (but after setting the student variable)!! It is like a reset of the system before the rest is activated.
         openPlus();
     } else if (data['information_type'] === 'canceled_rematch') {
-        student = 0;
+        currentPickedPrize = 0;
         updateCurrentMatching();
     } else if (data['information_type'] === 'matching_status') {
         if (data['round'] == 1) {
@@ -684,19 +695,19 @@ function liveRecv(data) {
     } else if (data['information_type'] === 'submit') {
         document.getElementById('form').submit();
     } else if (data['information_type'] === 'reset') {
-        partial = initialState.partial
-        containment = initialState.containment
-        student = initialState.student
+        matchingPerPrize = initialState.partial
+        numberOfPrizesPerParticipant = initialState.containment
+        currentPickedPrize = initialState.student
         updateCurrentMatching();
     }
 }
 
 function confirmStage() {
-    console.log(`confirmStage\ninformation_type: matching_update\nmatching: ${partial}\nstage: ${stage}`)
-    liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
+    console.log(`confirmStage\ninformation_type: matching_update\nmatching: ${matchingPerPrize}\nstage: ${stage}`)
+    liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
 }
 
-function onRese(e) {
+function onReset(e) {
     e.preventDefault()
     e.stopPropagation()
     liveSend({'information_type': 'reset_button'})

@@ -1,4 +1,5 @@
   <div class="participants-rows">
+      {{ participant.students_names}}
         {{ for school in participant.schools_alphabet }}
             <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
                 <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
@@ -12,7 +13,7 @@
                         {{ elif school == 'D' }}
                         <span style="color: grey;">Y:</span>
                         {{ elif school == "E"}}
-                            <span style="color: grey;">Unpaired::</span>
+                            Unpaired:
                         {{ endif }}
                     </b>
                 </div>
@@ -44,6 +45,4 @@
             </div>
         {{ endfor }}
 <!--      Unpairable students:-->
-      <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
-      </div>
            </div>
