@@ -1,3 +1,8 @@
+body {
+    /*global color */
+    --light-grey: #D3D3D3;
+}
+
 .Box {
     display: flex;
     align-items: center;
@@ -141,5 +146,24 @@
 }
 
 .participant-ranking .verticalLeft button {
-    color : grey;
+    color: var(--light-grey);
+}
+
+.text-faded {
+    color: var(--light-grey);
+}
+
+.legend-container {
+    display: grid;
+    grid-auto-flow: column;
+    margin-block-end: 1rem;
+}
+
+.legend-container span {
+    border-right: 0.5px solid grey;
+    text-align: center;
+}
+
+.legend-container span:last-child {
+    border-right: none;
 }

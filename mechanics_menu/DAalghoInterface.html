@@ -781,7 +781,7 @@
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: flex-end;">
             <div class="column" style="flex: 1 1 auto;width: 200%;">
                 <b style="font-size: 1.5rem;">
-                    Unpaired prizes:
+                    Pick prizes to pair →
                 </b>
             </div>
             {{ for i in participant.students_names}}
@@ -805,8 +805,15 @@
                     </div>
             {{ endfor }}
         </div>
-        <hr />
-        {{ include_sibling "ThirdRow.html" }}
+            <hr />
+            {{ include_sibling "ThirdRow.html" }}
+            <hr />
+            <div class="legend-container">
+                <span>R = Ruth</span>
+                <span>S = Shirley</span>
+                <span>T = Theresa</span>
+                <span>Y = You</span>
+            </div>
         </div>
     </div>
 

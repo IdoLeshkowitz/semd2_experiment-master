@@ -427,7 +427,7 @@ window.onload = function () {
     if (resetButton) {
         resetButton.addEventListener("click", onReset)
     }
-    /* pButton hover event listener */
+    /* plus Button hover event listener */
     $(".pButton").hover(function () {
         function findKeyByValue(obj, value) {
             for (let key in obj) {
@@ -438,26 +438,15 @@ window.onload = function () {
             return null;
         }
 
-        /* on hover should trigger highlight on the matching participant cells in prizes table */
-
+        /* on hover should trigger highlight on the matching participant column in participants table  */
         /* get the participant number */
         const participantNumber = $(this).attr("value");
-
-        /* get all cells elements with the participant number */
-        const allCells = document.querySelectorAll(".dButtonBottomBox button");
-        /* filter only the cells related to the participant number */
-        /* they are related if theire id ends with PrefSchool[participantAlphabeticalValue] */
-        const participantAlphabeticalValue = findKeyByValue(schools_dict, participantNumber)
-        const participantCells = Array.from(allCells).filter(cell => {
-            const endsWith = `PrefSchool${participantAlphabeticalValue}`
-            const doesEndWith = cell.id.endsWith(endsWith)
-            return doesEndWith
-        });
-        participantCells.forEach(cell => {
-            cell.classList.add("bg-warning")
-        });
+        /* get the participant column */
+        const participantColumn = document.getElementById(`SchoolBackground${participantNumber}`);
+        /* highlight the column */
+        participantColumn.classList.add("flexItemButtonsBackgroundSelected");
     })
-    /* button unhover event listener */
+    /* plus button unhover event listener */
     $(".pButton").mouseleave(function () {
         function findKeyByValue(obj, value) {
             for (let key in obj) {
@@ -468,23 +457,47 @@ window.onload = function () {
             return null;
         }
 
-        /* on mouse leave should remove highlight on the matching participant cells in prizes table */
+        /* on mouse leave should trigger unhighlight on the matching participant column in participants table  */
         /* get the participant number */
         const participantNumber = $(this).attr("value");
+        /* get the participant column */
+        const participantColumn = document.getElementById(`SchoolBackground${participantNumber}`);
+        /* unhighlight the column */
+        participantColumn.classList.remove("flexItemButtonsBackgroundSelected");
+    })
 
-        /* get all cells elements with the participant number */
-        const allCells = document.querySelectorAll(".dButtonBottomBox button");
-        /* filter only the cells related to the participant number */
-        /* they are related if theire id ends with PrefSchool[participantAlphabeticalValue] */
-        const participantAlphabeticalValue = findKeyByValue(schools_dict, participantNumber)
-        const participantCells = Array.from(allCells).filter(cell => {
-            const endsWith = `PrefSchool${participantAlphabeticalValue}`
-            const doesEndWith = cell.id.endsWith(endsWith)
-            return doesEndWith
-        })
-        participantCells.forEach(cell => {
-            cell.classList.remove("bg-warning")
-        });
+    /*
+     prize button hover event listener
+     when hovering over prize should check if any of the prizes buttons is selected
+     if so, do nothing
+     if not, highlight the matching prize column
+     */
+    $('[id^=ButtonStudent]').hover(function () {
+        /* check if any prize is currently selected, if not continue */
+        if (currentPickedPrize) return
+        /* get the prize number */
+        const prizeNumber = $(this).attr("value");
+        /* get the prize column */
+        const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
+        /* highlight the column */
+        prizeColumn.classList.add("flexItemButtonsBackgroundSelected");
+    })
+
+    /*
+        prize button unhover event listener
+        when unhovering over prize should check if any of the prizes is selected
+        if so, do nothing
+        if not, unhighlight the matching prize column
+     */
+    $('[id^=ButtonStudent]').mouseleave(function () {
+        /* check if any prize is currently selected, if not continue */
+        if (currentPickedPrize) return
+        /* get the prize number */
+        const prizeNumber = $(this).attr("value");
+        /* get the prize column */
+        const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
+        /* unhighlight the column */
+        prizeColumn.classList.remove("flexItemButtonsBackgroundSelected");
     })
 
 }
