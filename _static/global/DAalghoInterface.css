@@ -143,7 +143,3 @@
 .participant-ranking .verticalLeft button {
     color : grey;
 }
-
-.participants-rows > :last-child {
-    color : grey;
-}

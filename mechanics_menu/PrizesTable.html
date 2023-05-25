@@ -1,0 +1,55 @@
+                      <div class="row" style="justify-content: center;align-items: flex-start;align-content: flex-start;">
+                        {{ for student in participant.studentsAPC}}
+                            <div class="flexItemButtonsBackground" id="StudentBackground{{ forloop.counter }}">
+                                <div {{ if forloop.counter0 == 0 }}
+                                        class="verticalRight"
+                                     {{ elif forloop.counter == player.StudentsNumber }}
+                                        class="verticalLeft"
+                                     {{ else }}
+                                        class="verticalBoth"
+                                     {{ endif }}>
+                                    <div style="flex-direction: column;justify-content: flex-start;align-items: center;align-content: center;">
+                                        {{ for number_or_school in student }}
+<!--                                        ignore the last column which relates to unpaired prizes -->
+                                            {{ if forloop.counter0 < 5 }}
+                                                {{ if forloop.counter0 == 0}}
+                                                    <div class="dButtonTopBox">
+                                                        <button type="button" class="dButtonTop" id="Student{{ number_or_school}}" disabled="disabled">
+                                                            {{ if number_or_school == 1 }}
+                                                               <b style="font-size: 1.1rem">A</b>
+                                                            {{ elif number_or_school == 2 }}
+                                                                <b style="font-size: 1.1rem">B</b>
+                                                            {{ elif number_or_school == 3 }}
+                                                                <b style="font-size: 1.1rem">C</b>
+                                                            {{ else }}
+                                                                <b style="font-size: 1.1rem">D</b>
+                                                            {{ endif }}
+                                                        </button>
+                                                    </div>
+                                                {{ else }}
+                                                    <div {{ if forloop.counter0 == player.SchoolsNumber }}
+                                                            class="dButtonBottomBox"
+                                                         {{ else }}
+                                                            class="dButtonBottomBox"
+                                                         {{ endif }}
+                                                    >
+                                                        <button type="button" class="dButton" id="Student{{ student.0 }}PrefSchool{{ number_or_school }}" disabled="disabled">
+                                                            {{ if number_or_school == 'A' }}
+                                                                R
+                                                            {{ elif number_or_school == 'B' }}
+                                                                S
+                                                            {{ elif number_or_school == 'C' }}
+                                                                T
+                                                            {{ else }}
+                                                                Y
+                                                            {{ endif }}
+                                                        </button>
+                                                    </div>
+                                                {{ endif }}
+                                            {{ endif }}
+                                        {{ endfor }}
+                                    </div>
+                                </div>
+                            </div>
+                        {{ endfor }}
+                    </div>

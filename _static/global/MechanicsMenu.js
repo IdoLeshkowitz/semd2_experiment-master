@@ -5,9 +5,10 @@ let matchingPerPrize; // array. each item represents which participant was match
 let maxPrizesPerParticipant; // array. each item represents the max number of prizes per participant.
 const alphabet = Array.from(Array(js_vars.schools_number)).map((e, i) => i + 65).map((x) => String.fromCharCode(x)); // array of alphabetical letters. length is the number of schools.
 let stage = 1; // the stage of the mechanism we are at
+let prizeMatchedHistory = []; // array. each item represents a prize that was matched to a participant. the purpose is to save the order in which the prizes were matched.
 let student_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
 let schools_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4, 'E': 5}
-
+let clicks;
 let modal = document.getElementById("GenModal"); // Get the modal
 let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
 let span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
@@ -37,6 +38,7 @@ window.onload = function () {
         'student': currentPickedPrize,
 
     }
+    updatePrizeMatchedHistory(clicks)
     updateCurrentMatching();
     $("#step-2").hide();
     $("#step-3").hide();
@@ -420,16 +422,79 @@ window.onload = function () {
     $("#submit-page").click(function () {
         document.getElementById("form").submit();
     });
+    /* reset button event listener */
     resetButton = document.getElementById("reset-button");
     if (resetButton) {
         resetButton.addEventListener("click", onReset)
     }
+    /* pButton hover event listener */
+    $(".pButton").hover(function () {
+        function findKeyByValue(obj, value) {
+            for (let key in obj) {
+                if (obj[key] == value) {
+                    return key;
+                }
+            }
+            return null;
+        }
+
+        /* on hover should trigger highlight on the matching participant cells in prizes table */
+
+        /* get the participant number */
+        const participantNumber = $(this).attr("value");
+
+        /* get all cells elements with the participant number */
+        const allCells = document.querySelectorAll(".dButtonBottomBox button");
+        /* filter only the cells related to the participant number */
+        /* they are related if theire id ends with PrefSchool[participantAlphabeticalValue] */
+        const participantAlphabeticalValue = findKeyByValue(schools_dict, participantNumber)
+        const participantCells = Array.from(allCells).filter(cell => {
+            const endsWith = `PrefSchool${participantAlphabeticalValue}`
+            const doesEndWith = cell.id.endsWith(endsWith)
+            return doesEndWith
+        });
+        participantCells.forEach(cell => {
+            cell.classList.add("bg-warning")
+        });
+    })
+    /* button unhover event listener */
+    $(".pButton").mouseleave(function () {
+        function findKeyByValue(obj, value) {
+            for (let key in obj) {
+                if (obj[key] == value) {
+                    return key;
+                }
+            }
+            return null;
+        }
+
+        /* on mouse leave should remove highlight on the matching participant cells in prizes table */
+        /* get the participant number */
+        const participantNumber = $(this).attr("value");
+
+        /* get all cells elements with the participant number */
+        const allCells = document.querySelectorAll(".dButtonBottomBox button");
+        /* filter only the cells related to the participant number */
+        /* they are related if theire id ends with PrefSchool[participantAlphabeticalValue] */
+        const participantAlphabeticalValue = findKeyByValue(schools_dict, participantNumber)
+        const participantCells = Array.from(allCells).filter(cell => {
+            const endsWith = `PrefSchool${participantAlphabeticalValue}`
+            const doesEndWith = cell.id.endsWith(endsWith)
+            return doesEndWith
+        })
+        participantCells.forEach(cell => {
+            cell.classList.remove("bg-warning")
+        });
+    })
+
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
     numberOfPrizesPerParticipant = js_vars.matched_number;
     matchingPerPrize = js_vars.partialmatching;
     maxPrizesPerParticipant = js_vars.max_students_per_school;
+    clicks = js_vars.initial_clicks
+    updatePrizeMatchedHistory(clicks)
     updateCurrentMatching();
     let d = new Date();
     M = d.getTime();
@@ -505,12 +570,16 @@ function matchStudent(val) {
 }
 
 function matchToSchool(val) {
-    console.log(`matchToSchool\ninformation_type=schoolplusbutton\nschool=${val}\nstudent=${currentPickedPrize}`)
+    console.log(`
+        matchToSchool\ninformation_type = schoolplusbutton\nschool =${val}
+    \nstudent =${currentPickedPrize}`)
     liveSend({'information_type': 'school_plus_button', 'school': val, 'student': currentPickedPrize,});
 }
 
 function rematchStudent(val, text) {
-    console.log(`rematchStudent\ninformation_type=rematchbutton\nschool=${schools_dict[val]}\nstudent=${student_dict[text]}`)
+    console.log(`
+        rematchStudent\ninformation_type = rematchbutton\nschool =${schools_dict[val]}
+    \nstudent =${student_dict[text]}`)
     liveSend({'information_type': 'rematch_button', 'school': schools_dict[val], 'student': student_dict[text],});
 }
 
@@ -518,7 +587,6 @@ function updateCurrentMatching() {
     /* iterate over prizes */
     for (let j = 1; j <= js_vars.students_number; j++) {
         /* check if the prize is currently selected */
-        console.log(matchingPerPrize)
         if (j === parseInt(currentPickedPrize)) {
             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackgroundSelected';
             if (matchingPerPrize[j - 1] > 0) {
@@ -541,16 +609,14 @@ function updateCurrentMatching() {
         }
     }
     for (let i = 0; i < js_vars.schools_number; i++) {
+        /* iterate over participants */
         document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'none';
+        const unorderedPrizesMatchedToParticipant = [];
         for (let l = 1; l <= js_vars.students_number; l++) {
+            /* iterate over prizes */
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
             if (matchingPerPrize[l - 1] === i + 1) {
-                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = numberOfPrizesPerParticipant[i];
-                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'inline-block';
-                const plusButtonElement = document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i]))
-                if (plusButtonElement) {
-                    plusButtonElement.className = 'dButtonMatched';
-                }
+                unorderedPrizesMatchedToParticipant.push(l);
             } else {
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
@@ -560,6 +626,23 @@ function updateCurrentMatching() {
                 }
             }
         }
+        /* sort the prizes matched to the participant */
+        const orderedPrizesMatchedToParticipant = []
+        for (let index = prizeMatchedHistory.length - 1; index >= 0; index--) {
+            if (unorderedPrizesMatchedToParticipant.includes(parseInt(prizeMatchedHistory[index]))) {
+                orderedPrizesMatchedToParticipant.unshift(prizeMatchedHistory[index]);
+            }
+        }
+        /* iterate over the ordered prizes matched to the participant */
+        orderedPrizesMatchedToParticipant.forEach((matchedPrize, index) => {
+            document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', matchedPrize)).style.order = index;
+            document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', matchedPrize)).style.display = 'inline-block';
+            const plusButtonElement = document.getElementById('Student'.concat(matchedPrize, 'PrefSchool', alphabet[i]))
+            if (plusButtonElement) {
+                plusButtonElement.className = 'dButtonMatched';
+            }
+
+        })
     }
 }
 
@@ -588,6 +671,9 @@ function liveRecv(data) {
     } else if (data['information_type'] === 'student_matched') { // student was matched by clicking on a plus button.
         numberOfPrizesPerParticipant = data['matched_number'];
         matchingPerPrize = data['partialmatching'];
+        /* update the prize matched history */
+        clicks = data.clicks
+        updatePrizeMatchedHistory(clicks)
         currentPickedPrize = 0; // before the update function is executed.
         updateCurrentMatching();
     } else if (data['information_type'] === 'ready_for_rematch') { // A matched student's button was pressed, ready to remach.
@@ -698,12 +784,15 @@ function liveRecv(data) {
         matchingPerPrize = initialState.partial
         numberOfPrizesPerParticipant = initialState.containment
         currentPickedPrize = initialState.student
+        updatePrizeMatchedHistory(clicks)
         updateCurrentMatching();
     }
 }
 
 function confirmStage() {
-    console.log(`confirmStage\ninformation_type: matching_update\nmatching: ${matchingPerPrize}\nstage: ${stage}`)
+    console.log(`
+        confirmStage\matching_update\nmatching: ${matchingPerPrize}\
+        `)
     liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
 }
 
@@ -711,4 +800,15 @@ function onReset(e) {
     e.preventDefault()
     e.stopPropagation()
     liveSend({'information_type': 'reset_button'})
+}
+
+
+function updatePrizeMatchedHistory(clicks) {
+    const regex = /\b\d:\d/g;
+    const clicksFromLastReset = clicks.slice(clicks.lastIndexOf('reset') + 5)
+    const matchingStrings = clicksFromLastReset.match(regex);
+    if (matchingStrings) {
+        const prizes = matchingStrings.map(matchingString => matchingString[0])
+        prizeMatchedHistory = prizes
+    }
 }

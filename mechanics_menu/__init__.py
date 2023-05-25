@@ -205,6 +205,7 @@ class Player(BasePlayer):
 
 def variablesFunction(player):
     d = {
+        'initial_clicks':          str(player.Clicks),
         'schools_number':          player.SchoolsNumber,
         # This sets the number of schools. This of course can be determined randomly or according to some rule.
         'students_number':         player.StudentsNumber,  # Same as above but regarding the number of students.
@@ -400,6 +401,7 @@ class DAalghoInterface(Page):
                         'student_order':    player.participant.matched_number[pyschool],
                         'matched_number':   player.participant.matched_number,
                         'partialmatching':  player.participant.partialmatching,
+                        'clicks':           player.Clicks
                     }
                 }
             elif data['information_type'] == 'rematch_button':
