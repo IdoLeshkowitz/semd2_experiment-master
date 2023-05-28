@@ -153,15 +153,6 @@ def da(preferences):
     return [M_matching, W_matching]
 
 
-class C(BaseConstants):
-    NAME_IN_URL = 'step_1_null_training_rounds'
-    PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 4
-    PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
-    PRIZES = ["A", "B", "C", "D"]
-    PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
-    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
-    PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
 
 
 class Subsession(BaseSubsession):
@@ -273,5 +264,14 @@ class EndTraining(Page):
         else:
             return False
 
+class C(BaseConstants):
+    NAME_IN_URL = 'step_1_null_training_rounds'
+    PLAYERS_PER_GROUP = None
+    NUM_ROUNDS = 4
+    PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
+    PRIZES = ["A", "B", "C", "D"]
+    PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
+    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
+    PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
 
 page_sequence = [TrainingRound, EndTraining]

@@ -277,7 +277,7 @@ window.onload = function () {
         }, 5000);
     });
 
-    $("#proceed-step-14-btn").click(function () {
+    $("#proceed-step-14f-btn").click(function () {
         liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
@@ -434,6 +434,7 @@ window.onload = function () {
         /* get the participant column */
         const participantColumn = document.getElementById(`SchoolBackground${participantNumber}`);
         /* highlight the column */
+        if (!participantColumn) return
         participantColumn.classList.add("flexItemButtonsBackgroundSelected");
     })
     /* plus button unhover event listener */
@@ -485,11 +486,11 @@ window.onload = function () {
         if (currentPickedPrize) return
         /* get the prize number */
         const prizeAlphabetical = $(this).text().trim();
-        console.log(prizeAlphabetical);
         /* convert alphabetical value to numerical value */
         const prizeNumber = student_dict[prizeAlphabetical];
         /* get the prize column */
         const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
+        if (!prizeColumn) return
         /* highlight the column */
         prizeColumn.classList.add("flexItemButtonsBackgroundSelected");
     })
@@ -502,6 +503,7 @@ window.onload = function () {
         /* get the prize column */
         const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
         /* highlight the column */
+        if (!prizeColumn) return
         prizeColumn.classList.remove("flexItemButtonsBackgroundSelected");
     })
 }
@@ -581,22 +583,14 @@ function updateMatching(matching) {
 }
 
 function matchStudent(val) {
-    console.log("matchStudent\ninformation_type=studentbutton\nstudent=", val)
-
     liveSend({'information_type': 'student_button', 'student': val,});
 }
 
 function matchToSchool(val) {
-    console.log(`
-        matchToSchool\ninformation_type = schoolplusbutton\nschool =${val}
-    \nstudent =${currentPickedPrize}`)
     liveSend({'information_type': 'school_plus_button', 'school': val, 'student': currentPickedPrize,});
 }
 
 function rematchStudent(val, text) {
-    console.log(`
-        rematchStudent\ninformation_type = rematchbutton\nschool =${schools_dict[val]}
-    \nstudent =${student_dict[text]}`)
     liveSend({'information_type': 'rematch_button', 'school': schools_dict[val], 'student': student_dict[text],});
 }
 
@@ -675,6 +669,7 @@ function openPlus() {
 }
 
 function liveRecv(data) {
+    console.log(data)
     if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
         currentPickedPrize = data['student'];
         updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.
@@ -806,9 +801,6 @@ function liveRecv(data) {
 }
 
 function confirmStage() {
-    console.log(`
-        confirmStage\matching_update\nmatching: ${matchingPerPrize}\
-        `)
     liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
 }
 

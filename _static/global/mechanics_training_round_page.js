@@ -60,6 +60,12 @@ $("#submit-btn").click(function () {
         $("#step-3 .incorrect-msg").show();
         return;
     }
+    /* check if priorities are in the right order */
+    if (playerExpectedRanking.every((value, index) => value === humanPlayerRanking[index]) === false) {
+        console.log(humanPlayerRanking, playerExpectedRanking)
+        $("#step-3 .incorrect-msg").show();
+        return;
+    }
     /* disable input element */
     $("#id_player_bid_text").prop("disabled", true);
     $(this).hide();

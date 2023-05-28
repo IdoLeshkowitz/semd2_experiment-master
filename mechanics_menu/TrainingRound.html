@@ -132,17 +132,6 @@ Only after properties or mechanics
 <section id="step-3">
     <br>
 <h4>Step 2: Submit Your Ranking</h4>
-
-        <p>
-            Please rank the four prizes <b>in the arbitrary order <span class="expected-rank"></span></b> (from most to least preferred).
-        </p>
-        <ul>
-            <li>{{ formfield 'first_priority' }}</li>
-            <li>{{ formfield 'second_priority' }}</li>
-            <li>{{ formfield 'third_priority' }}</li>
-            <li>{{ formfield 'fourth_priority' }}</li>
-        </ul>
-
 <!-- fourth general pop up window-->
 <button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
     <div id="GenModal3" class="modal">
@@ -154,16 +143,7 @@ Only after properties or mechanics
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-
-    <div class="btn-container">
-        <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
-    </div>
-    <div class="incorrect-msg">
-        <p>
-            Please make sure your ranking follows the instructions.
-        </p>
-    </div>
+    {{ include_sibling "ranking_form.html" }}
 </section><br>
 
 <section id="step-4">

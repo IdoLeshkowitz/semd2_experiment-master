@@ -229,7 +229,6 @@ window.onload = function () {
         const prizeNumber = $(this).attr("value");
         /* get the prize column */
         const prizeColumn = document.getElementById(`SchoolBackground${prizeNumber}`)
-        console.log(prizeColumn)
         /* highlight the prize column */
         prizeColumn.classList.add("flexItemButtonsBackgroundSelected")
     })
@@ -245,7 +244,7 @@ window.onload = function () {
     /* participant button hover event listener */
     $('[id^=ButtonStudent]').mouseenter(function () {
         /* check if any participant is currently selected */
-        if (student) return ;
+        if (student) return;
         /* get the participant number */
         const studentNumber = $(this).attr("value");
         /* get the participant column */
@@ -256,7 +255,7 @@ window.onload = function () {
     /* participant button mouse leave event listener */
     $('[id^=ButtonStudent]').mouseleave(function () {
         /* check if any participant is currently selected */
-        if (student) return ;
+        if (student) return;
         /* get the participant number */
         const studentNumber = $(this).attr("value");
         /* get the participant column */
@@ -264,12 +263,36 @@ window.onload = function () {
         /* highlight the participant column */
         studentColumn.classList.remove("flexItemButtonsBackgroundSelected")
     })
+    $('.flexItemStudentButton').mouseenter(function () {
+        if (student) return;
+        /* get the prize number */
+        const participantAlphabet = $(this).text().trim();
+        /* get the participant number */
+        const participantNumber = student_dict[participantAlphabet];
+        /* get the prize column */
+        const participantColumn = document.getElementById(`StudentBackground${participantNumber}`)
+        /* highlight the prize column */
+        participantColumn.classList.add("flexItemButtonsBackgroundSelected")
+    })
+    /* plus button mouse leave event handler */
+    $('.flexItemStudentButton').mouseleave(function () {
+        if (student) return;
+        /* get the prize number */
+        const participantAlphabet = $(this).text().trim();
+        /* get the participant number */
+        const participantNumber = student_dict[participantAlphabet]
+        /* get the prize column */
+        const participantColumn = document.getElementById(`StudentBackground${participantNumber}`)
+        if (!participantColumn) return;
+        /* unhighlight the prize column */
+        participantColumn.classList.remove("flexItemButtonsBackgroundSelected")
+    })
 };
 window.addEventListener('DOMContentLoaded', (event) => {
     containment = js_vars.matched_number;
     partial = js_vars.partialmatching;
     max_students = js_vars.max_students_per_school;
-    clicks = js_vars.clicks;
+    clicks = js_vars.initial_clicks;
     updatePrizeMatchedHistory(clicks);
     updateCurrentMatching();
     let d = new Date();
@@ -278,7 +301,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
 });
 
 function submitButton() {
-    $('#finishModal').modal('show');
 }
 
 function dismissFinishModal() {
@@ -533,7 +555,6 @@ function confirmStage() {
 }
 
 function onReset(e) {
-    console.log('called')
     e.preventDefault()
     e.stopPropagation()
     liveSend({'information_type': 'reset_button'})
@@ -544,7 +565,6 @@ function updatePrizeMatchedHistory(clicks) {
     const regex = /\b\d:\d/g;
     const clicksFromLastReset = clicks.slice(clicks.lastIndexOf('reset') + 5);
     const matchingStrings = clicksFromLastReset.match(regex);
-    console.log(matchingStrings)
     if (matchingStrings) {
         const prizes = matchingStrings.map(matchingString => matchingString[0]);
         participantsMatchedHistory = prizes

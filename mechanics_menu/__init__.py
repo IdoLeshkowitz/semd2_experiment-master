@@ -299,7 +299,6 @@ class DAalghoInterface(Page):
                         'status':           True
                     }
                 }
-            else:
                 return {
                     player.id_in_group: {
                         'information_type': 'matching_status',
@@ -308,6 +307,8 @@ class DAalghoInterface(Page):
                         'matching':         C.STAGES[stage - 1]
                     }
                 }
+            else:
+                pass
         elif data['information_type'] == 'training_rounds':
             if player.round_number == 2:
                 if data['matching'] == C.ALLOCATION_2:
@@ -358,8 +359,7 @@ class DAalghoInterface(Page):
         else:
             pystudent = int(data['student']) - 1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
             if data['information_type'] == 'student_button':  # An unmatched student button was pressed
-                if player.Clicks[-2:] == data[
-                    'student'] + ':':  # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
+                if player.Clicks[-2:] == data['student'] + ':':  # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
                     if player.participant.partialmatching[pystudent] > 0:  # If the student was already matched.
                         oldschool = player.participant.partialmatching[pystudent] - 1
                         player.participant.matched_number[oldschool] -= 1
@@ -388,7 +388,7 @@ class DAalghoInterface(Page):
                     oldschool = player.participant.partialmatching[pystudent] - 1
                     # decrement the amount of prizes assigned to the old participant
                     player.participant.matched_number[oldschool] -= 1
-                player.Clicks = player.Clicks + str(data['school']) + '|'
+                player.Clicks = player.Clicks +str(data['student'])+":"+ str(data['school']) + '|'
                 # assign the prize to the new participant
                 player.participant.partialmatching[pystudent] = int(data['school'])
                 pyschool = int(data['school']) - 1  # This is the integer returned to javascript!!

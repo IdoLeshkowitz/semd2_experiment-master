@@ -432,7 +432,6 @@ class DAalghoInterface(Page):
 
     @staticmethod
     def live_method(player: Player, data):
-        print(data)
         if data['information_type'] == 'onload':
             player.TimeStamps = player.TimeStamps + '|R:' + data['time']
             player.Clicks = player.Clicks + '||'
@@ -485,7 +484,7 @@ class DAalghoInterface(Page):
                 if player.participant.partialmatching[pystudent] > 0:
                     oldschool = player.participant.partialmatching[pystudent] - 1
                     player.participant.matched_number[oldschool] -= 1
-                player.Clicks = player.Clicks + str(data['school']) + '|'
+                player.Clicks = player.Clicks +str(data['student'])+":"+str(data['school']) + '|'
                 player.participant.partialmatching[pystudent] = int(data['school'])
                 pyschool = int(data['school']) - 1 # This is the integer returned to javascript!!
                 player.participant.matched_number[pyschool] += 1
