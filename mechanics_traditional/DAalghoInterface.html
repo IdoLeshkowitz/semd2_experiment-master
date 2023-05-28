@@ -351,7 +351,16 @@
     </section>
     {{ endif }}
 
-    <div class="container-fluid" style="border: 5px solid gray;">
+    <div class="container-fluid position-relative" style="border: 5px solid gray;">
+        {{ if player.round_number > 1 }}
+    <button class="position-absolute btn btn-outline-dark" id="reset-button" style="right: .5rem; top: .5rem;">
+        reset
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
+            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
+            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
+        </svg>
+    </button>
+    {{ endif }}
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: baseline;">
             <div class="column" style="flex: 1 2 auto;">
                 <b style="font-size: 1.5rem;">
@@ -497,6 +506,8 @@
             {{ endfor }}
         </div>
         <hr width="100%" />
+        <div class="row">
+            <div class="col">
         {{ for school in participant.schools_alphabet }}
             <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
                 <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
@@ -531,6 +542,14 @@
                 </div>
             </div>
         {{ endfor }}
+        </div>
+             <div class="col-3 legend-container">
+        <span><b>R&nbsp;</b>= Ruth</span>
+        <span><b>S&nbsp;</b>= Shirley</span>
+        <span><b>T&nbsp;</b>= Theresa</span>
+        <span><b>Y&nbsp;</b>= You</span>
+    </div>
+        </div>
     </div>
     <center>Allocation Dashboard</center>
 

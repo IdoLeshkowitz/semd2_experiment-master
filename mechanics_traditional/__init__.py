@@ -208,6 +208,7 @@ class Player(BasePlayer):
 
 def variablesFunction(player):
     d = {
+        'initial_clicks': str(player.Clicks),
         'schools_number':player.SchoolsNumber, # This sets the number of schools. This of course can be determined randomly or according to some rule.
         'students_number':player.StudentsNumber, # Same as above but regarding the number of students.
         'schools_lists': player.participant.schools_lists,
@@ -458,6 +459,15 @@ class DAalghoInterface(Page):
                     return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
                 else:
                     return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'status': False}}
+        elif data['information_type'] == 'reset_button':
+            player.participant.matched_number = [0 for i in range(player.SchoolsNumber)]
+            player.participant.partialmatching = [0 for i in range(player.StudentsNumber)]
+            player.Clicks = player.Clicks + 'reset|'
+            return {
+                player.id_in_group: {
+                    'information_type': 'reset',
+                },
+            }
         else:
             pystudent = int(data['student']) -1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
             if data['information_type'] == 'student_button': # An unmatched student button was pressed
@@ -479,7 +489,7 @@ class DAalghoInterface(Page):
                 player.participant.partialmatching[pystudent] = int(data['school'])
                 pyschool = int(data['school']) - 1 # This is the integer returned to javascript!!
                 player.participant.matched_number[pyschool] += 1
-                return {player.id_in_group:{'information_type': 'student_matched', 'student': data['student'],'school':pyschool,'student_order':player.participant.matched_number[pyschool],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,}}
+                return {player.id_in_group:{'information_type': 'student_matched', 'student': data['student'],'school':pyschool,'student_order':player.participant.matched_number[pyschool],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,'clicks':player.Clicks}}
             elif data['information_type'] == 'rematch_button':
                 if player.Clicks[-2:] == str(data['student']) + ':':
                     school = player.participant.schools_alphabet.index(data['school']) + 1

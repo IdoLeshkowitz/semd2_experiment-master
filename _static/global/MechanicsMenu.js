@@ -36,7 +36,6 @@ window.onload = function () {
         'containment': numberOfPrizesPerParticipant,
         'partial': matchingPerPrize,
         'student': currentPickedPrize,
-
     }
     updatePrizeMatchedHistory(clicks)
     updateCurrentMatching();
@@ -429,15 +428,6 @@ window.onload = function () {
     }
     /* plus Button hover event listener */
     $(".pButton").hover(function () {
-        function findKeyByValue(obj, value) {
-            for (let key in obj) {
-                if (obj[key] == value) {
-                    return key;
-                }
-            }
-            return null;
-        }
-
         /* on hover should trigger highlight on the matching participant column in participants table  */
         /* get the participant number */
         const participantNumber = $(this).attr("value");
@@ -448,15 +438,6 @@ window.onload = function () {
     })
     /* plus button unhover event listener */
     $(".pButton").mouseleave(function () {
-        function findKeyByValue(obj, value) {
-            for (let key in obj) {
-                if (obj[key] == value) {
-                    return key;
-                }
-            }
-            return null;
-        }
-
         /* on mouse leave should trigger unhighlight on the matching participant column in participants table  */
         /* get the participant number */
         const participantNumber = $(this).attr("value");
@@ -472,7 +453,7 @@ window.onload = function () {
      if so, do nothing
      if not, highlight the matching prize column
      */
-    $('[id^=ButtonStudent]').hover(function () {
+    $('[id^=ButtonStudent]').mouseenter(function () {
         /* check if any prize is currently selected, if not continue */
         if (currentPickedPrize) return
         /* get the prize number */
@@ -500,6 +481,29 @@ window.onload = function () {
         prizeColumn.classList.remove("flexItemButtonsBackgroundSelected");
     })
 
+    $('.flexItemStudentButton').mouseenter(function () {
+        if (currentPickedPrize) return
+        /* get the prize number */
+        const prizeAlphabetical = $(this).text().trim();
+        console.log(prizeAlphabetical);
+        /* convert alphabetical value to numerical value */
+        const prizeNumber = student_dict[prizeAlphabetical];
+        /* get the prize column */
+        const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
+        /* highlight the column */
+        prizeColumn.classList.add("flexItemButtonsBackgroundSelected");
+    })
+    $('.flexItemStudentButton').mouseleave(function () {
+        if (currentPickedPrize) return
+        /* get the prize number */
+        const prizeAlphabetical = $(this).text().trim();
+        /* convert alphabetical value to numerical value */
+        const prizeNumber = student_dict[prizeAlphabetical];
+        /* get the prize column */
+        const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
+        /* highlight the column */
+        prizeColumn.classList.remove("flexItemButtonsBackgroundSelected");
+    })
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
@@ -671,7 +675,6 @@ function openPlus() {
 }
 
 function liveRecv(data) {
-    console.log("liveRecv", data)
     if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
         currentPickedPrize = data['student'];
         updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.
@@ -814,7 +817,6 @@ function onReset(e) {
     e.stopPropagation()
     liveSend({'information_type': 'reset_button'})
 }
-
 
 function updatePrizeMatchedHistory(clicks) {
     const regex = /\b\d:\d/g;

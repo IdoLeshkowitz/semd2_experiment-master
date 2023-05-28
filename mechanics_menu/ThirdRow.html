@@ -1,6 +1,8 @@
-  <div class="participants-rows">
+<div class="participants-rows row">
+    <div class="col">
         {{ for school in participant.schools_alphabet }}
-            <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
+            <div class="row"
+                    style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
                 <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
                     <b style="font-size: 1.5rem;">
                         {{ if school == 'A' }}
@@ -16,14 +18,25 @@
                         {{ endif }}
                     </b>
                 </div>
-                <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;order: 20;" id="plusButtonSchool{{ school }}">
-                    <button type="button" class="pButton" value="{{ forloop.counter }}" onclick="matchToSchool(this.value)">
+                <div class="flexItemStudentButton"
+                        style="flex: 1 1 auto;display: none;order: 20;"
+                        id="plusButtonSchool{{ school }}">
+                    <button type="button"
+                            class="pButton"
+                            value="{{ forloop.counter }}"
+                            onclick="matchToSchool(this.value)">
                         <b>+</b>
                     </button>
                 </div>
                 {{ for student in participant.students_names }}
-                    <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;" id="School{{ school }}MatchedToStudent{{ student }}">
-                        <button type="button" class="iButton" value="{{ school }}" onclick="rematchStudent(this.value,this.innerText)" id="School{{ school }}MatchedToStudent{{ student }}Button">
+                    <div class="flexItemStudentButton"
+                            style="flex: 1 1 auto;display: none;"
+                            id="School{{ school }}MatchedToStudent{{ student }}">
+                        <button type="button"
+                                class="iButton"
+                                value="{{ school }}"
+                                onclick="rematchStudent(this.value,this.innerText)"
+                                id="School{{ school }}MatchedToStudent{{ student }}Button">
                             {{ if student == 1 }}
                                 <b>A</b>
                             {{ elif student == 2 }}
@@ -43,5 +56,12 @@
                 </div>
             </div>
         {{ endfor }}
-<!--      Unpairable students:-->
-           </div>
+    </div>
+    <div class="col-3 legend-container">
+        <span><b>R&nbsp;</b>= Ruth</span>
+        <span><b>S&nbsp;</b>= Shirley</span>
+        <span><b>T&nbsp;</b>= Theresa</span>
+        <span><b>Y&nbsp;</b>= You</span>
+    </div>
+    <!--      Unpairable students:-->
+</div>

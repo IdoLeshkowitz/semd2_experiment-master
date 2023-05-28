@@ -155,15 +155,16 @@ body {
 
 .legend-container {
     display: grid;
-    grid-auto-flow: column;
+    grid-auto-flow: row;
     margin-block-end: 1rem;
 }
 
 .legend-container span {
-    border-right: 0.5px solid grey;
-    text-align: center;
+    border-bottom: 0.5px solid grey;
+    display: flex;
+    align-items: center;
 }
 
 .legend-container span:last-child {
-    border-right: none;
+    border-bottom: none;
 }
