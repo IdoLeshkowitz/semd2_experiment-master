@@ -184,16 +184,6 @@ class TrainingRound(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.payoff += 0.3
-
-    @staticmethod
-    def is_displayed(player: Player):  # show only on last round number
-        if player.participant.full_training:
-            return True
-        elif player.round_number == 1:  # not full training - only do 1 round of training
-            return True
-        else:
-            return False
-
     @staticmethod
     def js_vars(player: Player):
         return dict(
@@ -257,12 +247,18 @@ class TrainingRound(Page):
 
 
 class EndTraining(Page):
+
     @staticmethod
-    def is_displayed(player: Player):  # show only on last round number
-        if player.round_number == C.NUM_ROUNDS:
-            return True
+    def is_displayed(player: Player):
+        # if full training
+        if player.participant.full_training:
+            return player.round_number == C.NUM_ROUNDS
+        # if short training
         else:
-            return False
+            return player.round_number == 2
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        return upcoming_apps[0]
 
 class C(BaseConstants):
     NAME_IN_URL = 'step_1_null_training_rounds'

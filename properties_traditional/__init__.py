@@ -515,13 +515,24 @@ class TrainingRound(Page):
         return {0: response}
 
 
+
 class EndTraining(Page):
     @staticmethod
     def is_displayed(player: Player):  # show only on last round number
-        if player.round_number == C.NUM_ROUNDS:
-            return True
+        # check if this is a long training
+        if player.participant.full_training:
+            # if this is a long training show only on fourth round
+            return player.round_number == 4
         else:
-            return False
+            # if this is a short training show on  second round
+            return player.round_number == 2
+
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        return upcoming_apps[0]
+
+
+
 
 
 page_sequence = [ExplanationPage, TrainingRound, EndTraining]

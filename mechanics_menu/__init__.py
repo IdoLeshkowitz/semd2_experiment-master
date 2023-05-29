@@ -10,31 +10,30 @@ Your app description
 
 
 def prizes_priorities_list():
-    first_round_priorities = [[1, 2, 3, 0], [1, 2, 0, 3], [2, 3, 1, 0], [0, 3, 2, 1]]
+    first_round_priorities = [[0, 1, 2, 3], [0, 1, 3, 2], [1, 2, 0, 3], [3, 2, 1, 0]]
 
-    second_round_priorities = [[1, 2, 3, 0], [1, 0, 2, 3], [3, 0, 2, 1], [3, 2, 1, 0]]
+    second_round_priorities = [[2, 3, 0, 1], [1, 2, 3, 0], [1, 3, 0, 2], [2, 0, 3, 1]]
 
-    third_round_priorities = [[1, 0, 2, 3], [2, 0, 3, 1], [1, 0, 3, 2], [2, 3, 0, 1]]
+    third_round_priorities = [[0, 1, 2, 3], [0, 3, 1, 2], [2, 3, 1, 0], [2, 1, 0, 3]]
 
-    return [first_round_priorities, second_round_priorities, third_round_priorities]
+    fourth_round_priorities = [[1, 0, 2, 3], [2, 0, 3, 1], [1, 0, 3, 2], [2, 3, 0, 1]]
+    return [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
 
 
 def players_rankings_list():
-    first_round_rankings = [[0, 2, 3, 1], [1, 0, 2, 3], [2, 1, 0, 3]]
-
-    second_round_rankings = [[0, 2, 3, 1], [1, 0, 2, 3], [3, 1, 0, 2]]
-
-    third_round_rankings = [[2, 3, 0, 1], [1, 0, 2, 3], [3, 1, 0, 2]]
-
-    return [first_round_rankings, second_round_rankings, third_round_rankings]
+    first_round_rankings = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 0, 3, 2], [2, 0, 1, 3],[-1 ,-1 ,-1 ,-1]]
+    second_round_rankings = [[3, 2, 1, 0], [1, 2, 0, 3], [1, 0, 3, 2], [3, 0, 2, 1],[-1 ,-1 ,-1 ,-1]]
+    third_round_rankings = [[3, 0, 1, 2], [2, 1, 0, 3], [2, 3, 0, 1], [3, 2, 1, 0],[-1 ,-1 ,-1 ,-1]]
+    fourth_round_rankings = [[2, 0, 1, 3], [0, 3, 2, 1], [0, 3, 1, 2], [2, 3, 0, 1],[-1 ,-1 ,-1 ,-1]]
+    return [first_round_rankings, second_round_rankings, third_round_rankings, fourth_round_rankings]
 
 
 def expected_rankings_list():
     first_round_ranking = [2, 1, 0, 3]
-    second_round_ranking = [3, 2, 1, 0]
-    third_round_ranking = [2, 3, 0, 1]
-
-    return [first_round_ranking, second_round_ranking, third_round_ranking]
+    second_round_ranking = [3, 0, 2, 1]
+    third_round_ranking = [3, 2, 1, 0]
+    fourth_round_ranking = [2, 3, 0, 1]
+    return [first_round_ranking, second_round_ranking, third_round_ranking, fourth_round_ranking]
 
 
 def make_obtainable_field_round_2(label):
@@ -44,7 +43,7 @@ def make_obtainable_field_round_2(label):
 class C(BaseConstants):
     NAME_IN_URL = 'mechanics_menu'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 3
+    NUM_ROUNDS = 4
     MAX_SCHOOLS = 6
     MAX_STUDENTS = 9
     SCHOOLS_LETTERS = ['A', 'B', 'C', 'D' , 'E']  # Change if MAX_SCHOOLS is changed !!!
@@ -63,7 +62,7 @@ class C(BaseConstants):
     ALLOCATION_2 = [-10, 2, 3, 1]
     ALLOCATION_3 = [2, -10, 1, 3]
 
-    CORRECT_ANSWERS = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [1, 1, 2, 2, 1], [1, 1, 2, 2, 1]]
+    CORRECT_ANSWERS = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [1, 1, 2, 2, 1], [1, 1, 2, 2, 1], [1, 1, 2, 2, 1]]
 
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
@@ -360,6 +359,7 @@ class DAalghoInterface(Page):
             pystudent = int(data['student']) - 1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
             if data['information_type'] == 'student_button':  # An unmatched student button was pressed
                 if player.Clicks[-2:] == data['student'] + ':':  # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
+                    print(player.Clicks)
                     if player.participant.partialmatching[pystudent] > 0:  # If the student was already matched.
                         oldschool = player.participant.partialmatching[pystudent] - 1
                         player.participant.matched_number[oldschool] -= 1
@@ -429,6 +429,13 @@ class DAalghoInterface(Page):
     def before_next_page(player: Player, timeout_happened):
         pass  # Here one can compare the submitted matching with the DA matching for example.
 
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        #check if this is long training
+        if player.round_number == 2:
+            if not player.participant.full_training :
+                return upcoming_apps[0]
+
 
 class MechanicsIntro(Page):
 
@@ -467,7 +474,7 @@ class TrainingRound(Page):
         for i in range(player.SchoolsNumber):
             codi = "player.participant.max_students_per_school.append(int(player.MaxStudents" + C.SCHOOLS_LETTERS[i] + "))"
             exec(codi)  # executing the code inside the string
-        player.participant.matched_number = []  # The number of matched students per school.
+        player.participant.matched_number = [0 for school in range(player.SchoolsNumber)]  # The number of matched students per school.
         player.participant.schools_range = list(range(player.SchoolsNumber))  # A list [0,1,...,n-1] where n is the number of schools.
         SchoolsAlphabet = list(string.ascii_uppercase)
         player.participant.schools_alphabet = SchoolsAlphabet[
@@ -479,49 +486,29 @@ class TrainingRound(Page):
         player.participant.matchingalgho = '|'  # History of the participant's choices until that point. To be presented somehow on the screen.
         player.participant.partialmatching = [-10 for i in
                                               range(player.StudentsNumber)]  # The current partial matching according to the participant's choices until that point. The length of the list equals the number of students. The value of each entery is the number of the school that the student has been matched too. Equals -10 if the student hasn't been matched yet.
-        schools_lists = list()
-        for i in range(player.SchoolsNumber):  # Each school has a preference list over...
-            schools_lists.append(list(range(player.StudentsNumber)))  # ...the different students.
-            random.shuffle(schools_lists[i])  # The schools' preferences are randomly set.
-            player.participant.matched_number.append(0)
-        # mechanics traditional (prizes)-
-        if player.round_number == 1:
-            schools_lists = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 3, 0, 2], [2, 1, 0, 3],[-1,-1,-1,-1]]
-        if player.round_number == 2:
-            schools_lists = [[3, 0, 1, 2], [2, 1, 0, 3], [2, 3, 0, 1], [3, 2, 1, 0],[-1,-1,-1,-1]]
-        if player.round_number == 3:
-            schools_lists = [[2, 0, 1, 3], [0, 3, 2, 1], [0, 3, 1, 2], [2, 3, 0, 1],[-1,-1,-1,-1]]
+        schools_lists = players_rankings_list()
         player.participant.schools_lists = schools_lists  # This is a list of sublist. Each sublist corresponds to a school: the nth sublist represents the nth school's preferences: The first number represents the most preferred student by the school, the second entery represents the second-best preferred student etc.
         player.SchoolsPreferences = str(player.participant.schools_lists)  # saving this informtion.
-        students_lists = list()
-        for i in range(player.StudentsNumber):
-            students_lists.append(list(range(player.SchoolsNumber)))  # The students' preferences are randomly set.
-            random.shuffle(students_lists[i])
-        # mechanics traditional(participants)-
-        if player.round_number == 1:
-            students_lists = [[0, 1, 2, 3], [0, 1, 3, 2], [1, 2, 0, 3], [3, 2, 1, 0]]
-        if player.round_number == 2:
-            students_lists = [[0, 1, 2, 3], [0, 3, 1, 2], [2, 3, 1, 0], [2, 1, 0, 3]]
-        if player.round_number == 3:
-            students_lists = [[0, 3, 1, 2], [1, 3, 2, 0], [0, 3, 2, 1], [1, 2, 3, 0]]
-
+        students_lists = prizes_priorities_list()
         player.participant.students_lists = students_lists  # This is a list of sublist. Each sublist corresponds to a student: the nth sublist represents the nth student's preferences: The first number represents the most preferred school by the student, the second entery represents the second-best preferred school etc.
         player.StudentsPreferences = str(player.participant.students_lists)  # Saving this information.
         SchoolsAlphabetPreferencesCombined = []
         for i in range(player.SchoolsNumber):
             L = [player.participant.schools_alphabet[i]]
+            current_school = schools_lists[player.round_number-1]
             for j in range(player.StudentsNumber):
-                L.append(player.participant.schools_lists[i][j] + 1)
+                L.append(current_school[i][j] + 1)
             SchoolsAlphabetPreferencesCombined.append(L)
         player.participant.schoolsAPC = SchoolsAlphabetPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a school: its first entery is the name/letter of the school, and the other enteries are the students' numbers according to the school's preferences.
         StudentsNumberPreferencesCombined = []
         # iterates over the prizes
         for i in range(player.StudentsNumber):
             L = [i + 1]
+            current_students = students_lists[player.round_number-1]
             # itertas over the participants
             for j in range(player.SchoolsNumber):
-                if j in player.participant.students_lists[i]:
-                    L.append(player.participant.schools_alphabet[player.participant.students_lists[i][j]])
+                if j in current_students[i]:
+                    L.append(player.participant.schools_alphabet[current_students[i][j]])
                 else:
                     L.append("X")
             StudentsNumberPreferencesCombined.append(L)

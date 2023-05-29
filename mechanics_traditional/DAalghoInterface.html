@@ -4,7 +4,7 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
     How the Allocation Process Works:<br>
-    Training Round {{player.round_number}}/3
+    Training Round {{player.round_number}}/{{ C.NUM_ROUNDS }}
 {{ endblock }}
 {{ block content }}
 {% load index %}

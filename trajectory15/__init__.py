@@ -8,11 +8,11 @@ There are 10 different apps like this, each with a matching variable.
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'PassVars10'
+    NAME_IN_URL = 'PassVars15'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
-    trajectory_num = 10  # Null, double
+    trajectory_num = 15  # Null, double
 
 
 class Subsession(BaseSubsession):
@@ -33,7 +33,7 @@ class PassVars(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.trajectory_num = C.trajectory_num
-        player.participant.full_training = False
+        player.participant.full_training = True
         player.full_training = player.participant.full_training
 
 

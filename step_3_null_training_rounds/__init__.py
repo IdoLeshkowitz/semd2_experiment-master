@@ -254,11 +254,17 @@ class TrainingRound(Page):
 
 class EndTraining(Page):
     @staticmethod
-    def is_displayed(player: Player):  # show only on last round number
-        if player.round_number == C.NUM_ROUNDS:
-            return True
+    def is_displayed(player: Player):
+        # if full training
+        if player.participant.full_training:
+            return player.round_number == C.NUM_ROUNDS
+        # if short training
         else:
-            return False
+            return player.round_number == 2
+
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        return upcoming_apps[0]
 
 
 page_sequence = [TrainingRound, EndTraining]

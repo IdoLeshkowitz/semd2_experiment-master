@@ -269,6 +269,10 @@ window.onload = function () {
         const participantAlphabet = $(this).text().trim();
         /* get the participant number */
         const participantNumber = student_dict[participantAlphabet];
+        /* check if the current participant is already selected */
+        const matchingPerCurrentParticipant = partial[participantNumber - 1];
+        /* if matched do nothing */
+        if (matchingPerCurrentParticipant) return;
         /* get the prize column */
         const participantColumn = document.getElementById(`StudentBackground${participantNumber}`)
         /* highlight the prize column */
@@ -402,10 +406,6 @@ function updateCurrentMatching() {
         for (let l = 1; l <= js_vars.students_number; l++) {
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
             if (partial[l - 1] === i + 1) {
-                // document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = containment[i];
-                // document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'inline-block';
-                // document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButtonMatched';
-                // document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButtonMatched';
                 unorderedParticipantsMatchedToPrizes.push(l);
             } else {
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
@@ -431,6 +431,7 @@ function updateCurrentMatching() {
 
 function openPlus() {
     for (let i = 0; i < js_vars.schools_number; i++) {
+        console.log(max_students[i], containment[i], partial[student - 1])
         if (i + 1 !== partial[student - 1] && containment[i] < max_students[i]) {
             document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'inline-block'; // Display plus button in the lines where the student is not already matched to, and for schools which didn't attain their quotas yet..
         }
@@ -438,6 +439,7 @@ function openPlus() {
 }
 
 function liveRecv(data) {
+    console.log(data)
     if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
         student = data['student'];
         updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.

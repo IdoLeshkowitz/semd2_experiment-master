@@ -488,6 +488,10 @@ window.onload = function () {
         const prizeAlphabetical = $(this).text().trim();
         /* convert alphabetical value to numerical value */
         const prizeNumber = student_dict[prizeAlphabetical];
+        /* check if the prize is already matched */
+        const matchingPerCurrentPrize = matchingPerPrize[prizeNumber];
+        /* if the prize is already matched, do nothing */
+        if (matchingPerCurrentPrize) return
         /* get the prize column */
         const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
         if (!prizeColumn) return
@@ -595,6 +599,7 @@ function rematchStudent(val, text) {
 }
 
 function updateCurrentMatching() {
+    console.log('matchingPerPrize')
     /* iterate over prizes */
     for (let j = 1; j <= js_vars.students_number; j++) {
         /* check if the prize is currently selected */
@@ -631,6 +636,10 @@ function updateCurrentMatching() {
             } else {
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
+                const participantPriority = document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l))
+                if (participantPriority) {
+                    participantPriority.className = 'dButton';
+                }
                 const plusButtonElement = document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i]))
                 if (plusButtonElement) {
                     plusButtonElement.className = 'dButton';
@@ -652,7 +661,7 @@ function updateCurrentMatching() {
             if (plusButtonElement) {
                 plusButtonElement.className = 'dButtonMatched';
             }
-
+            document.getElementById('School'.concat(alphabet[i], 'PrefStudent', matchedPrize)).className = 'dButtonMatched';
         })
     }
 }
@@ -662,6 +671,7 @@ function openPlus() {
         /* check if the chosen prize was already matched to the participant */
         if (matchingPerPrize[currentPickedPrize - 1] === participantNumber + 1) continue;
         /* check if the current participant passed the max prizes allowed */
+        if (maxPrizesPerParticipant[participantNumber] === 0) continue;
         if (numberOfPrizesPerParticipant[participantNumber] >= maxPrizesPerParticipant[participantNumber]) continue;
         /* display the plus button */
         document.getElementById('plusButtonSchool'.concat(alphabet[participantNumber])).style.display = 'inline-block';
