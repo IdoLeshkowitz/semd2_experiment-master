@@ -276,6 +276,7 @@ class DAalghoInterface(Page):
 
     @staticmethod
     def live_method(player: Player, data):
+        print('data is', data)
         if data['information_type'] == 'onload':
             player.TimeStamps = player.TimeStamps + '|R:' + data['time']
             player.Clicks = player.Clicks + '||'
@@ -425,17 +426,6 @@ class DAalghoInterface(Page):
                     }  # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
                     player.Clicks = player.Clicks + str(data['student']) + ':'
 
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        pass  # Here one can compare the submitted matching with the DA matching for example.
-
-    @staticmethod
-    def app_after_this_page(player: Player, upcoming_apps):
-        #check if this is long training
-        if player.round_number == 2:
-            if not player.participant.full_training :
-                return upcoming_apps[0]
-
 
 class MechanicsIntro(Page):
 
@@ -515,4 +505,20 @@ class TrainingRound(Page):
         player.participant.studentsAPC = StudentsNumberPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a students: its first entery is the name/number of the student, and the other enteries are the schools' numbers according to the student's preferences.
 
 
-page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface, ]
+
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        #check if this is long training
+        if player.participant.full_training:
+            # if this is long training, show after round 4
+            return player.round_number == 4
+        else:
+            # if this is short training, show after round 2
+            return player.round_number == 2
+
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        return upcoming_apps[0]
+
+page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface,EndTraining ]

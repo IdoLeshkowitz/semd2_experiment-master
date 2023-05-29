@@ -5,7 +5,7 @@
 
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
-Final questions (2/4)
+Final Questions (2/4)
 {{ endblock }}
 
 {{ block styles}}
@@ -59,18 +59,19 @@ btn.btn-default:hover {
     gap: .5rem;
 }
 .slider-row > input {
-    width: 30vw;
     margin-top: 1rem;
-    align-self: center;
 }
 .slider-container >  span{
     min-height: 1.5rem;
     align-self: center;
 }
-.slider-row{
+.slider-row > span{
     display: flex;
-    flex-direction: row;
-    justify-content: space-evenly;
+    justify-content: center;
+}
+.slider-row{
+    grid-template-columns: 1fr 1fr 1fr;
+    display: grid;
 }
 .mgslider-wrapper {
     border-spacing: 10px;
@@ -94,6 +95,10 @@ btn.btn-default:hover {
     height: 16px;
     width: 100%;
     background: #80dfff;
+}
+[id$="error"] {
+  /* CSS styles for elements whose class ends with "error" */
+  color: red;
 }
 
 .mgslider-feedback {
@@ -140,7 +145,7 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="understand_choose_ranking" id="understand_choose_ranking">
             <span> I understand very well</span>
         </div>
-        <span id="understand_choose_ranking_indicator">0</span>
+        <span id="understand_choose_ranking_indicator"></span>
         {{ formfield_errors 'understand_choose_rankings' }}
         <p id="understand_choose_ranking_error"></p>
     </div>
@@ -153,7 +158,7 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="understand_principle" id="understand_principle">
             <span> I understand very well</span>
         </div>
-        <span id="understand_principle_indicator">0</span>
+        <span id="understand_principle_indicator"></span>
         {{ formfield_errors 'understand_principle' }}
         <p id="understand_principle_error"></p>
     </div>
@@ -166,8 +171,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="understand_allocation" id="understand_allocation">
             <span> I understand very well</span>
         </div>
-        <span id="understand_allocation_indicator">0</span>
+        <span id="understand_allocation_indicator"></span>
         {{ formfield_errors 'understand_allocation' }}
+        <p id="understand_allocation_error"></p>
     </div>
     <hr/>
     
@@ -175,11 +181,12 @@ btn.btn-default:hover {
         <p>How <b>easy</b> was it for you to come up with your ranking each round?</p>
         <div class="slider-row">
             <span> Very difficult</span>
-            <input type="range" min="1"" max="7" value="1" name="how_easy_ranking" id="how_easy_ranking">
+            <input type="range" min="1" max="7" value="1" name="how_easy_ranking" id="how_easy_ranking">
             <span> Very easy</span>
         </div>
-        <span id="how_easy_ranking_indicator">0</span>
+        <span id="how_easy_ranking_indicator"></span>
         {{ formfield_errors 'how_easy_ranking' }}
+        <p id="how_easy_ranking_error"></p>
     </div>
     <hr/>
 
@@ -192,8 +199,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="maximize_choose_second" id="maximize_choose_second">
             <span> 100%</span>
         </div>
-        <span id="maximize_choose_second_indicator">0</span>
+        <span id="maximize_choose_second_indicator"></span>
         {{ formfield_errors 'maximize_choose_second' }}
+        <p id="maximize_choose_second_error"></p>
     </div>
     <hr/>
     
@@ -204,8 +212,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="maximize_consider_prizes" id="maximize_consider_prizes">
             <span> 100%</span>
         </div>
-        <span id="maximize_consider_prizes_indicator">0</span>
+        <span id="maximize_consider_prizes_indicator"></span>
         {{ formfield_errors 'maximize_consider_prizes' }}
+        <p id="maximize_consider_prizes_error"></p>
     </div>
     <hr/>
     
@@ -216,8 +225,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="maximize_consider_rankings_other" id="maximize_consider_rankings_other">
             <span> 100%</span>
         </div>
-        <span id="maximize_consider_rankings_other_indicator">0</span>
+        <span id="maximize_consider_rankings_other_indicator"></span>
         {{ formfield_errors 'maximize_consider_rankings_other' }}
+        <p id="maximize_consider_rankings_other_error"></p>
     </div>
     <hr/>
     
@@ -228,8 +238,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="maximize_consider_prize_priorities" id="maximize_consider_prize_priorities">
             <span> 100%</span>
         </div>
-        <span id="maximize_consider_prize_priorities_indicator">0</span>
+        <span id="maximize_consider_prize_priorities_indicator"></span>
         {{ formfield_errors 'maximize_consider_prize_priorities' }}
+        <p id="maximize_consider_prize_priorities_error"></p>
     </div>
     <hr/>
     
@@ -241,8 +252,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="chance_all_allocated" id="chance_all_allocated">
             <span> 100%</span>
         </div>
-        <span id="chance_all_allocated_indicator">0</span>
+        <span id="chance_all_allocated_indicator"></span>
         {{ formfield_errors 'chance_all_allocated' }}
+        <p id="chance_all_allocated_error"></p>
     </div>
     <hr/>
     
@@ -253,8 +265,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="chance_Instability" id="chance_Instability">
             <span> 100%</span>
         </div>
-        <span id="chance_Instability_indicator">0</span>
+        <span id="chance_Instability_indicator"></span>
         {{ formfield_errors 'chance_Instability' }}
+        <p id="chance_Instability_error"></p>
     </div>
     <hr/>
     
@@ -265,8 +278,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="100" value="0" name="chance_Pareto" id="chance_Pareto">
             <span> 100%</span>
         </div>
-        <span id="chance_Pareto_indicator">0</span>
+        <span id="chance_Pareto_indicator"></span>
         {{ formfield_errors 'chance_Pareto' }}
+        <p id="chance_Pareto_error"></p>
     </div>
     <hr/>
     
@@ -279,8 +293,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="agree_allocation_fare" id="agree_allocation_fare">
             <span>Completely agree</span>
         </div>
-        <span id="agree_allocation_fare_indicator">0</span>
+        <span id="agree_allocation_fare_indicator"></span>
         {{ formfield_errors 'agree_allocation_fare' }}
+        <p id="agree_allocation_fare_error"></p>
     </div>
     <hr/>
     
@@ -291,8 +306,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="agree_allocation_good" id="agree_allocation_good">
             <span>Completely agree</span>
         </div>
-        <span id="agree_allocation_good_indicator">0</span>
+        <span id="agree_allocation_good_indicator"></span>
         {{ formfield_errors 'agree_allocation_good' }}
+        <p id="agree_allocation_good_error"></p>
     </div>
     <hr/>
     
@@ -303,8 +319,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="trust_account_all_participants" id="trust_account_all_participants">
             <span>Completely confident</span>
         </div>
-        <span id="trust_account_all_participants_indicator">0</span>
+        <span id="trust_account_all_participants_indicator"></span>
         {{ formfield_errors 'trust_account_all_participants' }}
+        <p id="trust_account_all_participants_error"></p>
     </div>
     <hr/>
     
@@ -315,8 +332,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="rely_in_real_life" id="rely_in_real_life">
             <span>Very willing</span>
         </div>
-        <span id="rely_in_real_life_indicator">0</span>
+        <span id="rely_in_real_life_indicator"></span>
         {{ formfield_errors 'rely_in_real_life' }}
+        <p id="rely_in_real_life_error"></p>
     </div>
     <hr/>
     
@@ -327,8 +345,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="allocation_transparent" id="allocation_transparent">
             <span>Completely transparent</span>
         </div>
-        <span id="allocation_transparent_indicator">0</span>
+        <span id="allocation_transparent_indicator"></span>
         {{ formfield_errors 'allocation_transparent' }}
+        <p id="allocation_transparent_error"></p>
     </div>
     <hr/>
     
@@ -339,8 +358,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="allocation_predictable" id="allocation_predictable">
             <span>Completely predictable</span>
         </div>
-        <span id="allocation_predictable_indicator">0</span>
+        <span id="allocation_predictable_indicator"></span>
         {{ formfield_errors 'allocation_predictable' }}
+        <p id="allocation_predictable_error"></p>
     </div>
     <hr/>
     
@@ -351,8 +371,9 @@ btn.btn-default:hover {
             <input type="range" min="1" max="7" value="1" name="your_ranking_matters" id="your_ranking_matters">
             <span>Very much</span>
         </div>
-        <span id="your_ranking_matters_indicator">0</span>
+        <span id="your_ranking_matters_indicator"></span>
         {{ formfield_errors 'your_ranking_matters' }}
+        <p id="your_ranking_matters_error"></p>
     </div>
     <hr/>
 <div style="text-align: center">

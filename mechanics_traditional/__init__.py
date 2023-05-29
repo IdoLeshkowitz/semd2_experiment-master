@@ -399,22 +399,27 @@ class DAalghoInterface(Page):
                         }
                     }  # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
 
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        pass  # Here one can compare the submitted matching with the DA matching for example.
-
-    @staticmethod
-    def app_after_this_page(player: Player, upcoming_apps):
-        # check if this is long training
-        if player.round_number == 2:
-            if not player.participant.full_training:
-                return upcoming_apps[0]
-
-
 class MechanicsIntro(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
 
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        #check if this is long training
+        if player.participant.full_training:
+            # if this is long training, show after round 4
+            return player.round_number == 4
+        else:
+            # if this is short training, show after round 2
+            return player.round_number == 2
 
-page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface,]
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        return upcoming_apps[0]
+
+
+
+
+page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface,EndTraining]

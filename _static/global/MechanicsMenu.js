@@ -277,7 +277,7 @@ window.onload = function () {
         }, 5000);
     });
 
-    $("#proceed-step-14f-btn").click(function () {
+    $("#proceed-step-14-btn").click(function () {
         liveSend({'information_type': 'matching_update', 'matching': matchingPerPrize, 'stage': stage})
     });
 
@@ -445,7 +445,9 @@ window.onload = function () {
         /* get the participant column */
         const participantColumn = document.getElementById(`SchoolBackground${participantNumber}`);
         /* unhighlight the column */
-        participantColumn.classList.remove("flexItemButtonsBackgroundSelected");
+        if (participantColumn) {
+            participantColumn.classList.remove("flexItemButtonsBackgroundSelected");
+        }
     })
 
     /*
@@ -599,7 +601,6 @@ function rematchStudent(val, text) {
 }
 
 function updateCurrentMatching() {
-    console.log('matchingPerPrize')
     /* iterate over prizes */
     for (let j = 1; j <= js_vars.students_number; j++) {
         /* check if the prize is currently selected */
@@ -661,7 +662,10 @@ function updateCurrentMatching() {
             if (plusButtonElement) {
                 plusButtonElement.className = 'dButtonMatched';
             }
-            document.getElementById('School'.concat(alphabet[i], 'PrefStudent', matchedPrize)).className = 'dButtonMatched';
+            const schoolButtonElement = document.getElementById('School'.concat(alphabet[i], 'PrefStudent', matchedPrize))
+            if (schoolButtonElement) {
+                schoolButtonElement.classList.add('dButtonMatched')
+            }
         })
     }
 }

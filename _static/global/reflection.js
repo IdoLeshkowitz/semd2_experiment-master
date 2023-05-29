@@ -1,3 +1,4 @@
+let slidersState = [];
 const errorMessages = {
     "missing": "Please answer the question.",
 }
@@ -8,7 +9,12 @@ document.querySelector("#Next").addEventListener("click", function (e) {
         validateIsHighToLow(),
         validateIsExplainHelp(),
         validateUnderstandChooseRankings(),
+        validateSliders(slidersState)
     ].every(isValid => isValid)
+    if (!isAllValid) {
+        /* prevent form submission */
+        e.preventDefault()
+    }
 })
 
 function validateTypicallyRank() {
@@ -83,14 +89,52 @@ function validateUnderstandChooseRankings() {
     }
 }
 
+function validateSliders(slidersState){
+    /*
+    check that all sliders have been changed.
+    if not then show missing answer error message.
+    if true, clean the error message.
+     */
+    let isAllValid = true
+    for (let sliderState of slidersState) {
+        /* check if slider has been changed */
+        if (sliderState.didChange) {
+            /* slider has been changed */
+            /* reset error message */
+            sliderState.errorElement.innerHTML = ""
+        }
+        else {
+            /* slider has not been changed */
+            /* set error message */
+            sliderState.errorElement.innerHTML = errorMessages["missing"]
+            /* set isAllValid to false */
+            isAllValid = false
+        }
+    }
+    return isAllValid
+}
 /* sliders */
 window.onload = function () {
     const allSliders = getAllSliders()
+    /* add event listener to all sliders */
     allSliders.forEach(slider => {
         const sliderIndicator = document.getElementById(slider.id + "_indicator")
         slider.addEventListener("input", function () {
+            /* update slider indicator */
             sliderIndicator.innerHTML = slider.value
+            /* update slider state */
+            const sliderState = slidersState.find(sliderState => sliderState.element === slider)
+            sliderState.didChange = true
         })
+    })
+    /* initialize sliders state */
+    slidersState = allSliders.map(slider => {
+        return {
+            element: slider,
+            didChange: false,
+            indicatorElement: document.getElementById(slider.id + "_indicator"),
+            errorElement: document.getElementById(slider.id + "_error")
+        }
     })
 }
 
