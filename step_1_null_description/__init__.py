@@ -203,6 +203,7 @@ class NullDescription(Page):
         payoff = round(values[user_prize] / 100, 2)
         response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
-
+    def before_next_page(player: Player, timeout_happened):
+        player.session.vars['stam'] = "stam"
 
 page_sequence = [NullDescription]
