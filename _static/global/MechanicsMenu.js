@@ -487,10 +487,6 @@ window.onload = function () {
         const prizeAlphabetical = $(this).text().trim();
         /* convert alphabetical value to numerical value */
         const prizeNumber = student_dict[prizeAlphabetical];
-        /* check if the prize is already matched */
-        const matchingPerCurrentPrize = partial[prizeNumber];
-        /* if the prize is already matched, do nothing */
-        if (matchingPerCurrentPrize) return
         /* get the prize column */
         const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
         if (!prizeColumn) return
