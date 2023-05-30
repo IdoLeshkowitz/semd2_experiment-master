@@ -37,8 +37,24 @@ def expected_rankings_list():
 
 
 def make_obtainable_field_round_2(label):
-    return models.IntegerField(choices=[[1, "A"], [2, "B"]], label=label, widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "C"],
+            [2, "D"]
+        ],
+        label = label,
+        widget = widgets.RadioSelect
+    )
 
+def make_obtainable_field_round_3_4(label):
+    return models.IntegerField(
+        choices = [
+            [1, "A"],
+            [2, "B"]
+        ],
+        label = label,
+        widget = widgets.RadioSelect
+    )
 
 class C(BaseConstants):
     NAME_IN_URL = 'mechanics_menu'
@@ -49,20 +65,19 @@ class C(BaseConstants):
     SCHOOLS_LETTERS = ['A', 'B', 'C', 'D' , 'E']  # Change if MAX_SCHOOLS is changed !!!
     STUDENTS_LETTERS = ['R', 'S', 'T', 'Y']
     STAGE_1 = [1, -10, -10, -10]
-    STAGES = {
-        0: [-10, -10, -10, -10],
-        1: [1, -10, -10, -10],
-        2: [1, 1, 2, 3],
-        3: [1, 2, 2, 3],
-        4: [1, 3, 2, 3],
-        5: [1, 3, 2, 2],
-        6: [1, 3, 2, 1],
-        7: [1, 3, 2, -10]
-    }
-    ALLOCATION_2 = [-10, 2, 3, 1]
-    ALLOCATION_3 = [2, -10, 1, 3]
+    STAGES = {0: [-10, -10, -10, -10],
+              1: [1, -10, -10, -10],
+              2: [1, 1, 2, 3],
+              3: [1, 2, 2, 3],
+              4: [1, 3, 2, 3],
+              5: [1, 3, 2, 2],
+              6: [1, 3, 2, 1],
+              7: [1, 3, 2, -10]}
+    ALLOCATION_2 = [3, 2, -10, 1]
+    ALLOCATION_3 = [-10, 2, 3, 1]
+    ALLOCATION_4 = [2, -10, 1, 3]
 
-    CORRECT_ANSWERS = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [1, 1, 2, 2, 1], [1, 1, 2, 2, 1], [1, 1, 2, 2, 1]]
+    CORRECT_ANSWERS = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [2,2,1,1,2], [1,1,2,2,2],[1,1,2,2,1]]
 
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
@@ -80,49 +95,109 @@ class Group(BaseGroup):
 
 
 def make_question_1():
-    return models.IntegerField(choices=[[1, "It is determined at random"], [2, "The prize who got paired to Ruth first"],
-                                        [3, "The prize at which Ruth is in the highest priority."],
-                                        [4, "The prize highest in Ruth’s ranking."]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "It is determined at random"],
+            [2, "The prize who got paired to Ruth first"],
+            [3, "The prize at which Ruth is in the highest priority."],
+            [4, "The prize highest in Ruth’s ranking."]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_2():
-    return models.IntegerField(choices=[[1, "A random participant that is currently unpaired to any prize"],
-                                        [2, "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
-                                        [3, "Its highest-priority participant"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "A random participant that is currently unpaired to any prize"],
+            [2, "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
+            [3, "Its highest-priority participant"]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_3():
-    return models.IntegerField(choices=[[1, "No, there are new conflicts: two (or more) prizes are paired to the same participant"],
-                                        [2, "No, some prizes are paired to participants that are not in their highest priority"], [3,
-                                                                                                                                   "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
-                                        [4, "Yes, there are no more conflicts"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "No, there are new conflicts: two (or more) prizes are paired to the same participant"],
+            [2, "No, some prizes are paired to participants that are not in their highest priority"],
+            [3, "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
+            [4, "Yes, there are no more conflicts"]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_4():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "No"],
+            [2, "Yes"]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_5():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "No"],
+            [2, "Yes"]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_6():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "No"],
+            [2, "Yes"]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_7():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "No"],
+            [2, "Yes"]
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_question_8():
-    return models.IntegerField(choices=[[1, "All four prizes, since I can in principle obtain all of them."],
-                                        [2, "Any prize at which my priority is higher than the participant it is temporarily allocated to."],
-                                        [3, "Only the prize that was left unpaired in the temporary allocation."], [4,
-                                                                                                                    "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."], ], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices = [
+            [1, "All four prizes, since I can in principle obtain all of them."],
+            [2, "Any prize at which my priority is higher than the participant it is temporarily allocated to."],
+            [3, "Only the prize that was left unpaired in the temporary allocation."],
+            [4, "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."],
+        ],
+        label = 'Answer',
+        widget = widgets.RadioSelect
+    )
 
 
 def make_prize(label):
-    return models.IntegerField(choices=[[1, "Obtainable"], [2, "Unobtainable"]], label=label, widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices=[
+            [1, "Obtainable"],
+            [2, "Unobtainable"]
+        ],
+        label=label,
+        widget=widgets.RadioSelect
+    )
 
 
 def make_prize_a():
@@ -142,29 +217,43 @@ def make_prize_d():
 
 
 def make_prize_question():
-    return models.IntegerField(choices=[[1, "The prize that was left unpaired in the temporary allocation"],
-                                        [2, "The prize that other participants placed last in rankings on average"], [3, "The prize that I ranked the highest"],
-                                        [4, "The prize at which I have the highest priority"], ], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(
+        choices=[
+            [1, "The prize that was left unpaired in the temporary allocation"],
+            [2, "The prize that other participants placed last in rankings on average"],
+            [3, "The prize that I ranked the highest"],
+            [4, "The prize at which I have the highest priority"],
+        ],
+        label='Answer',
+        widget=widgets.RadioSelect
+    )
 
 
 def make_priority_field(label):
-    return models.IntegerField(choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
-
+    return models.IntegerField(
+        choices = [
+            [1, "A"],
+            [2, "B"],
+            [3, "C"],
+            [4, "D"]
+        ],
+        label = label
+    )
 
 class Player(BasePlayer):
-    SchoolsNumber = models.IntegerField(choices=[i for i in range(1, C.MAX_SCHOOLS + 1)])
-    StudentsNumber = models.IntegerField(choices=[i for i in range(1, C.MAX_STUDENTS + 1)])
+    SchoolsNumber = models.IntegerField(choices=[i for i in range(1,C.MAX_SCHOOLS + 1)])
+    StudentsNumber = models.IntegerField(choices=[i for i in range(1,C.MAX_STUDENTS + 1)])
     SchoolsPreferences = models.LongStringField()
     StudentsPreferences = models.LongStringField()
     Clicks = models.LongStringField()
     TimeStamps = models.LongStringField()
     FinalMatching = models.LongStringField()
     CorrectMatching = models.BooleanField()
-    MaxStudentsA = models.StringField(label="Number of students school A can accept", choices=[i for i in range(0,19)])  # might need to be changed if C.LETTERS_SCHOOLS is changed.
-    MaxStudentsB = models.StringField(label="Number of students school B can accept", choices=[i for i in range(1, 19)])
-    MaxStudentsC = models.StringField(label="Number of students school C can accept", choices=[i for i in range(1, 19)])
-    MaxStudentsD = models.StringField(label="Number of students school D can accept", choices=[i for i in range(1, 19)])
-    MaxStudentsE = models.StringField(label="Number of students school E can accept", choices=[i for i in range(1, 19)])
+    MaxStudentsA = models.StringField(label="Number of students school A can accept",choices=[i for i in range(0,19)]) # might need to be changed if C.LETTERS_SCHOOLS is changed.
+    MaxStudentsB = models.StringField(label="Number of students school B can accept",choices=[i for i in range(1,19)])
+    MaxStudentsC = models.StringField(label="Number of students school C can accept",choices=[i for i in range(1,19)])
+    MaxStudentsD = models.StringField(label="Number of students school D can accept",choices=[i for i in range(1,19)])
+    MaxStudentsE = models.StringField(label="Number of students school E can accept",choices=[i for i in range(1,19)])
 
     question_1 = make_question_1()
     question_2 = make_question_2()
@@ -181,7 +270,8 @@ class Player(BasePlayer):
     prize_d_obtainable = make_prize_d()
 
     question_prize = make_prize_question()
-    obtainable_prize = make_obtainable_field_round_2('Answer')
+    obtainable_prize_round_2 = make_obtainable_field_round_2('Answer')
+    obtainable_prize_round_3_4 = make_obtainable_field_round_3_4('Answer')
 
     incorrect_seq_question_1 = models.LongStringField(blank=True)
     incorrect_seq_question_2 = models.LongStringField(blank=True)
@@ -240,7 +330,7 @@ def GetParticpantNumber(char):
 # PAGES
 class DAalghoIntro(Page):
     form_model = 'player'
-    form_fields = ['SchoolsNumber', 'StudentsNumber', ]
+    form_fields = ['SchoolsNumber', 'StudentsNumber',]
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):  # EXPLANATION:
@@ -262,17 +352,48 @@ class DAalghoInterface(Page):
     @staticmethod
     def get_form_fields(player: Player):
         if player.round_number == 1:
-            questions = ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6", "question_7", "question_8", "prize_a_obtainable",
-                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "question_prize"]
+            questions = ["question_1",
+                         "question_2",
+                         "question_3",
+                         "question_4",
+                         "question_5",
+                         "question_6",
+                         "question_7",
+                         "question_8",
+                         "prize_a_obtainable",
+                         "prize_b_obtainable",
+                         "prize_c_obtainable",
+                         "prize_d_obtainable",
+                         "question_prize"]
 
-            incorrect_answers = ["incorrect_seq_question_1", "incorrect_seq_question_2", "incorrect_seq_question_3", "incorrect_seq_question_4",
-                                 "incorrect_seq_question_5", "incorrect_seq_question_6", "incorrect_seq_question_7", "incorrect_seq_question_8"]
+            incorrect_answers = ["incorrect_seq_question_1",
+                                 "incorrect_seq_question_2",
+                                 "incorrect_seq_question_3",
+                                 "incorrect_seq_question_4",
+                                 "incorrect_seq_question_5",
+                                 "incorrect_seq_question_6",
+                                 "incorrect_seq_question_7",
+                                 "incorrect_seq_question_8"]
 
             return questions + incorrect_answers
 
         else:
-            questions = ["prize_a_obtainable", "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "obtainable_prize"]
-            return questions
+            if player.round_number == 2:
+                questions = [
+                             "prize_a_obtainable",
+                             "prize_b_obtainable",
+                             "prize_c_obtainable",
+                             "prize_d_obtainable",
+                             "obtainable_prize_round_2"]
+                return questions
+            else:
+                questions = [
+                    "prize_a_obtainable",
+                    "prize_b_obtainable",
+                    "prize_c_obtainable",
+                    "prize_d_obtainable",
+                    "obtainable_prize_round_3_4"]
+                return questions
 
     @staticmethod
     def live_method(player: Player, data):
@@ -284,104 +405,46 @@ class DAalghoInterface(Page):
             player.TimeStamps = player.TimeStamps + '|F:' + data['time']
             player.Clicks = player.Clicks + '||'
             player.FinalMatching = str(player.participant.partialmatching)
-            return {
-                player.id_in_group: {
-                    'information_type': 'submit',
-                }
-            }
+            return {player.id_in_group: {'information_type': 'submit', }}
         elif data['information_type'] == 'matching_update':
             stage = data['stage']
             if data['matching'] == C.STAGES[stage]:
-                return {
-                    player.id_in_group: {
-                        'information_type': 'matching_status',
-                        'round':            player.round_number,
-                        'status':           True
-                    }
-                }
-                return {
-                    player.id_in_group: {
-                        'information_type': 'matching_status',
-                        'round':            player.round_number,
-                        'status':           False,
-                        'matching':         C.STAGES[stage - 1]
-                    }
-                }
+                return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
             else:
-                pass
+                return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'status': False,
+                                             'matching': C.STAGES[stage-1], 'next_matching': C.STAGES[stage]}}
         elif data['information_type'] == 'training_rounds':
             if player.round_number == 2:
                 if data['matching'] == C.ALLOCATION_2:
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'matching_status',
-                            'round':            player.round_number,
-                            'status':           True
-                        }
-                    }
+                    return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
                 else:
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'matching_status',
-                            'round':            player.round_number,
-                            'status':           False
-                        }
-                    }
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'correct_allocation': C.ALLOCATION_2, 'status': False}}
             if player.round_number == 3:
                 if data['matching'] == C.ALLOCATION_3:
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'matching_status',
-                            'round':            player.round_number,
-                            'status':           True
-                        }
-                    }
+                    return {player.id_in_group:{'information_type': 'matching_status', 'round': player.round_number, 'status': True}}
                 else:
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'matching_status',
-                            'round':            player.round_number,
-                            'status':           False
-                        }
-                    }
-        elif data['information_type'] == "reset_button":
-            # reset matched_number
-            player.participant.matched_number = [0 for school in range(player.SchoolsNumber)]
-            # reset partial_matching
-            player.participant.partialmatching = [-10, -10, -10, -10]
-            # add reset to clicks
-            player.Clicks = player.Clicks + 'reset|'
-            return {
-                player.id_in_group: {
-                    'information_type': 'reset'
-                }
-            }
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number, 'correct_allocation': C.ALLOCATION_3, 'status': False}}
+            if player.round_number == 4:
+                if data['matching'] == C.ALLOCATION_4:
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                                 'status': True}}
+                else:
+                    return {player.id_in_group: {'information_type': 'matching_status', 'round': player.round_number,
+                                                 'correct_allocation': C.ALLOCATION_4, 'status': False}}
+
         else:
-            pystudent = int(data['student']) - 1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
-            if data['information_type'] == 'student_button':  # An unmatched student button was pressed
-                if player.Clicks[-2:] == data['student'] + ':':  # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
-                    print(player.Clicks)
-                    if player.participant.partialmatching[pystudent] > 0:  # If the student was already matched.
+            pystudent = int(data['student']) -1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
+            if data['information_type'] == 'student_button': # An unmatched student button was pressed
+                if player.Clicks[-2:] == data['student'] + ':': # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
+                    if player.participant.partialmatching[pystudent] > 0: # If the student was already matched.
                         oldschool = player.participant.partialmatching[pystudent] - 1
                         player.participant.matched_number[oldschool] -= 1
                     player.Clicks = player.Clicks + data['student'] + '|'
                     player.participant.partialmatching[pystudent] = -10
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'student_unmatched',
-                            'student':          data['student'],
-                            'matched_number':   player.participant.matched_number,
-                            'partialmatching':  player.participant.partialmatching,
-                        }
-                    }
+                    return {player.id_in_group: {'information_type': 'student_unmatched', 'student': data['student'],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,}}
                 else:
                     player.Clicks = player.Clicks + data['student'] + ':'
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'student_matching',
-                            'student':          data['student']
-                        }
-                    }
+                    return {player.id_in_group:{'information_type':'student_matching','student':data['student']}}
             elif data['information_type'] == 'school_plus_button':
                 # check if the prize was assigned to a participant already, if so decrement the amount of prizes assigned to the old participant
                 if player.participant.partialmatching[pystudent] > 0:
@@ -417,14 +480,13 @@ class DAalghoInterface(Page):
                         }
                     }
                 else:
-                    return {
-                        player.id_in_group: {
-                            'information_type': 'ready_for_rematch',
-                            'student':          data['student'],
-                            'school':           data['school']
-                        }
-                    }  # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
                     player.Clicks = player.Clicks + str(data['student']) + ':'
+                    return{player.id_in_group:{'information_type':'ready_for_rematch','student':data['student'],'school':data['school']}} # The data sent to javascript is the same that was sent by it. Data['school'] is a letter!
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        pass
+        # Here one can compare the submitted matching with the DA matching for example.
 
 
 class MechanicsIntro(Page):
@@ -439,13 +501,23 @@ class TrainingRound(Page):
 
     @staticmethod
     def get_form_fields(player: Player):
-        priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority", ]
+        priorities = [
+            "first_priority",
+            "second_priority",
+            "third_priority",
+            "fourth_priority",
+        ]
         return priorities
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(prizes=C.PRIZES, prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1], players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS[
-            player.round_number - 1], player_expected_ranking=C.EXPECTED_RANKINGS[player.round_number - 1], )
+        return dict(
+            prizes=C.PRIZES,
+            prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1],
+            players=C.PLAYERS,
+            players_rankings=C.PLAYERS_RANKINGS[player.round_number - 1],
+            player_expected_ranking=C.EXPECTED_RANKINGS[player.round_number - 1],
+        )
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
