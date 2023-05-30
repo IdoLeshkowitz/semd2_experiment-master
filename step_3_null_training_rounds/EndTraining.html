@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 {{ endblock }}
 
 {{ block styles}}
@@ -14,4 +15,5 @@
 {{ endblock }}
 
 {{ block scripts }}
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
 {{ endblock }}

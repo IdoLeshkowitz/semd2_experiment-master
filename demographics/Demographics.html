@@ -1,4 +1,9 @@
+{{ block scripts }}
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+{{ endblock}}
+
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
     Final questions (4/4)
 {{ endblock }}
 

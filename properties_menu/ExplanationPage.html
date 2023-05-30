@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
     The Key Principle of the Allocation Process
 {{ endblock }}
 
@@ -81,5 +82,6 @@
 {{ endblock }}
 
 {{ block scripts }}
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/properties_page.js' }}"></script>
 {{ endblock }}

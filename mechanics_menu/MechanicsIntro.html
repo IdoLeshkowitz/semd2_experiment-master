@@ -1,4 +1,5 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 <p> How the Allocation Process Works </p>
 {{ endblock }}
 {{ block styles}}
@@ -163,6 +164,7 @@
 </section>
 {{ endblock }}
 {{ block scripts }}
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
 <script src="{{ static 'global/menu_description_page.js' }}"></script>
 <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
 <script src="{{ static 'global/generate_priorities_table.js' }}"></script>

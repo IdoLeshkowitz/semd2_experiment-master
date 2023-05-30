@@ -33,7 +33,7 @@ class PassVars(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.trajectory_num = C.trajectory_num
-        player.participant.full_training = random.choice([True, False])
+        player.participant.full_training =True
         player.full_training = player.participant.full_training
 
 

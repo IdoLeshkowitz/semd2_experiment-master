@@ -1,6 +1,7 @@
 {{ block title }}
+{{ include "components/bonus_indicator.html" }}
 <!-- this is where it is most updated!! change all other round pages from here-->
-    Round {{ player.round_number }}/{{if player.participant.trajectory_num == 1
+Round {{ player.round_number }}/{{if player.participant.trajectory_num == 1
 or player.participant.trajectory_num == 3
 or player.participant.trajectory_num == 5
 or player.participant.trajectory_num == 7
@@ -39,7 +40,7 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
             {{if player.participant.trajectory_num == 3 or player.participant.trajectory_num == 4
             or player.participant.trajectory_num == 7 or player.participant.trajectory_num == 8}}
             Click for a reminder on the important principle of the allocation
-            <!--  after mechanics 1,2,5,6  -->
+    <!--  after mechanics 1,2,5,6  -->
             {{else}}
             Click for a reminder on the technical details of the allocation process
             {{endif}}
@@ -81,8 +82,18 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
                 <th>D</th>
             </tr>
         </thead>
-    </table><br>
-<!--second pop up window-->
+        <tbody>
+            <tr>
+                <td>Addition to your earnings if you get this prize</td>
+                <td class="money-amount">{{ first_prize | cu }}</td>
+                <td class="money-amount">{{ second_prize | cu }}</td>
+                <td class="money-amount">{{ third_prize | cu }}</td>
+                <td class="money-amount">{{ fourth_prize | cu }}</td>
+            </tr>
+        </tbody>
+    </table>
+    <br>
+    <!--second pop up window-->
 <button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
     <div id="GenModal1" class="modal">
       <div class="modal-content">
@@ -117,9 +128,9 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
             </tr>
         </thead>
     </table><br>
-
-<!--third pop up window-->
-<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
+    
+    <!--third pop up window-->
+<button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button><br>
     <div id="GenModal2" class="modal">
       <div class="modal-content">
         <span class="close2">&times;</span>
@@ -144,18 +155,8 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
 
 <section id="step-3">
     <h4>Step 2: Submit Your Ranking</h4>
-    <p>
-        Please rank the four prizes from most preferred to least preferred.
-    </p>
-    <ul>
-        <li>{{ formfield 'first_priority' }}</li>
-        <li>{{ formfield 'second_priority' }}</li>
-        <li>{{ formfield 'third_priority' }}</li>
-        <li>{{ formfield 'fourth_priority' }}</li>
-    </ul>
-
-<!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
+    <!-- fourth general pop up window-->
+<button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button><br>
     <div id="GenModal3" class="modal">
       <div class="modal-content">
         <span class="close3">&times;</span>
@@ -165,16 +166,7 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-
-    <div class="btn-container">
-        <!-- class="btn btn-danger btn-container" for submit button-->
-        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button><br>
-    </div>
-    <div class="incorrect-msg">
-        <p>
-            You submitted an invalid ranking. Please resubmit.
-        </p>
-    </div>
+    {{ include_sibling "ranking_form.html" }}
 </section>
 
 <section id="step-4">
@@ -188,16 +180,17 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
     <div id="round-results">
         <p>
             <b>You get Prize <span id="prize-won"></span></b>,
-            and your total earnings increase by <b><span id="points-won"></span>p</b>.
+            and your total earnings increase by <b><span id="points-won"></span></b>.
         </p>
     </div>
     <div class="next_btn" style="text-align: center">
         {{ next_button }}
     </div>
+</section>
 {{ endblock }}
 
 {{ block scripts }}
+    <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/round_page.js' }}"></script>
-    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}
