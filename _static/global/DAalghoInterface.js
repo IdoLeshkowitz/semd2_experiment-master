@@ -263,7 +263,7 @@ window.onload = function () {
         /* highlight the participant column */
         studentColumn.classList.remove("flexItemButtonsBackgroundSelected")
     })
-    $('.flexItemStudentButton').mouseenter(function () {
+    $('.flexItemStudentButton').hover(function () {
         if (student) return;
         /* get the prize number */
         const participantAlphabet = $(this).text().trim();
@@ -271,10 +271,8 @@ window.onload = function () {
         const participantNumber = student_dict[participantAlphabet];
         /* check if the current participant is already selected */
         const matchingPerCurrentParticipant = partial[participantNumber - 1];
-        /* if matched do nothing */
-        // if (matchingPerCurrentParticipant) return;
-        /* get the prize column */
         const participantColumn = document.getElementById(`StudentBackground${participantNumber}`)
+        if (!participantColumn) return;
         /* highlight the prize column */
         participantColumn.classList.add("flexItemButtonsBackgroundSelected")
     })

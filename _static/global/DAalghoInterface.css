@@ -168,3 +168,7 @@ body {
 .legend-container span:last-child {
     border-bottom: none;
 }
+
+.offButton{
+    display: none;
+}

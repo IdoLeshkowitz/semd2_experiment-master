@@ -456,7 +456,7 @@ window.onload = function () {
      if so, do nothing
      if not, highlight the matching prize column
      */
-    $('[id^=ButtonStudent]').mouseenter(function () {
+    $('[id^=ButtonStudent]').hover(function () {
         /* check if any prize is currently selected, if not continue */
         if (currentPickedPrize) return
         /* get the prize number */
@@ -484,16 +484,12 @@ window.onload = function () {
         prizeColumn.classList.remove("flexItemButtonsBackgroundSelected");
     })
 
-    $('.flexItemStudentButton').mouseenter(function () {
+    $('.flexItemStudentButton').hover(function () {
         if (currentPickedPrize) return
         /* get the prize number */
         const prizeAlphabetical = $(this).text().trim();
         /* convert alphabetical value to numerical value */
         const prizeNumber = student_dict[prizeAlphabetical];
-        /* check if the prize is already matched */
-        const matchingPerCurrentPrize = matchingPerPrize[prizeNumber];
-        /* if the prize is already matched, do nothing */
-        if (matchingPerCurrentPrize) return
         /* get the prize column */
         const prizeColumn = document.getElementById(`StudentBackground${prizeNumber}`);
         if (!prizeColumn) return
