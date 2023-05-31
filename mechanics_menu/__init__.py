@@ -334,6 +334,7 @@ class Player(BasePlayer):
 
 def variablesFunction(player):
     d = {
+        'round_number':player.round_number,
         'schools_number':player.SchoolsNumber, # This sets the number of schools. This of course can be determined randomly or according to some rule.
         'students_number':player.StudentsNumber, # Same as above but regarding the number of students.
         'schools_lists': player.participant.schools_lists,

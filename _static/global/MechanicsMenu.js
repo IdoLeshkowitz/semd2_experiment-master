@@ -20,11 +20,19 @@ var span = document.getElementsByClassName("close")[0]; // Get the <span> elemen
 
 var currQuestionIncorrectAnswers = [];
 
-btn.onclick = function() {modal.style.display = "block";} // When the user clicks the button, open the modal
-span.onclick = function() {modal.style.display = "none";}// When the user clicks on <span> (x), close the modal
-window.onclick = function(event) {if (event.target == modal) {modal.style.display = "none";}}// When the user clicks anywhere outside of the modal, close it
+btn.onclick = function () {
+    modal.style.display = "block";
+} // When the user clicks the button, open the modal
+span.onclick = function () {
+    modal.style.display = "none";
+}// When the user clicks on <span> (x), close the modal
+window.onclick = function (event) {
+    if (event.target == modal) {
+        modal.style.display = "none";
+    }
+}// When the user clicks anywhere outside of the modal, close it
 
-window.onload = function() {
+window.onload = function () {
     containment = js_vars.matched_number;
     partial = js_vars.partialmatching;
     max_students = js_vars.max_students_per_school;
@@ -94,10 +102,12 @@ window.onload = function() {
     $("#step-17 .incorrect-seq-field").hide();
 
     $(".incorrect-skip-msg").hide();
-
+    $(".correct-first-msg").hide();
+    $(".correct-second-msg").hide();
     $("#step-2-rounds").hide();
     $("#step-2-rounds .incorrect-msg").hide();
     $("#step-2-rounds .correct-msg").hide();
+
     $("#step-3-rounds").hide();
     $("#step-4-rounds").hide();
     $("#step-5-rounds").hide();
@@ -120,7 +130,7 @@ window.onload = function() {
     });
 
     $("#proceed-step-3-btn-rounds").click(function () {
-        liveSend({'information_type':'training_rounds','matching':partial})
+        liveSend({'information_type': 'training_rounds', 'matching': partial})
     });
 
     $("#proceed-step-4-btn-rounds").click(function () {
@@ -129,61 +139,90 @@ window.onload = function() {
         c = forminputs['prize_c_obtainable'].value;
         d = forminputs['prize_d_obtainable'].value;
         if (a != js_vars.correct_answers[0] || b != js_vars.correct_answers[1] || c != js_vars.correct_answers[2] || d != js_vars.correct_answers[3]) {
+            mistakes_counter += 1;
             $("#step-3-rounds .incorrect-msg").show();
         } else {
-            $("#step-3-rounds .incorrect-msg").hide();
-            $("#step-3-rounds .correct-msg").show();
-             setTimeout(() => {
-                 $("#step-3-rounds").hide();
+            if (mistakes_counter > 0) {
+                $("#step-3-rounds .incorrect-msg").hide();
+                $("#step-3-rounds .correct-msg").show();
+                $("#step-3-rounds .correct-first-msg").hide();
+            } else {
+                $("#step-3-rounds .incorrect-msg").hide();
+                $("#step-3-rounds .correct-first-msg").show();
+            }
+            setTimeout(() => {
+                $("#step-3-rounds ol").hide();
                 $("#step-4-rounds").toggle();
             }, 2000);
+            mistakes_counter = 0;
         }
     });
 
     $("#proceed-step-5-btn-rounds").click(function () {
-        answer = forminputs['obtainable_prize'].value;
-        if (answer != js_vars.correct_answers[4]){
+        let answer;
+        const roundNumber = js_vars.round_number;
+        if (roundNumber === 2) {
+            answer = forminputs['obtainable_prize_round_2'].value;
+        } else {
+            answer = forminputs['obtainable_prize_round_3_4'].value;
+        }
+        if (answer != js_vars.correct_answers[4]) {
+            mistakes_counter += 1;
             $("#step-4-rounds .incorrect-msg").show();
-        } else  {
+        } else {
             $("#step-4-rounds .incorrect-msg").hide();
-            $("#step-4-rounds .correct-msg").show();
-             setTimeout(() => {
-                    $("#step-4-rounds .btn-container").hide();
-                    $("#step-5-rounds").show();
+            if (mistakes_counter > 0) {
+                $("#step-4-rounds .correct-msg").show();
+            }
+            else {
+                $("#step-4-rounds .correct-first-msg").show();
+            }
+            setTimeout(() => {
+                $("#step-4-rounds ._formfield").hide();
+                $("#step-4-rounds .btn-container").hide();
+                $("#step-5-rounds").show();
             }, 2000);
+            mistakes_counter = 0;
         }
     });
 
-     $("#proceed-step-6-btn-rounds").click(function () {
+    $("#proceed-step-6-btn-rounds").click(function () {
         document.getElementById("form").submit();
     });
 
 
-
-
-
     $("#proceed-step-4-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
 
     $("#proceed-step-5-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
 
     $("#proceed-step-6-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_1";
         var formInputName = "question_1";
-        if (forminputs[formInputName].value != js_vars.correct_answers[0]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[0]) {
+            debugger
+            bonus_flag = false;
             $("#step-5 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        debugger
+        $("#step-5 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-5 .correct-msg").hide();
+        } else {
+            $("#step-5 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-5 .incorrect-msg").hide();
-        $("#step-5 .correct-msg").show();
+
         setTimeout(() => {
-             $("#step-5").hide();
+            $("#step-5").hide();
             $("#step-6").toggle();
         }, 5000);
 
@@ -192,125 +231,173 @@ window.onload = function() {
     $("#proceed-step-7-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_2";
         var formInputName = "question_2";
-        if (forminputs[formInputName].value != js_vars.correct_answers[1]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[1]) {
+            debugger
+            bonus_flag = false;
             $("#step-6 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        debugger
+        $("#step-6 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-6 .correct-first-msg").show();
+        } else {
+            $("#step-6 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-6 .incorrect-msg").hide();
-        $("#step-6 .correct-msg").show();
         setTimeout(() => {
-             $("#step-6").hide();
+            $("#step-6").hide();
             $("#step-7").toggle();
         }, 5000);
     });
 
     $("#proceed-step-8-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
     $("#proceed-step-9-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_3";
         var formInputName = "question_3";
-        if (forminputs[formInputName].value != js_vars.correct_answers[2]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[2]) {
+            debugger
+            bonus_flag = false;
             $("#step-8 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        debugger
+        $("#step-8 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-8 .correct-first-msg").show();
+        } else {
+            $("#step-8 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-8 .incorrect-msg").hide();
-        $("#step-8 .correct-msg").show();
         setTimeout(() => {
-             $("#step-8").hide();
+            $("#step-8").hide();
             $("#step-9").toggle();
         }, 5000);
     });
     $("#proceed-step-10-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
 
     $("#proceed-step-11-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_4";
         var formInputName = "question_4";
-        if (forminputs[formInputName].value != js_vars.correct_answers[3]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[3]) {
+            bonus_flag = false;
             $("#step-10 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        $("#step-10 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-10 .correct-first-msg").show();
+        } else {
+            $("#step-10 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-10 .incorrect-msg").hide();
-        $("#step-10 .correct-msg").show();
         setTimeout(() => {
-             $("#step-10").hide();
+            $("#step-10").hide();
             $("#step-11").toggle();
         }, 5000);
     });
 
     $("#proceed-step-12-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
 
     $("#proceed-step-13-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_5";
         var formInputName = "question_5";
-        if (forminputs[formInputName].value != js_vars.correct_answers[4]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[4]) {
+            bonus_flag = false;
             $("#step-12 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        $("#step-12 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-12 .correct-first-msg").show();
+        } else {
+            $("#step-12 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-12 .incorrect-msg").hide();
-        $("#step-12 .correct-msg").show();
         setTimeout(() => {
-             $("#step-12").hide();
+            $("#step-12").hide();
             $("#step-13").toggle();
         }, 5000);
     });
 
     $("#proceed-step-14-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
 
     $("#proceed-step-15-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_6";
+        var incorrectSequenceFieldName = "incorrect_seq_question_5";
         var formInputName = "question_6";
-        if (forminputs[formInputName].value != js_vars.correct_answers[5]){
-            $("#step-12 .incorrect-msg").show();
+        if (forminputs[formInputName].value != js_vars.correct_answers[4]) {
+            bonus_flag = false;
+            $("#step-14 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        $("#step-14 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-14 .correct-first-msg").show();
+        } else {
+            $("#step-14 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-14 .incorrect-msg").hide();
-        $("#step-14 .correct-msg").show();
         setTimeout(() => {
-             $("#step-14").hide();
+            $("#step-14").hide();
             $("#step-15").toggle();
         }, 5000);
     });
 
     $("#proceed-step-16-btn").click(function () {
-        liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+        liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
     });
 
     $("#proceed-step-17-btn").click(function () {
-        var incorrectSequenceFieldName = "incorrect_seq_question_7";
-        var formInputName = "question_7";
-        if (forminputs[formInputName].value != js_vars.correct_answers[6]){
+        var incorrectSequenceFieldName = "incorrect_seq_question_5";
+        var formInputName = "question_5";
+        if (forminputs[formInputName].value != js_vars.correct_answers[4]) {
+            debugger
+            bonus_flag = false;
             $("#step-16 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        debugger
+        $("#step-16 .incorrect-msg").hide();
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-16 .correct-first-msg").show();
+        } else {
+            $("#step-16 .correct-msg").show();
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-16 .incorrect-msg").hide();
-        $("#step-16 .correct-msg").show();
         setTimeout(() => {
-             $("#step-16").hide();
+            $("#step-16").hide();
             $("#step-17").toggle();
         }, 5000);
     });
@@ -318,24 +405,26 @@ window.onload = function() {
     $("#proceed-step-18-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_8";
         var formInputName = "question_8";
-        if (forminputs[formInputName].value != js_vars.correct_answers[7]){
-            $("#step-16 .incorrect-msg").show();
+        if (forminputs[formInputName].value != js_vars.correct_answers[7]) {
+            debugger
+            $("#step-17 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        debugger
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
         $("#step-17 .incorrect-msg").hide();
         $("#step-17 .correct-msg").show();
         setTimeout(() => {
-             $("#step-17").hide();
+            $("#step-17").hide();
             $("#step-18").toggle();
         }, 5000);
     });
 
     $("#prize-a-btn").click(function () {
         var formInputName = "prize_a_obtainable";
-        if (forminputs[formInputName].value != js_vars.correct_answers[8]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[8]) {
             $("#step-18 .incorrect-msg").show();
             return;
         }
@@ -350,7 +439,7 @@ window.onload = function() {
 
     $("#prize-b-btn").click(function () {
         var formInputName = "prize_b_obtainable";
-        if (forminputs[formInputName].value != js_vars.correct_answers[9]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[9]) {
             $("#step-19 .incorrect-msg").show();
             return;
         }
@@ -365,7 +454,7 @@ window.onload = function() {
 
     $("#prize-c-btn").click(function () {
         var formInputName = "prize_c_obtainable";
-        if (forminputs[formInputName].value != js_vars.correct_answers[10]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[10]) {
             $("#step-20 .incorrect-msg").show();
             return;
         }
@@ -380,7 +469,7 @@ window.onload = function() {
 
     $("#prize-d-btn").click(function () {
         var formInputName = "prize_d_obtainable";
-        if (forminputs[formInputName].value != js_vars.correct_answers[11]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[11]) {
             $("#step-21 .incorrect-msg").show();
         }
         $("#prize-d-btn").hide();
@@ -398,7 +487,7 @@ window.onload = function() {
 
     $("#prize_question").click(function () {
         var formInputName = "question_prize";
-        if (forminputs[formInputName].value != js_vars.correct_answers[12]){
+        if (forminputs[formInputName].value != js_vars.correct_answers[12]) {
             $("#step-22 .incorrect-msg").show();
             return;
         }
@@ -418,100 +507,104 @@ window.onload = function() {
 }
 
 window.addEventListener('DOMContentLoaded', (event) => {
-            containment = js_vars.matched_number;
-            partial = js_vars.partialmatching;
-            max_students = js_vars.max_students_per_school;
-            updateCurrentMatching();
-            let d = new Date();
-            M = d.getTime();
-            liveSend({'information_type':'onload','time':JSON.stringify(M),})
-        });
+    containment = js_vars.matched_number;
+    partial = js_vars.partialmatching;
+    max_students = js_vars.max_students_per_school;
+    updateCurrentMatching();
+    let d = new Date();
+    M = d.getTime();
+    liveSend({'information_type': 'onload', 'time': JSON.stringify(M),})
+});
+
 function submitButton() {
     $('#finishModal').modal('show');
 }
+
 function dismissFinishModal() {
     $('#finishModal').modal('hide');
 }
+
 function confirmSubmission() {
     let d = new Date();
     M = d.getTime();
-    liveSend({'information_type':'submission','time':JSON.stringify(M),});
+    liveSend({'information_type': 'submission', 'time': JSON.stringify(M),});
 
 }
-function updateMatching(matching){
+
+function updateMatching(matching) {
     if (matching[0] != -10) {
-        if (partial[0] == -10){
-            liveSend({'information_type':'student_button','student':'1',});
+        if (partial[0] == -10) {
+            liveSend({'information_type': 'student_button', 'student': '1',});
         } else {
-            liveSend({'information_type':'rematch_button','school':partial[0],'student':'1',});
+            liveSend({'information_type': 'rematch_button', 'school': partial[0], 'student': '1',});
         }
-        liveSend({'information_type':'school_plus_button','school':matching[0],'student':'1',});
-    }
-    else {
-        liveSend({'information_type':'student_button','student':'1',});
-        liveSend({'information_type':'student_button','student':'1',});
+        liveSend({'information_type': 'school_plus_button', 'school': matching[0], 'student': '1',});
+    } else {
+        liveSend({'information_type': 'student_button', 'student': '1',});
+        liveSend({'information_type': 'student_button', 'student': '1',});
     }
     if (matching[1] != -10) {
-        if (partial[01] == -10){
-            liveSend({'information_type':'student_button','student':'2',});
+        if (partial[01] == -10) {
+            liveSend({'information_type': 'student_button', 'student': '2',});
         } else {
-            liveSend({'information_type':'rematch_button','school':partial[1],'student':'2',});
+            liveSend({'information_type': 'rematch_button', 'school': partial[1], 'student': '2',});
         }
-        liveSend({'information_type':'school_plus_button','school':matching[1],'student':'2',});
-    }
-    else {
-        liveSend({'information_type':'student_button','student':'2',});
-        liveSend({'information_type':'student_button','student':'2',});
+        liveSend({'information_type': 'school_plus_button', 'school': matching[1], 'student': '2',});
+    } else {
+        liveSend({'information_type': 'student_button', 'student': '2',});
+        liveSend({'information_type': 'student_button', 'student': '2',});
     }
     if (matching[2] != -10) {
-        if (partial[2] == -10){
-            liveSend({'information_type':'student_button','student':'3',});
+        if (partial[2] == -10) {
+            liveSend({'information_type': 'student_button', 'student': '3',});
         } else {
-            liveSend({'information_type':'rematch_button','school':partial[2],'student':'3',});
+            liveSend({'information_type': 'rematch_button', 'school': partial[2], 'student': '3',});
         }
-        liveSend({'information_type':'school_plus_button','school':matching[2],'student':'3',});
-    }
-    else {
-        liveSend({'information_type':'student_button','student':'3',});
-        liveSend({'information_type':'student_button','student':'3',});
+        liveSend({'information_type': 'school_plus_button', 'school': matching[2], 'student': '3',});
+    } else {
+        liveSend({'information_type': 'student_button', 'student': '3',});
+        liveSend({'information_type': 'student_button', 'student': '3',});
     }
     if (matching[3] != -10) {
-        if (partial[3] == -10){
-            liveSend({'information_type':'student_button','student':'4',});
+        if (partial[3] == -10) {
+            liveSend({'information_type': 'student_button', 'student': '4',});
         } else {
-            liveSend({'information_type':'rematch_button','school':partial[3],'student':'4',});
+            liveSend({'information_type': 'rematch_button', 'school': partial[3], 'student': '4',});
         }
-        liveSend({'information_type':'school_plus_button','school':matching[3],'student':'4',});
-    }
-    else {
-        liveSend({'information_type':'student_button','student':'4',});
-        liveSend({'information_type':'student_button','student':'4',});
+        liveSend({'information_type': 'school_plus_button', 'school': matching[3], 'student': '4',});
+    } else {
+        liveSend({'information_type': 'student_button', 'student': '4',});
+        liveSend({'information_type': 'student_button', 'student': '4',});
     }
 }
+
 function matchStudent(val) {
-    liveSend({'information_type':'student_button','student':val,});
+    liveSend({'information_type': 'student_button', 'student': val,});
 }
+
 function matchToSchool(val) {
-    liveSend({'information_type':'school_plus_button','school':val,'student':student,});
+    liveSend({'information_type': 'school_plus_button', 'school': val, 'student': student,});
 }
-function rematchStudent(val,text) {
-    liveSend({'information_type':'rematch_button','school': schools_dict[val],'student':student_dict[text],});
+
+function rematchStudent(val, text) {
+    liveSend({'information_type': 'rematch_button', 'school': schools_dict[val], 'student': student_dict[text],});
 }
+
 function updateCurrentMatching() {
-    for (let j = 1; j <= js_vars.students_number; j ++) {
-        if (j===parseInt(student)) { // a student's button is selected
+    for (let j = 1; j <= js_vars.students_number; j++) {
+        if (j === parseInt(student)) { // a student's button is selected
             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackgroundSelected';
-            if (partial[j-1]>0) {
+            if (partial[j - 1] > 0) {
                 document.getElementById('ButtonStudent'.concat(j)).className = 'pButton';
                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
-                document.getElementById('School'.concat(alphabet[partial[j-1]-1],'MatchedToStudent',student,'Button')).className = 'iButtonSelected';
+                document.getElementById('School'.concat(alphabet[partial[j - 1] - 1], 'MatchedToStudent', student, 'Button')).className = 'iButtonSelected';
             } else {
                 document.getElementById('ButtonStudent'.concat(student)).className = 'iButtonSelected';
                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
             }
         } else { // no student button is selected.
             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackground';
-            if (partial[j-1]>0) {
+            if (partial[j - 1] > 0) {
                 document.getElementById('ButtonStudent'.concat(j)).className = 'offButton';
                 document.getElementById('ButtonStudent'.concat(j)).disabled = true;
             } else {
@@ -522,33 +615,35 @@ function updateCurrentMatching() {
     }
     for (let i = 0; i < js_vars.schools_number; i++) {
         document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'none';
-        for (let l = 1; l <= js_vars.students_number; l ++) {
-            document.getElementById('School'.concat(alphabet[i],'MatchedToStudent',l,'Button')).className = 'iButton';
-            if (partial[l-1] === i+1) {
-                document.getElementById('School'.concat(alphabet[i],'MatchedToStudent',l)).style.order = containment[i];
-                document.getElementById('School'.concat(alphabet[i],'MatchedToStudent',l)).style.display = 'inline-block';
-                document.getElementById('Student'.concat(l,'PrefSchool',alphabet[i])).className = 'dButtonMatched';
-                document.getElementById('School'.concat(alphabet[i],'PrefStudent',l)).className = 'dButtonMatched';
+        for (let l = 1; l <= js_vars.students_number; l++) {
+            document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
+            if (partial[l - 1] === i + 1) {
+                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = containment[i];
+                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'inline-block';
+                document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButtonMatched';
+                document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButtonMatched';
             } else {
-                document.getElementById('School'.concat(alphabet[i],'MatchedToStudent',l)).style.order = '30';
-                document.getElementById('School'.concat(alphabet[i],'MatchedToStudent',l)).style.display = 'none';
-                document.getElementById('Student'.concat(l,'PrefSchool',alphabet[i])).className = 'dButton';
-                document.getElementById('School'.concat(alphabet[i],'PrefStudent',l)).className = 'dButton';
+                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
+                document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
+                document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButton';
+                document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButton';
             }
         }
     }
 
 
-
 }
+
 function openPlus() {
     for (let i = 0; i < js_vars.schools_number; i++) {
-        if (i + 1 !== partial[student -1]  && containment[i] < max_students[i]) {
+        if (i + 1 !== partial[student - 1] && containment[i] < max_students[i]) {
             document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'inline-block'; // Display plus button in the lines where the student is not already matched to, and for schools which didn't attain their quotas yet..
         }
     }
 }
+
 function liveRecv(data) {
+    console.log(data)
     if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
         student = data['student'];
         updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.
@@ -572,69 +667,112 @@ function liveRecv(data) {
         updateCurrentMatching();
     } else if (data['information_type'] === 'matching_status') {
         if (data['round'] == 1) {
-            if (data['status']){
+            if (data['status']) {
                 mistakes_counter = 0;
-                if (stage == 1){
+                if (stage == 1) {
                     $("#step-3 .incorrect-msg").hide();
-                    $("#step-3 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-3 .correct-first-msg").show();
+                    } else {
+                        $("#step-3 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-3").hide();
+                        $("#step-3").hide();
                         $("#step-4").toggle();
                     }, 2000);
                 }
-                if (stage == 2){
+                if (stage == 2) {
                     $("#step-4 .incorrect-msg").hide();
-                    $("#step-4 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-4 .correct-first-msg").show();
+                    } else {
+                        $("#step-4 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-4").hide();
+                        $("#step-4").hide();
                         $("#step-5").toggle();
                     }, 2000);
                 }
-                if (stage == 3){
+                if (stage == 3) {
                     $("#step-7 .incorrect-msg").hide();
-                    $("#step-7 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-7 .correct-first-msg").show();
+                    } else {
+                        $("#step-7 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-7").hide();
+                        $("#step-7").hide();
                         $("#step-8").toggle();
                     }, 2000);
                 }
-                if (stage == 4){
+                if (stage == 4) {
                     $("#step-9 .incorrect-msg").hide();
-                    $("#step-9 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-9 .correct-first-msg").show();
+                    } else {
+                        $("#step-9 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-9").hide();
+                        $("#step-9").hide();
                         $("#step-10").toggle();
                     }, 2000);
                 }
-                if (stage == 5){
+                if (stage == 5) {
                     $("#step-11 .incorrect-msg").hide();
-                    $("#step-11 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-11 .correct-first-msg").show();
+                    } else {
+                        $("#step-11 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-11").hide();
+                        $("#step-11").hide();
                         $("#step-12").toggle();
                     }, 2000);
                 }
-                if (stage == 6){
+                if (stage == 6) {
                     $("#step-13 .incorrect-msg").hide();
-                    $("#step-13 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-13 .correct-first-msg").show();
+                    } else {
+                        $("#step-13 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-13").hide();
+                        $("#step-13").hide();
                         $("#step-14").toggle();
                     }, 2000);
                 }
-                if (stage == 7){
+                if (stage == 7) {
                     $("#step-15 .incorrect-msg").hide();
-                    $("#step-15 .correct-msg").show();
+                    if (bonus_flag) {
+                        bonus = bonus + 1;
+                        $("#step-15 .correct-first-msg").show();
+                    } else {
+                        $("#step-11 .correct-msg").show();
+                    }
+                    bonus_flag = true;
                     setTimeout(() => {
-                         $("#step-15").hide();
+                        $("#step-15").hide();
                         $("#step-16").toggle();
                     }, 2000);
                 }
                 stage = stage + 1;
             } else {
-                if (stage == 1){
-                    mistakes_counter = mistakes_counter + 1;
-                    if (mistakes_counter < 3){
+                bonus_flag = false;
+                mistakes_counter = mistakes_counter + 1;
+                if (stage == 1) {
+                    if (mistakes_counter < 3) {
                         $("#step-3 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -651,9 +789,8 @@ function liveRecv(data) {
                         return;
                     }
                 }
-                if (stage == 2){
-                    mistakes_counter = mistakes_counter + 1;
-                    if (mistakes_counter < 3){
+                if (stage == 2) {
+                    if (mistakes_counter < 3) {
                         $("#step-4 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -670,8 +807,8 @@ function liveRecv(data) {
                         return;
                     }
                 }
-                if (stage == 3){
-                    if (mistakes_counter < 3){
+                if (stage == 3) {
+                    if (mistakes_counter < 3) {
                         $("#step-7 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -688,8 +825,8 @@ function liveRecv(data) {
                         return;
                     }
                 }
-                if (stage == 4){
-                    if (mistakes_counter < 3){
+                if (stage == 4) {
+                    if (mistakes_counter < 3) {
                         $("#step-9 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -706,8 +843,8 @@ function liveRecv(data) {
                         return;
                     }
                 }
-                if (stage == 5){
-                    if (mistakes_counter < 3){
+                if (stage == 5) {
+                    if (mistakes_counter < 3) {
                         $("#step-11 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -724,8 +861,8 @@ function liveRecv(data) {
                         return;
                     }
                 }
-                if (stage == 6){
-                    if (mistakes_counter < 3){
+                if (stage == 6) {
+                    if (mistakes_counter < 3) {
                         $("#step-13 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -742,8 +879,8 @@ function liveRecv(data) {
                         return;
                     }
                 }
-                if (stage == 7){
-                    if (mistakes_counter < 3){
+                if (stage == 7) {
+                    if (mistakes_counter < 3) {
                         $("#step-15 .incorrect-msg").show();
                         updateMatching(data['matching']);
                     } else {
@@ -757,22 +894,29 @@ function liveRecv(data) {
                             $("#step-15").hide();
                             $("#step-16").toggle();
                         }, 5000);
-                        return;
+
                     }
                 }
             }
         } else {
-            if (data['status']){
+            if (data['status']) {
                 $("#step-2-rounds .incorrect-msg").hide();
-                $("#step-2-rounds .correct-msg").show();
+                if (mistakes_counter === 0) {
+                    /* show first try correct message */
+                    $("#step-2-rounds .correct-first-msg").show();
+                } else if (mistakes_counter === 1) {
+                    /* show second try correct message */
+                    $("#step-2-rounds .correct-second-msg").show();
+                }
                 setTimeout(() => {
-                        $("#step-1-rounds").hide();
-                        $("#step-2-rounds").hide();
-                        $("#step-3-rounds").toggle();
-                    }, 2000);
+                    $("#step-2-rounds .btn-container").hide();
+                    $("#step-3-rounds").show();
+                    $("#step-2-rounds .correct-second-msg").hide();
+                }, 2000);
+                mistakes_counter = 0;
             } else {
                 mistakes_counter = mistakes_counter + 1;
-                if (mistakes_counter < 3){
+                if (mistakes_counter < 3) {
                     $("#step-2-rounds .incorrect-msg").show();
                 } else {
                     $("#step-2-rounds .incorrect-msg").hide();
@@ -781,7 +925,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-2-rounds .btn-container").hide();
                         $("#step-3-rounds").show();
-                        }, 5000);
+                    }, 5000);
                 }
             }
         }
@@ -790,8 +934,8 @@ function liveRecv(data) {
     }
 }
 
-function confirmStage(){
-    liveSend({'information_type':'matching_update','matching':partial,'stage':stage})
+function confirmStage() {
+    liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
 }
 
 

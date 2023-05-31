@@ -85,7 +85,7 @@
     text-align: center;
 }
 
-/POP UP WINDOW/
+
 /* The Modal (background) */
 .modal {
   display: none; /* Hidden by default */
@@ -141,4 +141,10 @@
   user-select: none;
   -webkit-user-select: none;
   touch-action: manipulation;
+}
+
+.correct-second-msg {
+       color: green;
+    text-align: center;
+    margin: 1rem 0;
 }

@@ -14,601 +14,8 @@
 
     <link rel="stylesheet" href="{{ static 'global/globalstyle.css' }}">
     <link rel="stylesheet" href="{{ static 'global/DAalghoInterface.css' }}">
-
-{{ if player.round_number ==  1 }}
-    <section id="step-1">
-        The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer. <br><br>
-        First, we will guide you how to use the <b>Allocation Dashboard</b> below to find the temporary allocation of prizes to all participants except for you:
-        <br><br>
-        <div class="btn-container">
-            <button id="proceed-step-2-btn" type="button" class="btn btn-primary">Proceed</button>
-        </div>
-        <br>
-    </section>
-    <section id="step-2">
-        On the upper left part of the dashboard below you see the <b>Participant Rankings</b>.<br>
-        Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.<br><br>
-        <b>For example:</b> The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest). <br>
-        Notice that the ranking under “Y” (you) is exactly the ranking that you submitted in the previous screen! <br><br>
-        On the upper right part of the dashboard below you see the <b>Prize Priorities</b>.<br><br>
-        Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize. <br><br>
-        <b>For example:</b> The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority at that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority. <br><br>
-
-        Also Notice: Since you are now in charge of the allocation process, and you have to use the other participants’ rankings to perform it, <b>in these training rounds only</b> you are able to see the other participants’ rankings.<br><br>
-
-        The middle and lower parts of the dashboard enable you to pair prizes to participants, as will be explained next.
-        <br><br>
-        <div class="btn-container">
-            <button id="proceed-step-3-btn" type="button" class="btn btn-primary">Proceed</button>
-        </div>
-        <br>
-    </section>
-    <section id="step-3">
-        First, pair each prize to its <b>highest-priority</b> participant.<br><br>
-
-        Start by clicking on <b>Prize A (“A”)</b> to the right of “Unpaired prizes”.
-        Then, in the list of four participants at the bottom of the dashboard, click on “+” next to the participant, <b>except for you</b> that is highest in their priorities.<br>
-        <p>Hint: this participant is indicated by the letter just under “A” in the Prize Priorities table.</p>
-        <p>After pairing, “R” will be colored purple under Prize A’s name (“A”) and “A” will be colored purple under Ruth’s name (“R”) , to help you keep track that they are paired.</p>
-        <p>Notice: There is no “+” sign next to “You” in the bottom part of the dashboard, reminding that you should not pair any prize with yourself during this stage of the allocation process.</p>
-        <p>Click Submit when done.</p>
-        <div class="btn-container">
-            <button id="proceed-step-4-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-4">
-        <p>Now repeat the same for the three other prizes. One by one, pair each of them to its <b>highest-priority</b> participant, except for you. </p>
-        <p>Notice: There is no “+” sign next to “You” in the bottom part of the dashboard, reminding that you should not pair any prize with yourself during the temporary- allocation phase.</p>
-        <p>Hint: The highest-priority participant at Prize D is you, but you are not a part of the process and hence you cannot pair yourself to it. Who is Prize D’s highest-priority participant, <b>except for you</b>? <br>
-            (Another hint: it is Theresa)</p>
-        <p>Click Submit after completing all three.</p>
-        <br>
-        <div class="btn-container">
-            <button id="proceed-step-5-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-5">
-        <p>Each prize is now paired to a participant. <br>
-        However, there are <b>conflicts</b>: two (or more) prizes are paired to the same participant.</p>
-        <p>Notice: <b>Prize A</b> and <b>Prize B</b> are both paired to <b>Ruth</b>. This is a conflict.</p>
-        <p>To solve a conflict, the first step is <b>Unpair</b>.<br>
-            According to this step, only one prize should remain paired to Ruth. <b>Which prize should it be?</b>
-        </p>
-        <p>Please select one of the answers below and then click Submit.</p>
-        {{ formfield 'question_1' }}
-
-        <div class="btn-container">
-            <button id="proceed-step-6-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_1' }}
-        </div>
-
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct! When there is a conflict, only the prize with the highest rank at that participant’s ranking remains paired to that participant. The others get unpaired.
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-6">
-        <p>
-            The second step in solving conflicts is <b>Re-pair</b>.
-            After a prize gets unpaired, what new participant does it get paired to?
-        </p>
-        {{ formfield 'question_2' }}
-
-        <div class="btn-container">
-            <button id="proceed-step-7-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_2' }}
-        </div>
-
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct! Each unpaired prize is re-paired to its highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-7">
-        <p>Now, let’s solve the conflict. </p>
-        <p>According to the Participant Rankings, <b>Ruth</b> ranked <b>Prize A</b> higher than <b>Prize B</b>. Hence, <b>Prize B</b> should get unpaired from Ruth, and then be re-paired to its second highest-priority participant, among all participants <b>except for you</b>.</p>
-        <p>Perform this using the two steps:
-            <ul>
-                <li><b>Unpair</b>: at the lower part of the dashboard, next to Ruth (“R”), click on <b>Prize B (“B”)</b>.</li>
-                <li><p><b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Prize B's (“B”) <b>second highest-priority participant</b> among all participants <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant it is, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under Prize B’s name (“B”), or, in case that participant is you (“Y”), the one right below you, or, in case that participant is you (“Y”), the one right below you.</p></li>
-            </ul>
-        </p>
-        <p>Click Submit when done.</p>
-        <div class="btn-container">
-            <button id="proceed-step-8-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-
-
-    <section id ="step-8">
-        <p>Is the process over?</p>
-        {{ formfield 'question_3' }}
-        <div class="btn-container">
-            <button id="proceed-step-9-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_3' }}
-        </div>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                 Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-9">
-        <p>Find all conflicts and solve them like before:
-            <ul>
-                <li>Find all participants that are paired to two (or more) prizes.</li>
-            </ul>
-            <p><span style="color:red"><b>Only solve the conflicts you can see now!</b></span> If you already observe new conflicts after re-pairing, wait. You will solve them one-by-one in the next screens.</p>
-            <ul>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
-            </ul>
-        </p>
-        <p>Click Submit when done.</p>
-        <div class="btn-container">
-            <button id="proceed-step-10-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-    <section id ="step-10">
-        <p>Is the process over?</p>
-        {{ formfield 'question_4' }}
-        <div class="btn-container">
-            <button id="proceed-step-11-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_4' }}
-        </div>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                 Correct! The process is only over when there are no more conflicts.
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-11">
-        <p>Find all conflicts and solve them like before:
-            <ul>
-                <li>Find all participants that are paired to two (or more) prizes.</li>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
-            </ul>
-        </p>
-        <p>Click Submit when done.</p>
-        <div class="btn-container">
-            <button id="proceed-step-12-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-    <section id ="step-12">
-        <p>Is the process over?</p>
-        {{ formfield 'question_5' }}
-        <div class="btn-container">
-            <button id="proceed-step-13-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_5' }}
-        </div>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                 Correct!
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-13">
-        <p>Find all conflicts and solve them like before:
-            <ul>
-                <li>Find all participants that are paired to two (or more) prizes.</li>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
-            </ul>
-        </p>
-        <p>Click Submit when done.</p>
-        <div class="btn-container">
-            <button id="proceed-step-14-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-    <section id ="step-14">
-        <p>Is the process over?</p>
-        {{ formfield 'question_6' }}
-        <div class="btn-container">
-            <button id="proceed-step-15-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_6' }}
-        </div>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                 Correct!
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-15">
-        <p>Find all conflicts and solve them like before:
-            <ul>
-                <li>Find all participants that are paired to two (or more) prizes.</li>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-            </ul>
-        </p>
-        <p><b>Note</b>: at this stage, <b>Prize D</b> should be unpaired from Ruth, which is its last priority. Hence, there are no participants left to re-pair it to, and <b>it will remain unpaired</b>.</p>
-        <p>To leave Prize D unpaired, do the following:<br>
-            After clicking on “D” at the <b>lower</b> part of the dashboard, click on “D” at the <b>middle</b> part of the dashboard. </p>
-        <p>Click Submit when done.</p>
-        <div class="btn-container">
-            <button id="proceed-step-16-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct!
-            </p>
-        </div>
-    </section>
-    <section id ="step-16">
-        <p>Is the process over?</p>
-        {{ formfield 'question_7' }}
-        <div class="btn-container">
-            <button id="proceed-step-17-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_7' }}
-        </div>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                 Correct! There are no more conflicts, and Prize D was unpaired from all participants who are not you.
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-17">
-        <p>
-            The <b>temporary</b> allocation is the following:
-            <ul>
-                <li>
-                    Prize A is temporarily allocated to Ruth.
-                </li>
-                <li>
-                    Prize B is temporarily allocated to Theresa.
-                </li>
-                <li>
-                    Prize C is temporarily allocated to Shirely.
-                </li>
-                <li>
-                    Prize D is temporarily left unpaired.
-                </li>
-            </ul>
-        </p>
-        <p>All participants <b>except for you are</b> temporarily matched to prizes.<br>
-            What about you? Which prizes can you obtain, in principle? In other words, what are your Obtainable Prizes?</p>
-        {{ formfield 'question_8' }}
-        <div class="btn-container">
-            <button id="proceed-step-18-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-        <br>
-        <div class="incorrect-seq-field">
-            {{ formfield 'incorrect_seq_question_8' }}
-        </div>
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                 Correct! The Obtainable Prizes may include any prize at which your priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
-            </p>
-        </div>
-    </section>
-
-    <section id ="step-18">
-        Now use this rule to determine your Obtainable Prizes. <br>
-        Click on “Obtainable” or “Unobtainable” next to all the prizes below:
-        {{formfield "prize_a_obtainable"}}
-
-            <div class="btn-container">
-                <button id="prize-a-btn" type="button" class="btn btn-primary">Submit</button>
-            </div>
-
-            <div class="incorrect-msg">
-                <p>
-                    Incorrect answer. Please try again.
-                </p>
-            </div>
-
-            <div class="correct-msg">
-                <p>
-                    Correct! Prize A is temporarily allocated to Ruth, and your priority at that prize
-                    is <b>lower</b> than hers. Hence <b>you cannot obtain Prize A</b>.
-                </p>
-            </div>
-        <br>
-    </section>
-    <section id ="step-19">
-        {{formfield "prize_b_obtainable"}}
-
-        <div class="btn-container">
-            <button id="prize-b-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct! Prize B is temporarily allocated to Theresa, but your priority at that prize
-                is <b>higher</b> than hers. Hence <b>you can obtain Prize B</b>.
-            </p>
-        </div>
-        <br>
-    </section>
-    <section id ="step-20">
-        {{formfield "prize_c_obtainable"}}
-
-        <div class="btn-container">
-            <button id="prize-c-btn" type="button" class="btn btn-primary">Submit</button>
-        </div>
-
-        <div class="incorrect-msg">
-            <p>
-                Incorrect answer. Please try again.
-            </p>
-        </div>
-
-        <div class="correct-msg">
-            <p>
-                Correct! Prize C is temporarily allocated to Shirley, and your priority at that prize
-                is <b>lower</b> than hers. Hence <b>you cannot obtain Prize C</b>.
-            </p>
-        </div>
-        <br>
-    </section>
-
-    <section id ="step-21">
-        {{formfield "prize_d_obtainable"}}
-
-            <div class="btn-container">
-                <button id="prize-d-btn" type="button" class="btn btn-primary">Submit</button>
-            </div>
-
-            <div class="incorrect-msg">
-                <p>
-                    Incorrect answer. Please try again.
-                </p>
-            </div>
-
-            <div class="correct-msg">
-                <p>
-                    Correct! Prize D was left unpaired in the temporary allocation.
-                    Hence <b>you can obtain Prize D</b>.
-                </p>
-            </div>
-        <br>
-    </section>
-
-    <section id ="step-22">
-        <p>Your Obtainable Prizes are therefore <b>Prize B</b> and <b>Prize D</b>.</p>
-        <p>Among these Obtainable Prizes, which prize do you actually get?</p>
-
-        {{formfield "question_prize"}}
-
-        <div class="btn-container">
-                <button id="prize_question" type="button" class="btn btn-primary">Submit</button>
-        </div>
-
-        <div class="incorrect-msg">
-                <p>
-                    Incorrect answer. Please try again.
-                </p>
-            </div>
-
-            <div class="correct-msg">
-                <p>
-                    Correct! Among the Obtainable Prizes, you get the one that you ranked the highest.
-                </p>
-            </div>
-        <br>
-    </section>
-
-    <section id ="last">
-        <p><b>The allocation process is over. You get Prize B.</b></p>
-        <div class="btn-container">
-            <button id="submit-page" type="button" class="btn btn-primary">Proceed</button>
-        </div>
-        <br>
-    </section>
-
-    {{ endif }}
+<!--    first round questions -->
+{{ include_sibling "RoundOne.html" }}
     {{ if player.round_number > 1 }}
     <section id="step-1-rounds">
         <p>In this training round, you will perform the allocation process by yourself, instead of the computer.</p>
@@ -617,7 +24,6 @@
         </div>
         <br>
     </section>
-
     <section id="step-2-rounds">
         First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned. <br>
         Click Submit when you are done.
@@ -636,16 +42,23 @@
                 Incorrect allocation. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
             </p>
         </div>
-
-
         <div class="correct-msg">
             <p>
                 Correct temporary allocation!
             </p>
         </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
+            </p>
+        </div>
+        <div class="correct-second-msg">
+            <p>
+              Good job on the second try! This will count as 2 questions for your understanding bonus.
+            </p>
+        </div>
         <br>
     </section>
-
     <section id="step-3-rounds">
         Next, find your <b>Obtainable Prizes</b>.
         For each of the four prizes below, Click on “Obtainable” or “Unobtainable“
@@ -676,17 +89,17 @@
                 Incorrect answer. Please try again.
             </p>
         </div>
-
-
-
         <div class="correct-msg">
             <p>
                 Correct!
             </p>
         </div>
-
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
+            </p>
+        </div>
         <br>
-
     </section>
     <section id="step-4-rounds">
         <p>Finally, select <b>the prize that will be allocated to you</b> out of the Obtainable Prizes.</p>
@@ -695,7 +108,6 @@
         {{ else }}
             {{formfield "obtainable_prize_round_3_4"}}
         {{ endif }}
-
         <div class="btn-container">
             <button id="proceed-step-5-btn-rounds" type="button" class="btn btn-primary">Submit</button>
         </div>
@@ -710,6 +122,11 @@
             <p>
                 Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest.
                 Hence it is allocated to you.
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
             </p>
         </div>
         <br>
@@ -729,8 +146,6 @@
         <br>
     </section>
     {{ endif }}
-
-
 
     <div class="container-fluid" style="border: 5px solid gray;">
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: baseline;">
