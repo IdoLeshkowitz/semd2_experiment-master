@@ -1,9 +1,4 @@
-{{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-{{ endblock}}
-
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
     Welcome
 {{ endblock }}
 
@@ -12,13 +7,12 @@
     <!-- Introduction -->
     <div>
         <p>
-            This survey takes around 45 minutes to complete.
+            This survey takes around 20 minutes to complete.
         </p>
 
         <p>
-            You begin this survey with
-            <span class="fw-bold money-amount">{{ 1.5 | cu }}</span> in your total earnings.
-            Your total earnings can increase <b>up to <span class="money-amount">{{ 6 | cu }}</span></b> during the survey, depending on your outcomes.
+            You begin this survey with <b>£1.50</b> in your total earnings.
+            Your total earnings can increase <b>up to £6.00</b> during the survey, depending on your outcomes.
             You can always see your total earnings in the upper right corner of the window.
         </p>
 

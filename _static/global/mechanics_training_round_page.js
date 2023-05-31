@@ -60,14 +60,7 @@ $("#submit-btn").click(function () {
         $("#step-3 .incorrect-msg").show();
         return;
     }
-    /* check if priorities are in the right order */
-    if (playerExpectedRanking.every((value, index) => value === humanPlayerRanking[index]) === false) {
-        console.log(humanPlayerRanking, playerExpectedRanking)
-        $("#step-3 .incorrect-msg").show();
-        return;
-    }
-    /* disable input element */
-    $("#id_player_bid_text").prop("disabled", true);
+
     $(this).hide();
 
     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
@@ -113,9 +106,9 @@ var players = js_vars.players;
 var prizes = js_vars.prizes;
 
 var prizesPriorities = js_vars.prizes_priorities;
-console.log(prizesPriorities)
+
 var otherPlayersRankings = js_vars.players_rankings;
-var playerExpectedRanking = js_vars.player_expected_ranking;
+var playerExpectedRanking =  js_vars.player_expected_ranking;
 
 var expectedRanknigString = expectedRankingString(prizes, playerExpectedRanking);
 
@@ -144,62 +137,30 @@ $(".expected-rank").text(expectedRanknigString);
 var modal = document.getElementById("GenModal"); // Get the modal
 var btn = document.getElementById("GenBtn"); // Get the button that opens the modal
 var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-} // When the user clicks the button, open the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}// When the user clicks on <span> (x), close the modal
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}// When the user clicks anywhere outside of the modal, close it
+btn.onclick = function() {modal.style.display = "block";} // When the user clicks the button, open the modal
+span.onclick = function() {modal.style.display = "none";}// When the user clicks on <span> (x), close the modal
+window.onclick = function(event) {if (event.target == modal) {modal.style.display = "none";}}// When the user clicks anywhere outside of the modal, close it
 
 /*second*/
 var modal1 = document.getElementById("GenModal1");
 var btn1 = document.getElementById("GenBtn1");
 var span1 = document.getElementsByClassName("close1")[0];
-btn1.onclick = function () {
-    modal1.style.display = "block";
-}
-span1.onclick = function () {
-    modal1.style.display = "none";
-}
-window.onclick = function (event) {
-    if (event.target == modal1) {
-        modal1.style.display = "none";
-    }
-}
+btn1.onclick = function() {modal1.style.display = "block";}
+span1.onclick = function() {modal1.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal1) {modal1.style.display = "none";}}
 
 /*third*/
 var modal2 = document.getElementById("GenModal2");
 var btn2 = document.getElementById("GenBtn2");
 var span2 = document.getElementsByClassName("close2")[0];
-btn2.onclick = function () {
-    modal2.style.display = "block";
-}
-span2.onclick = function () {
-    modal2.style.display = "none";
-}
-window.onclick = function (event) {
-    if (event.target == modal2) {
-        modal2.style.display = "none";
-    }
-}
+btn2.onclick = function() {modal2.style.display = "block";}
+span2.onclick = function() {modal2.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal2) {modal2.style.display = "none";}}
 
 /*fourth*/
 var modal3 = document.getElementById("GenModal3");
 var btn3 = document.getElementById("GenBtn3");
 var span3 = document.getElementsByClassName("close3")[0];
-btn3.onclick = function () {
-    modal3.style.display = "block";
-}
-span3.onclick = function () {
-    modal3.style.display = "none";
-}
-window.onclick = function (event) {
-    if (event.target == modal3) {
-        modal3.style.display = "none";
-    }
-}
+btn3.onclick = function() {modal3.style.display = "block";}
+span3.onclick = function() {modal3.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal3) {modal3.style.display = "none";}}

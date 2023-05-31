@@ -1,5 +1,4 @@
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
     How the Allocation Process Works:<br>
     Training Round {{player.round_number}}/3
 {{ endblock }}
@@ -16,7 +15,6 @@
     <link rel="stylesheet" href="{{ static 'global/globalstyle.css' }}">
     <link rel="stylesheet" href="{{ static 'global/DAalghoInterface.css' }}">
 
-    
 {{ if player.round_number ==  1 }}
     <section id="step-1">
         The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer. <br><br>
@@ -27,7 +25,6 @@
         </div>
         <br>
     </section>
-
     <section id="step-2">
         On the upper left part of the dashboard below you see the <b>Participant Rankings</b>.<br>
         Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.<br><br>
@@ -46,7 +43,6 @@
         </div>
         <br>
     </section>
-
     <section id="step-3">
         First, pair each prize to its <b>highest-priority</b> participant.<br><br>
 
@@ -56,7 +52,6 @@
         <p>After pairing, “R” will be colored purple under Prize A’s name (“A”) and “A” will be colored purple under Ruth’s name (“R”) , to help you keep track that they are paired.</p>
         <p>Notice: There is no “+” sign next to “You” in the bottom part of the dashboard, reminding that you should not pair any prize with yourself during this stage of the allocation process.</p>
         <p>Click Submit when done.</p>
-        <br><
         <div class="btn-container">
             <button id="proceed-step-4-btn" type="button" class="btn btn-primary">Submit</button>
         </div>
@@ -65,6 +60,12 @@
         <div class="incorrect-msg">
             <p>
                 Incorrect answer. Please try again.
+            </p>
+        </div>
+
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
             </p>
         </div>
 
@@ -89,6 +90,12 @@
         <div class="incorrect-msg">
             <p>
                 Incorrect answer. Please try again.
+            </p>
+        </div>
+
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
             </p>
         </div>
 
@@ -179,12 +186,19 @@
             </p>
         </div>
 
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+
         <div class="correct-msg">
             <p>
                 Correct!
             </p>
         </div>
     </section>
+
 
     <section id ="step-8">
         <p>Is the process over?</p>
@@ -232,13 +246,18 @@
             </p>
         </div>
 
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+
         <div class="correct-msg">
             <p>
                 Correct!
             </p>
         </div>
     </section>
-    
     <section id ="step-10">
         <p>Is the process over?</p>
         {{ formfield 'question_4' }}
@@ -282,13 +301,18 @@
             </p>
         </div>
 
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+
         <div class="correct-msg">
             <p>
                 Correct!
             </p>
         </div>
     </section>
-    
     <section id ="step-12">
         <p>Is the process over?</p>
         {{ formfield 'question_5' }}
@@ -332,13 +356,18 @@
             </p>
         </div>
 
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+
         <div class="correct-msg">
             <p>
                 Correct!
             </p>
         </div>
     </section>
-    
     <section id ="step-14">
         <p>Is the process over?</p>
         {{ formfield 'question_6' }}
@@ -383,13 +412,18 @@
             </p>
         </div>
 
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+
         <div class="correct-msg">
             <p>
                 Correct!
             </p>
         </div>
     </section>
-    
     <section id ="step-16">
         <p>Is the process over?</p>
         {{ formfield 'question_7' }}
@@ -477,7 +511,6 @@
             </div>
         <br>
     </section>
-    
     <section id ="step-19">
         {{formfield "prize_b_obtainable"}}
 
@@ -499,7 +532,6 @@
         </div>
         <br>
     </section>
-    
     <section id ="step-20">
         {{formfield "prize_c_obtainable"}}
 
@@ -575,6 +607,7 @@
         </div>
         <br>
     </section>
+
     {{ endif }}
     {{ if player.round_number > 1 }}
     <section id="step-1-rounds">
@@ -597,6 +630,14 @@
                 Incorrect temporary allocation. Please try again.
             </p>
         </div>
+
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect allocation. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+
+
         <div class="correct-msg">
             <p>
                 Correct temporary allocation!
@@ -636,6 +677,8 @@
             </p>
         </div>
 
+
+
         <div class="correct-msg">
             <p>
                 Correct!
@@ -645,11 +688,13 @@
         <br>
 
     </section>
-
     <section id="step-4-rounds">
         <p>Finally, select <b>the prize that will be allocated to you</b> out of the Obtainable Prizes.</p>
-
-        {{formfield "obtainable_prize"}}
+        {{ if player.round_number == 2 }}
+            {{formfield "obtainable_prize_round_2"}}
+        {{ else }}
+            {{formfield "obtainable_prize_round_3_4"}}
+        {{ endif }}
 
         <div class="btn-container">
             <button id="proceed-step-5-btn-rounds" type="button" class="btn btn-primary">Submit</button>
@@ -669,12 +714,11 @@
         </div>
         <br>
     </section>
-
     <section id="step-5-rounds">
-        {{ if player.round_number == 2 }}
+        {{ if player.round_number < 4 }}
         <p></p>
         {{ endif }}
-        {{ if player.round_number == 3 }}
+        {{ if player.round_number == 4 }}
         <p>You completed the training rounds. <br>
         Click the button below to proceed to real rounds of the game.
         </p>
@@ -685,16 +729,10 @@
         <br>
     </section>
     {{ endif }}
-    <div class="container-fluid position-relative" style="border: 5px solid gray;">
-    {{ if player.round_number > 1 }}
-    <button class="position-absolute btn btn-outline-dark" id="reset-button" style="right: .5rem; top: .5rem;">
-        reset
-        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-counterclockwise" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z"/>
-            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z"/>
-        </svg>
-    </button>
-    {{ endif }}
+
+
+
+    <div class="container-fluid" style="border: 5px solid gray;">
         <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: baseline;">
             <div class="column" style="flex: 1 2 auto;">
                 <b style="font-size: 1.5rem;">
@@ -713,57 +751,55 @@
 <!--                    Schools:-->
 <!--                </b>-->
                 <div class="container-fluid">
-                    <div class="row participant-ranking" style="justify-content: center;align-items: flex-start;align-content: flex-start;">
+                    <div class="row" style="justify-content: center;align-items: flex-start;align-content: flex-start;">
                         {{ for school in participant.schoolsAPC }}
-                            {{ if forloop.counter0 < 4 }}
-                                    <div class="flexItemButtonsBackground" id="SchoolBackground{{ forloop.counter }}">
-                                        <div {{ if forloop.counter0 == 0 }}
-                                                class="verticalRight"
-                                             {{ elif forloop.counter == 4 }}
-                                                class="verticalLeft"
-                                             {{ else }}
-                                                class="verticalBoth"
-                                             {{ endif }}>
-                                            <div style="flex-direction: column;justify-content: flex-start;align-items: center;align-content: center;">
-                                                {{ for name_or_student in school}}
-                                                    {{ if forloop.counter0 == 0}}
-                                                        <div class="dButtonTopBox">
-                                                            <button type="button" class="dButtonTop" id="School{{ name_or_student }}" disabled="disabled">
-                                                                {{ if name_or_student == 'A' }}
-                                                                    <b>R</b>
-                                                                {{ elif name_or_student == 'B' }}
-                                                                    <b>S</b>
-                                                                {{ elif name_or_student == 'C' }}
-                                                                    <b>T</b>
-                                                                {{ else }}
-                                                                    <b>Y</b>
-                                                                {{ endif }}
-                                                            </button>
-                                                        </div>
-                                                    {{ else }}
-                                                        <div {{ if forloop.counter0 == player.StudentsNumber }}
-                                                                class="dButtonBottomBox"
-                                                             {{ else }}
-                                                                class="dButtonBox"
-                                                             {{ endif }}>
-                                                            <button type="button" class="dButton" id="School{{ school.0}}PrefStudent{{ name_or_student }}" disabled="disabled">
-                                                                {{ if name_or_student == 1 }}
-                                                                   A
-                                                                {{ elif name_or_student == 2 }}
-                                                                    B
-                                                                {{ elif name_or_student == 3 }}
-                                                                    C
-                                                                {{ else }}
-                                                                    D
-                                                                {{ endif }}
-                                                            </button>
-                                                        </div>
-                                                    {{ endif }}
-                                                {{ endfor}}
-                                            </div>
-                                        </div>
+                            <div class="flexItemButtonsBackground" id="SchoolBackground{{ forloop.counter }}">
+                                <div {{ if forloop.counter0 == 0 }}
+                                        class="verticalRight"
+                                     {{ elif forloop.counter == player.SchoolsNumber }}
+                                        class="verticalLeft"
+                                     {{ else }}
+                                        class="verticalBoth"
+                                     {{ endif }}>
+                                    <div style="flex-direction: column;justify-content: flex-start;align-items: center;align-content: center;">
+                                        {{ for name_or_student in school}}
+                                            {{ if forloop.counter0 == 0}}
+                                                <div class="dButtonTopBox">
+                                                    <button type="button" class="dButtonTop" id="School{{ name_or_student }}" disabled="disabled">
+                                                        {{ if name_or_student == 'A' }}
+                                                            <b>R</b>
+                                                        {{ elif name_or_student == 'B' }}
+                                                            <b>S</b>
+                                                        {{ elif name_or_student == 'C' }}
+                                                            <b>T</b>
+                                                        {{ else }}
+                                                            <b>Y</b>
+                                                        {{ endif }}
+                                                    </button>
+                                                </div>
+                                            {{ else }}
+                                                <div {{ if forloop.counter0 == player.StudentsNumber }}
+                                                        class="dButtonBottomBox"
+                                                     {{ else }}
+                                                        class="dButtonBox"
+                                                     {{ endif }}>
+                                                    <button type="button" class="dButton" id="School{{ school.0}}PrefStudent{{ name_or_student }}" disabled="disabled">
+                                                        {{ if name_or_student == 1 }}
+                                                           A
+                                                        {{ elif name_or_student == 2 }}
+                                                            B
+                                                        {{ elif name_or_student == 3 }}
+                                                            C
+                                                        {{ else }}
+                                                            D
+                                                        {{ endif }}
+                                                    </button>
+                                                </div>
+                                            {{ endif }}
+                                        {{ endfor}}
                                     </div>
-                            {{ endif }}
+                                </div>
+                            </div>
                         {{ endfor }}
                     </div>
                 </div>
@@ -773,15 +809,66 @@
 <!--                    Students:-->
 <!--                </b>-->
                 <div class="container-fluid" >
-                    {{ include_sibling "PrizesTable.html" }}
+                    <div class="row" style="justify-content: center;align-items: flex-start;align-content: flex-start;">
+                        {{ for student in participant.studentsAPC}}
+                            <div class="flexItemButtonsBackground" id="StudentBackground{{ forloop.counter }}">
+                                <div {{ if forloop.counter0 == 0 }}
+                                        class="verticalRight"
+                                     {{ elif forloop.counter == player.StudentsNumber }}
+                                        class="verticalLeft"
+                                     {{ else }}
+                                        class="verticalBoth"
+                                     {{ endif }}>
+                                    <div style="flex-direction: column;justify-content: flex-start;align-items: center;align-content: center;">
+                                        {{ for number_or_school in student }}
+                                            {{ if forloop.counter0 == 0}}
+                                                <div class="dButtonTopBox">
+                                                    <button type="button" class="dButtonTop" id="Student{{ number_or_school}}" disabled="disabled">
+                                                        {{ if number_or_school == 1 }}
+                                                           <b style="font-size: 1.1rem">A</b>
+                                                        {{ elif number_or_school == 2 }}
+                                                            <b style="font-size: 1.1rem">B</b>
+                                                        {{ elif number_or_school == 3 }}
+                                                            <b style="font-size: 1.1rem">C</b>
+                                                        {{ else }}
+                                                            <b style="font-size: 1.1rem">D</b>
+                                                        {{ endif }}
+
+                                                    </button>
+                                                </div>
+                                            {{ else }}
+                                                <div {{ if forloop.counter0 == player.SchoolsNumber }}
+                                                        class="dButtonBottomBox"
+                                                     {{ else }}
+                                                        class="dButtonBottomBox"
+                                                     {{ endif }}>
+                                                    <button type="button" class="dButton" id="Student{{ student.0 }}PrefSchool{{ number_or_school }}" disabled="disabled">
+                                                        {{ if number_or_school == 'A' }}
+                                                            R
+                                                        {{ elif number_or_school == 'B' }}
+                                                            S
+                                                        {{ elif number_or_school == 'C' }}
+                                                            T
+                                                        {{ else }}
+                                                            Y
+                                                        {{ endif }}
+                                                </div>
+                                            {{ endif }}
+                                        {{ endfor }}
+                                    </div>
+                                </div>
+                            </div>
+                        {{ endfor }}
+                    </div>
                 </div>
             </div>
         </div>
-        <hr />
-        <div class="row middle-rowb" style="justify-content: space-between;flex-wrap: nowrap;align-items: flex-end;">
+
+        <hr width="100%" />
+        <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: flex-end;">
             <div class="column" style="flex: 1 1 auto;width: 200%;">
                 <b style="font-size: 1.5rem;">
-                    Pick prizes to pair →
+                    Unpaired prizes:
                 </b>
             </div>
             {{ for i in participant.students_names}}
@@ -805,9 +892,51 @@
                     </div>
             {{ endfor }}
         </div>
-            <hr />
-            {{ include_sibling "ThirdRow.html" }}
+        <hr width="100%" />
+        {{ for school in participant.schools_alphabet }}
+            <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
+                <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
+                    <b style="font-size: 1.5rem;">
+                        {{ if school == 'A' }}
+                            R:
+                        {{ elif school == 'B' }}
+                            S:
+                        {{ elif school == 'C' }}
+                            T:
+                        {{ else }}
+                            Y:
+                        {{ endif }}
+                    </b>
+                </div>
+                <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;order: 20;" id="plusButtonSchool{{ school }}">
+                    <button type="button" class="pButton" value="{{ forloop.counter }}" onclick="matchToSchool(this.value)">
+                        <b>+</b>
+                    </button>
+                </div>
+                {{ for student in participant.students_names }}
+                    <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;" id="School{{ school }}MatchedToStudent{{ student }}">
+                        <button type="button" class="iButton" value="{{ school }}" onclick="rematchStudent(this.value,this.innerText)" id="School{{ school }}MatchedToStudent{{ student }}Button">
+                            {{ if student == 1 }}
+                                <b>A</b>
+                            {{ elif student == 2 }}
+                                <b>B</b>
+                            {{ elif student == 3 }}
+                                <b>C</b>
+                            {{ else }}
+                                <b>D</b>
+                            {{ endif }}
+                        </button>
+                    </div>
+                {{ endfor }}
+                <div class="column" style="flex: 1 0 auto;text-align: right;order: 100">
+                    <b style="font-size: 1.2rem;color: transparent;">
+                        ::
+                    </b>
+                </div>
+            </div>
+        {{ endfor }}
     </div>
+    <center>Allocation Dashboard</center>
 
 
 <!---
@@ -844,7 +973,6 @@
     --->
 {{ endblock }}
 {{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/MechanicsMenu.js' }}"></script>
 {{ endblock }}
 

@@ -1,7 +1,6 @@
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
 <!--every change on "step_1_null_description" should be changed here as well (identical from section 4!!!)-->
-The Basics
+    The Basics
 {{ endblock }}
 
 {{ block styles}}
@@ -55,7 +54,7 @@ The Basics
         </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
     </div>
 </section>
 
@@ -86,15 +85,6 @@ The Basics
                 <th>D</th>
             </tr>
         </thead>
-        <tbody>
-        <tr>
-            <td>Addition to your earnings if you get this prize</td>
-            <td class="money-amount">{{ first_prize | cu }}</td>
-            <td class="money-amount">{{ second_prize | cu }}</td>
-            <td class="money-amount">{{ third_prize | cu }}</td>
-            <td class="money-amount">{{ fourth_prize | cu }}</td>
-        </tr>
-        </tbody>
     </table><br>
     <div class="btn-container">
         <button id="proceed-step-6-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
@@ -187,7 +177,25 @@ The Basics
 </section>
 
 <section id="step-11">
-    {{ include_sibling "ranking_form.html"}}
+    <p>
+        Please rank the four prizes from most preferred to least preferred.
+    </p>
+    <ul>
+        <li>{{ formfield 'first_priority' }}</li>
+        <li>{{ formfield 'second_priority' }}</li>
+        <li>{{ formfield 'third_priority' }}</li>
+        <li>{{ formfield 'fourth_priority' }}</li>
+    </ul>
+
+    <div class="btn-container">
+        <!-- class="btn btn-danger btn-container" for submit button-->
+        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
+    </div>
+    <div class="incorrect-msg">
+        <p>
+            You submitted an invalid ranking. Please resubmit.
+        </p>
+    </div>
 </section>
 <section id="step-12">
     <div class="explain">
@@ -253,7 +261,7 @@ The Basics
     </div>
     <div id="round-results">
         <p>
-            <b>You get Prize <span id="prize-won"></span></b>, and your total earnings increase by <b><span id="points-won"></span></b>.
+            <b>You get Prize <span id="prize-won"></span></b>, and your total earnings increase by <b><span id="points-won"></span>p</b>.
         </p>
     </div>
     <div class="btn-container">
@@ -264,7 +272,7 @@ The Basics
 <section id="step-17">
     <div class="explain">
         <p>
-            That's it! <br>Click on the button below to proceed to training rounds.
+            That's it! <br>Click on the button below to proceed.
         </p>
     </div>
     <div style="text-align: center">
@@ -274,7 +282,7 @@ The Basics
 {{ endblock }}
 
 {{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/description_page.js' }}"></script>
+    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

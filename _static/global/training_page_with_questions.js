@@ -1,48 +1,6 @@
-let attemptsCounter = 0;
 function liveRecv(data) {
-    function getCurrentCurrency() {
-        /* grab the current bonsu element */
-        const bonusElement = document.getElementById("bonus-indicator");
-        /* grab the bonus value */
-        const bonusValue = bonusElement.innerText;
-        /* grab the currency from the bonus value */
-        const isUsd = bonusValue.includes("$") | bonusValue.includes("¢");
-        const isGbp = bonusValue.includes("£") | bonusValue.includes("p");
-        if (isUsd) {
-            return "USD";
-        }
-        if (isGbp) {
-            return "GBP";
-        }
-    }
-
-    function getEvaluatedPrizeString(evaluatedPrizeValue, currency) {
-        /* check if value is less than 1 */
-        if (evaluatedPrizeValue < 1) {
-            /* convert to cents */
-            evaluatedPrizeValue = (evaluatedPrizeValue * 100).toFixed();
-            /* if currency is USD convert the money to cents */
-            if (currency === 'USD') {
-                return `${evaluatedPrizeValue}¢`;
-            }
-            if (currency === "GBP") {
-                return `${evaluatedPrizeValue}p`;
-            }
-        }
-        /* if value is greater than 1 */
-        if (currency === 'USD') {
-            return `$${evaluatedPrizeValue}`;
-        }
-        if (currency === "GBP") {
-            return `£${evaluatedPrizeValue}`;
-        }
-    }
-
-    const evaluatedPrizeValue = data.payoff;
-    const currentCurrency = getCurrentCurrency()
-    const evaluatedPrizeString = getEvaluatedPrizeString(evaluatedPrizeValue, currentCurrency);
     $("#prize-won").text(data.prize);
-    $("#points-won").text(evaluatedPrizeString);
+    $("#points-won").text(data.value);
     $("#load").slideUp();
     $("#round-results").slideDown();
 //    var firstQuestion = $(".question").first();
@@ -51,7 +9,6 @@ function liveRecv(data) {
 //    var subQuestions = firstQuestion.find(".question");
 //    subQuestions.first().slideDown();
 }
-
 
 /*FRAMES*/
 $("#proceed-step-1a-btn").click(function () {
@@ -68,51 +25,29 @@ $("#proceed-question1-btn").click(function () {
 });
 $("#question1-btn").click(function () {
     var formInputName = "independence";
-    if (forminputs[formInputName].value != "False") {
-        /* increment attempts counter */
-        incrementAttemptsCounter()
+    if (forminputs[formInputName].value != "False"){
         $("#question1 .incorrect-msg").show();
         return;
     }
-    /* disbale input elements */
-    document.querySelector("#question1 input").disabled = true;
     $("#question1-btn").hide();
     $("#question1 .incorrect-msg").hide();
     $("#question1 .correct-msg").show();
     $("#question2").slideDown();
     button = document.getElementById('question2-btn');
     button.scrollIntoView(true);
-    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
-    /* check current number of attempts */
-    if (attemptsCounter === 0) {
-    addUnderstandingBonus(1)
-    }
-    /* reset attempts counter */
-    resetAttemptsCounter()
 });
 $("#question2-btn").click(function () {
     var formInputName = "value_table";
-    if (forminputs[formInputName].value != "False") {
-        /* increment attempts counter */
-        incrementAttemptsCounter()
+    if (forminputs[formInputName].value != "False"){
         $("#question2 .incorrect-msg").show();
         return;
     }
-    /* disbale input elements */
-    document.querySelector("#question2 input").disabled = true;
     $("#question2-btn").hide();
     $("#question2 .incorrect-msg").hide();
     $("#question2 .correct-msg").show();
     $("#step-2").slideDown();
     button = document.getElementById('proceed-question3-btn');
     button.scrollIntoView(true);
-    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
-    /* check current number of attempts */
-    if (attemptsCounter === 0) {
-    addUnderstandingBonus(1)
-    }
-    /* reset attempts counter */
-    resetAttemptsCounter()
 });
 $("#proceed-question3-btn").click(function () {
     $(this).hide();
@@ -122,46 +57,33 @@ $("#proceed-question3-btn").click(function () {
 });
 $("#question3-btn").click(function () {
     var formInputName = "self_rank_independence";
-    if (forminputs[formInputName].value != "False") {
-        /* increment attempts counter */
-        incrementAttemptsCounter()
+    if (forminputs[formInputName].value != "False"){
         $("#question3 .incorrect-msg").show();
         return;
     }
-    /* disbale input elements */
-    document.querySelector("#question3 input").disabled = true;
     $("#question3-btn").hide();
     $("#question3 .incorrect-msg").hide();
     $("#question3 .correct-msg").show();
     $("#step-3").slideDown();
     button = document.getElementById('proceed-step-3-btn');
     button.scrollIntoView(true);
-    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
-    /* check current number of attempts */
-    if (attemptsCounter === 0) {
-    addUnderstandingBonus(1)
-    }
-    /* reset attempts counter */
-    resetAttemptsCounter()
 });
-
 $("#proceed-step-3-btn").click(function () {
     $(this).hide();
     $("#step-3").slideDown();
     button = document.getElementById('proceed-step-4-btn');
     button.scrollIntoView(true);
 });
-$("#proceed-step-4-btn").click(function () {
-    $(this).hide();
-    $("#step-4").slideDown();
-    button = document.getElementById('proceed-step-5-btn');
-    button.scrollIntoView(true);
-});
 /*SUBMIT (frame, button, validation*/
 $("#submit-btn").click(function () {
     $("#step-3 .incorrect-msg").hide();
 
-    var humanPlayerRanking = [parseInt(forminputs.first_priority.value) - 1, parseInt(forminputs.second_priority.value) - 1, parseInt(forminputs.third_priority.value) - 1, parseInt(forminputs.fourth_priority.value) - 1]
+    var humanPlayerRanking = [
+        parseInt(forminputs.first_priority.value) - 1,
+        parseInt(forminputs.second_priority.value) - 1,
+        parseInt(forminputs.third_priority.value) - 1,
+        parseInt(forminputs.fourth_priority.value) - 1
+    ]
 
     var unique = humanPlayerRanking.filter((value, index, array) => array.indexOf(value) === index);
     if (unique.length < 4) {
@@ -170,13 +92,15 @@ $("#submit-btn").click(function () {
     }
 
     $(this).hide();
-    /* disable input elements */
-    document.querySelector("#step-3 input").disabled = true;
+
     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
 
-    liveSend({
-        "preferences": [playersRankings, prizesPriorities], "prizes": prizes, "values": prizesValues
-    });
+    liveSend({"preferences": [
+        playersRankings,
+        prizesPriorities
+    ],
+    "prizes": prizes,
+    "values": prizesValues});
     $("#step-4").slideDown();
     button = document.getElementById('proceed-step-4-btn');
     button.scrollIntoView(true);
@@ -195,31 +119,21 @@ $("#proceed-question4-btn").click(function () {
 });
 $("#question4-btn").click(function () {
     var formInputName = "competitors_rank_independence";
-    if (forminputs[formInputName].value != "False") {
-        /* increment attempts counter */
-        incrementAttemptsCounter()
+    if (forminputs[formInputName].value != "False"){
         $("#question4 .incorrect-msg").show();
         return;
     }
-    /* disbale input elements */
-    document.querySelector("#question4 input").disabled = true;
     $("#question4-btn").hide();
     $("#question4 .incorrect-msg").hide();
     $("#question4 .correct-msg").show();
     $("#next").slideDown();
-    /*    button = document.getElementById('proceed-step-3-btn');
-        button.scrollIntoView(true);*/
-    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
-    /* check current number of attempts */
-    if (attemptsCounter === 0) {
-    addUnderstandingBonus(1)
-    }
-    /* reset attempts counter */
-    resetAttemptsCounter()
+/*    button = document.getElementById('proceed-step-3-btn');
+    button.scrollIntoView(true);*/
 });
 $("#next").click(function () {
     $(this).hide();
 });
+
 
 
 //buttons with submit
@@ -236,6 +150,7 @@ $("#next").click(function () {
 //    var incorrectSequenceFieldName = `incorrect_seq_${formInputName}`;
 //    forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
 //    currQuestionIncorrectAnswers = [];
+
 
 
 //$(".btn-question").click(function () {
@@ -289,7 +204,6 @@ $("#step-2").hide();
 $("#step-3").hide();
 $("#step-4").hide();
 $("#step-5").hide();
-$("#step-6").hide();
 $("#next").hide();
 $("#question1").hide();
 $("#question2").hide();
@@ -316,74 +230,30 @@ $(".incorrect_seq_competitors_rank_independence").hide();
 var modal = document.getElementById("GenModal"); // Get the modal
 var btn = document.getElementById("GenBtn"); // Get the button that opens the modal
 var span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
-btn.onclick = function () {
-    modal.style.display = "block";
-} // When the user clicks the button, open the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}// When the user clicks on <span> (x), close the modal
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}// When the user clicks anywhere outside of the modal, close it
+btn.onclick = function() {modal.style.display = "block";} // When the user clicks the button, open the modal
+span.onclick = function() {modal.style.display = "none";}// When the user clicks on <span> (x), close the modal
+window.onclick = function(event) {if (event.target == modal) {modal.style.display = "none";}}// When the user clicks anywhere outside of the modal, close it
 
 /*second*/
 var modal1 = document.getElementById("GenModal1");
 var btn1 = document.getElementById("GenBtn1");
 var span1 = document.getElementsByClassName("close1")[0];
-btn1.onclick = function () {
-    modal1.style.display = "block";
-}
-span1.onclick = function () {
-    modal1.style.display = "none";
-}
-window.onclick = function (event) {
-    if (event.target == modal1) {
-        modal1.style.display = "none";
-    }
-}
+btn1.onclick = function() {modal1.style.display = "block";}
+span1.onclick = function() {modal1.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal1) {modal1.style.display = "none";}}
 
 /*third*/
 var modal2 = document.getElementById("GenModal2");
 var btn2 = document.getElementById("GenBtn2");
 var span2 = document.getElementsByClassName("close2")[0];
-btn2.onclick = function () {
-    modal2.style.display = "block";
-}
-span2.onclick = function () {
-    modal2.style.display = "none";
-}
-window.onclick = function (event) {
-    if (event.target == modal2) {
-        modal2.style.display = "none";
-    }
-}
+btn2.onclick = function() {modal2.style.display = "block";}
+span2.onclick = function() {modal2.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal2) {modal2.style.display = "none";}}
 
 /*fourth*/
 var modal3 = document.getElementById("GenModal3");
 var btn3 = document.getElementById("GenBtn3");
 var span3 = document.getElementsByClassName("close3")[0];
-btn3.onclick = function () {
-    modal3.style.display = "block";
-}
-span3.onclick = function () {
-    modal3.style.display = "none";
-}
-window.onclick = function (event) {
-    if (event.target == modal3) {
-        modal3.style.display = "none";
-    }
-}
-
-function addUnderstandingBonus(pointsToAdd){
-    liveSend({"action_type":"add_understanding_bonus","payload":{"points_to_add":pointsToAdd}});
-}
-
-function resetAttemptsCounter(){
-    attemptsCounter = 0;
-}
-
-function incrementAttemptsCounter(){
-    attemptsCounter++;
-}
+btn3.onclick = function() {modal3.style.display = "block";}
+span3.onclick = function() {modal3.style.display = "none";}
+window.onclick = function(event) {if (event.target == modal3) {modal3.style.display = "none";}}

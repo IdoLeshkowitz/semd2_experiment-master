@@ -1,47 +1,6 @@
 function liveRecv(data) {
-    function getCurrentCurrency() {
-        /* grab the current bonsu element */
-        const bonusElement = document.getElementById("bonus-indicator");
-        /* grab the bonus value */
-        const bonusValue = bonusElement.innerText;
-        /* grab the currency from the bonus value */
-        const isUsd = bonusValue.includes("$") | bonusValue.includes("¢");
-        const isGbp = bonusValue.includes("£") | bonusValue.includes("p");
-        if (isUsd) {
-            return "USD";
-        }
-        if (isGbp) {
-            return "GBP";
-        }
-    }
-
-    function getEvaluatedPrizeString(evaluatedPrizeValue, currency) {
-        /* check if the value is less than 1 */
-        if (evaluatedPrizeValue < 1) {
-            /* convert to cents */
-            evaluatedPrizeValue = (evaluatedPrizeValue * 100).toFixed();
-            /* if currency is USD convert the money to cents */
-            if (currency === 'USD') {
-                return `${evaluatedPrizeValue}¢`;
-            }
-            if (currency === "GBP") {
-                return `${evaluatedPrizeValue}p`;
-            }
-        }
-        if (currency === 'USD') {
-            return `$${evaluatedPrizeValue}`;
-        }
-        if (currency === "GBP") {
-            return `£${evaluatedPrizeValue}`;
-        }
-    }
-
-    const evaluatedPrizeValue = data.payoff;
-    const currentCurrency = getCurrentCurrency();
-    const evaluatedPrizeString = getEvaluatedPrizeString(evaluatedPrizeValue, currentCurrency);
     $("#prize-won").text(data.prize);
-    $("#points-won").text(evaluatedPrizeString)
-
+    $("#points-won").text(data.value);
     //$("#load").slideUp();
     $("#round-results").slideDown();
 }
@@ -123,8 +82,8 @@ $("#proceed-step-14-btn").click(function () {
     $("#step-14").slideDown();
     /*change the timing of the timer*/
     setTimeout(() => {
-        $("#load").slideUp();
-    }, 3000);
+      $("#load").slideUp();
+    }, 2000);
     button = document.getElementById('proceed-step-15-btn');
     button.scrollIntoView(true);
 });
@@ -148,9 +107,9 @@ $("#proceed-step-17-btn").click(function () {
 });
 $("#proceed-step-18-btn").click(function () {
     $(this).hide();
-    /*    $("#step-13").slideDown();
-        button = document.getElementById('proceed-step-14-btn');
-        button.scrollIntoView(true);*/
+/*    $("#step-13").slideDown();
+    button = document.getElementById('proceed-step-14-btn');
+    button.scrollIntoView(true);*/
 });
 /*
 $("#proceed-step-15-btn").click(function () {
@@ -162,23 +121,29 @@ $("#proceed-step-15-btn").click(function () {
 $("#submit-btn").click(function () {
     $("#step-11 .incorrect-msg").hide();
 
-    var humanPlayerRanking = [parseInt(forminputs.first_priority.value) - 1, parseInt(forminputs.second_priority.value) - 1, parseInt(forminputs.third_priority.value) - 1, parseInt(forminputs.fourth_priority.value) - 1]
+    var humanPlayerRanking = [
+        parseInt(forminputs.first_priority.value) - 1,
+        parseInt(forminputs.second_priority.value) - 1,
+        parseInt(forminputs.third_priority.value) - 1,
+        parseInt(forminputs.fourth_priority.value) - 1
+    ]
 
     var unique = humanPlayerRanking.filter((value, index, array) => array.indexOf(value) === index);
     if (unique.length < 4) {
         $("#step-11 .incorrect-msg").show();
         return;
     }
-    /* disbale inout element */
-    $("#id_player_bid_text").prop('disabled', true);
 
     $(this).hide();
 
     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
 
-    liveSend({
-        "preferences": [playersRankings, prizesPriorities], "prizes": prizes, "values": prizesValues
-    });
+    liveSend({"preferences": [
+        playersRankings,
+        prizesPriorities
+    ],
+    "prizes": prizes,
+    "values": prizesValues});
 
     $("#step-12").slideDown();
     button = document.getElementById('proceed-step-13-btn');

@@ -1,0 +1,95 @@
+{{ block title }}
+    Round {{ player.round_number }}
+{{ endblock }}
+
+{{ block styles}}
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+{{ endblock }}
+
+{{ block content }}
+    <section id="step-1">
+        <h4>Step 1: Round Information</h4>
+
+        <p>
+            In this round, the <b>prizes</b> are:
+        </p>
+
+        <table id="prize-table" class=" table table-bordered">
+            <thead>
+                <tr>
+                    <th>Prize</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+            </thead>
+        </table>
+
+        <p>
+            The <b>prize priorities</b> for you and for the other participants are:
+        </p>
+
+        <table id="priorities-table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Prize</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="btn-container">
+            <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        </div>   
+    </section>
+
+    <section id="step-2">
+        <h4>Step 2: Submit Your Ranking</h4>
+
+        <p>
+            Please rank the four prizes in your list from most preferred to least preferred.
+        </p>
+
+        <ul>
+            <li>{{ formfield 'first_priority' }}</li>
+            <li>{{ formfield 'second_priority' }}</li>
+            <li>{{ formfield 'third_priority' }}</li>
+            <li>{{ formfield 'fourth_priority' }}</li>
+        </ul>
+
+        <div class="btn-container">
+            <button id="submit-btn" type="button" class="btn btn-primary btn-container">Submit</button>
+        </div> 
+    </section>
+
+    <section id="step-3">
+        <h4>Step 3: Allocation Process</h4>
+
+        <div id="load">
+            <p>
+                Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+            </p>
+        </div>
+
+        <div id="round-results">
+            <p>
+                <b>You get prize <span id="prize-won"></span></b>, and your total earnings increase by <b><span id="points-won"></span>p</b>.
+            </p>
+    
+            {{ next_button }}
+        </div>
+    </section>
+{{ endblock }}
+
+{{ block scripts }}
+    <script src="{{ static 'global/round_page.js' }}"></script>
+    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+{{ endblock }}

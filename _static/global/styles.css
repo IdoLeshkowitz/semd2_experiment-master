@@ -63,7 +63,7 @@ table {
 }
 
 /* The Close Button */
-.close, .close1, .close2, .close3, .close4, .close5 {
+.close, .close1, .close2, .close3 {
   color: #aaaaaa;
   float: right;
   font-size: 28px;

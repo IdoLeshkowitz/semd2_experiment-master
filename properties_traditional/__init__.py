@@ -2,10 +2,10 @@ from otree.api import *
 import time, random
 import numpy
 
+
 doc = """
 Your app description
 """
-
 
 def prizes_priorities_list():
     first_round_priorities = [
@@ -28,15 +28,8 @@ def prizes_priorities_list():
         [2, 3, 1, 0],
         [1, 3, 0, 2]
     ]
-    fourth_round_priorities = [
-        [2, 1, 0, 3],
-        [2, 0, 1, 3],
-        [2, 3, 1, 0],
-        [1, 3, 0, 2]
-    ]
 
-    return [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
-
+    return [first_round_priorities, second_round_priorities, third_round_priorities]
 
 def players_rankings_list():
     first_round_rankings = [
@@ -56,21 +49,15 @@ def players_rankings_list():
         [1, 0, 2, 3],
         [3, 1, 0, 2]
     ]
-    fourth_round_rankings = [
-        [2, 3, 0, 1],
-        [1, 0, 2, 3],
-        [3, 1, 0, 2]
-    ]
-    return [first_round_rankings, second_round_rankings, third_round_rankings, fourth_round_rankings]
 
+    return [first_round_rankings, second_round_rankings, third_round_rankings]
 
 def expected_rankings_list():
     first_round_ranking = [2, 1, 0, 3]
     second_round_ranking = [0, 1, 3, 2]
     third_round_ranking = [3, 1, 2, 0]
-    fourth_round_ranking = [3, 1, 2, 0]
-    return [first_round_ranking, second_round_ranking, third_round_ranking, fourth_round_ranking]
 
+    return [first_round_ranking, second_round_ranking, third_round_ranking]
 
 def questions_answers():
     first_round = {
@@ -105,66 +92,50 @@ def questions_answers():
         "brute-force-3": "3",
         "brute-force-4": "3"
     }
-    fourth_round = {
-        "ranking-change-1": "True",
-        "ranking-change-2": "True",
-        "ranking-change-3": "False",
-        "ranking-change-4": "True",
-        "ranking-change-5": "True",
-        "brute-force-1": "2",
-        "brute-force-2": "2",
-        "brute-force-3": "2",
-        "brute-force-4": "1"
-    }
 
-    return [first_round, second_round, third_round, fourth_round]
-
+    return [first_round, second_round, third_round]
 
 def make_priority_field(label):
     return models.IntegerField(
-        choices=[
+        choices = [
             [1, "A"],
             [2, "B"],
             [3, "C"],
             [4, "D"]
         ],
-        label=label
+        label = label
     )
-
 
 def make_boolean_field(label):
     return models.BooleanField(
-        choices=[
+        choices = [
             [True, "True"],
             [False, "False"]
         ],
-        label=label,
-        widget=widgets.RadioSelect
+        label = label,
+        widget = widgets.RadioSelect
     )
-
 
 def make_ranking_change_field(label):
     return models.BooleanField(
-        choices=[
+        choices = [
             [True, "Possibly True"],
             [False, "Definitely False"]
         ],
-        label=label,
-        widget=widgets.RadioSelect
+        label = label,
+        widget = widgets.RadioSelect
     )
-
 
 def make_brute_force_field(label):
     return models.IntegerField(
-        choices=[
+        choices = [
             [1, "Definitely included"],
             [2, "Possibly included"],
             [3, "Certainly not included"]
         ],
-        label=label,
-        widget=widgets.RadioSelect
+        label = label,
+        widget = widgets.RadioSelect
     )
-
 
 def da(preferences):
     """
@@ -186,47 +157,47 @@ def da(preferences):
     """
     M_prefs = preferences[0]
     W_prefs = preferences[1]
-
+    
     NM = len(M_prefs)
     NW = len(W_prefs)
-
+    
     if NM == 0 or NW == 0:
-        return [[-1] * NM, [-1] * NW]
-
+        return [[-1]*NM,[-1]*NW]
+    
     # Create "map" to ranks
-    W_ranks = NM * numpy.ones([NW, NM], int)
+    W_ranks = NM * numpy.ones([NW,NM],int)
     for w in range(NW):
         for i in range(len(W_prefs[w])):
             W_ranks[w][W_prefs[w][i]] = i
-
+    
     # Create vector of men still proposing
-    proposing_men = numpy.ones(NM, int)
-    proposing_index = numpy.zeros(NM, int)
-
+    proposing_men = numpy.ones(NM,int)
+    proposing_index = numpy.zeros(NM,int)
+    
     # Temporary matching
-    matching = -1 * numpy.ones(NW, int)
-
+    matching = -1 * numpy.ones(NW,int)
+    
     # Run proposals
     while sum(proposing_men) > 0:
         # Create vector of proposing men to each woman
         women_proposals = [[] for i in range(NW)]
         for m in proposing_men.nonzero()[0]:
             women_proposals[M_prefs[m][proposing_index[m]]].append(m)
-
+        
         # Select/replace men where applicable
         for w in range(NW):
             if women_proposals[w] == []: continue
             if matching[w] > -1: women_proposals[w].append(matching[w])
-
+            
             indices = numpy.take(W_ranks[w], women_proposals[w])
             amin_indices = numpy.argmin(indices)
-
+            
             if indices[amin_indices] == NM:
                 new_m = -1
             else:
                 new_m = women_proposals[w][amin_indices]
                 proposing_men[new_m] = 0
-
+            
             matching[w] = new_m
             for m in women_proposals[w]:
                 if m != new_m:
@@ -235,24 +206,24 @@ def da(preferences):
                         proposing_men[m] = 0
                     else:
                         proposing_men[m] = 1
-
+    
     # We got a result, now need to inverse vector
     W_matching = matching
-    M_matching = -1 * numpy.ones(NM, int)
+    M_matching = -1 * numpy.ones(NM,int)
     for i in range(NW):
         if W_matching[i] != -1:
             M_matching[W_matching[i]] = i
-
+    
     M_matching = M_matching.tolist()
     W_matching = W_matching.tolist()
-
+    
     return [M_matching, W_matching]
 
 
 class C(BaseConstants):
     NAME_IN_URL = 'properties_traditional'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 4
+    NUM_ROUNDS = 3
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_PRIORITIES = prizes_priorities_list()
@@ -278,7 +249,7 @@ class Player(BasePlayer):
 
     # Training round 1 questions
     general_property = make_boolean_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     # self_rank_independence = make_boolean_field(
@@ -290,84 +261,85 @@ class Player(BasePlayer):
     # )
 
     mechanism_misconception_1 = make_boolean_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     mechanism_misconception_2 = make_boolean_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     different_rank_outcome = models.IntegerField(
-        label="Answer:",
-        widget=widgets.RadioSelect
+        label = "Answer:",
+        widget = widgets.RadioSelect
     )
 
     # Training rounds 2-3 questions
     ranking_change_1 = make_ranking_change_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     ranking_change_2 = make_ranking_change_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     ranking_change_3 = make_ranking_change_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     ranking_change_4 = make_ranking_change_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     ranking_change_5 = make_ranking_change_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     brute_force_1 = make_brute_force_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     brute_force_2 = make_brute_force_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     brute_force_3 = make_brute_force_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     brute_force_4 = make_brute_force_field(
-        label="Answer:"
+        label = "Answer:"
     )
 
     # Fields for saving each question's incorrect submitted answers
-    incorrect_seq_general_property = models.LongStringField(blank=True)
+    incorrect_seq_general_property = models.LongStringField(blank = True)
     # incorrect_seq_self_rank_independence = models.LongStringField(blank = True)
     # incorrect_seq_competitors_rank_independence = models.LongStringField(blank = True)
-    incorrect_seq_mechanism_misconception_1 = models.LongStringField(blank=True)
-    incorrect_seq_mechanism_misconception_2 = models.LongStringField(blank=True)
-    incorrect_seq_different_rank_outcome = models.LongStringField(blank=True)
+    incorrect_seq_mechanism_misconception_1 = models.LongStringField(blank = True)
+    incorrect_seq_mechanism_misconception_2 = models.LongStringField(blank = True)
+    incorrect_seq_different_rank_outcome = models.LongStringField(blank = True)
 
-    incorrect_seq_ranking_change_1 = models.LongStringField(blank=True)
-    incorrect_seq_ranking_change_2 = models.LongStringField(blank=True)
-    incorrect_seq_ranking_change_3 = models.LongStringField(blank=True)
-    incorrect_seq_ranking_change_4 = models.LongStringField(blank=True)
-    incorrect_seq_ranking_change_5 = models.LongStringField(blank=True)
+    incorrect_seq_ranking_change_1 = models.LongStringField(blank = True)
+    incorrect_seq_ranking_change_2 = models.LongStringField(blank = True)
+    incorrect_seq_ranking_change_3 = models.LongStringField(blank = True)
+    incorrect_seq_ranking_change_4 = models.LongStringField(blank = True)
+    incorrect_seq_ranking_change_5 = models.LongStringField(blank = True)
 
-    incorrect_seq_brute_force_1 = models.LongStringField(blank=True)
-    incorrect_seq_brute_force_2 = models.LongStringField(blank=True)
-    incorrect_seq_brute_force_3 = models.LongStringField(blank=True)
-    incorrect_seq_brute_force_4 = models.LongStringField(blank=True)
+    incorrect_seq_brute_force_1 = models.LongStringField(blank = True)
+    incorrect_seq_brute_force_2 = models.LongStringField(blank = True)
+    incorrect_seq_brute_force_3 = models.LongStringField(blank = True)
+    incorrect_seq_brute_force_4 = models.LongStringField(blank = True)
 
 
 def different_rank_outcome_choices(player: Player):
     choices = [
-        [1, "It is certain that every possible ranking I could have submitted would have gotten me Prize A."],
-        [2, "There might be some alternative ranking I could have submitted that would have gotten me Prize B."],
-        [3, "There might be some alternative ranking I could have submitted that would have gotten me Prize C."],
-        [4, "There might be some alternative ranking I could have submitted that would have gotten me Prize D."]
+        [1, "It's certain that every possible ranking I could submit would have gotten me Prize A."],
+        [2, "There might be some alternative ranking I could've submitted that would have gotten me Prize B."],
+        [3, "There might be some alternative ranking I could've submitted that would have gotten me Prize C."],
+        [4, "There might be some alternative ranking I could've submitted that would have gotten me Prize D."]
     ]
-    return choices
 
+    random.shuffle(choices)
+    return choices
 
 # PAGES
 class ExplanationPage(Page):
@@ -380,34 +352,6 @@ class TrainingRound(Page):
     form_model = "player"
 
     @staticmethod
-    def vars_for_template(player: Player):
-        # convert ranking numeric values to string values
-        def convert_numeric_to_string(rankings):
-            # gets an array of numeric values returns an array of string values
-            numeric_to_string = {
-                0: "A",
-                1: "B",
-                2: "C",
-                3: "D"
-            }
-            return [numeric_to_string[rank] for rank in rankings]
-
-        def join_with_en_dash(array):
-            # gets an array of strings and joins them with en dash
-            return "-".join(array)
-
-        expected_ranking_string = join_with_en_dash(
-            convert_numeric_to_string(C.EXPECTED_RANKINGS[player.round_number - 1]))
-        return {
-            "expected_ranking_string": expected_ranking_string,
-        }
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        # before next page add 0.3 bonus to the player
-        player.payoff += 0.3
-
-    @staticmethod
     def get_form_fields(player: Player):
         priorities = [
             "first_priority",
@@ -418,14 +362,14 @@ class TrainingRound(Page):
 
         # Training question for the round 1 only.
         training_questions = [
-            "general_property",
-            # "self_rank_independence",
-            # "competitors_rank_independence",
-            "mechanism_misconception_1",
-            "mechanism_misconception_2",
-            "different_rank_outcome"
-        ]
-
+                "general_property",
+                # "self_rank_independence",
+                # "competitors_rank_independence",
+                "mechanism_misconception_1",
+                "mechanism_misconception_2",
+                "different_rank_outcome"
+            ]
+        
         # Fields for tracking incorrect answers for round 1 only.
         incorrect_answers = [
             "incorrect_seq_general_property",
@@ -437,7 +381,7 @@ class TrainingRound(Page):
         ]
 
         if player.round_number > 1:
-            # Training questions for rounds 2 - 4.
+            # Training questions for rounds 2 + 3.
             training_questions = [
                 "ranking_change_1",
                 "ranking_change_2",
@@ -448,9 +392,10 @@ class TrainingRound(Page):
                 "brute_force_2",
                 "brute_force_3",
                 "brute_force_4"
+                
             ]
 
-            # Fields for tracking incorrect answers for rounds 2 - 4.
+            # Fields for tracking incorrect answers for rounds 2 + 3.
             incorrect_answers = [
                 "incorrect_seq_ranking_change_1",
                 "incorrect_seq_ranking_change_2",
@@ -464,16 +409,16 @@ class TrainingRound(Page):
             ]
 
         return priorities + training_questions + incorrect_answers
-
+    
     @staticmethod
     def js_vars(player: Player):
         return dict(
-            prizes=C.PRIZES,
-            prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1],
-            players=C.PLAYERS,
-            players_rankings=C.PLAYERS_RANKINGS[player.round_number - 1],
-            player_expected_ranking=C.EXPECTED_RANKINGS[player.round_number - 1],
-            questions_answers=C.QUESTIONS_ANSWERS[player.round_number - 1]
+            prizes = C.PRIZES,
+            prizes_priorities = C.PRIZES_PRIORITIES[player.round_number - 1],
+            players = C.PLAYERS,
+            players_rankings = C.PLAYERS_RANKINGS[player.round_number - 1],
+            player_expected_ranking = C.EXPECTED_RANKINGS[player.round_number - 1],
+            questions_answers = C.QUESTIONS_ANSWERS[player.round_number - 1]
         )
 
     @staticmethod
@@ -507,32 +452,12 @@ class TrainingRound(Page):
         prizes = data["prizes"]
         matching = da(preferences)
         user_prize = matching[0][0]
-        # since prize is in cents covert to dollars
         response = dict(
-            prize=prizes[user_prize],
-            value=30
+            prize = prizes[user_prize],
+            value = 30
         )
+
         return {0: response}
 
 
-
-class EndTraining(Page):
-    @staticmethod
-    def is_displayed(player: Player):  # show only on last round number
-        # check if this is a long training
-        if player.participant.full_training:
-            # if this is a long training show only on fourth round
-            return player.round_number == 4
-        else:
-            # if this is a short training show on  second round
-            return player.round_number == 2
-
-    @staticmethod
-    def app_after_this_page(player: Player, upcoming_apps):
-        return upcoming_apps[0]
-
-
-
-
-
-page_sequence = [ExplanationPage, TrainingRound, EndTraining]
+page_sequence = [ExplanationPage, TrainingRound]

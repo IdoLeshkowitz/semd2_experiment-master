@@ -1,0 +1,197 @@
+{{ block title }}
+    Introduction Round
+{{ endblock }}
+
+{{ block styles}}
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+
+    <!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+{{ endblock }}
+
+{{ block content }}
+
+    <div class="explain">
+        <p>
+            In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.
+            Each prize is worth money, but is worth a different amount of money for each participant.
+        </p>
+
+        <p>
+            You and the computerized participants will each rank the 4 prizes from most preferred to least preferred.
+            Then, an <b>allocation process</b> will use these rankings to allocate the prizes — one prize for each participant.
+        </p>
+
+        <p>
+            The allocation process will try to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
+            while taking into account the rankings of all participants.
+        </p>
+
+        <p>
+            You will learn about the game and allocation process while playing a round of the game.
+            This text provides explanations of the game interface. <b>Make sure you read it carefully</b>.
+        </p>
+
+        <p>
+            A round of the game has three steps.
+        </p>
+    </div>
+
+    <section id="step-1">
+        <h4>Step 1: Round Information</h4>
+
+        <div class="explain">
+            <p>
+                In Step 1, you first see the <b>prizes</b> you can get in this round.
+                Each prize is worth money, but might be worth a different amount of money for each participant.
+            </p>
+        </div>
+
+        <p>
+            In this round, the <b>prizes</b> are:
+        </p>
+
+        <table id="prize-table" class=" table table-bordered">
+            <thead>
+                <tr>
+                    <th>Prize</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+            </thead>
+        </table>
+       
+        <div class="explain">
+            <p>
+                In the table above, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.
+                The computerized participants <b>do not know</b> the money amounts shown in your table, and the allocation process is not affected by these money amounts.
+            </p>
+    
+            <p>
+                Next, you see what we call the <b>prize priorities</b>:
+            </p>
+
+            <p>
+                All four participants have some <p>priority</p> at each of the four prizes. These priorities can affect the allocation of prizes.
+                The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.                
+            </p>
+        </div>
+       
+        <p>
+            In this round, the <b>prize priorities</b> for you and for the other participants are:
+        </p>
+
+        <table id="priorities-table" class="table table-bordered">
+            <thead>
+                <tr>
+                    <th></th>
+                    <th>Prize A</th>
+                    <th>Prize B</th>
+                    <th>Prize C</th>
+                    <th>Prize D</th>
+                </tr>
+            </thead>
+        </table>
+
+        <div class="explain">
+            <p>
+                Each column shows the priorities of all participants at some prize, written from highest to lowest.
+                For example, the column under <b>Prize A</b> shows its priorities. Prize A has Ruth in the 1st priority (the highest),
+                Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
+                So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.
+            </p>
+
+            <p>
+                The prize-priorities table is chosen <b>completely at random</b>, with each possible table being equally likely.
+                You and the other participants <b>cannot affect the prize priorities</b>.
+            </p>
+        </div>
+        
+        <div class="btn-container">
+            <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        </div>   
+    </section>
+
+    <section id="step-2">
+        <h4>Step 2: Submit Your Ranking</h4>
+
+        <div class="explain">
+            <p>
+                In Step 2, you are asked to <b>rank the four prizes in a list</b>, from most preferred to least preferred.
+            </p>
+        </div>
+
+        <p>
+            Please rank the four prizes in your list from most preferred to least preferred.
+        </p>
+
+        <ul>
+            <li>{{ formfield 'first_priority' }}</li>
+            <li>{{ formfield 'second_priority' }}</li>
+            <li>{{ formfield 'third_priority' }}</li>
+            <li>{{ formfield 'fourth_priority' }}</li>
+        </ul>
+
+        <p>
+            The computerized participants simultaneously submit their own rankings.
+            Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.
+            Your own ranking <b>cannot affect the computerized participants' rankings</b>.
+        </p>
+
+        <div class="btn-container">
+            <button id="submit-btn" type="button" class="btn btn-primary btn-container">Submit</button>
+        </div>
+
+        <div class="explain">
+            <p>
+                The computerized participants simultaneously submit their own rankings.
+                Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.
+                Your own ranking <b>cannot affect the computerized participants' rankings</b>.
+            </p>
+        </div>
+    </section>
+
+    <section id="step-3">
+        <h4>Step 3: Allocation Process</h4>
+
+        <div class="explain">
+            <p>
+                In Step 3, the allocation process allocates the prizes to participants.
+            </p>
+        </div>
+
+        <div id="load">
+            <p>
+                Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+            </p>
+        </div>
+
+        <div class="explain">
+            <p>
+                Then, you get the prize that was allocated to you
+            </p>
+        </div>
+
+        <div id="round-results">
+            <p>
+                <b>You get prize <span id="prize-won"></span></b>, and your total earnings increase by <b><span id="points-won"></span>p</b>.
+            </p>
+
+            <div class="explain">
+                <p>
+                    That's it! Click on the button below to proceed to rounds of the game.
+                </p>
+            </div>
+    
+            {{ next_button }}
+        </div>
+    </section>
+{{ endblock }}
+
+{{ block scripts }}
+    <script src="{{ static 'global/round_page.js' }}"></script>
+    <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+{{ endblock }}

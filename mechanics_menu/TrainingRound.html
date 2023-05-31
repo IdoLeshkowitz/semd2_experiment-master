@@ -1,6 +1,5 @@
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
-    How the Allocation Process Works: <br>
+    The Key Principle of the Allocation Process: <br>
     Training Round {{ player.round_number }}/3
 {{ endblock }}
 
@@ -40,7 +39,7 @@ Only after properties or mechanics
     <p>
         This is a training round.<br>
         Please follow the instructions and answer the questions shown to you as best you can.<br>
-        The prizes are not worth money this round, but <b>you will earn <span class="money-amount">{{ 0.3 | cu }}</span></b> for completing it.</p>
+        The prizes are not worth money this round, but <b>you will earn 30p</b> for completing it.</p>
 </div>
     <div class="btn-container">
         <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
@@ -132,6 +131,17 @@ Only after properties or mechanics
 <section id="step-3">
     <br>
 <h4>Step 2: Submit Your Ranking</h4>
+
+        <p>
+            Please rank the four prizes <b>in the arbitrary order <span class="expected-rank"></span></b> (from most to least preferred).
+        </p>
+        <ul>
+            <li>{{ formfield 'first_priority' }}</li>
+            <li>{{ formfield 'second_priority' }}</li>
+            <li>{{ formfield 'third_priority' }}</li>
+            <li>{{ formfield 'fourth_priority' }}</li>
+        </ul>
+
 <!-- fourth general pop up window-->
 <button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
     <div id="GenModal3" class="modal">
@@ -143,7 +153,16 @@ Only after properties or mechanics
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-    {{ include_sibling "ranking_form.html" }}
+
+    <div class="btn-container">
+        <!-- class="btn btn-danger btn-container" for submit button-->
+        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
+    </div>
+    <div class="incorrect-msg">
+        <p>
+            Please make sure your ranking follows the instructions.
+        </p>
+    </div>
 </section><br>
 
 <section id="step-4">
@@ -160,7 +179,6 @@ Only after properties or mechanics
 {{ endblock }}
 
 {{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/mechanics_training_round_page.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

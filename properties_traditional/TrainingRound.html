@@ -1,7 +1,6 @@
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
-The Key Principle of the Allocation Process: <br>
-Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}
+    The Key Principle of the Allocation Process: <br>
+    Training Round {{ player.round_number }}/3
 {{ endblock }}
 
 {{ block styles}}
@@ -26,27 +25,7 @@ Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}
                 than a prize that they ranked lower, while taking into account the rankings of all participants.
             </p>
       </div>
-    </div><br>
-
-<!-- everyone in properties should see this -->
-<button id="GenBtn4" class="button-2">Click for a reminder on the important principle of the allocation</button><br>
-    <div id="GenModal4" class="modal">
-      <div class="modal-content">
-        <span class="close4">&times;</span>
-          <p>important principle of the allocation</p>
-      </div>
-    </div><br>
-<!-- TRADITIONAL TREATMENTS - only those who see properties after mech should see mech reminder as well -->
-{{if player.participant.trajectory_num == 1 or player.participant.trajectory_num == 2}}
-<button id="GenBtn5" class="button-2">Click for a reminder on the technical details of the allocation process</button>
-    <div id="GenModal5" class="modal">
-      <div class="modal-content">
-        <span class="close5">&times;</span>
-          <p>technical details of the allocation process</p>
-      </div>
-    </div><br>
-{{else}}
-{{endif}}
+    </div>
 
 <!--
 need to program conditions
@@ -60,7 +39,7 @@ Only after properties or mechanics
     <p>
         This is a training round.<br>
         Please follow the instructions and answer the questions shown to you as best you can.<br>
-        The prizes are not worth money this round, but <b>you will earn <span class="money-amount">{{ 0.3 | cu }}</span></b> for completing it.</p>
+        The prizes are not worth money this round, but <b>you will earn 30p</b> for completing it.</p>
 </div>
     <div class="btn-container">
         <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
@@ -89,7 +68,7 @@ Only after properties or mechanics
                 </tr>
             </tbody>
         </table><br>
-    <!--second pop up window-->
+<!--second pop up window-->
 <button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
     <div id="GenModal1" class="modal">
       <div class="modal-content">
@@ -125,8 +104,8 @@ Only after properties or mechanics
                 </tr>
             </thead>
         </table><br>
-    <!--third pop up window-->
-<button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button><br>
+<!--third pop up window-->
+<button id="GenBtn2" class="button-2"  type="button">Click for a reminder on what the priorities mean</button><br>
     <div id="GenModal2" class="modal">
       <div class="modal-content">
         <span class="close2">&times;</span>
@@ -152,8 +131,19 @@ Only after properties or mechanics
 <section id="step-3">
     <br>
 <h4>Step 2: Submit Your Ranking</h4>
-    <!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button><br>
+
+        <p>
+            Please rank the four prizes <b>in the arbitrary order <span class="expected-rank"></span></b> (from most to least preferred).
+        </p>
+        <ul>
+            <li>{{ formfield 'first_priority' }}</li>
+            <li>{{ formfield 'second_priority' }}</li>
+            <li>{{ formfield 'third_priority' }}</li>
+            <li>{{ formfield 'fourth_priority' }}</li>
+        </ul>
+
+<!-- fourth general pop up window-->
+<button id="GenBtn3" class="button-2"  type="button">Click for a reminder on what this ranking means</button><br>
     <div id="GenModal3" class="modal">
       <div class="modal-content">
         <span class="close3">&times;</span>
@@ -163,7 +153,16 @@ Only after properties or mechanics
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-    {{ include_sibling "ranking_form.html" }}
+
+    <div class="btn-container">
+        <!-- class="btn btn-danger btn-container" for submit button-->
+        <button id="submit-btn" type="button" class="btn btn-danger btn-container">Submit ranking</button>
+    </div>
+    <div class="incorrect-msg">
+        <p>
+            Please make sure your ranking follows the instructions.
+        </p>
+    </div>
 </section><br>
 
 <section id="step-4">
@@ -276,7 +275,6 @@ Only after properties or mechanics
                         Correct! Imagine submitting a ranking that places Prize A first and Prize B second,
                         but getting some prize other than Prize A or Prize B. Remember that submitting different,
                         alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking.
-                        Hence, no alternative ranking can get you Prize A or Prize B.
                         This is true <b>regardless of your priorities at these prizes</b>.
                     </p>
                 </div>
@@ -507,10 +505,6 @@ Only after properties or mechanics
                     <b>possibly</b> included in the log, or <b>certainly not</b> included in the log?
                     Choose the correct answer below:
                 </p>
-                <p>
-                    (Remember: You submitted the ranking <span class="expected-rank"></span> (from most to least preferred),
-                    and ended up getting Prize <span class="prize-won"></span>.)
-                </p>
 
                 <ul>
                     <li id="brute-force-1" class="question">
@@ -650,16 +644,10 @@ Only after properties or mechanics
 </section>
 
 <section id="next">
-    {{ if player.round_number == C.NUM_ROUNDS }}
-        In this training round you get <b><span class="money-amount">{{ 0.3 | cu }}</span></b>.
-        You completed the training rounds!
-        Click the button below to proceed to real rounds of the game.
-    {{else}}
     <p>
-        You have completed this training round! You get <b><span class="money-amount">{{ 0.3 | cu }}</span></b>.
+        You have completed this training round! You get <b><span id="points-won"></span>p</b>.
         Click the button below to proceed.
     </p>
-    {{endif}}
 
     <div style="text-align: center">
         {{ next_button }}
@@ -668,7 +656,6 @@ Only after properties or mechanics
 {{ endblock }}
 
 {{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/property_training_round_page.js' }}"></script>
     <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
 {{ endblock }}

@@ -85,7 +85,7 @@ $("#proceed-step-14-btn").click(function () {
     $("#step-14").slideDown();
     /*change the timing of the timer*/
     setTimeout(() => {
-        $("#load").slideUp();
+      $("#load").slideUp();
     }, 2000);
     button = document.getElementById('proceed-step-15-btn');
     button.scrollIntoView(true);
@@ -110,9 +110,9 @@ $("#proceed-step-17-btn").click(function () {
 });
 $("#proceed-step-18-btn").click(function () {
     $(this).hide();
-    /*    $("#step-13").slideDown();
-        button = document.getElementById('proceed-step-14-btn');
-        button.scrollIntoView(true);*/
+/*    $("#step-13").slideDown();
+    button = document.getElementById('proceed-step-14-btn');
+    button.scrollIntoView(true);*/
 });
 /*
 $("#proceed-step-15-btn").click(function () {
@@ -136,21 +136,17 @@ $("#submit-btn").click(function () {
         $("#step-11 .incorrect-msg").show();
         return;
     }
-    /* disable input element */
-    $("#id_player_bid_text").attr("disabled", true);
 
     $(this).hide();
 
     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
 
-    liveSend({
-        "preferences": [
-            playersRankings,
-            prizesPriorities
-        ],
-        "prizes": prizes,
-        "values": prizesValues
-    });
+    liveSend({"preferences": [
+        playersRankings,
+        prizesPriorities
+    ],
+    "prizes": prizes,
+    "values": prizesValues});
 
     $("#step-12").slideDown();
     button = document.getElementById('proceed-step-13-btn');

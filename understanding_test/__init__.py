@@ -81,14 +81,14 @@ class Player(BasePlayer):
         choices=["Possibly True", " Definitely False"],
         widget=widgets.RadioSelect,
     )
-    def first_situation_a_error_message(self, value):
-        if value != "Possibly True":
-            return 'Please select the correct answer'
+
+
 # PAGES
 class Understanding_test(Page):
     form_model = 'player'
     form_fields = ["first_situation_a", "first_situation_b", "first_situation_c", "first_situation_d",
                    "second_situation_a", "second_situation_b", "second_situation_c", "second_situation_d",
                    "third_situation_a", "third_situation_b", "third_situation_c", "third_situation_d"]
+
 
 page_sequence = [Understanding_test]
