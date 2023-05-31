@@ -113,7 +113,7 @@ var players = js_vars.players;
 var prizes = js_vars.prizes;
 
 var prizesPriorities = js_vars.prizes_priorities;
-
+console.log(prizesPriorities)
 var otherPlayersRankings = js_vars.players_rankings;
 var playerExpectedRanking = js_vars.player_expected_ranking;
 

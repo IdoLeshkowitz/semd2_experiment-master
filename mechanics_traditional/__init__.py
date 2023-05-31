@@ -8,11 +8,11 @@ Your app description
 
 
 def prizes_priorities_list():
-    first_round_priorities = [[0, 1, 2, 3], [0, 1, 3, 2], [1, 2, 0, 3], [3, 2, 1, 0]]
+    first_round_priorities = [[1,2,3,0], [1,2,0,3], [2,3,1,0], [0,3,2,1]]
 
-    second_round_priorities = [[2, 3, 0, 1], [1, 2, 3, 0], [1, 3, 0, 2], [2, 0, 3, 1]]
+    second_round_priorities = [[3, 0, 1, 2], [2, 3, 0, 1], [2, 0, 1, 3], [3, 1, 0, 2]]
 
-    third_round_priorities = [[0, 1, 2, 3], [0, 3, 1, 2], [2, 3, 1, 0], [2, 1, 0, 3]]
+    third_round_priorities =    [[1, 2, 3, 0], [1, 0, 2, 3], [3, 0, 2, 1], [3, 2, 1, 0]]
 
     fourth_round_priorities = [[1, 0, 2, 3], [2, 0, 3, 1], [1, 0, 3, 2], [2, 3, 0, 1]]
     return [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
@@ -27,7 +27,7 @@ def players_rankings_list():
     # third_round_rankings = [[2, 3, 0, 1], [1, 0, 2, 3], [3, 1, 0, 2]]
     #
     # fourth_round_rankings = [[2, 0, 1, 3], [0, 3, 2, 1], [0, 3, 1, 2]]
-    first_round_rankings = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 3, 0, 2], [2, 1, 0, 3]]
+    first_round_rankings = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 0, 3, 2], [2, 0, 1, 3]]
     second_round_rankings = [[3, 2, 1, 0], [1, 2, 0, 3], [1, 0, 3, 2], [3, 0, 2, 1]]
     third_round_rankings = [[3, 0, 1, 2], [2, 1, 0, 3], [2, 3, 0, 1], [3, 2, 1, 0]]
     fourth_round_rankings = [[2, 0, 1, 3], [0, 3, 2, 1], [0, 3, 1, 2], [2, 3, 0, 1]]
@@ -213,6 +213,7 @@ class DAalghoIntro2(Page):
             for j in range(player.StudentsNumber):
                 L.append(player.participant.schools_lists[i][j] + 1)
             SchoolsAlphabetPreferencesCombined.append(L)
+        print(SchoolsAlphabetPreferencesCombined)
         player.participant.schoolsAPC = SchoolsAlphabetPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a school: its first entery is the name/letter of the school, and the other enteries are the students' numbers according to the school's preferences.
         StudentsNumberPreferencesCombined = []
         for i in range(player.StudentsNumber):
@@ -277,6 +278,7 @@ class TrainingRound(Page):
             for j in range(player.StudentsNumber):
                 L.append(current_round_schools_list[i][j] + 1)
             SchoolsAlphabetPreferencesCombined.append(L)
+        print(SchoolsAlphabetPreferencesCombined)
         player.participant.schoolsAPC = SchoolsAlphabetPreferencesCombined  # This is a list of sublist. Each sublist corresponds to a school: its first entery is the name/letter of the school, and the other enteries are the students' numbers according to the school's preferences.
         StudentsNumberPreferencesCombined = []
         for i in range(player.StudentsNumber):

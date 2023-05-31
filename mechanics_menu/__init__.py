@@ -10,11 +10,11 @@ Your app description
 
 
 def prizes_priorities_list():
-    first_round_priorities = [[0, 1, 2, 3], [0, 1, 3, 2], [1, 2, 0, 3], [3, 2, 1, 0]]
+    first_round_priorities = [[1, 2, 3, 0], [1, 2, 0, 3], [2, 3, 1, 0], [0, 3, 2, 1]]
 
-    second_round_priorities = [[2, 3, 0, 1], [1, 2, 3, 0], [1, 3, 0, 2], [2, 0, 3, 1]]
+    second_round_priorities = [[3, 0, 1, 2], [2, 3, 0, 1], [2, 0, 1, 3], [3, 1, 0, 2]]
 
-    third_round_priorities = [[0, 1, 2, 3], [0, 3, 1, 2], [2, 3, 1, 0], [2, 1, 0, 3]]
+    third_round_priorities = [[1, 2, 3, 0], [1, 0, 2, 3], [3, 0, 2, 1], [3, 2, 1, 0]]
 
     fourth_round_priorities = [[1, 0, 2, 3], [2, 0, 3, 1], [1, 0, 3, 2], [2, 3, 0, 1]]
     return [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]

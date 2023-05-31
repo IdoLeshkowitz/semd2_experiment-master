@@ -404,11 +404,11 @@
                                                         class="dButtonBox"
                                                      {{ endif }}>
                                                     <button type="button" class="dButton" id="School{{ school.0}}PrefStudent{{ name_or_student }}" disabled="disabled">
-                                                        {{ if name_or_student == 1 }}
+                                                        {{ if name_or_student == 2 }}
                                                            R
-                                                        {{ elif name_or_student == 2 }}
-                                                            S
                                                         {{ elif name_or_student == 3 }}
+                                                            S
+                                                        {{ elif name_or_student == 4 }}
                                                             T
                                                         {{ else }}
                                                             Y
@@ -481,7 +481,7 @@
         <div class="row middle-row" style="justify-content: space-between;flex-wrap: nowrap;align-items: flex-end;">
             <div class="column" style="flex: 1 1 auto;width: 200%;">
                 <b style="font-size: 1.5rem;">
-                    pick participants to pair -->
+                    Pick participants to pair →
                 </b>
             </div>
             {{ for i in participant.students_names}}

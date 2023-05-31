@@ -26,6 +26,7 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     trajectory_num = models.IntegerField(initial=C.trajectory_num)
     full_training = models.BooleanField()
+    understanding_bonus = models.IntegerField(initial=0)
 
 
 # PAGES
