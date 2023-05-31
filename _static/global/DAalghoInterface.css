@@ -172,3 +172,7 @@ body {
 .offButton{
     display: none;
 }
+
+.middle-row .pButton {
+    display: none;
+}
