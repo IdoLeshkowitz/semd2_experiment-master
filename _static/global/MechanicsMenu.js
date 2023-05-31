@@ -551,10 +551,10 @@ window.onload = function () {
         if (forminputs[formInputName].value != js_vars.correct_answers[12]) {
             bonus_flag = false;
             $("#step-22 .incorrect-msg").show();
-            $(this).prop('disabled', true)
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        $(this).prop('disabled', true)
         $("#step-22 .incorrect-msg").hide();
         $(this).prop('disabled', true)
         if (bonus_flag) {
