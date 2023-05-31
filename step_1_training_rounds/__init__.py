@@ -223,50 +223,53 @@ class TrainingRoundWithQuestions(Page):
 
     @staticmethod
     def live_method(player: Player, data):
-        """
-        Recieves a data stracture from the client side, calls the
-        Differed-Acceptance algorithm and sends the client side the
-        player's matched prize and its value
-
-        Parameters
-        ----------
-        player: Player
-            Otree's object representing the current player.
-        data: dictionary
-            A data set with all the information needed from the client side
-            for the matching algorithm.
-        Returns
-        -------
-        dictionary
-            A data set with the player's matched prize and its value.
-        """
-        # Sleep for 2 seconds to give the feeling the allocation process
-        # takes more time than it really is (which practically 0 in our case).
-        time.sleep(2)
-        # TODO: Back when this was implemented, all the rounds data was determined
-        #       in the frontend side (preferences of competitors and prizes, prizes values, etc.).
-        #       Now, everything is implemented in the backend side. So, while everything still
-        #       works fine, we should consider refactoring all the source code to avoid redundant
-        #       transfer of data.
-        preferences = data["preferences"]
-        prizes = data["prizes"]
-        values = data["values"]
-        matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
-        user_prize = matching[0][0]
-        # since the prizes are in cents, we need to divide by 100 to get the real value
-        payoff = round(values[user_prize] / 100, 2)
-        response = dict(prize=prizes[user_prize], value=cu(values[user_prize]),payoff=payoff)
-        return {0: response}
-
-    def before_next_page(player: Player, timeout_happened):
-        player.payoff += 0.3
+        if ("action_type" in data and data["action_type"] == "add_understanding_bonus"):
+            points_to_add = data["payload"]["points_to_add"]
+            player.participant.vars["understanding_bonus"] += points_to_add
+        else:
+            """
+            Recieves a data stracture from the client side, calls the
+            Differed-Acceptance algorithm and sends the client side the
+            player's matched prize and its value
+    
+            Parameters
+            ----------
+            player: Player
+                Otree's object representing the current player.
+            data: dictionary
+                A data set with all the information needed from the client side
+                for the matching algorithm.
+            Returns
+            -------
+            dictionary
+                A data set with the player's matched prize and its value.
+            """
+            # Sleep for 2 seconds to give the feeling the allocation process
+            # takes more time than it really is (which practically 0 in our case).
+            time.sleep(2)
+            # TODO: Back when this was implemented, all the rounds data was determined
+            #       in the frontend side (preferences of competitors and prizes, prizes values, etc.).
+            #       Now, everything is implemented in the backend side. So, while everything still
+            #       works fine, we should consider refactoring all the source code to avoid redundant
+            #       transfer of data.
+            preferences = data["preferences"]
+            prizes = data["prizes"]
+            values = data["values"]
+            matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
+            user_prize = matching[0][0]
+            # since the prizes are in cents, we need to divide by 100 to get the real value
+            payoff = round(values[user_prize] / 100, 2)
+            response = dict(prize=prizes[user_prize], value=cu(values[user_prize]),payoff=payoff)
+            return {0: response}
 
     @staticmethod
     def vars_for_template(player: Player):
         return {'firstPrize': C.PRIZES_VALUES[player.round_number - 1][0] / 100,
                 'secondPrize': C.PRIZES_VALUES[player.round_number - 1][1] / 100,
                 'thirdPrize': C.PRIZES_VALUES[player.round_number - 1][2] / 100,
-                'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100}
+                'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100,
+                "understanding_bonus": player.participant.vars["understanding_bonus"],
+        }
 
 
 page_sequence = [TrainingRoundWithQuestions]

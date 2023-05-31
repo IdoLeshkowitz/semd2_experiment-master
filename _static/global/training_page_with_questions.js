@@ -1,3 +1,4 @@
+let attemptsCounter = 0;
 function liveRecv(data) {
     function getCurrentCurrency() {
         /* grab the current bonsu element */
@@ -68,6 +69,8 @@ $("#proceed-question1-btn").click(function () {
 $("#question1-btn").click(function () {
     var formInputName = "independence";
     if (forminputs[formInputName].value != "False") {
+        /* increment attempts counter */
+        incrementAttemptsCounter()
         $("#question1 .incorrect-msg").show();
         return;
     }
@@ -79,10 +82,19 @@ $("#question1-btn").click(function () {
     $("#question2").slideDown();
     button = document.getElementById('question2-btn');
     button.scrollIntoView(true);
+    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
+    /* check current number of attempts */
+    if (attemptsCounter === 0) {
+    addUnderstandingBonus(1)
+    }
+    /* reset attempts counter */
+    resetAttemptsCounter()
 });
 $("#question2-btn").click(function () {
     var formInputName = "value_table";
     if (forminputs[formInputName].value != "False") {
+        /* increment attempts counter */
+        incrementAttemptsCounter()
         $("#question2 .incorrect-msg").show();
         return;
     }
@@ -94,6 +106,13 @@ $("#question2-btn").click(function () {
     $("#step-2").slideDown();
     button = document.getElementById('proceed-question3-btn');
     button.scrollIntoView(true);
+    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
+    /* check current number of attempts */
+    if (attemptsCounter === 0) {
+    addUnderstandingBonus(1)
+    }
+    /* reset attempts counter */
+    resetAttemptsCounter()
 });
 $("#proceed-question3-btn").click(function () {
     $(this).hide();
@@ -104,6 +123,8 @@ $("#proceed-question3-btn").click(function () {
 $("#question3-btn").click(function () {
     var formInputName = "self_rank_independence";
     if (forminputs[formInputName].value != "False") {
+        /* increment attempts counter */
+        incrementAttemptsCounter()
         $("#question3 .incorrect-msg").show();
         return;
     }
@@ -115,7 +136,15 @@ $("#question3-btn").click(function () {
     $("#step-3").slideDown();
     button = document.getElementById('proceed-step-3-btn');
     button.scrollIntoView(true);
+    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
+    /* check current number of attempts */
+    if (attemptsCounter === 0) {
+    addUnderstandingBonus(1)
+    }
+    /* reset attempts counter */
+    resetAttemptsCounter()
 });
+
 $("#proceed-step-3-btn").click(function () {
     $(this).hide();
     $("#step-3").slideDown();
@@ -167,6 +196,8 @@ $("#proceed-question4-btn").click(function () {
 $("#question4-btn").click(function () {
     var formInputName = "competitors_rank_independence";
     if (forminputs[formInputName].value != "False") {
+        /* increment attempts counter */
+        incrementAttemptsCounter()
         $("#question4 .incorrect-msg").show();
         return;
     }
@@ -178,6 +209,13 @@ $("#question4-btn").click(function () {
     $("#next").slideDown();
     /*    button = document.getElementById('proceed-step-3-btn');
         button.scrollIntoView(true);*/
+    /* this part of the code is responsible for adding understanding bonus if the user answers the question correctly on the first attempt */
+    /* check current number of attempts */
+    if (attemptsCounter === 0) {
+    addUnderstandingBonus(1)
+    }
+    /* reset attempts counter */
+    resetAttemptsCounter()
 });
 $("#next").click(function () {
     $(this).hide();
@@ -336,4 +374,16 @@ window.onclick = function (event) {
     if (event.target == modal3) {
         modal3.style.display = "none";
     }
+}
+
+function addUnderstandingBonus(pointsToAdd){
+    liveSend({"action_type":"add_understanding_bonus","payload":{"points_to_add":pointsToAdd}});
+}
+
+function resetAttemptsCounter(){
+    attemptsCounter = 0;
+}
+
+function incrementAttemptsCounter(){
+    attemptsCounter++;
 }
