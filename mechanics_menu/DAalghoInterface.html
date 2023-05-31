@@ -132,10 +132,12 @@
         <br>
     </section>
     <section id="step-5-rounds">
-        {{ if player.round_number < 4 }}
-        <p></p>
+        {{ if player.round_number < C.NUM_ROUNDS }}
+        <p>You completed this training rounds. <br>
+        Click the button below to start the next training round.
+        </p>
         {{ endif }}
-        {{ if player.round_number == 4 }}
+        {{ if player.round_number == C.NUM_ROUNDS }}
         <p>You completed the training rounds. <br>
         Click the button below to proceed to real rounds of the game.
         </p>

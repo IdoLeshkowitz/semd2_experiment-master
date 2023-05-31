@@ -8,7 +8,7 @@ const alphabet = alpha.map((x) => String.fromCharCode(x));
 var stage = 1; // the stage of the mechanism we are at
 var student_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
 var schools_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
-
+var delay = 1000;
 var bonus_flag = true;
 var bonus = 0
 
@@ -142,6 +142,7 @@ window.onload = function () {
             mistakes_counter += 1;
             $("#step-3-rounds .incorrect-msg").show();
         } else {
+            $(this).prop('disabled', true);
             if (mistakes_counter > 0) {
                 $("#step-3-rounds .incorrect-msg").hide();
                 $("#step-3-rounds .correct-msg").show();
@@ -151,9 +152,9 @@ window.onload = function () {
                 $("#step-3-rounds .correct-first-msg").show();
             }
             setTimeout(() => {
-                $("#step-3-rounds ol").hide();
+                $("#step-3-rounds").hide();
                 $("#step-4-rounds").toggle();
-            }, 2000);
+            }, delay);
             mistakes_counter = 0;
         }
     });
@@ -170,17 +171,16 @@ window.onload = function () {
             mistakes_counter += 1;
             $("#step-4-rounds .incorrect-msg").show();
         } else {
+            $(this).prop('disabled', true);
             $("#step-4-rounds .incorrect-msg").hide();
             if (mistakes_counter > 0) {
                 $("#step-4-rounds .correct-msg").show();
-            }
-            else {
+            } else {
                 $("#step-4-rounds .correct-first-msg").show();
             }
             setTimeout(() => {
-                $("#step-4-rounds ._formfield").hide();
-                $("#step-4-rounds .btn-container").hide();
-                $("#step-5-rounds").show();
+                $("#step-4-rounds").hide();
+                $("#step-5-rounds").toggle();
             }, 2000);
             mistakes_counter = 0;
         }
@@ -203,43 +203,40 @@ window.onload = function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_1";
         var formInputName = "question_1";
         if (forminputs[formInputName].value != js_vars.correct_answers[0]) {
-            debugger
             bonus_flag = false;
             $("#step-5 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
-        debugger
+        $(this).prop('disabled', true)
         $("#step-5 .incorrect-msg").hide();
         if (bonus_flag) {
             bonus = bonus + 1;
-            $("#step-5 .correct-msg").hide();
+            $("#step-5 .correct-first-msg").show();
         } else {
             $("#step-5 .correct-msg").show();
         }
         bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-
         setTimeout(() => {
             $("#step-5").hide();
             $("#step-6").toggle();
-        }, 5000);
-
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#proceed-step-7-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_2";
         var formInputName = "question_2";
         if (forminputs[formInputName].value != js_vars.correct_answers[1]) {
-            debugger
             bonus_flag = false;
             $("#step-6 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
-        debugger
         $("#step-6 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-6 .correct-first-msg").show();
@@ -252,7 +249,8 @@ window.onload = function () {
         setTimeout(() => {
             $("#step-6").hide();
             $("#step-7").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#proceed-step-8-btn").click(function () {
@@ -262,14 +260,13 @@ window.onload = function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_3";
         var formInputName = "question_3";
         if (forminputs[formInputName].value != js_vars.correct_answers[2]) {
-            debugger
             bonus_flag = false;
             $("#step-8 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
-        debugger
         $("#step-8 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-8 .correct-first-msg").show();
@@ -282,7 +279,8 @@ window.onload = function () {
         setTimeout(() => {
             $("#step-8").hide();
             $("#step-9").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
     $("#proceed-step-10-btn").click(function () {
         liveSend({'information_type': 'matching_update', 'matching': partial, 'stage': stage})
@@ -298,6 +296,7 @@ window.onload = function () {
             return;
         }
         $("#step-10 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-10 .correct-first-msg").show();
@@ -310,7 +309,8 @@ window.onload = function () {
         setTimeout(() => {
             $("#step-10").hide();
             $("#step-11").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#proceed-step-12-btn").click(function () {
@@ -327,6 +327,7 @@ window.onload = function () {
             return;
         }
         $("#step-12 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-12 .correct-first-msg").show();
@@ -339,7 +340,8 @@ window.onload = function () {
         setTimeout(() => {
             $("#step-12").hide();
             $("#step-13").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#proceed-step-14-btn").click(function () {
@@ -349,13 +351,14 @@ window.onload = function () {
     $("#proceed-step-15-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_5";
         var formInputName = "question_6";
-        if (forminputs[formInputName].value != js_vars.correct_answers[4]) {
+        if (forminputs[formInputName].value != js_vars.correct_answers[5]) {
             bonus_flag = false;
             $("#step-14 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
         $("#step-14 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-14 .correct-first-msg").show();
@@ -368,7 +371,8 @@ window.onload = function () {
         setTimeout(() => {
             $("#step-14").hide();
             $("#step-15").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#proceed-step-16-btn").click(function () {
@@ -377,16 +381,17 @@ window.onload = function () {
 
     $("#proceed-step-17-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_5";
-        var formInputName = "question_5";
-        if (forminputs[formInputName].value != js_vars.correct_answers[4]) {
-            debugger
+        var formInputName = "question_7";
+        console.log(forminputs[formInputName].value)
+        console.log(js_vars.correct_answers[6])
+        if (forminputs[formInputName].value != js_vars.correct_answers[6]) {
             bonus_flag = false;
             $("#step-16 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
-        debugger
         $("#step-16 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-16 .correct-first-msg").show();
@@ -399,105 +404,172 @@ window.onload = function () {
         setTimeout(() => {
             $("#step-16").hide();
             $("#step-17").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#proceed-step-18-btn").click(function () {
         var incorrectSequenceFieldName = "incorrect_seq_question_8";
         var formInputName = "question_8";
         if (forminputs[formInputName].value != js_vars.correct_answers[7]) {
-            debugger
+            bonus_flag = false;
             $("#step-17 .incorrect-msg").show();
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
-        debugger
+        $("#step-17 .incorrect-msg").hide();
+        $(this).prop('disabled', true)
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-17 .correct-first-msg").show();
+        } else {
+            $("#step-17 .correct-msg").show()
+        }
+        bonus_flag = true;
         forminputs[incorrectSequenceFieldName].value = currQuestionIncorrectAnswers.join(",");
         currQuestionIncorrectAnswers = [];
-        $("#step-17 .incorrect-msg").hide();
-        $("#step-17 .correct-msg").show();
         setTimeout(() => {
             $("#step-17").hide();
             $("#step-18").toggle();
-        }, 5000);
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#prize-a-btn").click(function () {
         var formInputName = "prize_a_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[8]) {
+            bonus_flag = false;
             $("#step-18 .incorrect-msg").show();
+            $(this).prop('disabled', true)
+            currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
         $("#prize-a-btn").hide();
         $("#step-18 .incorrect-msg").hide();
-        $("#step-18 .correct-msg").show();
+        $(this).prop('disabled', true)
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-18 .correct-first-msg").show();
+        } else {
+            $("#step-18 .correct-msg").show();
+        }
+        bonus_flag = true;
+        currQuestionIncorrectAnswers = [];
         setTimeout(() => {
+            $("#step-18").hide();
             $("#step-19").toggle();
-        }, 1000);
-
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#prize-b-btn").click(function () {
         var formInputName = "prize_b_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[9]) {
+            bonus_flag = false;
             $("#step-19 .incorrect-msg").show();
+            $(this).prop('disabled', true)
+            currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
         $("#prize-b-btn").hide();
         $("#step-19 .incorrect-msg").hide();
-        $("#step-19 .correct-msg").show();
+        $(this).prop('disabled', true)
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-19 .correct-first-msg").show();
+        } else {
+            $("#step-19 .correct-msg").show();
+        }
+        bonus_flag = true;
+        currQuestionIncorrectAnswers = [];
         setTimeout(() => {
+            $("#step-19").hide();
             $("#step-20").toggle();
-        }, 1000);
-
+        }, delay);
+        mistakes_counter = 0
     });
 
     $("#prize-c-btn").click(function () {
         var formInputName = "prize_c_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[10]) {
+            bonus_flag = false;
             $("#step-20 .incorrect-msg").show();
+            $(this).prop('disabled', true)
+            currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
         $("#prize-c-btn").hide();
         $("#step-20 .incorrect-msg").hide();
-        $("#step-20 .correct-msg").show();
+        $(this).prop('disabled', true)
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-20 .correct-first-msg").show();
+        } else {
+            $("#step-20 .correct-msg").show();
+        }
+        bonus_flag = true;
+        currQuestionIncorrectAnswers = [];
         setTimeout(() => {
+            $("#step-20").hide();
             $("#step-21").toggle();
-        }, 1000);
-
+        }, delay);
+        mistakes_counter = 0;
     });
 
     $("#prize-d-btn").click(function () {
         var formInputName = "prize_d_obtainable";
         if (forminputs[formInputName].value != js_vars.correct_answers[11]) {
+            bonus_flag = false;
             $("#step-21 .incorrect-msg").show();
+            $(this).prop('disabled', true)
+            currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
+            return;
         }
         $("#prize-d-btn").hide();
         $("#step-21 .incorrect-msg").hide();
-        $("#step-21 .correct-msg").show();
+        $(this).prop('disabled', true)
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-21 .correct-first-msg").show();
+        } else {
+            $("#step-21 .correct-msg").show();
+        }
+        bonus_flag = true;
+        currQuestionIncorrectAnswers = [];
         setTimeout(() => {
             $("#step-18").hide();
             $("#step-19").hide();
-            $("#step-20").hide();
+            $("#stdelay0").hide();
             $("#step-21").hide();
             $("#step-22").toggle();
         }, 2000);
-
+        mistakes_counter = 0;
     });
 
     $("#prize_question").click(function () {
         var formInputName = "question_prize";
         if (forminputs[formInputName].value != js_vars.correct_answers[12]) {
+            bonus_flag = false;
             $("#step-22 .incorrect-msg").show();
+            $(this).prop('disabled', true)
+            currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
         $("#step-22 .incorrect-msg").hide();
-        $("#step-22 .correct-msg").show();
+        $(this).prop('disabled', true)
+        if (bonus_flag) {
+            bonus = bonus + 1;
+            $("#step-22 .correct-first-msg").show();
+        }else {
+            $("#step-22 .correct-msg").show();
+        }
+        bonus_flag = true;
+        currQuestionIncorrectAnswers = [];
         setTimeout(() => {
             $("#step-22").hide();
             $("#last").toggle();
-        }, 1000);
-
+        }, delay);
+        mistakes_counter = 0;
     });
 
 
@@ -681,7 +753,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-3").hide();
                         $("#step-4").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 if (stage == 2) {
                     $("#step-4 .incorrect-msg").hide();
@@ -695,7 +767,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-4").hide();
                         $("#step-5").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 if (stage == 3) {
                     $("#step-7 .incorrect-msg").hide();
@@ -709,7 +781,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-7").hide();
                         $("#step-8").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 if (stage == 4) {
                     $("#step-9 .incorrect-msg").hide();
@@ -723,7 +795,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-9").hide();
                         $("#step-10").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 if (stage == 5) {
                     $("#step-11 .incorrect-msg").hide();
@@ -737,7 +809,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-11").hide();
                         $("#step-12").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 if (stage == 6) {
                     $("#step-13 .incorrect-msg").hide();
@@ -751,7 +823,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-13").hide();
                         $("#step-14").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 if (stage == 7) {
                     $("#step-15 .incorrect-msg").hide();
@@ -765,7 +837,7 @@ function liveRecv(data) {
                     setTimeout(() => {
                         $("#step-15").hide();
                         $("#step-16").toggle();
-                    }, 2000);
+                    }, delay);
                 }
                 stage = stage + 1;
             } else {
@@ -785,7 +857,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-3").hide();
                             $("#step-4").toggle();
-                        }, 5000);
+                        }, delay);
                         return;
                     }
                 }
@@ -803,7 +875,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-4").hide();
                             $("#step-5").toggle();
-                        }, 5000);
+                        }, delay);
                         return;
                     }
                 }
@@ -821,7 +893,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-7").hide();
                             $("#step-8").toggle();
-                        }, 5000);
+                        }, delay);
                         return;
                     }
                 }
@@ -839,7 +911,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-9").hide();
                             $("#step-10").toggle();
-                        }, 5000);
+                        }, delay);
                         return;
                     }
                 }
@@ -857,7 +929,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-11").hide();
                             $("#step-12").toggle();
-                        }, 5000);
+                        }, delay);
                         return;
                     }
                 }
@@ -875,7 +947,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-13").hide();
                             $("#step-14").toggle();
-                        }, 5000);
+                        }, delay);
                         return;
                     }
                 }
@@ -893,7 +965,7 @@ function liveRecv(data) {
                         setTimeout(() => {
                             $("#step-15").hide();
                             $("#step-16").toggle();
-                        }, 5000);
+                        }, delay);
 
                     }
                 }
@@ -909,10 +981,11 @@ function liveRecv(data) {
                     $("#step-2-rounds .correct-second-msg").show();
                 }
                 setTimeout(() => {
+                    $("#step-2-rounds").hide()
                     $("#step-2-rounds .btn-container").hide();
                     $("#step-3-rounds").show();
-                    $("#step-2-rounds .correct-second-msg").hide();
-                }, 2000);
+                    $("#stdelay-rounds .correct-second-msg").hide();
+                }, delay);
                 mistakes_counter = 0;
             } else {
                 mistakes_counter = mistakes_counter + 1;
@@ -923,9 +996,11 @@ function liveRecv(data) {
                     $("#step-2-rounds .incorrect-skip-msg").show();
                     updateMatching(data['correct_allocation']);
                     setTimeout(() => {
+                        debugger
+                        $("#step-2-rounds").hide()
                         $("#step-2-rounds .btn-container").hide();
                         $("#step-3-rounds").show();
-                    }, 5000);
+                    }, delay);
                 }
             }
         }
