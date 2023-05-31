@@ -268,7 +268,6 @@ class TrainingRoundWithQuestions(Page):
                 'secondPrize': C.PRIZES_VALUES[player.round_number - 1][1] / 100,
                 'thirdPrize': C.PRIZES_VALUES[player.round_number - 1][2] / 100,
                 'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100,
-                "understanding_bonus": player.participant.vars["understanding_bonus"],
         }
 
 

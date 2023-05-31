@@ -329,7 +329,7 @@ function updateMatching(matching) {
         liveSend({'information_type': 'student_button', 'student': '1',});
     }
     if (matching[1] != -10) {
-        if (partial[01] == -10) {
+        if (partial[1] == -10) {
             liveSend({'information_type': 'student_button', 'student': '2',});
         } else {
             liveSend({'information_type': 'rematch_button', 'school': partial[1], 'student': '2',});
@@ -401,15 +401,23 @@ function updateCurrentMatching() {
     for (let i = 0; i < js_vars.schools_number; i++) {
         document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'none';
         const unorderedParticipantsMatchedToPrizes = [];
+        function getNumber(n) {
+            n = n + 1
+            if (n > 4) {
+                return n % 4
+            }
+            return n.toString()
+        }
         for (let l = 1; l <= js_vars.students_number; l++) {
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
             if (partial[l - 1] === i + 1) {
                 unorderedParticipantsMatchedToPrizes.push(l);
+                document.getElementById(`School${alphabet[i]}PrefStudent${getNumber(l)}`).classList.add('dButtonMatched') ;
             } else {
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
                 document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButton';
-                document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButton';
+                document.getElementById('School'.concat(alphabet[i], 'PrefStudent', getNumber(l))).className = 'dButton';
             }
         }
         const orderedParticipantsMatchedToPrizes = []
@@ -422,7 +430,6 @@ function updateCurrentMatching() {
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', participant)).style.order = index;
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', participant)).style.display = 'inline-block';
             document.getElementById('Student'.concat(participant, 'PrefSchool', alphabet[i])).className = 'dButtonMatched';
-            document.getElementById('School'.concat(alphabet[i], 'PrefStudent', participant)).className = 'dButtonMatched';
         })
     }
 }

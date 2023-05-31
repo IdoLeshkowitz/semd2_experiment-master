@@ -621,6 +621,14 @@ function updateCurrentMatching() {
             }
         }
     }
+
+        function getNumber(n) {
+            n = n + 1
+            if (n > 4) {
+                return n % 4
+            }
+            return n.toString()
+        }
     for (let i = 0; i < js_vars.schools_number; i++) {
         /* iterate over participants */
         document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'none';
@@ -630,10 +638,12 @@ function updateCurrentMatching() {
             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
             if (matchingPerPrize[l - 1] === i + 1) {
                 unorderedPrizesMatchedToParticipant.push(l);
+                console.log(`School${alphabet[i]}PrefStudent${l}`)
+                document.getElementById(`School${alphabet[i]}PrefStudent${l}`).classList.add('dButtonMatched') ;
             } else {
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
-                const participantPriority = document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l))
+                const participantPriority = document.getElementById('School'.concat(alphabet[i], 'PrefStudent',l))
                 if (participantPriority) {
                     participantPriority.className = 'dButton';
                 }
@@ -657,10 +667,6 @@ function updateCurrentMatching() {
             const plusButtonElement = document.getElementById('Student'.concat(matchedPrize, 'PrefSchool', alphabet[i]))
             if (plusButtonElement) {
                 plusButtonElement.className = 'dButtonMatched';
-            }
-            const schoolButtonElement = document.getElementById('School'.concat(alphabet[i], 'PrefStudent', matchedPrize))
-            if (schoolButtonElement) {
-                schoolButtonElement.classList.add('dButtonMatched')
             }
         })
     }
