@@ -466,7 +466,6 @@ window.onload = function () {
         if (forminputs[formInputName].value != js_vars.correct_answers[9]) {
             bonus_flag = false;
             $("#step-19 .incorrect-msg").show();
-            $(this).prop('disabled', true)
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
@@ -493,7 +492,6 @@ window.onload = function () {
         if (forminputs[formInputName].value != js_vars.correct_answers[10]) {
             bonus_flag = false;
             $("#step-20 .incorrect-msg").show();
-            $(this).prop('disabled', true)
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
@@ -520,13 +518,12 @@ window.onload = function () {
         if (forminputs[formInputName].value != js_vars.correct_answers[11]) {
             bonus_flag = false;
             $("#step-21 .incorrect-msg").show();
-            $(this).prop('disabled', true)
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
+        $(this).prop('disabled', true)
         $("#prize-d-btn").hide();
         $("#step-21 .incorrect-msg").hide();
-        $(this).prop('disabled', true)
         if (bonus_flag) {
             bonus = bonus + 1;
             $("#step-21 .correct-first-msg").show();
