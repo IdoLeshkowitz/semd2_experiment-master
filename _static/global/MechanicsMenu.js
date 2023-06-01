@@ -8,7 +8,7 @@ const alphabet = alpha.map((x) => String.fromCharCode(x));
 var stage = 1; // the stage of the mechanism we are at
 var student_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
 var schools_dict = {'A': 1, 'B': 2, 'C': 3, 'D': 4,}
-var delay = 5000;
+var delay = 1000;
 var bonus_flag = true;
 var bonus = 0
 
@@ -440,7 +440,6 @@ window.onload = function () {
         if (forminputs[formInputName].value != js_vars.correct_answers[8]) {
             bonus_flag = false;
             $("#step-18 .incorrect-msg").show();
-            $(this).prop('disabled', true)
             currQuestionIncorrectAnswers.push(forminputs[formInputName].value);
             return;
         }
