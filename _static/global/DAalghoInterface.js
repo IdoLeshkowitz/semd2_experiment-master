@@ -145,7 +145,7 @@ function reducer(state = initialState, action) {
     if (action.type === ACTION_TYPES.START_STEP) {
         return state
     }
-    if (action.type === ACTION_TYPES.PLUS_BUTTON_CLICKED){
+    if (action.type === ACTION_TYPES.PLUS_BUTTON_CLICKED) {
         /*
         when user clicks plus button do the following :
             state changes:
@@ -567,14 +567,21 @@ window.addEventListener('DOMContentLoaded', (event) => {
         if the server is sending the current step, then the page is reloaded. start the step that the server is sending
         if the server is not sending the current step, then the page is loaded for the first time. start the first step
         */
-        let stepToBeStarted;
-        if (store.getState().currentStep) {
-            stepToBeStarted = store.getState().currentStep
-        } else {
-            const currentRoundSteps = getStepsByRound(store.getState().currentRound)
-            stepToBeStarted = currentRoundSteps[0]
-        }
-        return store.dispatch({type: ACTION_TYPES.START_STEP, step: stepToBeStarted})
+    let stepToBeStarted;
+    if (store.getState().currentStep) {
+        stepToBeStarted = store.getState().currentStep
+    } else {
+        const currentRoundSteps = getStepsByRound(store.getState().currentRound)
+        stepToBeStarted = currentRoundSteps[0]
+    }
+    store.dispatch({type: ACTION_TYPES.START_STEP, step: stepToBeStarted})
+    const jsx = `
+     const MyComponent = () => {
+    return <div>Hello, React!</div>;
+  };
+`;
+
+    renderReactComponent(jsx,"react-root","MyComponent")
 });
 
 function submitButton() {
@@ -650,7 +657,7 @@ function rematchStudent(val, text) {
     liveSend({'information_type': 'rematch_participant', 'school': schools_dict[val], 'student': student_dict[text],});
 }
 
-// function updateCurrentMatching() {
+function updateCurrentMatching() {
 //     for (let j = 1; j <= js_vars.students_number; j++) {
 //         if (j === parseInt(student)) { // a student's button is selected
 //             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackgroundSelected';
@@ -690,7 +697,7 @@ function rematchStudent(val, text) {
 //             }
 //         }
 //     }
-// }
+}
 
 function openPlus() {
     for (let i = 0; i < js_vars.schools_number; i++) {
@@ -1107,7 +1114,30 @@ function getStepsByRound(round) {
     }
 }
 
-function renderUiFromState(state){
-    function render
+
+function renderUiFromState(state) {
+    function renderMiddleRow() {
+        /*
+        the middle row is presenting the participant that is currently Unmatched.
+        if a participant is currently selected than it is being highlighted.
+        */
+        const middleRowElement = document.getElementById("middle-row")
+        const allParticipants = Object.keys(state.currentMatching)
+        const unmatchedParticipants = allParticipants.filter(participant => state.currentMatching[participant] === -10)
+        unmatchedParticipants.forEach(participant => {
+            /* check if the participant is currently selected */
+            const isSelected = state.selectedParticipant === participant
+            const participantButtonContainer = document.createElement("div").classList.add("column")
+        })
+    }
 }
 
+function renderReactComponent(jsxCode,renderAt,componentName,props) {
+    const renderString = jsxCode.concat(`ReactDOM.render(<${componentName} {...${props}} />, document.getElementById('${renderAt}'));`)
+    /* transpile jsx code to js code */
+    const transPiledCode = Babel.transform(renderString, {
+        presets: ['react'],
+    }).code;
+    /* evaluate the transpiled code */
+    eval(transPiledCode);
+}
