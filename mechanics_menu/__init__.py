@@ -328,6 +328,7 @@ class Player(BasePlayer):
     fourth_priority = make_priority_field("Fourth:")
 
 
+
 # FUNCTIONS
 
 
@@ -335,15 +336,15 @@ class Player(BasePlayer):
 def variablesFunction(player):
     d = {
         'round_number':player.round_number,
-        'schools_number':player.SchoolsNumber, # This sets the number of schools. This of course can be determined randomly or according to some rule.
-        'students_number':player.StudentsNumber, # Same as above but regarding the number of students.
+        'schools_number':player.number_of_Schools, # This sets the number of schools. This of course can be determined randomly or according to some rule.
+        'students_number':player.number_of_students, # Same as above but regarding the number of students.
         'schools_lists': player.participant.schools_lists,
         'students_lists': player.participant.students_lists,
         'matchingalgho': player.participant.matchingalgho,
-        'partialmatching': player.participant.partialmatching,
+        'partialmatching': player.participant.matching_per_participant,
         'schools_alphabet':player.participant.schools_alphabet,
         'max_students_per_school':player.participant.max_students_per_school,
-        'matched_number':player.participant.matched_number,
+        'matched_number':player.participant.number_of_participants_assigned_to_prize,
         'correct_answers':C.CORRECT_ANSWERS[player.round_number - 1],
     }
     # for i in range(player.SchoolsNumber):
@@ -441,7 +442,7 @@ class DAalghoInterface(Page):
         elif data['information_type'] == 'submission':
             player.TimeStamps = player.TimeStamps + '|F:' + data['time']
             player.Clicks = player.Clicks + '||'
-            player.FinalMatching = str(player.participant.partialmatching)
+            player.FinalMatching = str(player.participant.matching_per_participant)
             return {player.id_in_group: {'information_type': 'submit', }}
         elif data['information_type'] == 'matching_update':
             stage = data['stage']
@@ -473,24 +474,24 @@ class DAalghoInterface(Page):
             pystudent = int(data['student']) -1  # Student i's data is stored in the i-1th placed in the lists (where 0 is the first entry).
             if data['information_type'] == 'student_button': # An unmatched student button was pressed
                 if player.Clicks[-2:] == data['student'] + ':': # Either the student was unmatched or the unmatched button was reclicked to cancel its matching.
-                    if player.participant.partialmatching[pystudent] > 0: # If the student was already matched.
-                        oldschool = player.participant.partialmatching[pystudent] - 1
-                        player.participant.matched_number[oldschool] -= 1
+                    if player.participant.matching_per_participant[pystudent] > 0: # If the student was already matched.
+                        oldschool = player.participant.matching_per_participant[pystudent] - 1
+                        player.participant.number_of_participants_assigned_to_prize[oldschool] -= 1
                     player.Clicks = player.Clicks + data['student'] + '|'
-                    player.participant.partialmatching[pystudent] = -10
-                    return {player.id_in_group: {'information_type': 'student_unmatched', 'student': data['student'],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,}}
+                    player.participant.matching_per_participant[pystudent] = -10
+                    return {player.id_in_group: {'information_type': 'student_unmatched', 'student': data['student'],'matched_number': player.participant.number_of_participants_assigned_to_prize, 'partialmatching': player.participant.matching_per_participant, }}
                 else:
                     player.Clicks = player.Clicks + data['student'] + ':'
                     return {player.id_in_group:{'information_type':'student_matching','student':data['student']}}
             elif data['information_type'] == 'school_plus_button':
-                if player.participant.partialmatching[pystudent] > 0:
-                    oldschool = player.participant.partialmatching[pystudent] - 1
-                    player.participant.matched_number[oldschool] -= 1
+                if player.participant.matching_per_participant[pystudent] > 0:
+                    oldschool = player.participant.matching_per_participant[pystudent] - 1
+                    player.participant.number_of_participants_assigned_to_prize[oldschool] -= 1
                 player.Clicks = player.Clicks + str(data['school']) + '|'
-                player.participant.partialmatching[pystudent] = int(data['school'])
+                player.participant.matching_per_participant[pystudent] = int(data['school'])
                 pyschool = int(data['school']) - 1 # This is the integer returned to javascript!!
-                player.participant.matched_number[pyschool] += 1
-                return {player.id_in_group:{'information_type': 'student_matched', 'student': data['student'],'school':pyschool,'student_order':player.participant.matched_number[pyschool],'matched_number':player.participant.matched_number,'partialmatching':player.participant.partialmatching,}}
+                player.participant.number_of_participants_assigned_to_prize[pyschool] += 1
+                return {player.id_in_group:{'information_type': 'student_matched', 'student': data['student'],'school': pyschool,'student_order': player.participant.number_of_participants_assigned_to_prize[pyschool], 'matched_number': player.participant.number_of_participants_assigned_to_prize, 'partialmatching': player.participant.matching_per_participant, }}
             elif data['information_type'] == 'rematch_button':
                 if player.Clicks[-2:] == str(data['student']) + ':':
                     school = player.participant.schools_alphabet.index(data['school']) + 1
@@ -554,7 +555,7 @@ class TrainingRound(Page):
             codi = "player.participant.max_students_per_school.append(int(player.MaxStudents" + C.SCHOOLS_LETTERS[
                 i] + "))"
             exec(codi)  # executing the code inside the string
-        player.participant.matched_number = []  # The number of matched students per school.
+        player.participant.number_of_participants_assigned_to_prize = []  # The number of matched students per school.
         player.participant.schools_range = list(
             range(player.SchoolsNumber))  # A list [0,1,...,n-1] where n is the number of schools.
         SchoolsAlphabet = list(string.ascii_uppercase)
@@ -567,13 +568,13 @@ class TrainingRound(Page):
             range(1, (player.StudentsNumber + 1)))  # A list [1,2,...,m] where m is the number of students.
         # player.participant.students_names = C.STUDENTS_LETTERS.copy()
         player.participant.matchingalgho = '|'  # History of the participant's choices until that point. To be presented somehow on the screen.
-        player.participant.partialmatching = [-10 for i in range(
+        player.participant.matching_per_participant = [-10 for i in range(
             player.StudentsNumber)]  # The current partial matching according to the participant's choices until that point. The length of the list equals the number of students. The value of each entery is the number of the school that the student has been matched too. Equals -10 if the student hasn't been matched yet.
         schools_lists = list()
         for i in range(player.SchoolsNumber):  # Each school has a preference list over...
             schools_lists.append(list(range(player.StudentsNumber)))  # ...the different students.
             random.shuffle(schools_lists[i])  # The schools' preferences are randomly set.
-            player.participant.matched_number.append(0)
+            player.participant.number_of_participants_assigned_to_prize.append(0)
         # mechanics traditional (prizes)-
         if player.round_number == 1:
             schools_lists = [[0, 2, 3, 1], [0, 2, 3, 1], [1, 3, 0, 2], [2, 1, 0, 3]]

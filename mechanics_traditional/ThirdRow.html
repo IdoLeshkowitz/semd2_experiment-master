@@ -1,0 +1,36 @@
+<div class="row">
+    <div class="col">
+        {{ for prize in prizesNames }}
+            <div class="row" style="justify-content: flex-start;flex-wrap: nowrap;align-items: baseline;align-content: flex-start">
+                <div class="column" style="flex: 1 1 auto;text-align: right;order: -1;">
+                    <b style="font-size: 1.5rem;">
+                        {{ prize }}:
+                    </b>
+                </div>
+                <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;order: 20;" id="plusButtonPrize{{ prize }}">
+                    <button type="button" class="pButton" value="{{ forloop.counter }}" onclick="store.dispatch({type:ACTION_TYPES.PLUS_BUTTON_CLICKED, payload:`{{ prize }}`})">
+                        <b>+</b>
+                    </button>
+                </div>
+                {{ for participant in participantsNames }}
+                    <div class="flexItemStudentButton" style="flex: 1 1 auto;display: none;" id="School{{ prize }}MatchedToStudent{{ participant }}">
+                        <button type="button" class="iButton" value="{{ prize }}" onclick="rematchStudent(this.value,this.innerText)" id="School{{ prize }}MatchedToStudent{{ participant }}Button">
+                            <b>{{ participant }}</b>
+                        </button>
+                    </div>
+                {{ endfor }}
+                <div class="column" style="flex: 1 0 auto;text-align: right;order: 100">
+                    <b style="font-size: 1.2rem;color: transparent;">
+                        ::
+                    </b>
+                </div>
+            </div>
+        {{ endfor }}
+        </div>
+             <div class="col-3 legend-container">
+        <span><b>R&nbsp;</b>= Ruth</span>
+        <span><b>S&nbsp;</b>= Shirley</span>
+        <span><b>T&nbsp;</b>= Theresa</span>
+        <span><b>Y&nbsp;</b>= You</span>
+    </div>
+        </div>

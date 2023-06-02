@@ -1,7 +1,7 @@
-{{ if player.round_number ==  1 }}
-    <section id="step-1" xmlns="http://www.w3.org/1999/html">
+{{ if player.round_number == 1 }}
+    <section id="step-1">
         The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer. <br><br>
-        First, we will guide you how to use the <b>Allocation Dashboard</b> below to find the temporary allocation of prizes to all participants except for you.
+        We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants
         <br><br>
         <div class="btn-container">
             <button class="btn btn-primary" id="proceed-step-2-btn" type="button">Proceed</button>
@@ -9,7 +9,7 @@
         <br>
     </section>
     <section id="step-2">
-        On the upper left part of the dashboard below you see condensed version of the <b>Participant Rankings</b>.<br>
+        On the upper left part of the dashboard below you see the condensed version of the <b>Prize Priorities</b> that you saw before.<br>
         Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.<br><br>
         <b>For example:</b> The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest). <br>
         Notice that the ranking under “Y” (you) is exactly the ranking that you submitted in the previous screen! <br><br>
@@ -19,7 +19,7 @@
 
         Also Notice: Since you are now in charge of the allocation process, and you have to use the other participants’ rankings to perform it, <b>in these training rounds only</b> you are able to see the other participants’ rankings.<br><br>
 
-        The middle and lower parts of the dashboard enable you to pair prizes to participants, as will be explained next.
+        The middle and lower parts of the dashboard enable you to pair participants to prizes, as will be explained next.
         <br><br>
         <div class="btn-container">
             <button class="btn btn-primary" id="proceed-step-3-btn" type="button">Proceed</button>
@@ -27,13 +27,11 @@
         <br>
     </section>
     <section id="step-3">
-        First, pair each prize to its <b>highest-priority</b> participant.<br><br>
-
-        1. Start from the “Pick prizes to pair” row, and click on <b>Prize A (“A”)</b><br/>
-        2. Then, in the list of four participants at the bottom left part of the dashboard, click on “+” next to the participant, <b>except for you</b> that is highest in their priorities.<br>
-        Notice: “Y” is colored gray everywhere and there is no “+” sign next to “You”, reminding that prizes cannot be paired with you during this stage of the process.<br/>
-        <p>Hint: the participant, except for you, that is highest in Prize A’s priorities, is indicated by the letter just under “A” in thePrize Priorities table.</p>
-        <p>After pairing, “R” and “A” will be colored purple in the two tables, to indicate that they are paired.</p>
+        First, pair each prize to its <b>highest-priority</b> prize.<br><br>
+        1. Start from the “Pick participants to pair” row, and click on <b>Ruth (“R”)</b><br/>
+        2. Then, in the list of four participants at the bottom of the dashboard, click on “+” next to the participant, <b>except for you</b> that is highest in their priorities.<br>
+        <p>Hint: the prize that is highest in Ruth’s ranking is indicated by the letter just under “R” in the Participant Rankings table.</p>
+        <p>After pairing, “A” and “R” will be colored purple in the two tables, to indicate that they are paired.</p>
         <p>Click Submit when done.</p>
         <div class="btn-container">
             <button class="btn btn-primary" id="proceed-step-4-btn" type="button">Submit</button>
@@ -64,11 +62,8 @@
             </p>
         </div>
     </section>
-
     <section id="step-4">
-        <p>Now repeat the same for the three other prizes.One by one, pair each of them to its <b>highest-priority</b> participant, except for you.</p>
-        <p>Hint: The highest-priority participant at Prize D is You, but you are not a part of the process and hence you cannot pair yourself to it. Who is Prize D’s highest-priority participant, <b>except for you</b>? <br>
-            (Another hint: it is Theresa)</p>
+        <p>Now repeat the same for the three other participants.One by one, pair each of them to their <b>highest-rank</b> prize</p>
         <p>Click Submit after completing all three.</p>
         <br>
         <div class="btn-container">
@@ -101,11 +96,11 @@
     </section>
 
     <section id="step-5">
-        <p>Each prize is now paired to a participant. <br>
-        However, there are <b>conflicts</b>: two (or more) prizes are paired to the same participant.</p>
-        <p>Notice: <b>Prize A</b> and <b>Prize B</b> are both paired to <b>Ruth</b>. This is a conflict.</p>
+        <p>Each participant is now paired to a prize. <br>
+        However, there are <b>conflicts</b>: two (or more) participants are paired to the same prize.</p>
+        <p>Notice: <b>Ruth</b> and Shirley are both paired to <b>Prize A</b>. This is a conflict.</p>
         <p>To solve a conflict, the first step is <b>Unpair</b>.<br>
-            According to this step, only one prize should remain paired to Ruth. <b>Which prize should it be?</b>
+            According to this step, only one participant should remain paired to Prize A. <b>Which participant should it be?</b>
         </p>
         <p>
             Please select one of the answers below and then click Submit.<br/>
@@ -129,13 +124,13 @@
 
         <div class="correct-msg">
             <p>
-                Correct! When there is a conflict at some participant, only the prize highest in that participant’s ranking should remain paired to that participant. The others should get unpaired.
+                Correct! When there is a conflict at some prize, only the participant highest in that prize’s priorities remain paired to that prize. The others should get unpaired.
             </p>
         </div>
 
         <div class="correct-first-msg">
             <p>
-               Correct! When there is a conflict at some participant, only the prize highest in that participant’s ranking should remain paired to that participant. The others should get unpaired.<br/>
+                Correct! When there is a conflict at some prize, only the participant highest in that prize’s priorities remain paired to that prize. The others should get unpaired.<br/>
                 Since you were right on your first try, you get a bonus.
             </p>
         </div>
@@ -144,7 +139,7 @@
     <section id="step-6">
         <p>
             The second step in solving conflicts is <b>Re-pair</b>.
-            After a prize gets unpaired, what new participant does it get paired to?
+            After a participant gets unpaired, what new prize do they get paired to?
         </p>
         {{ formfield 'question_2' }}
 
@@ -164,7 +159,7 @@
 
         <div class="correct-msg">
             <p>
-                Correct! Each unpaired participant is re-paired to their highest-rank prize, among the prizes they <b>were not yet paired with</b>.
+                Correct! Each unpaired prize is re-paired to it's highest-rank prize among the prizes they were <b>not yet paired with</b>.
             </p>
         </div>
 
@@ -177,14 +172,12 @@
 
     <section id="step-7">
         <p>Now, let’s solve the conflict. </p>
-        <p>
-            According to the Participant Rankings, <b>Ruth</b> ranked <b>Prize A</b> higher than <b>Prize B</b>.<br/>Hence,<b>Prize B</b> should get unpaired from <b>Ruth</b> , and then get re-paired to its second highest-priority participant, among all participants <b>except for you.</b>
-        </p>
+        <p>According to the Prize Priorities, <b>Ruth’s</b> priority for getting <b>Prize A</b> is higher than <b>Shirley’s</b>.<br/>Hence, <b>Shirley</b> should get unpaired from <b>Prize A</b>, and then get re-paired to her second highest-rank prize.</p>
         <p>Perform this using the two steps:
             <ul>
-                <li><b>Unpair</b>: at the lower part of the dashboard, next to Ruth (“R”), click on <b>Prize B (“B”)</b>.</li>
-                <li><p><b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Prize B's (“B”) <b>second highest-priority participant</b> among all participants <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant it is, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under Prize B’s name (“B”), or, in case that participant is you (“Y”), the one right below you, or, in case that participant is you (“Y”), the one right below you.</p></li>
+                <li><b>Unpair</b>: at the lower part of the dashboard, next to Prize A (“A”), click on <b>Shirley (“S”)</b>.</li>
+                <li><p><b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Shirley’s (“S”) <b>second highest-rank prize</b> among all participants <b>except for you</b>.</p>
+                <p>Hint: You can easily find which prize it is, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under Shirley’s name (“S”)</p></li>
             </ul>
         </p>
         <p>Click Submit when done.</p>
@@ -236,14 +229,13 @@
 
         <div class="correct-msg">
             <p>
-                 Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants except for you.
+                 Correct! The process is only over when there are no more conflicts.
             </p>
         </div>
 
         <div class="correct-first-msg">
             <p>
-                Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants except for you.<br/>
-                Since you were right on your first try, you get a bonus.
+                Correct! The process is only over when there are no more conflicts. Since you were right on your first try, you get a bonus.
             </p>
         </div>
     </section>
@@ -251,12 +243,12 @@
     <section id="step-9">
         <p>Find all conflicts and solve them like before:
             <ul>
-                <li>Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes.</li>
+                <li>Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants.</li>
             </ul>
             <ul>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
+                <li><b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.</li>
+                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-rank prize, among the participants it was <b>not yet paired with</b>.</p>
+                <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name</p>
             </ul>
         </p>
         <p>Click Submit when done.</p>
@@ -311,7 +303,7 @@
         </div>
 
         <div class="correct-first-msg">
-            <p>
+             <p>
                 Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.<br/>
                 Since you were right on your first try, you get a bonus.
             </p>
@@ -319,12 +311,14 @@
     </section>
 
     <section id="step-11">
-        <p>Find all conflicts and solve them like before:
+      <p>Find all conflicts and solve them like before:
             <ul>
-                <li>Find all participants that are paired to two (or more) prizes.</li>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
+                <li>Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants.</li>
+            </ul>
+            <ul>
+                <li><b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.</li>
+                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-rank prize, among the participants it was <b>not yet paired with</b>.</p>
+                <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name</p>
             </ul>
         </p>
         <p>Click Submit when done.</p>
@@ -358,7 +352,7 @@
     </section>
     <section id="step-12">
         <p>
-            Is the process over?<br/>
+            Is the process over? <br/>
             (Get it right on first try to increase your bonus)
         </p>
         {{ formfield 'question_5' }}
@@ -377,26 +371,26 @@
 
         <div class="correct-msg">
             <p>
-                 Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.
+                 Correct! The process is only over when there are no more conflicts
             </p>
         </div>
 
         <div class="correct-first-msg">
             <p>
-                Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.<br/>Since you were right on your first try, you get a bonus.
+                Correct! The process is only over when there are no more conflicts.<br/>Since you were right on your first try, you get a bonus.
             </p>
         </div>
     </section>
 
     <section id="step-13">
-        <p>Find all conflicts and solve them like before:
+         <p>Find all conflicts and solve them like before:
             <ul>
-                <li>Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes.</li>
+                <li>Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants.</li>
             </ul>
             <ul>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
+                <li><b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.</li>
+                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-rank prize, among the participants it was <b>not yet paired with</b>.</p>
+                <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name</p>
             </ul>
         </p>
         <p>Click Submit when done.</p>
@@ -461,14 +455,14 @@
     </section>
 
     <section id="step-15">
-        <p>Find all conflicts and solve them like before:
+       <p>Find all conflicts and solve them like before:
             <ul>
-                <li>Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes.</li>
+                <li>Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants.</li>
             </ul>
             <ul>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
+                <li><b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.</li>
+                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-rank prize, among the participants it was <b>not yet paired with</b>.</p>
+                <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name</p>
             </ul>
         </p>
         <p>Click Submit when done.</p>
@@ -535,12 +529,12 @@
     <section id="step-17">
         <p>Find all conflicts and solve them like before:
             <ul>
-                <li>Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes.</li>
+                <li>Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants.</li>
             </ul>
             <ul>
-                <li><b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes from that participant.</li>
-                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.</p>
-                <p>Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.</p>
+                <li><b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.</li>
+                <li><p><b>Re-pair</b>: re-pair these prizes to their highest-rank prize, among the participants it was <b>not yet paired with</b>.</p>
+                <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name</p>
             </ul>
         </p>
         <p>Click Submit when done.</p>
@@ -558,7 +552,7 @@
             <p>
                 Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
             </p>
-        </div>_
+        </div>
 
         <div class="correct-msg">
             <p>
@@ -716,6 +710,4 @@
             <button class="btn btn-primary" id="submit-page" type="button">Proceed</button>
         </div>
         <br>
-    </section>
-
-{{ endif }}
+    </section>{{ endif }}

@@ -1,0 +1,49 @@
+{{ if player.round_number > 1 }}
+    <section id="step-1-rounds">
+        <p>In this training round, you will perform the allocation process by yourself, instead of the computer.</p>
+        <div class="btn-container">
+            <button id="proceed-step-2-btn-rounds" type="button" class="btn btn-primary">Proceed</button>
+        </div>
+        <br>
+    </section>
+
+    <section id="step-2-rounds">
+        Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned. <br>
+        Click Submit when you are done.
+        <br>
+        <div class="btn-container">
+            <button id="proceed-step-3-btn-rounds" type="button" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="incorrect-msg">
+            <p>
+                Incorrect allocation. Please try again.
+            </p>
+        </div>
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect allocation. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+        <div class="correct-msg">
+            <p>
+                Correct allocation!
+            </p>
+        </div>
+        <br>
+    </section>
+
+    <section id="step-3-rounds">
+        {{ if player.round_number < 4 }}
+        <p></p>
+        {{ endif }}
+        {{ if player.round_number == 4 }}
+        <p>You completed the training rounds. <br>
+        Click the button below to proceed to real rounds of the game.
+        </p>
+        {{ endif }}
+        <div class="btn-container">
+            <button id="proceed-step-4-btn-rounds" type="button" class="btn btn-primary">Proceed</button>
+        </div>
+        <br>
+    {{ endif }}
+    </section>

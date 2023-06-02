@@ -1,0 +1,132 @@
+{{ if player.round_number > 1 }}
+    <section id="step-1-rounds">
+        <p>In this training round, you will perform the allocation process by yourself, instead of the computer.</p>
+        <div class="btn-container">
+            <button id="proceed-step-2-btn-rounds" type="button" class="btn btn-primary">Proceed</button>
+        </div>
+        <br>
+    </section>
+    <section id="step-2-rounds">
+        First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned. <br>
+        Click Submit when you are done.
+        <br>
+        <div class="btn-container">
+            <button id="proceed-step-3-btn-rounds" type="button" class="btn btn-primary">Submit</button>
+        </div>
+        <div class="incorrect-msg">
+            <p>
+                Incorrect temporary allocation. Please try again.
+            </p>
+        </div>
+
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect allocation. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+        <div class="correct-msg">
+            <p>
+                Correct temporary allocation!
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
+            </p>
+        </div>
+        <div class="correct-second-msg">
+            <p>
+              Good job on the second try! This will count as 2 questions for your understanding bonus.
+            </p>
+        </div>
+        <br>
+    </section>
+    <section id="step-3-rounds">
+        Next, find your <b>Obtainable Prizes</b>.
+        For each of the four prizes below, Click on “Obtainable” or “Unobtainable“
+        based on what you learned in the previous screens.
+        <ol>
+            <li id="prize-a-obtainable" class="question">
+                {{formfield "prize_a_obtainable"}}
+            </li>
+
+            <li id="prize-b-obtainable" class="question">
+                {{formfield "prize_b_obtainable"}}
+            </li>
+            <li id="prize-c-obtainable" class="question">
+                {{formfield "prize_c_obtainable"}}
+            </li>
+
+            <li id="prize-d-obtainable" class="question">
+                {{formfield "prize_d_obtainable"}}
+            </li>
+        </ol>
+
+        <div class="btn-container">
+            <button id="proceed-step-4-btn-rounds" type="button" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="incorrect-msg">
+            <p>
+                Incorrect answer. Please try again.
+            </p>
+        </div>
+        <div class="correct-msg">
+            <p>
+                Correct!
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
+            </p>
+        </div>
+        <br>
+    </section>
+    <section id="step-4-rounds">
+        <p>Finally, select <b>the prize that will be allocated to you</b> out of the Obtainable Prizes.</p>
+        {{ if player.round_number == 2 }}
+            {{formfield "obtainable_prize_round_2"}}
+        {{ else }}
+            {{formfield "obtainable_prize_round_3_4"}}
+        {{ endif }}
+        <div class="btn-container">
+            <button id="proceed-step-5-btn-rounds" type="button" class="btn btn-primary">Submit</button>
+        </div>
+
+        <div class="incorrect-msg">
+            <p>
+                Incorrect answer. Please try again.
+            </p>
+        </div>
+
+        <div class="correct-msg">
+            <p>
+                Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest.
+                Hence it is allocated to you.
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
+            </p>
+        </div>
+        <br>
+    </section>
+    <section id="step-5-rounds">
+        {{ if player.round_number < C.NUM_ROUNDS }}
+        <p>You completed this training rounds. <br>
+        Click the button below to start the next training round.
+        </p>
+        {{ endif }}
+        {{ if player.round_number == C.NUM_ROUNDS }}
+        <p>You completed the training rounds. <br>
+        Click the button below to proceed to real rounds of the game.
+        </p>
+        {{ endif }}
+        <div class="btn-container">
+            <button id="proceed-step-6-btn-rounds" type="button" class="btn btn-primary">Proceed</button>
+        </div>
+        <br>
+    </section>
+{{ endif }}

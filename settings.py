@@ -213,7 +213,13 @@ PARTICIPANT_FIELDS = ["trajectory_num",'matchingalgho',  # History of the partic
     # This is a list of sublist. Each sublist corresponds to a students: its first entery is the name/number of the student, and the other enteries are the schools' numbers according to the student's preferences.
     'max_students_per_school',
     # The nth number in the list represents the maximal number of students that can be matched to the nth school.
-    'matched_number',]
+    'matched_number',
+    "expected_ranking",
+    "participants_priorities",
+    "prizes_priorities",
+    "current_matching",
+    "expected_matching"
+                      ]
 SESSION_FIELDS = []
 
 # ISO-639 code
