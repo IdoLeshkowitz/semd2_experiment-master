@@ -49,10 +49,23 @@ def make_question_7():
 
 
 def make_question_8():
-    return models.IntegerField(choices=[[1, "All four prizes, since I can in principle obtain all of them."],
-                                        [2, "Any prize at which my priority is higher than the participant it is temporarily allocated to."],
-                                        [3, "Only the prize that was left unpaired in the temporary allocation."], [4,
-                                                                                                                    "Any prize at which my priority is higher than the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation."], ], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(choices=[[1, "I can get any prize that I was paired with at some point in the allocation process, with equal chances."],
+                                        [2, "It is certain that I will get the prize allocated to me at the end of the allocation process. [Correct]"], [3,
+                                                                                                                                                         "I can only get one of the prizes I was paired with at some point in the allocation process, but I cannot know which one."],
+                                        [4,
+                                         "I am more likely to get a prize I was paired with at an earlier point in the allocation process than at a later point in the process."], ], label='Answer', widget=widgets.RadioSelect)
+
+
+def make_question_9():
+    return models.IntegerField(choices=[
+        [1, "I will sometimes receive a prize which I ranked lower than any prize I was paired with during the allocation process."],
+        [2, "Out of all the prizes I was paired with at some point in the allocation process, I will get the last one I was paired with."],
+        [3, "If another participant does not want the prize allocated to them, then I may be able to switch prizes with them."],
+        [4, "I am as likely to get a prize I was paired with at a later point in the allocation process as to get a prize I was paired with at an earlier point in the process"]], label='Which of the following is true?(Get it right on first try to increase your bonus)', widget=widgets.RadioSelect)
+
+
+def make_participant_field(label):
+    return models.IntegerField(choices=[[1, "R"], [2, "S"], [3, "T"], [4, "Y"]], label=label)
 
 
 def make_prize(label):
@@ -94,7 +107,7 @@ def make_priority_field(label):
 
 
 def get_prizes_priorities_by_round(round):
-    first_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
+    first_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["R", "S", "Y", "T"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
     second_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
     third_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
     fourth_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
@@ -103,7 +116,7 @@ def get_prizes_priorities_by_round(round):
 
 
 def get_participants_priorities_by_round(round):
-    first_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
+    first_round_priorities = {"R": ["A", "C", "B", "D"], "S": ["A", "C", "D", "B"], "T": ["B", "A", "D", "C"], "Y": ["C", "A", "B", "D"]}
     second_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
     third_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
     fourth_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
@@ -127,15 +140,15 @@ class C(BaseConstants):
 
     NUMBER_OF_PARTICIPANTS = 4
     NUMBER_OF_PRIZES = 4
-    PARTICIPANTS_NAMES = {"R": "R", "S": "S", "T": "T", "Y": "Y"}
-    PRIZES_NAMES = {"A": "A", "B": "B", "C": "C", "D": "D"}
+    PARTICIPANTS_NAMES = {'R': 1, "S": 2, "T": 3, "Y": 0}
+    PRIZES_NAMES = {"A": 0, "B": 1, "C": 2, "D": 3}
 
     # this dict is used to determine the allocation of prizes in each round. if the round is divided into stages, then the allocation is determined by the
     # stage.
     EXPECTED_MATCHING_BY_ROUND = {
         1: {
             'stages': {
-                0: {'R': "NONE", 'S': "NONE", 'T': "NONE", 'Y': "NONE"},
+                0: {'R': "A", 'S': -10, 'T': -10, 'Y': -10},
                 1: {"R": "A", "S": "A", "T": "B", "Y": "C"},
                 2: {"R": "A", "S": "C", "T": "B", "Y": "C"},
                 3: {"R": "A", "S": "C", "T": "B", "Y": "A"},
@@ -150,7 +163,7 @@ class C(BaseConstants):
     },
 
     # this list keeps the correct answers for the multiple choice questions
-    CORRECT_ANSWERS_BY_ROUND = [[4, 2, 1, 1, 1, 1, 2, 4, 2, 1, 2, 1, 3], [2, 2, 1, 1, 2], [1, 1, 2, 2, 2], [1, 1, 2, 2, 1]]
+    CORRECT_ANSWERS_BY_ROUND = [[4, 2, 1, 1, 1, 1, 2, 2, 1, 4, 2, 3, 2, 2,1,4,2,3,2,2], [2, 2, 1, 1, 2], [1, 1, 2, 2, 2], [1, 1, 2, 2, 1]]
 
     # this dict keeps the max participants that can be assigned to each prize. in traditional mechanism, this is the same for all prizes.
     MAX_PARTICIPANTS_ASSIGNED_TO_PRIZE = {"A": NUMBER_OF_PARTICIPANTS, "B": NUMBER_OF_PARTICIPANTS, "C": NUMBER_OF_PARTICIPANTS, "D": NUMBER_OF_PARTICIPANTS}
@@ -171,13 +184,13 @@ class Player(BasePlayer):
     question_6 = make_question_6()
     question_7 = make_question_7()
     question_8 = make_question_8()
+    question_9 = make_question_9()
+    question_10 = make_priority_field("Based on the allocation determined by the allocation process, click on the prize that you get in this round.(Get it right on first try to increase your bonus)")
+    prize_a_obtainable = make_participant_field("Prize A")
+    prize_b_obtainable = make_participant_field("Prize B")
+    prize_c_obtainable = make_participant_field("Prize C")
+    prize_d_obtainable = make_participant_field("Prize D")
 
-    prize_a_obtainable = make_prize_a()
-    prize_b_obtainable = make_prize_b()
-    prize_c_obtainable = make_prize_c()
-    prize_d_obtainable = make_prize_d()
-
-    question_prize = make_prize_question()
     obtainable_prize_round_2 = make_obtainable_field_round_2('Answer')
     obtainable_prize_round_3_4 = make_obtainable_field_round_3_4('Answer')
 
@@ -305,14 +318,15 @@ class DAalghoInterface(Page):
             "currentStep":             player.field_maybe_none("current_step"),
             "currentStage":            player.current_stage,
             "currentRound":            player.round_number,
-            "correctAnswers":          C.CORRECT_ANSWERS_BY_ROUND[player.round_number -1 ],
+            "correctAnswers":          C.CORRECT_ANSWERS_BY_ROUND[player.round_number - 1],
+            "expectedMatchingByRound": C.EXPECTED_MATCHING_BY_ROUND[player.round_number - 1],
         }
 
     @staticmethod
     def get_form_fields(player: Player):
         if player.round_number == 1:
             questions = ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6", "question_7", "question_8", "prize_a_obtainable",
-                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "question_prize"]
+                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable","question_9","question_10"]
 
             incorrect_answers = ["incorrect_seq_question_1", "incorrect_seq_question_2", "incorrect_seq_question_3", "incorrect_seq_question_4",
                                  "incorrect_seq_question_5", "incorrect_seq_question_6", "incorrect_seq_question_7", "incorrect_seq_question_8"]

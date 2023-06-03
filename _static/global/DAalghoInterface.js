@@ -1,4 +1,3 @@
-console.log(js_vars)
 const initialState = {
     'selectedParticipant': null,
     "currentMatching": js_vars.currentMatching,
@@ -8,13 +7,28 @@ const initialState = {
     'currentStep': js_vars.currentStep,
     'currentStage': js_vars.currentStage,
     'currentRound': js_vars.currentRound,
-    'mistakesCounter': 0
+    'prizesNames': js_vars.prizesNames,
+    'participantsNames': js_vars.participantsNames,
+    'mistakesCounter': 0,
+    'mouseOnParticipant': null,
+    'mouseOnPrize': null,
+    'correctAnswers': js_vars.correctAnswers,
+    "participantsMatchMemo": [],
+    "expectedMatchingByRound": js_vars.expectedMatchingByRound,
 }
 const ACTION_TYPES = {
     START_STEP: 'START_STEP',
     END_STEP: 'END_STEP',
     PARTICIPANT_SELECTED: 'PARTICIPANT_SELECTED',
     PLUS_BUTTON_CLICKED: 'PLUS_BUTTON_CLICKED',
+    RENDER: 'RENDER',
+    MOUSE_ENTERED_PRIZE_ROW: 'MOUSE_ENTERED_PRIZE_ROW',
+    MOUSE_LEFT_PRIZE_ROW: 'MOUSE_LEFT_PRIZE_ROW',
+    MOUSE_ENTERED_PARTICIPANT_BUTTON: 'MOUSE_ENTERED_PARTICIPANT_BUTTON',
+    MOUSE_LEFT_PARTICIPANT_BUTTON: 'MOUSE_LEFT_PARTICIPANT_BUTTON',
+    HIDE_ALL_SECTIONS: 'HIDE_ALL_SECTIONS',
+    NEXT_BUTTON_CLICKED: 'NEXT_BUTTON_CLICKED',
+    RESET: 'RESET',
 }
 const steps = [
     {
@@ -53,7 +67,7 @@ const steps = [
     {
         id: "step-8",
         type: "radio",
-        formFields: {element: "question_33", correctAnswerIndex: 2},
+        formFields: {element: "question_3", correctAnswerIndex: 2},
     },
     {
         id: "step-9",
@@ -63,7 +77,7 @@ const steps = [
     {
         id: "step-10",
         type: "radio",
-        formFields: {element: "question_44", correctAnswerIndex: 3},
+        formFields: {element: "question_4", correctAnswerIndex: 3},
     },
     {
         id: "step-11",
@@ -73,7 +87,7 @@ const steps = [
     {
         id: "step-12",
         type: "radio",
-        formFields: {element: "question5", correctAnswerIndex: 4},
+        formFields: {element: "question_5", correctAnswerIndex: 4},
     },
     {
         id: "step-13",
@@ -83,7 +97,7 @@ const steps = [
     {
         id: "step-14",
         type: "radio",
-        formFields: {element: "question6", correctAnswerIndex: 5},
+        formFields: {element: "question_6", correctAnswerIndex: 5},
     },
     {
         id: "step-15",
@@ -93,37 +107,42 @@ const steps = [
     {
         id: "step-16",
         type: "radio",
-        formFields: {element: "question7", correctAnswerIndex: 6},
+        formFields: {element: "question_7", correctAnswerIndex: 6},
     },
     {
         id: "step-17",
-        type: "matching",
-        stage: 7,
+        type: "radio",
+        formFields: {element: "question_8", correctAnswerIndex: 7},
     },
     {
         id: "step-18",
         type: "radio",
-        formFields: {element: "prize_a_obtainable", correctAnswerIndex: 7},
+        formFields: {element: "prize_a_obtainable", correctAnswerIndex: 8},
     },
     {
         id: "step-19",
         type: "radio",
-        formFields: {element: "prize_b_obtainable", correctAnswerIndex: 8},
+        formFields: {element: "prize_b_obtainable", correctAnswerIndex: 9},
     },
     {
         id: "step-20",
         type: "radio",
-        formFields: {element: "prize_c_obtainable", correctAnswerIndex: 9},
+        formFields: {element: "prize_c_obtainable", correctAnswerIndex: 10},
     },
     {
         id: "step-21",
         type: "radio",
-        formFields: {element: "prize_d_obtainable", correctAnswerIndex: 10},
+        formFields: {element: "prize_d_obtainable", correctAnswerIndex: 11},
     },
     {
         id: "step-22",
         type: "radio",
-        formFields: {element: "question_prize", correctAnswerIndex: 11},
+        formFields: {element: "question_9", correctAnswerIndex: 12},
+    },
+    {
+        id: "step-23",
+        type: "radio",
+        formFields: {element: "question_10", correctAnswerIndex: 13},
     },
     {
         id: "step-1-rounds",
@@ -141,9 +160,27 @@ const steps = [
 ]
 
 function reducer(state = initialState, action) {
-    console.log("reducer", action)
+    console.log(state)
+    if (action.type === ACTION_TYPES.MOUSE_ENTERED_PARTICIPANT_BUTTON) {
+        const newState = {...state, mouseOnParticipant: action.payload}
+        renderUiFromState(newState)
+    }
+    if (action.type === ACTION_TYPES.MOUSE_LEFT_PARTICIPANT_BUTTON) {
+        const newState = {...state, mouseOnParticipant: null}
+        renderUiFromState(newState)
+    }
+    if (action.type === ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW) {
+        const newState = {...state, mouseOnPrize: action.payload}
+        renderUiFromState(newState)
+    }
+    if (action.type === ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW) {
+        const newState = {...state, mouseOnPrize: null}
+        renderUiFromState(newState)
+    }
     if (action.type === ACTION_TYPES.START_STEP) {
-        return state
+        const stepToBeStarted = action.payload
+        const newState = {...state, currentStep: stepToBeStarted}
+        return newState
     }
     if (action.type === ACTION_TYPES.PLUS_BUTTON_CLICKED) {
         /*
@@ -152,10 +189,19 @@ function reducer(state = initialState, action) {
                 1. update currentMatching set the value of the participant to the prize that he was matched with
                 2. livesend currentMatching to the server
                 3. reset selectedParticipant to null
-                4. side effect:
-                    1. remove iButtonSelected class from last selected participant button
-                    2. hide plus buttons
+                4. push currentMatching to history
          */
+        const participant = state.selectedParticipant
+        const prize = action.payload
+        const currentMatching = {...state.currentMatching, [participant]: prize}
+        const newState = {
+            ...state,
+            currentMatching,
+            selectedParticipant: null,
+            participantsMatchMemo: [...state.participantsMatchMemo, participant]
+        }
+        renderUiFromState(newState)
+        return newState
     }
     if (action.type === ACTION_TYPES.PARTICIPANT_SELECTED) {
         /*
@@ -167,21 +213,280 @@ function reducer(state = initialState, action) {
              show plus buttons
          */
         const selectedParticipant = action.payload
-        /* remove iButtonSelected class from last selected participant button */
-        const lastSelectedParticipantButton = document.getElementById(`participant${state.selectedParticipant}Button`)
-        lastSelectedParticipantButton?.classList.remove("iButtonSelected")
-        /* set selectedParticipant to the participant that was clicked */
-        const selectedParticipantButton = document.getElementById(`participant${selectedParticipant}Button`)
-        selectedParticipantButton?.classList.add("iButtonSelected")
-        /* show plus buttons */
-        const plusButtons = Array.from(document.querySelectorAll("[id^='plusButton']"))
-        plusButtons.forEach(button => button.style.display = "inline-block")
+        // /* remove iButtonSelected class from last selected participant button */
+        // const lastSelectedParticipantButton = document.getElementById(`participant${state.selectedParticipant}Button`)
+        // lastSelectedParticipantButton?.classList.remove("iButtonSelected")
+        // /* set selectedParticipant to the participant that was clicked */
+        // const selectedParticipantButton = document.getElementById(`participant${selectedParticipant}Button`)
+        // selectedParticipantButton?.classList.add("iButtonSelected")
+        // /* show plus buttons */
+        // const plusButtons = Array.from(document.querySelectorAll("[id^='plusButton']"))
+        // plusButtons.forEach(button => button.style.display = "inline-block")
+        const newState = {...state, selectedParticipant}
+        renderUiFromState(newState)
         return {...state, selectedParticipant}
     }
-    return state
+    if (action.type === ACTION_TYPES.RENDER) {
+        renderUiFromState(state)
+    }
+    if (action.type === ACTION_TYPES.HIDE_ALL_SECTIONS) {
+        $("section").hide();
+    }
+    if (action.type === ACTION_TYPES.NEXT_BUTTON_CLICKED) {
+        /* in case this is the first step in the round */
+        if (!state.currentStep) {
+            const firstStep = getStepsByRound(state.currentRound)[0]
+            startStep(firstStep)
+            return {...state, currentStep: firstStep}
+        }
+        const currentStep = state.currentStep
+        if (currentStep.type === "instructions") {
+            /* disable button */
+            const buttonElement = action.payload ?? null
+            buttonElement?.prop("disabled", true)
+            const sectionId = currentStep.id
+            $(`#${sectionId}`).hide()
+            const stepsInRound = getStepsByRound(state.currentRound)
+            const currentStepIndex = stepsInRound.findIndex(step => step.id === currentStep.id)
+            const nextStep = stepsInRound[currentStepIndex + 1]
+            startStep(nextStep)
+            return {...state, currentStep: nextStep}
+        }
+        /* check the type of the current step */
+        if (currentStep.type === "matching") {
+            /*
+            if matching is correct do the following:
+                - hide incorrect message if it is shown
+                - disable the button
+                - show  correct/ first-correct message for "delay" seconds, then:
+                    - hide current step
+                    - show next step
+                - reset increment counter
+                - set current step to the next step
+                - set current stage to next stage
+            if matching is incorrect do the following:
+                if user didn't exceed three attempts:
+                    - show incorrect message
+                    - increment mistakes counter
+                if user exceeded three attempts:
+                    - show incorrect skip message. for "delay" seconds, then:
+                        - hide current step
+                        - show next step
+                    - reset increment counter
+                    - set current step to the next step
+                    - set current matching to expected matching and render ui
+            */
+            /* check if matching is correct */
+            const expectedMatchingsForRound = state.expectedMatchingByRound[state.currentRound]
+            const expectedMatchingForStage = expectedMatchingsForRound.stages[state.currentStage]
+
+            /* check if matching is correct */
+            function validateMatching(expectedMatching, userMatching) {
+                return Object.keys(expectedMatching).every(participant => {
+                    const expectedPrize = expectedMatching[participant]
+                    const userPrize = userMatching[participant]
+                    return expectedPrize === userPrize
+                })
+            }
+
+            const isMatchingCorrect = validateMatching(expectedMatchingForStage, state.currentMatching)
+            const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
+            const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
+            if (isMatchingCorrect) {
+                /* disable button */
+                const buttonElement = action.payload ?? null;
+                buttonElement?.prop('disabled', true)
+                /* hide incorrect message if it is shown */
+                $(`#${state.currentStep.id} .incorrect-msg`).hide();
+                /* display the matching correct message */
+                if (state.mistakesCounter === 0) {
+                    $(`#${state.currentStep.id} .correct-first-msg`).show();
+                } else if (state.mistakesCounter === 1 && state.currentRound > 1) {
+                    $(`#${state.currentStep.id} .correct-second-msg`).show();
+                } else {
+                    $(`#${state.currentStep.id} .correct-msg`).show();
+                }
+                setTimeout(() => {
+                    /* hide current step */
+                    $(`#${state.currentStep.id}`).hide();
+                    /* show next step */
+                    startStep(nextStep)
+                    /* reset mistakes counter and update current step and current stage */
+                }, delay)
+                const newState = {
+                    ...state,
+                    currentStep: nextStep,
+                    currentStage: state.currentStage + 1,
+                    mistakesCounter: 0,
+                }
+                return newState
+            } else {
+                /* if user didn't exceed three attempts */
+                if (state.mistakesCounter < 2) {
+                    /* show incorrect message */
+                    $(`#${state.currentStep.id} .incorrect-msg`).show();
+                    /* update state */
+                    const newState = {
+                        ...state,
+                        mistakesCounter: state.mistakesCounter + 1,
+                    }
+                    return newState
+                }
+                /* if user exceeded three attempts */
+                else {
+                    /* disable button */
+                    const buttonElement = action.payload ?? null;
+                    buttonElement?.prop('disabled', true)
+                    /* hide incorrect message if it is shown */
+                    $(`#${state.currentStep.id} .incorrect-msg`).hide();
+                    /* show incorrect skip message */
+                    $(`#${state.currentStep.id} .incorrect-skip-msg`).show();
+                    const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
+                    const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
+                    setTimeout(() => {
+                        /* hide current step */
+                        $(`#${state.currentStep.id}`).hide();
+                        /* show next step */
+                        startStep(nextStep)
+                    }, delay)
+                    /* reset mistakes counter and update current step and current stage */
+                    const newState = {
+                        ...state,
+                        currentStep: nextStep,
+                        currentStage: state.currentStage + 1,
+                        mistakesCounter: 0,
+                        currentMatching: expectedMatchingForStage,
+                        participantsMatchMemo: [
+                            ...state.participantsMatchMemo, ...Object.keys(expectedMatchingForStage).map(participant => {
+                                if (expectedMatchingsForRound[participant] !== -10) {
+                                    return participant
+                                }
+                            })
+                        ]
+                    }
+                    renderUiFromState(newState)
+                    return newState
+                }
+            }
+        }
+        if (currentStep.type === "radio") {
+            /*
+            check if the user answered correctly :
+                - if yes, do the following:
+                    - hide incorrect message if it is shown
+                    - disable the button
+                    - reset mistakes counter
+                    - set current step to the next step
+                    - show  correct message for "delay" seconds, then:
+                        - hide current step
+                        - start next step
+                - if no, do the following:
+                    - show incorrect message
+                    - increment mistakes counter
+             */
+            const expectedAnswer = state.correctAnswers[currentStep.formFields.correctAnswerIndex]
+            const userAnswer = parseInt(forminputs[currentStep.formFields.element].value)
+            const isCorrect = expectedAnswer === userAnswer
+            if (isCorrect) {
+                /* hide incorrect message if it is shown */
+                $(`#${state.currentStep.id} .incorrect-msg`).hide();
+                /* disable button */
+                const buttonElement = action.payload ?? null;
+                buttonElement?.prop('disabled', true)
+                /* display the matching correct message */
+                const isFirstAttempt = state.mistakesCounter === 0
+                if (isFirstAttempt) {
+                    $(`#${state.currentStep.id} .correct-first-msg`).show();
+                } else {
+                    $(`#${state.currentStep.id} .correct-msg`).show();
+                }
+                const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
+                const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
+                console.log(nextStep)
+                setTimeout(() => {
+                    /* hide current step */
+                    $(`#${state.currentStep.id}`).hide();
+                    /* show next step */
+                    startStep(nextStep)
+                }, delay)
+                const newState = {
+                    ...state,
+                    currentStep: nextStep,
+                    mistakesCounter: 0,
+                }
+                return newState
+            }
+            if (!isCorrect) {
+                /* show incorrect message */
+                $(`#${state.currentStep.id} .incorrect-msg`).show();
+                /* update state */
+                const newState = {
+                    ...state,
+                    mistakesCounter: state.mistakesCounter + 1,
+                }
+                return newState
+            }
+        }
+        return state
+    }
+    if (action.type === ACTION_TYPES.RESET) {
+        /* reset currentMatching */
+        const newCurrentMatching = {};
+        for (const participant in state.participantsNames) {
+            newCurrentMatching[participant] = -10
+        }
+        /* reset participantsMatchMemo */
+        const newParticipantsMatchMemo = [];
+        const newState = {
+            ...state,
+            currentMatching: newCurrentMatching,
+            participantsMatchMemo: newParticipantsMatchMemo,
+        }
+        renderUiFromState(newState)
+        return newState
+    }
+    return state;
 }
 
-const delay = 1000;
+function startStep(stepToBeStarted) {
+    if (!stepToBeStarted) {
+        $("#last").show()
+        return
+    }
+    if (stepToBeStarted.type === 'instructions') {
+        const sectionId = stepToBeStarted.id
+        // show section
+        $(`#${sectionId}`).show()
+        return
+    }
+    if (stepToBeStarted.type === "matching") {
+        const sectionId = stepToBeStarted.id
+        /* hide error and success messages */
+        $(`#${sectionId} .incorrect-msg`).hide()
+        $(`#${sectionId} .correct-msg`).hide()
+        $(`#${sectionId} .correct-first-msg`).hide()
+        $(`#${sectionId} .correct-second-msg`).hide()
+        $(`#${sectionId} .incorrect-msg`).hide()
+        $(`#${sectionId} .incorrect-skip-msg`).hide()
+        // show section
+        $(`#${sectionId}`).show()
+        return
+    }
+    if (stepToBeStarted.type === "radio") {
+        const sectionId = stepToBeStarted.id
+        /* hide error and success messages */
+        $(`#${sectionId} .incorrect-msg`).hide()
+        $(`#${sectionId} .correct-msg`).hide()
+        $(`#${sectionId} .correct-first-msg`).hide()
+        $(`#${sectionId} .incorrect-seq-field`).hide()
+        // show section
+        $(`#${sectionId}`).show()
+
+    }
+
+}
+
+const delay = 5000;
 let store;
 let modal = document.getElementById("GenModal"); // Get the modal
 let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
@@ -554,13 +859,6 @@ window.onclick = function (event) {
 };*/
 
 window.addEventListener('DOMContentLoaded', (event) => {
-    /* render prizes priorities table */
-    renderPrizesPrioritiesTable(initialState.prizesPriorities);
-    renderParticipantsPrioritiesTable(initialState.participantsPriorities)
-    updateCurrentMatching();
-    /* initialize live server */
-    liveSend({'information_type': 'onload', 'time': Date.now()})
-
     store = Redux.createStore(reducer);
     /*
         this action is dispatched each time that the page is loaded
@@ -574,14 +872,20 @@ window.addEventListener('DOMContentLoaded', (event) => {
         const currentRoundSteps = getStepsByRound(store.getState().currentRound)
         stepToBeStarted = currentRoundSteps[0]
     }
-    store.dispatch({type: ACTION_TYPES.START_STEP, step: stepToBeStarted})
-    const jsx = `
-     const MyComponent = () => {
-    return <div>Hello, React!</div>;
-  };
-`;
-
-    renderReactComponent(jsx,"react-root","MyComponent")
+    store.dispatch({type: ACTION_TYPES.HIDE_ALL_SECTIONS})
+    store.dispatch({type: ACTION_TYPES.NEXT_BUTTON_CLICKED})
+    store.dispatch({type: ACTION_TYPES.RENDER})
+    liveSend({'information_type': 'onload', 'time': Date.now()})
+    $("button").click(function (event) {
+        event.preventDefault()
+    })
+    $("section button").click(function (event) {
+        if ($(this).attr("id") == "submit-page") {
+            document.getElementById("form").submit();
+            return
+        }
+        store.dispatch({type: ACTION_TYPES.NEXT_BUTTON_CLICKED, payload: $(this)})
+    })
 });
 
 function submitButton() {
@@ -654,50 +958,13 @@ function matchToSchool(val) {
 }
 
 function rematchStudent(val, text) {
-    liveSend({'information_type': 'rematch_participant', 'school': schools_dict[val], 'student': student_dict[text],});
+    liveSend({
+        'information_type': 'rematch_participant',
+        'school': schools_dict[val],
+        'student': student_dict[text],
+    });
 }
 
-function updateCurrentMatching() {
-//     for (let j = 1; j <= js_vars.students_number; j++) {
-//         if (j === parseInt(student)) { // a student's button is selected
-//             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackgroundSelected';
-//             if (partial[j - 1] > 0) {
-//                 document.getElementById('ButtonStudent'.concat(j)).className = 'pButton';
-//                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
-//                 document.getElementById('School'.concat(alphabet[partial[j - 1] - 1], 'MatchedToStudent', student, 'Button')).className = 'iButtonSelected';
-//             } else {
-//                 document.getElementById('ButtonStudent'.concat(student)).className = 'iButtonSelected';
-//                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
-//             }
-//         } else { // no student button is selected.
-//             document.getElementById('StudentBackground'.concat(j)).className = 'flexItemButtonsBackground';
-//             if (partial[j - 1] > 0) {
-//                 document.getElementById('ButtonStudent'.concat(j)).className = 'offButton';
-//                 document.getElementById('ButtonStudent'.concat(j)).disabled = true;
-//             } else {
-//                 document.getElementById('ButtonStudent'.concat(j)).className = 'iButton';
-//                 document.getElementById('ButtonStudent'.concat(j)).disabled = false;
-//             }
-//         }
-//     }
-//     for (let i = 0; i < js_vars.schools_number; i++) {
-//         document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'none';
-//         for (let l = 1; l <= js_vars.students_number; l++) {
-//             document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l, 'Button')).className = 'iButton';
-//             if (partial[l - 1] === i + 1) {
-//                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = containment[i];
-//                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'inline-block';
-//                 document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButtonMatched';
-//                 document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButtonMatched';
-//             } else {
-//                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.order = '30';
-//                 document.getElementById('School'.concat(alphabet[i], 'MatchedToStudent', l)).style.display = 'none';
-//                 document.getElementById('Student'.concat(l, 'PrefSchool', alphabet[i])).className = 'dButton';
-//                 document.getElementById('School'.concat(alphabet[i], 'PrefStudent', l)).className = 'dButton';
-//             }
-//         }
-//     }
-}
 
 function openPlus() {
     for (let i = 0; i < js_vars.schools_number; i++) {
@@ -1116,24 +1383,396 @@ function getStepsByRound(round) {
 
 
 function renderUiFromState(state) {
+    function renderPrizesPrioritiesTable() {
+        /*
+        the prizesPriorities table is a table that contains all the prizes priorities.
+        each column represents a prize and each row represents a priority of the prize.
+        a column is highlighted if all of these terms are met:
+            1.there is no currently selected participant
+            2.the user is hovering over prize row that matches the column prize
+        a participant in a cell is highlited if it is matched to the prize that this column represents
+         */
+        const jsxCode = `
+        function Stam(){
+        return <div></div>
+        }
+        function PrizesPrioritiesTable(props) {
+            return (
+                <>
+                          {
+                            Array.from(Object.keys(props)).map((_,index)=>{
+                                const { isHighlited, prizeName, columnIndex, highlitedParticipants,isLast, priorities} = props[index]
+                                const classNames = () => {
+                                    let classNames = "table-column flexItemButtonsBackground"
+                                    if (columnIndex === 0) {
+                                        classNames += " verticalRight"
+                                    } else if (columnIndex === Object.keys(props).length - 1) {
+                                        classNames += " verticalLeft"
+                                    } else {
+                                        classNames += " verticalBoth"
+                                    }
+                                    if (isHighlited) {
+                                        classNames += " highlited"
+                                    }
+                                    return classNames
+                                 }
+                                return (
+                                    <div className={classNames()} id={\`SchoolsBackground\${index}\`} key={index}>
+                                        <div className="dButtonTop dButton" id={\`School\${prizeName}\`}>{prizeName}</div>
+                                        {
+                                            priorities.map((priority, cellIndex) => {                                           
+                                                const classNames=()=>{
+                                                    let classNames = "dButton"                                                 
+                                                    if (highlitedParticipants.includes(priority)) {
+                                                        classNames += " dButtonMatched"
+                                                    }
+                                                    return classNames
+                                                }
+                                                return (
+                                                    <div className={classNames()} id={\`School\${prizeName}PrefSchool\${priority}\`} key={cellIndex}>{priority}</div>
+                                                ) 
+                                            })
+                                         }
+                                    </div>
+                                )
+                            })
+                        }
+                </>
+            )
+        }
+        `
+        const prizesPrioritiesProps = Object.keys(state.prizesPriorities).map((prizeName, index) => {
+            const prizePriorities = state.prizesPriorities[prizeName]
+            const highlitedParticipants = () => {
+                /* a participant cell should be highlited if the prize that the columns relates to was chosen by the participant */
+                return Object.keys(state.currentMatching).filter(participantName => {
+                    const prizeMatchedToParticipant = state.currentMatching[participantName]
+                    return prizeMatchedToParticipant === prizeName
+                })
+            }
+            const isHighlited = () => {
+                /*
+                  a column is highlighted if all of these terms are met:
+                     1.there is no currently selected participant
+                     2.the user is hovering over prize row that matches the column prize
+                 */
+                return state.selectedParticipant === null && state.mouseOnPrize === prizeName
+            }
+            const isLast = index === Object.keys(state.prizesPriorities).length - 1
+            return {
+                isHighlited: isHighlited(),
+                prizeName,
+                columnIndex: index,
+                highlitedParticipants: highlitedParticipants(),
+                isLast,
+                priorities: prizePriorities
+            }
+        })
+        renderReactComponent(jsxCode, "prizes-priorities-table", "PrizesPrioritiesTable", JSON.stringify(prizesPrioritiesProps))
+
+    }
+
+    function renderParticipantsPrioritiesTable() {
+        /*
+        the participantsPriorities table is a table that contains all the participants priorities.
+        it is highlighted if one or more of these terms are met:
+        1. the participant is currently selected
+        2. the user is hovering over the matching participant button
+        the prizes that are displayed in the column is highlited if this term is met: :
+            1. the prize is the current match of the participant that this column represents
+         */
+        const jsxCode = `
+
+        function Stam() {
+            return <div></div>
+        }
+
+        function ParticipantsPrioritiesTable(props) {
+            return (
+                <>
+                       {
+                           Array.from(Object.keys(props)).map((_, index) => {
+                               const {
+                                   isHighlited,
+                                   participantName,
+                                   columnIndex,
+                                   highlitedPrize,
+                                   isLast,
+                                   priorities
+                               } = props[index]
+                               const classNames = () => {
+                                   let classNames = "table-column flexItemButtonsBackground"
+                                   if (columnIndex === 0) {
+                                       classNames += " verticalRight"
+                                   } else if (isLast) {
+                                       classNames += " verticalLeft"
+                                   } else {
+                                       classNames += " verticalBoth"
+                                   }
+                                   if (isHighlited) {
+                                       classNames += " highlited"
+                                   }
+                                   return classNames
+                               }
+                               return (
+                                   <div className={classNames()} key={columnIndex}>
+                                        <div className="dButtonTop dButton" id={participantName}>{participantName}</div>
+                                       {
+                                           priorities.map((priority, cellIndex) => {
+                                               const className = () => {
+                                                   let classNames = "dButton"
+                                                   if (highlitedPrize === priority) {
+                                                       classNames += " dButtonMatched"
+                                                   }
+                                                   return classNames
+                                               }
+                                               return (
+                                                   <div className={className()} id={participantName + "PrefSchool" + priority} key={cellIndex}>{priority}</div>
+                                               )
+                                           })
+                                       }
+                                    </div>
+                               )
+                           })
+                       }
+                 </>
+            )
+        }
+
+        `
+        const participantsPrioritiesTableProps = Object.keys(state.participantsPriorities).map((participantName, index) => {
+            const isHighlited = () => {
+                if (state.selectedParticipant !== null) {
+                    return state.selectedParticipant === participantName
+                } else if (state.mouseOnParticipant) {
+                    return state.mouseOnParticipant === participantName
+                }
+            }
+            const highlitedPrize = state.currentMatching[participantName] === -10 ? null : state.currentMatching[participantName]
+            const isLast = index === Object.keys(state.participantsPriorities).length - 1
+            return {
+                isHighlited: isHighlited(),
+                participantName,
+                columnIndex: index,
+                priorities: state.participantsPriorities[participantName],
+                highlitedPrize,
+                isLast
+            }
+        })
+        renderReactComponent(jsxCode, "participants-priorities-table", "ParticipantsPrioritiesTable", JSON.stringify(participantsPrioritiesTableProps))
+    }
+
     function renderMiddleRow() {
         /*
         the middle row is presenting the participant that is currently Unmatched.
         if a participant is currently selected than it is being highlighted.
         */
-        const middleRowElement = document.getElementById("middle-row")
-        const allParticipants = Object.keys(state.currentMatching)
-        const unmatchedParticipants = allParticipants.filter(participant => state.currentMatching[participant] === -10)
-        unmatchedParticipants.forEach(participant => {
-            /* check if the participant is currently selected */
-            const isSelected = state.selectedParticipant === participant
-            const participantButtonContainer = document.createElement("div").classList.add("column")
+        const jsxCode = `
+
+        function ParticipantButton(isMatched, isSelected, participantName) {
+            if (isMatched === true) return null
+
+            function onClick() {
+                if (isMatched || isSelected) return;
+                store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
+            }
+
+            const className = isSelected ? "iButtonSelected" : "iButton"
+            return (
+                <div className="column" style={{flex: "1 1 auto"}}>
+                        <button className={className} onClick={onClick} children={participantName}>
+                        </button>
+                    </div>
+            )
+        }
+
+        function MiddleRow(participants) {
+            return (
+                <>
+                        <span>
+                            <b style={{fontSize: "1.5rem"}}>Unpaired participants:</b>
+                        </span>
+                    {Object.keys(participants).map((_, index) => {
+                        const participantName = participants[index].participantName
+                        const isMatched = participants[index].isMatched
+                        if (isMatched === true) return null
+                        const isSelected = participants[index].isSelected
+                        const className = isSelected ? "iButtonSelected" : "iButton"
+                        return (
+                            <button className={className} onClick={(e) => {
+                                e.preventDefault()
+                                store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
+                            }} onMouseEnter={(e) => {
+                                store.dispatch({
+                                    type: ACTION_TYPES.MOUSE_ENTERED_PARTICIPANT_BUTTON,
+                                    payload: participantName
+                                })
+                            }} onMouseLeave={(e) => {
+                                store.dispatch({
+                                    type: ACTION_TYPES.MOUSE_LEFT_PARTICIPANT_BUTTON,
+                                    payload: participantName
+                                })
+                            }} key={index}>
+                                        {participantName}
+                                    </button>
+                        )
+                    })}
+                    </>
+            )
+        }
+
+        `
+        const participants = Object.keys(state.participantsNames).map((participantName, index) => {
+            const isMatched = state.currentMatching[participantName] !== -10
+            const isSelected = state.selectedParticipant && state.selectedParticipant === participantName
+            return {
+                isMatched,
+                isSelected,
+                participantName
+            }
         })
+        renderReactComponent(jsxCode, "middle-row", "MiddleRow", JSON.stringify(participants))
     }
+
+    function renderPrizesRows() {
+        /*
+         this component is divided to sub-rows.
+         each sub-row represents a prize.
+         each sub row contains :
+            1. the prize name
+            2. the participant that is currently matched to the prize
+            3. plus button that allows to add a participant to the prize.
+               (shown only if there is a selected participant).
+               (shown only if the current number of participants currently matched to the prize is less than the max number of participants that can be matched to the prize)
+               Onclick - dispatch plus button clicked action.
+            4. onHover - dispatches onHover action.
+            5. non-hoverable - if the prize is already full.
+         */
+        const jsxCode = `
+
+        function Stam() {
+            return <div></div>
+        }
+
+        function PrizesRows(prizesRowsProps) {
+            return (
+                <>
+                            {Array.from(Object.keys(prizesRowsProps)).map((_, index) => {
+                                return (
+                                        <div 
+                                            key={index}
+                                            onMouseEnter={() => {
+                                                store.dispatch({
+                                                                 type: ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW,
+                                                                 payload: prizesRowsProps[index].prizeName
+                                                })
+                                            }}
+                                            onMouseLeave={() => {
+                                                store.dispatch({
+                                                                type: ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW,
+                                                                payload: prizesRowsProps[index].prizeName
+                                                })
+                                            }}
+                                            > 
+                                            {/* prize name */}
+                                            <span>{prizesRowsProps[index].prizeName}</span>
+                                            {/* participants that are currently matched to the prize */}
+                                            <div className="buttons-grid">
+                                                {
+                                                    prizesRowsProps[index].matchedParticipants.map((participantName, index) => {
+                                                        function isSelected() {
+                                                            return prizesRowsProps[index].selectedParticipant === participantName
+                                                        }
+                                                        const className = isSelected() ? "iButtonSelected" : "iButton"
+                                                        return (
+                                                           <button
+                                                            key={index}
+                                                            onClick={(e)=>{
+                                                                e.preventDefault()
+                                                                store.dispatch({type:ACTION_TYPES.PARTICIPANT_SELECTED, payload: participantName})
+                                                            }} 
+                                                            className={className}>
+                                                                 {participantName}
+                                                           </button>
+                                                           )
+                                                    })
+                                                }
+                                                {/* plus button */}
+                                                { prizesRowsProps[index].showPlus &&
+                                                    <button 
+                                                        className="pButton"
+                                                        onClick={(e) => {
+                                                          e.preventDefault()
+                                                          store.dispatch({type:ACTION_TYPES.PLUS_BUTTON_CLICKED, payload: prizesRowsProps[index].prizeName})
+                                                          store.dispatch({type:ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW, payload: prizesRowsProps[index].prizeName})  
+                                                        }}
+                                                    >
+                                                    +
+                                                    </button>
+                                                }
+                                            </div>
+                                        </div>
+                                   )
+                            })}
+                        </>
+            )
+        }
+
+        `
+        const prizesRowsProps = Object.keys(state.prizesNames).sort().map((prizeName, index) => {
+                const isFull = () => {
+                    const maxParticipants = state.maxParticipantsPerPrize[prizeName]
+                    const numberOfParticipantsMatched = Object.keys(state.participantsNames).reduce((acc, participantName) => {
+                        if (state.currentMatching[participantName] === prizeName) {
+                            acc++
+                        }
+                        return acc
+                    })
+                    return numberOfParticipantsMatched < maxParticipants
+                }
+                /* show plus button if there is a selected participant and the prize is not full */
+
+                /* get the participants that are currently matched to the prize */
+                const matchedParticipants = Object.keys(state.participantsNames).filter(participantName => state.currentMatching[participantName] === prizeName)
+                /* sort them by participnats match memo */
+                const orderedMatchedParticipants = []
+                for (let i = state.participantsMatchMemo.length - 1; i >= 0; i--) {
+                    const participantName = state.participantsMatchMemo[i]
+                    if (matchedParticipants.includes(participantName) && !orderedMatchedParticipants.includes(participantName)) {
+                        orderedMatchedParticipants.unshift(participantName)
+                    }
+                    if (orderedMatchedParticipants.length === matchedParticipants.length) {
+                        break
+                    }
+                }
+                const showPlus = () => {
+                    if (state.selectedParticipant && !isFull() && !matchedParticipants.includes(state.selectedParticipant)) {
+                        return true
+                    } else {
+                        return false
+                    }
+                }
+                return {
+                    prizeName,
+                    showPlus: showPlus(),
+                    matchedParticipants: orderedMatchedParticipants,
+                    selectedParticipant: state.selectedParticipant
+                }
+            }
+        )
+        renderReactComponent(jsxCode, "prizes-rows", "PrizesRows", JSON.stringify(prizesRowsProps))
+    }
+
+    renderPrizesPrioritiesTable()
+    renderParticipantsPrioritiesTable()
+    renderMiddleRow()
+    renderPrizesRows()
 }
 
-function renderReactComponent(jsxCode,renderAt,componentName,props) {
-    const renderString = jsxCode.concat(`ReactDOM.render(<${componentName} {...${props}} />, document.getElementById('${renderAt}'));`)
+function renderReactComponent(jsxCode, renderAt, componentName, props) {
+    const renderString = jsxCode.concat(`
+        ReactDOM.render(<${componentName} {...${props}} />, document.getElementById('${renderAt}'));
+        `)
     /* transpile jsx code to js code */
     const transPiledCode = Babel.transform(renderString, {
         presets: ['react'],

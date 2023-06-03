@@ -1,17 +1,2 @@
-  <div class="row" style="justify-content: space-between;flex-wrap: nowrap;align-items: flex-end;" id="middle-row">
-      <div class="column" style="flex: 1 1 auto;width: 200%;">
-                <b style="font-size: 1.5rem;">Unpaired participants:</b>
-      </div>
-      {{ for participant in participantsNames}}
-                  <div class="column"
-                     {{ if forloop.counter == C.NUMBER_OF_PARTICIPANTS }}
-                        style="flex: 1 1 auto;"
-                     {{ else }}
-                        style="flex: 1 1 auto;width: 20%;"
-                     {{ endif }}>
-                    <button type="button" class="iButton" value="{{ participant }}" id="participant{{ participant }}Button" onclick="store.dispatch({type:ACTION_TYPES.PARTICIPANT_SELECTED,payload:`{{ participant }}`})">
-                            <b>{{ participant }}</b>
-                        </button>
-                    </div>
-      {{ endfor }}
+  <div id="middle-row">
   </div>
