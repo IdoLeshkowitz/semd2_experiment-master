@@ -103,10 +103,9 @@ $("#submit-btn").click(function () {
 
 var players = js_vars.players;
 var prizes = js_vars.prizes;
-
 var prizesValues = js_vars.prizes_values;
 var prizesPriorities = js_vars.prizes_priorities;
-
+console.log(prizesPriorities);
 var otherPlayersRankings = js_vars.players_rankings;
 
 $("#step-1a").hide();
