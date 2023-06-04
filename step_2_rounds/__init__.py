@@ -178,6 +178,7 @@ class Player(BasePlayer):
     fourth_priority = make_priority_field("Fourth:")
     prizes_values = models.StringField(initial="")
     prizes_priorities = models.StringField(initial="")
+    other_participants_rankings = models.StringField(initial="")
 
 
 
@@ -198,7 +199,7 @@ class RoundPage(Page):
             "prizes_values": get_prizes_in_round(player.prizes_values, player.round_number),
             "prizes_priorities": get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
             "players": C.PLAYERS,
-            "players_rankings": C.PLAYERS_RANKINGS[player.round_number - 1]
+            "players_rankings": player.other_participants_rankings
         }
 
     @staticmethod
@@ -268,6 +269,9 @@ def randomize_prize_values():
     return values
 
 
+### helping functions ###
+#########################
+
 def randomize_permutation(r, kind):
     """
     draw a permutation given the follwoing distributions:
@@ -287,7 +291,8 @@ def randomize_permutation(r, kind):
     """
 
     import numpy as np
-    index_you = 3
+    index_you = 0
+    index_others = [i for i in [0, 1, 2, 3] if i != index_you]
 
     if kind == 'ranking':
         p_first = lambda n: (1 - r) / (1 - r ** n)
@@ -306,7 +311,7 @@ def randomize_permutation(r, kind):
         p_pos_you = lambda pos: r ** pos * ((1 - r) / (1 - r ** n))
 
         # first, randomize a permutation of the side-1 participants other than "You"
-        perm = list(np.random.permutation([0, 1, 2]))
+        perm = list(np.random.permutation(index_others))
 
         # second, randomize the position of "You" (side-1 index 3) out of the 4 possible positions [0,1,2,3]
         you_pos = np.random.choice([0, 1, 2, 3], p=[p_pos_you(i) for i in range(4)])
@@ -315,6 +320,11 @@ def randomize_permutation(r, kind):
         perm.insert(you_pos, index_you)
 
     return perm
+def randomize_others_rankings(prize_values,r=0.5):
+    """
+    returns a list of the three rankings of the other participants, where the prize order affects the ranking distribution
+    """
+    return [[get_prizes_dict(prize_values)[i] for i in randomize_permutation(r, kind='ranking')] for _ in range(3)]
 def get_prizes_dict(prize_values):
     """
     Translates index 0 to the index of the highest-earning prize, index 1 to the second highest, and so on.
@@ -322,7 +332,7 @@ def get_prizes_dict(prize_values):
     import numpy as np
     index_list = (-1*np.array(prize_values)).argsort().tolist()
     return {i:j for i,j in zip([0,1,2,3],index_list)}
-def randomize_prize_priorities(prize_values, r_highest=100, r_regular=100):
+def randomize_prize_priorities(prize_values, r_highest=1.7, r_regular=0.999):
     """
     returns a list of 4 prize priorities, where the highest-prize priorities are randomized differently than the other prizes' priorities
     """
@@ -336,7 +346,6 @@ def randomize_prize_priorities(prize_values, r_highest=100, r_regular=100):
     other_prize_indices = [get_prizes_dict(prize_values)[i] for i in range(1, 4)]
     for index in other_prize_indices:
         all_prize_priorities[index] = randomize_permutation(r_regular, kind='priorities')
-    print(all_prize_priorities)
     return all_prize_priorities
 
 class PreProcess(Page):
@@ -344,10 +353,12 @@ class PreProcess(Page):
     def before_next_page(player: Player, timeout_happened):
         if (player.round_number == 1):
             player.prizes_values = str([randomize_prize_values() for i in range(C.NUM_ROUNDS)])
-            player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values,player.round_number)) for i in range(C.NUM_ROUNDS)])
+            player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values, i+1 )) for i in range(C.NUM_ROUNDS)])
+            player.other_participants_rankings = str([randomize_others_rankings(get_prizes_in_round(player.prizes_values, i+1 )) for i in range(C.NUM_ROUNDS)])
         else :
             player.prizes_values = player.in_round(1).prizes_values
             player.prizes_priorities = player.in_round(1).prizes_priorities
+            player.other_participants_rankings = player.in_round(1).other_participants_rankings
 
 
 page_sequence = [PreProcess, RoundPage]
