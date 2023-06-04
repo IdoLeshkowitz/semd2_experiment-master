@@ -44,7 +44,7 @@
     border-radius: .7rem;
     padding: .375rem .75rem;
     font-size: 25px;
-    line-height: 0.7;
+    line-height: .7;
     background-color: #ae85ed;
 }
 .iButton:hover {
@@ -76,6 +76,7 @@
     border-color: palevioletred;
     border-radius: .7rem;
     padding: .375rem .75rem;
+    aspect-ratio: 1/1;
     font-size: 25px;
     line-height: 0.7;
     background-color: transparent;

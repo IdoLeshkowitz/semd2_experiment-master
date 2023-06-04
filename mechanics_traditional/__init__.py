@@ -60,8 +60,8 @@ def make_question_9():
     return models.IntegerField(choices=[
         [1, "I will sometimes receive a prize which I ranked lower than any prize I was paired with during the allocation process."],
         [2, "Out of all the prizes I was paired with at some point in the allocation process, I will get the last one I was paired with."],
-        [3, "If another participant does not want the prize allocated to them, then I may be able to switch prizes with them."],
-        [4, "I am as likely to get a prize I was paired with at a later point in the allocation process as to get a prize I was paired with at an earlier point in the process"]], label='Which of the following is true?(Get it right on first try to increase your bonus)', widget=widgets.RadioSelect)
+        [3, "If another participant does not want the prize allocated to them, then I may be able to switch prizes with them."], [4,
+                                                                                                                                  "I am as likely to get a prize I was paired with at a later point in the allocation process as to get a prize I was paired with at an earlier point in the process"]], label='Which of the following is true?(Get it right on first try to increase your bonus)', widget=widgets.RadioSelect)
 
 
 def make_participant_field(label):
@@ -145,25 +145,29 @@ class C(BaseConstants):
 
     # this dict is used to determine the allocation of prizes in each round. if the round is divided into stages, then the allocation is determined by the
     # stage.
-    EXPECTED_MATCHING_BY_ROUND = {
-        1: {
-            'stages': {
-                0: {'R': "A", 'S': -10, 'T': -10, 'Y': -10},
-                1: {"R": "A", "S": "A", "T": "B", "Y": "C"},
-                2: {"R": "A", "S": "C", "T": "B", "Y": "C"},
-                3: {"R": "A", "S": "C", "T": "B", "Y": "A"},
-                4: {"R": "A", "S": "C", "T": "B", "Y": "B"},
-                5: {"R": "A", "S": "C", "T": "A", "Y": "B"},
-                6: {"R": "A", "S": "C", "T": "D", "Y": "B"},
-            }
-        },
-        2: {'stages': {0: {'R': "D", "S": "B", "T": "A", "Y": "C"}}},
-        3: {'stages': {0: {'R': "D", "S": "A", "T": "C", "Y": "B"}}},
-        4: {'stages': {0: {'R': "C", "S": "D", "T": "B", "Y": "A"}}}
-    },
+    EXPECTED_MATCHING_BY_ROUND = [
+        [
+            {'R': "A", 'S': 'none', 'T': 'none', 'Y': 'none'},
+            {"R": "A", "S": "A", "T": "B", "Y": "C"},
+            {"R": "A", "S": "C", "T": "B", "Y": "C"},
+            {"R": "A", "S": "C", "T": "B", "Y": "A"},
+            {"R": "A", "S": "C", "T": "B", "Y": "B"},
+            {"R": "A", "S": "C", "T": "A", "Y": "B"},
+            {"R": "A", "S": "C", "T": "D", "Y": "B"},
+        ],
+        [
+            {'R': "D", "S": "B", "T": "A", "Y": "C"}
+        ],
+        [
+            {'R': "D", "S": "A", "T": "C", "Y": "B"}
+        ],
+        [
+            {'R': "C", "S": "D", "T": "B", "Y": "A"}
+        ]
+    ]
 
     # this list keeps the correct answers for the multiple choice questions
-    CORRECT_ANSWERS_BY_ROUND = [[4, 2, 1, 1, 1, 1, 2, 2, 1, 4, 2, 3, 2, 2,1,4,2,3,2,2], [2, 2, 1, 1, 2], [1, 1, 2, 2, 2], [1, 1, 2, 2, 1]]
+    CORRECT_ANSWERS_BY_ROUND = [[4, 2, 1, 1, 1, 1, 2, 2, 1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [2, 2, 1, 1, 2], [1, 1, 2, 2, 2], [1, 1, 2, 2, 1]]
 
     # this dict keeps the max participants that can be assigned to each prize. in traditional mechanism, this is the same for all prizes.
     MAX_PARTICIPANTS_ASSIGNED_TO_PRIZE = {"A": NUMBER_OF_PARTICIPANTS, "B": NUMBER_OF_PARTICIPANTS, "C": NUMBER_OF_PARTICIPANTS, "D": NUMBER_OF_PARTICIPANTS}
@@ -174,7 +178,6 @@ class Player(BasePlayer):
     number_of_students = models.IntegerField(choices=[i for i in range(1, C.NUMBER_OF_PRIZES + 1)])
     clicks = models.LongStringField()
     time_stamps = models.LongStringField()
-    final_matching = models.LongStringField()
 
     question_1 = make_question_1()
     question_2 = make_question_2()
@@ -194,14 +197,29 @@ class Player(BasePlayer):
     obtainable_prize_round_2 = make_obtainable_field_round_2('Answer')
     obtainable_prize_round_3_4 = make_obtainable_field_round_3_4('Answer')
 
-    incorrect_seq_question_1 = models.LongStringField(blank=True)
-    incorrect_seq_question_2 = models.LongStringField(blank=True)
-    incorrect_seq_question_3 = models.LongStringField(blank=True)
-    incorrect_seq_question_4 = models.LongStringField(blank=True)
-    incorrect_seq_question_5 = models.LongStringField(blank=True)
-    incorrect_seq_question_6 = models.LongStringField(blank=True)
-    incorrect_seq_question_7 = models.LongStringField(blank=True)
-    incorrect_seq_question_8 = models.LongStringField(blank=True)
+    incorrect_seq_question_1 = models.LongStringField(initial="")
+    incorrect_seq_question_2 = models.LongStringField(initial="")
+    incorrect_seq_question_3 = models.LongStringField(initial="")
+    incorrect_seq_question_4 = models.LongStringField(initial="")
+    incorrect_seq_question_5 = models.LongStringField(initial="")
+    incorrect_seq_question_6 = models.LongStringField(initial="")
+    incorrect_seq_question_7 = models.LongStringField(initial="")
+    incorrect_seq_question_8 = models.LongStringField(initial="")
+    incorrect_seq_question_9 = models.LongStringField(initial="")
+    incorrect_seq_question_10 = models.LongStringField(initial="")
+    incorrect_seq_prize_a_obtainable = models.LongStringField(initial="")
+    incorrect_seq_prize_b_obtainable = models.LongStringField(initial="")
+    incorrect_seq_prize_c_obtainable = models.LongStringField(initial="")
+    incorrect_seq_prize_d_obtainable = models.LongStringField(initial="")
+
+
+    incorrect_seq_obtainable_prize_round_2 = models.LongStringField(blank=True)
+    incorrect_seq_obtainable_prize_round_3_4 = models.LongStringField(blank=True)
+
+    allocation_dashboard_question_1 = models.LongStringField(initial="")
+    allocation_dashboard_question_2 = models.LongStringField(initial="")
+    allocation_dashboard_question_3 = models.LongStringField(initial="")
+    allocation_dashboard_question_4 = models.LongStringField(initial="")
 
     # Player's ranking variables
     first_priority = make_priority_field("First:")
@@ -209,12 +227,9 @@ class Player(BasePlayer):
     third_priority = make_priority_field("Third:")
     fourth_priority = make_priority_field("Fourth:")
 
-    current_stage = models.IntegerField(initial=0)
     current_step = models.LongStringField(blank=True)
     matching_counter = models.IntegerField(initial=0)
-
-    bonus_field = models.IntegerField(initial=0)
-
+    understanding_bonus = models.IntegerField(initial=0)
 
 def GetParticpantNumber(char):
     if char == 'R':
@@ -284,19 +299,18 @@ class TrainingRound(Page):
         # Setting the field so that it is not empty.
         player.time_stamps = 'L:'
         # initialize clicks
-        player.clicks = '||'
-        player.participant.current_matching = {participant_name: -10 for participant_name in C.PARTICIPANTS_NAMES}
+        player.clicks = ''
+        player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NAMES}
         # the priorities of each prize .
         player.participant.prizes_priorities = get_prizes_priorities_by_round(player.round_number)
         # the priorities of each participant .
         player.participant.participants_priorities = get_participants_priorities_by_round(player.round_number)
         player.participant.expected_ranking = get_expected_prizes_ranking_by_round(player.round_number)
+        player.participant.matching_memo = []
 
 
 class DAalghoInterface(Page):
     form_model = "player"
-    current_stage = 0;
-
     @staticmethod
     def vars_for_template(player: Player):
         return {
@@ -309,6 +323,7 @@ class DAalghoInterface(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
+            "matchingMemo":            player.participant.matching_memo,
             "currentMatching":         player.participant.current_matching,
             "prizesPriorities":        player.participant.prizes_priorities,
             "participantsPriorities":  player.participant.participants_priorities,
@@ -316,7 +331,6 @@ class DAalghoInterface(Page):
             "participantsNames":       C.PARTICIPANTS_NAMES,
             "maxParticipantsPerPrize": C.MAX_PARTICIPANTS_ASSIGNED_TO_PRIZE,
             "currentStep":             player.field_maybe_none("current_step"),
-            "currentStage":            player.current_stage,
             "currentRound":            player.round_number,
             "correctAnswers":          C.CORRECT_ANSWERS_BY_ROUND[player.round_number - 1],
             "expectedMatchingByRound": C.EXPECTED_MATCHING_BY_ROUND[player.round_number - 1],
@@ -326,7 +340,7 @@ class DAalghoInterface(Page):
     def get_form_fields(player: Player):
         if player.round_number == 1:
             questions = ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6", "question_7", "question_8", "prize_a_obtainable",
-                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable","question_9","question_10"]
+                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "question_9", "question_10"]
 
             incorrect_answers = ["incorrect_seq_question_1", "incorrect_seq_question_2", "incorrect_seq_question_3", "incorrect_seq_question_4",
                                  "incorrect_seq_question_5", "incorrect_seq_question_6", "incorrect_seq_question_7", "incorrect_seq_question_8"]
@@ -346,73 +360,78 @@ class DAalghoInterface(Page):
         print(data)
         # onload event
         if data['information_type'] == 'onload':
-            player.time_stamps = player.time_stamps + '|R:' + data['time']
-            player.clicks = player.clicks + '||'
+            player.time_stamps = player.time_stamps + '|R:' + str(data['time'])
+            player.clicks = player.clicks + '|load'
         # end event
-        elif data['information_type'] == 'submission':
-            player.time_stamps = player.time_stamps + '|F:' + data['time']
+        elif data['information_type'] == 'onend':
+            player.time_stamps = player.time_stamps + '|F:' + str(data['time'])
             player.clicks = player.clicks + '||'
-            player.final_matching = str(player.participant.current_matching)
             return {player.id_in_group: {'information_type': 'submit'}}
         elif data['information_type'] == 'matching_submission':
-            """
-            this event is called when the user hit submits after he finished the matching
-            the client gets back the following information:
-                1. expected_matching (only after the last attempt)
-                2. next_stage (if no more stages left in the current round the next stage is -1)
-                3. is_correct (True if the matching is correct, False otherwise)
-                4. is_last_matching (True if the current matching is the last matching in the current stage, False otherwise)
-            expecting data to include :
-                1. user_matching
-            """
-            current_stage = player.current_stage
-
-            def get_expected_matching():
-                return C.EXPECTED_MATCHING_BY_ROUND[player.round_number][current_stage]
-
-            def is_last_matching():
-                return player.matching_counter >= 3
-
-            def is_matching_correct():
-                return data['user_matching'] == C.EXPECTED_MATCHING_BY_ROUND[player.round_number][current_stage]
-
-            return {
-                player.id_in_group: {
-                    'information_type':  'matching_feedback',
-                    "next_stage":        current_stage + 1 if not is_last_matching() else -1,
-                    "expected_matching": get_expected_matching() if is_last_matching() else None,
-                    "is_correct":        is_matching_correct(),
-                    "is_last_matching":  is_last_matching(),
-                }
-            }
-            """ 
-            sideEffects:
-                1. update the matching per participant
-                2. update the matching counter
-                3. update the stage if needed
-            """
-
-            def update_current_matching():
-                if not is_matching_correct() and is_last_matching():
-                    player.participant.current_matching = get_expected_matching()
-                else:
-                    player.participant.current_matching = data['user_matching']
-
-            def update_matching_counter():
-                player.matching_counter = player.matching_counter + 1
-
-            def update_stage():
-                if is_last_matching():
-                    player.current_stage = -1
-                else:
-                    player.current_stage = player.current_stage + 1
-
-            update_current_matching()
-            update_matching_counter()
-            update_stage()
-
-
-        elif data['information_type'] == 'match_participant':
+            matching = data['matching']
+            is_correct = data['is_correct']
+            understanding_bonus = data['understanding_bonus']
+            player.clicks += '|submit'
+            stage= data['stage']
+            def create_submission_string(matching,is_correct,understanding_bonus):
+                def get_correct_matching_string(is_correct):
+                    if is_correct:
+                        return 'correct'
+                    else:
+                        return 'incorrect'
+                return f"[{str(matching)},{str(get_correct_matching_string(is_correct))},{str(understanding_bonus)}]"
+            if stage == 0:
+                player.allocation_dashboard_question_1 += create_submission_string(matching,is_correct,understanding_bonus)
+            elif stage == 1:
+                player.allocation_dashboard_question_2 += create_submission_string(matching,is_correct,understanding_bonus)
+            elif stage == 2:
+                player.allocation_dashboard_question_3 += create_submission_string(matching,is_correct,understanding_bonus)
+            elif stage == 3:
+                player.allocation_dashboard_question_4 += create_submission_string(matching,is_correct,understanding_bonus)
+            player.understanding_bonus += understanding_bonus
+        elif data['information_type'] == 'question_submission':
+            question_id = data['question_id']
+            answer = data['answer']
+            is_correct = data['is_correct']
+            understanding_bonus = data['understanding_bonus']
+            player.understanding_bonus += understanding_bonus
+            def create_question_submission_string(answer, is_correct, understanding_bonus):
+                def get_correct_answer_string(is_correct):
+                    if is_correct:
+                        return 'correct'
+                    else:
+                        return 'incorrect'
+                return f"[{str(answer)},{str(get_correct_answer_string(is_correct))},{str(understanding_bonus)}]"
+            if question_id == "question_1":
+                player.incorrect_seq_question_1 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_2":
+                player.incorrect_seq_question_2 += create_question_submission_string(answer,is_correct,understanding_bonus)
+                print(player.incorrect_seq_question_2)
+            elif question_id == "question_3":
+                player.incorrect_seq_question_3 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_4":
+                player.incorrect_seq_question_4 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_5":
+                player.incorrect_seq_question_5 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_6":
+                player.incorrect_seq_question_6 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_7":
+                player.incorrect_seq_question_7 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_8":
+                player.incorrect_seq_question_8 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_9":
+                player.incorrect_seq_question_9 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "question_10":
+                player.incorrect_seq_question_10 += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "prize_a_obtainable":
+                player.incorrect_seq_prize_a_obtainable += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "prize_b_obtainable":
+                player.incorrect_seq_prize_b_obtainable += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "prize_c_obtainable":
+                player.incorrect_seq_prize_c_obtainable += create_question_submission_string(answer,is_correct,understanding_bonus)
+            elif question_id == "prize_d_obtainable":
+                player.incorrect_seq_prize_d_obtainable += create_question_submission_string(answer,is_correct,understanding_bonus)
+        elif data['information_type'] == 'matching_update':
             """
             this event is called when the user clicks on a participant to match
             expecting data to include : 
@@ -421,7 +440,17 @@ class DAalghoInterface(Page):
             """
             participant_to_match = data['participant_to_match']
             match_to_prize = data['match_to_prize']
-            player.clicks = player.clicks + '||' + participant_to_match + '->' + match_to_prize
+            player.clicks += '|' + participant_to_match + ':' + match_to_prize
+            player.participant.current_matching = data['matching']
+            player.participant.matching_memo = data['matching_memo']
+        elif data['information_type'] == 'set_step':
+            step = data['step']
+            player.current_step = step
+            pass
+        elif data['information_type'] == "reset":
+            player.clicks += '|reset'
+            player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NAMES}
+            player.participant.matching_memo = []
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

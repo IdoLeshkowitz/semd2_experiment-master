@@ -5,7 +5,6 @@ const initialState = {
     'participantsPriorities': js_vars.participantsPriorities,
     'prizesPriorities': js_vars.prizesPriorities,
     'currentStep': js_vars.currentStep,
-    'currentStage': js_vars.currentStage,
     'currentRound': js_vars.currentRound,
     'prizesNames': js_vars.prizesNames,
     'participantsNames': js_vars.participantsNames,
@@ -13,7 +12,7 @@ const initialState = {
     'mouseOnParticipant': null,
     'mouseOnPrize': null,
     'correctAnswers': js_vars.correctAnswers,
-    "participantsMatchMemo": [],
+    "participantsMatchMemo": js_vars.matchingMemo,
     "expectedMatchingByRound": js_vars.expectedMatchingByRound,
 }
 const ACTION_TYPES = {
@@ -29,6 +28,8 @@ const ACTION_TYPES = {
     HIDE_ALL_SECTIONS: 'HIDE_ALL_SECTIONS',
     NEXT_BUTTON_CLICKED: 'NEXT_BUTTON_CLICKED',
     RESET: 'RESET',
+    SET_CURRENT_STEP: 'SET_CURRENT_STEP',
+
 }
 const steps = [
     {
@@ -160,7 +161,7 @@ const steps = [
 ]
 
 function reducer(state = initialState, action) {
-    console.log(state)
+    console.log(state, action)
     if (action.type === ACTION_TYPES.MOUSE_ENTERED_PARTICIPANT_BUTTON) {
         const newState = {...state, mouseOnParticipant: action.payload}
         renderUiFromState(newState)
@@ -176,11 +177,6 @@ function reducer(state = initialState, action) {
     if (action.type === ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW) {
         const newState = {...state, mouseOnPrize: null}
         renderUiFromState(newState)
-    }
-    if (action.type === ACTION_TYPES.START_STEP) {
-        const stepToBeStarted = action.payload
-        const newState = {...state, currentStep: stepToBeStarted}
-        return newState
     }
     if (action.type === ACTION_TYPES.PLUS_BUTTON_CLICKED) {
         /*
@@ -201,6 +197,13 @@ function reducer(state = initialState, action) {
             participantsMatchMemo: [...state.participantsMatchMemo, participant]
         }
         renderUiFromState(newState)
+        liveSend({
+            'information_type': "matching_update",
+            'matching': newState.currentMatching,
+            'participant_to_match': participant,
+            'match_to_prize': prize,
+            'matching_memo': newState.participantsMatchMemo,
+        })
         return newState
     }
     if (action.type === ACTION_TYPES.PARTICIPANT_SELECTED) {
@@ -234,11 +237,6 @@ function reducer(state = initialState, action) {
     }
     if (action.type === ACTION_TYPES.NEXT_BUTTON_CLICKED) {
         /* in case this is the first step in the round */
-        if (!state.currentStep) {
-            const firstStep = getStepsByRound(state.currentRound)[0]
-            startStep(firstStep)
-            return {...state, currentStep: firstStep}
-        }
         const currentStep = state.currentStep
         if (currentStep.type === "instructions") {
             /* disable button */
@@ -277,8 +275,7 @@ function reducer(state = initialState, action) {
                     - set current matching to expected matching and render ui
             */
             /* check if matching is correct */
-            const expectedMatchingsForRound = state.expectedMatchingByRound[state.currentRound]
-            const expectedMatchingForStage = expectedMatchingsForRound.stages[state.currentStage]
+            const expectedMatchingForStage = state.expectedMatchingByRound[currentStep.stage]
 
             /* check if matching is correct */
             function validateMatching(expectedMatching, userMatching) {
@@ -292,6 +289,44 @@ function reducer(state = initialState, action) {
             const isMatchingCorrect = validateMatching(expectedMatchingForStage, state.currentMatching)
             const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
             const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
+            const understandingBonus = (() => {
+                /*
+                if round is 1 :
+                    1. add 1 to the understanding bonus if the matching is correct.
+                else :
+                    if matching is correct :
+                        if first attempt:
+                            add 5 points .
+                        if second attempt:
+                            add 2 points .
+                        if third attempt:
+                            add 1 point .
+                 */
+                if (state.currentRound === 1) {
+                    if (isMatchingCorrect && state.mistakesCounter === 0) {
+                        return 1
+                    } else {
+                        return 0
+                    }
+                }
+                if (isMatchingCorrect) {
+                    if (state.mistakesCounter === 0) {
+                        return 5
+                    } else if (state.mistakesCounter === 1) {
+                        return 2
+                    } else {
+                        return 1
+                    }
+                }
+                return 0
+            })()
+            liveSend({
+                "information_type": "matching_submission",
+                "matching": state.currentMatching,
+                "is_correct": isMatchingCorrect,
+                "understanding_bonus": understandingBonus,
+                "stage": currentStep.stage,
+            })
             if (isMatchingCorrect) {
                 /* disable button */
                 const buttonElement = action.payload ?? null;
@@ -316,7 +351,6 @@ function reducer(state = initialState, action) {
                 const newState = {
                     ...state,
                     currentStep: nextStep,
-                    currentStage: state.currentStage + 1,
                     mistakesCounter: 0,
                 }
                 return newState
@@ -353,12 +387,11 @@ function reducer(state = initialState, action) {
                     const newState = {
                         ...state,
                         currentStep: nextStep,
-                        currentStage: state.currentStage + 1,
                         mistakesCounter: 0,
                         currentMatching: expectedMatchingForStage,
                         participantsMatchMemo: [
                             ...state.participantsMatchMemo, ...Object.keys(expectedMatchingForStage).map(participant => {
-                                if (expectedMatchingsForRound[participant] !== -10) {
+                                if (expectedMatchingForStage[participant] !== 'none') {
                                     return participant
                                 }
                             })
@@ -387,6 +420,20 @@ function reducer(state = initialState, action) {
             const expectedAnswer = state.correctAnswers[currentStep.formFields.correctAnswerIndex]
             const userAnswer = parseInt(forminputs[currentStep.formFields.element].value)
             const isCorrect = expectedAnswer === userAnswer
+            const understandingBonus = (() => {
+                /* if mistakes counter is 0, add 1 to the understanding bonus */
+                if (state.mistakesCounter === 0 && isCorrect) {
+                    return 1
+                }
+                return 0
+            })()
+            liveSend({
+                "information_type": "question_submission",
+                question_id: currentStep.formFields.element,
+                "is_correct": isCorrect,
+                "understanding_bonus": understandingBonus,
+                "answer": userAnswer,
+            })
             if (isCorrect) {
                 /* hide incorrect message if it is shown */
                 $(`#${state.currentStep.id} .incorrect-msg`).hide();
@@ -433,7 +480,7 @@ function reducer(state = initialState, action) {
         /* reset currentMatching */
         const newCurrentMatching = {};
         for (const participant in state.participantsNames) {
-            newCurrentMatching[participant] = -10
+            newCurrentMatching[participant] = 'none'
         }
         /* reset participantsMatchMemo */
         const newParticipantsMatchMemo = [];
@@ -443,12 +490,26 @@ function reducer(state = initialState, action) {
             participantsMatchMemo: newParticipantsMatchMemo,
         }
         renderUiFromState(newState)
+        liveSend({
+            'information_type': 'reset',
+        })
+        return newState
+    }
+    if (action.type === ACTION_TYPES.SET_CURRENT_STEP) {
+        const newState = {
+            ...state,
+            currentStep: action.payload,
+        }
         return newState
     }
     return state;
 }
 
 function startStep(stepToBeStarted) {
+    liveSend({
+        "information_type": "set_step",
+        "step": stepToBeStarted.id,
+    })
     if (!stepToBeStarted) {
         $("#last").show()
         return
@@ -483,10 +544,9 @@ function startStep(stepToBeStarted) {
         $(`#${sectionId}`).show()
 
     }
-
 }
 
-const delay = 5000;
+const delay = 400;
 let store;
 let modal = document.getElementById("GenModal"); // Get the modal
 let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
@@ -867,13 +927,15 @@ window.addEventListener('DOMContentLoaded', (event) => {
         */
     let stepToBeStarted;
     if (store.getState().currentStep) {
-        stepToBeStarted = store.getState().currentStep
+        stepToBeStarted = steps.find((step) => store.getState().currentStep === step.id)
     } else {
         const currentRoundSteps = getStepsByRound(store.getState().currentRound)
         stepToBeStarted = currentRoundSteps[0]
     }
+    store.dispatch({type: ACTION_TYPES.SET_CURRENT_STEP, payload: stepToBeStarted})
     store.dispatch({type: ACTION_TYPES.HIDE_ALL_SECTIONS})
-    store.dispatch({type: ACTION_TYPES.NEXT_BUTTON_CLICKED})
+    startStep(stepToBeStarted)
+    // store.dispatch({type: ACTION_TYPES.NEXT_BUTTON_CLICKED})
     store.dispatch({type: ACTION_TYPES.RENDER})
     liveSend({'information_type': 'onload', 'time': Date.now()})
     $("button").click(function (event) {
@@ -894,84 +956,6 @@ function submitButton() {
 
 function dismissFinishModal() {
     $('#finishModal').modal('hide');
-}
-
-function confirmSubmission() {
-    let d = new Date();
-    M = d.getTime();
-    liveSend({'information_type': 'submission', 'time': JSON.stringify(M),});
-}
-
-function updateMatching(matching) {
-    if (matching[0] != -10) {
-        if (partial[0] == -10) {
-            liveSend({'information_type': 'match_participant', 'student': '1',});
-        } else {
-            liveSend({'information_type': 'rematch_participant', 'school': partial[0], 'student': '1',});
-        }
-        liveSend({'information_type': 'school_plus_button', 'school': matching[0], 'student': '1',});
-    } else {
-        liveSend({'information_type': 'match_participant', 'student': '1',});
-        liveSend({'information_type': 'match_participant', 'student': '1',});
-    }
-    if (matching[1] != -10) {
-        if (partial[01] == -10) {
-            liveSend({'information_type': 'match_participant', 'student': '2',});
-        } else {
-            liveSend({'information_type': 'rematch_participant', 'school': partial[1], 'student': '2',});
-        }
-        liveSend({'information_type': 'school_plus_button', 'school': matching[1], 'student': '2',});
-    } else {
-        liveSend({'information_type': 'match_participant', 'student': '2',});
-        liveSend({'information_type': 'match_participant', 'student': '2',});
-    }
-    if (matching[2] != -10) {
-        if (partial[2] == -10) {
-            liveSend({'information_type': 'match_participant', 'student': '3',});
-        } else {
-            liveSend({'information_type': 'rematch_participant', 'school': partial[2], 'student': '3',});
-        }
-        liveSend({'information_type': 'school_plus_button', 'school': matching[2], 'student': '3',});
-    } else {
-        liveSend({'information_type': 'match_participant', 'student': '3',});
-        liveSend({'information_type': 'match_participant', 'student': '3',});
-    }
-    if (matching[3] != -10) {
-        if (partial[3] == -10) {
-            liveSend({'information_type': 'match_participant', 'student': '4',});
-        } else {
-            liveSend({'information_type': 'rematch_participant', 'school': partial[3], 'student': '4',});
-        }
-        liveSend({'information_type': 'school_plus_button', 'school': matching[3], 'student': '4',});
-    } else {
-        liveSend({'information_type': 'match_participant', 'student': '4',});
-        liveSend({'information_type': 'match_participant', 'student': '4',});
-    }
-}
-
-function matchStudent(val) {
-    liveSend({'information_type': 'match_participant', 'student': val,});
-}
-
-function matchToSchool(val) {
-    liveSend({'information_type': 'school_plus_button', 'school': val, 'student': student,});
-}
-
-function rematchStudent(val, text) {
-    liveSend({
-        'information_type': 'rematch_participant',
-        'school': schools_dict[val],
-        'student': student_dict[text],
-    });
-}
-
-
-function openPlus() {
-    for (let i = 0; i < js_vars.schools_number; i++) {
-        if (i + 1 !== partial[student - 1] && containment[i] < max_students[i]) {
-            document.getElementById('plusButtonSchool'.concat(alphabet[i])).style.display = 'inline-block'; // Display plus button in the lines where the student is not already matched to, and for schools which didn't attain their quotas yet..
-        }
-    }
 }
 
 /*function liveRecv(data) {
@@ -1256,123 +1240,6 @@ function openPlus() {
         document.getElementById('form').submit();
     }
 }*/
-
-function confirmStage() {
-    liveSend({'information_type': 'matching_submission', 'matching': partial, 'stage': stage})
-}
-
-
-function renderPrizesPrioritiesTable(prizesPriorities) {
-    function createColumnsCollection() {
-        /*
-         Create column for each prize priorities
-         The top row of each column represents the prize name which is the key of the prizePriorities object
-         The rest of the column represents the priorities of the prize which is the value of the prizePriorities object
-          */
-        const columns = Object.keys(prizesPriorities).map((prizeName, index) => {
-            const columnElement = document.createElement("div")
-            columnElement.classList.add("flexItemButtonsBackground")
-            columnElement.id = (`SchoolsBackground${index}`)
-            columnElement.classList.add("table-column")
-            /* if first column add class verticalRight */
-            if (index === 0) {
-                columnElement.classList.add("verticalRight")
-            }
-            /* if last column add class verticalLeft */
-            else if (index === Object.keys(prizesPriorities).length - 1) {
-                columnElement.classList.add("verticalLeft")
-            }
-            /* else add class verticalBoth */
-            else {
-                columnElement.classList.add("verticalBoth")
-            }
-
-            /*
-            create the upper row of the column which represents the prize name
-            */
-            const prizeNameElement = document.createElement("div")
-            prizeNameElement.classList.add("dButtonTop")
-            prizeNameElement.classList.add("dButton")
-            prizeNameElement.id = `School${prizeName}`
-            prizeNameElement.innerText = prizeName
-            columnElement.appendChild(prizeNameElement)
-            /*
-            create the rest of the column which represents the priorities of the prize
-             */
-            prizesPriorities[prizeName].forEach((priority, index) => {
-                const priorityElement = document.createElement("div")
-                priorityElement.id = `School${prizeName}PrefSchool${priority}`
-                priorityElement.innerText = priority
-                columnElement.appendChild(priorityElement)
-            })
-            return columnElement
-        })
-        return columns
-    }
-
-    const columns = createColumnsCollection()
-    const tableElement = document.getElementById("prizes-priorities-table-container")
-    columns.forEach(column => {
-        tableElement.appendChild(column)
-    })
-}
-
-function renderParticipantsPrioritiesTable(participantsPriorities) {
-    function createColumnsCollection() {
-        /*
-         Create column for each participant priorities
-         The top row of each column represents the participant name which is the key of the participantPriorities object
-         The rest of the column represents the priorities of the participant which is the value of the participantPriorities object
-          */
-        const columns = Object.keys(participantsPriorities).map((participantName, index) => {
-            const columnElement = document.createElement("div")
-            columnElement.classList.add("flexItemButtonsBackground")
-            columnElement.id = (`SchoolsBackground${index}`)
-            columnElement.classList.add("table-column")
-            /* if first column add class verticalRight */
-            if (index === 0) {
-                columnElement.classList.add("verticalRight")
-            }
-            /* if last column add class verticalLeft */
-            else if (index === Object.keys(participantsPriorities).length - 1) {
-                columnElement.classList.add("verticalLeft")
-            }
-            /* else add class verticalBoth */
-            else {
-                columnElement.classList.add("verticalBoth")
-            }
-
-            /*
-            create the upper row of the column which represents the participant name
-            */
-            const participantNameElement = document.createElement("div")
-            participantNameElement.classList.add("dButtonTop")
-            participantNameElement.classList.add("dButton")
-            participantNameElement.id = `School${participantName}`
-            participantNameElement.innerText = participantName
-            columnElement.appendChild(participantNameElement)
-            /*
-            create the rest of the column which represents the priorities of the participant
-             */
-            participantsPriorities[participantName].forEach((priority, index) => {
-                const priorityElement = document.createElement("div")
-                priorityElement.id = `School${participantName}PrefSchool${priority}`
-                priorityElement.innerText = priority
-                columnElement.appendChild(priorityElement)
-            })
-            return columnElement
-        })
-        return columns
-    }
-
-    const columns = createColumnsCollection()
-    const tableElement = document.getElementById("participants-priorities-table")
-    columns.forEach(column => {
-        tableElement.appendChild(column)
-    })
-}
-
-
 function getStepsByRound(round) {
     if (round === 1) {
         return steps.filter(step => !step.id.includes("rounds"))
@@ -1380,7 +1247,6 @@ function getStepsByRound(round) {
         return steps.filter(step => step.id.includes("rounds"))
     }
 }
-
 
 function renderUiFromState(state) {
     function renderPrizesPrioritiesTable() {
@@ -1548,7 +1414,7 @@ function renderUiFromState(state) {
                     return state.mouseOnParticipant === participantName
                 }
             }
-            const highlitedPrize = state.currentMatching[participantName] === -10 ? null : state.currentMatching[participantName]
+            const highlitedPrize = state.currentMatching[participantName] === 'none' ? null : state.currentMatching[participantName]
             const isLast = index === Object.keys(state.participantsPriorities).length - 1
             return {
                 isHighlited: isHighlited(),
@@ -1599,22 +1465,16 @@ function renderUiFromState(state) {
                         const isSelected = participants[index].isSelected
                         const className = isSelected ? "iButtonSelected" : "iButton"
                         return (
-                            <button className={className} onClick={(e) => {
+                            <button 
+                            className={className}
+                            onClick={(e) => {
                                 e.preventDefault()
                                 store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
-                            }} onMouseEnter={(e) => {
-                                store.dispatch({
-                                    type: ACTION_TYPES.MOUSE_ENTERED_PARTICIPANT_BUTTON,
-                                    payload: participantName
-                                })
-                            }} onMouseLeave={(e) => {
-                                store.dispatch({
-                                    type: ACTION_TYPES.MOUSE_LEFT_PARTICIPANT_BUTTON,
-                                    payload: participantName
-                                })
-                            }} key={index}>
-                                        {participantName}
-                                    </button>
+                            }} 
+                            key={index}
+                            >
+                                {participantName}
+                            </button>
                         )
                     })}
                     </>
@@ -1623,7 +1483,7 @@ function renderUiFromState(state) {
 
         `
         const participants = Object.keys(state.participantsNames).map((participantName, index) => {
-            const isMatched = state.currentMatching[participantName] !== -10
+            const isMatched = state.currentMatching[participantName] !== 'none'
             const isSelected = state.selectedParticipant && state.selectedParticipant === participantName
             return {
                 isMatched,
