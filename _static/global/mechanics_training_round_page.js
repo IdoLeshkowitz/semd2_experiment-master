@@ -1,6 +1,9 @@
-function expectedRankingString(prizes, ranking) {
-    var orderedPrizes = ranking.map(i => prizes[i]);
-    return orderedPrizes.join("–");
+const state = {
+    "prizesNames": js_vars.prizesNames,
+    "participantsNames": js_vars.participantsNames,
+    "expectedRanking": js_vars.expectedRanking,
+    "participantsPriorities": js_vars.participantsPriorities,
+    "prizesPriorities": js_vars.prizesPriorities,
 }
 
 function liveRecv(data) {
@@ -15,7 +18,19 @@ function liveRecv(data) {
     var subQuestions = firstQuestion.find(".question");
     subQuestions.first().slideDown();
 }
-
+function convertExpectedRankingToString(state){
+    function findKeyByValue(object, value) {
+        return Object.keys(object).find(key => object[key] === value);
+    }
+    let output = "";
+    for (let i = 0; i < state.expectedRanking.length; i++) {
+        output += findKeyByValue(state.prizesNames, state.expectedRanking[i]) ;
+        if (i < state.expectedRanking.length - 1) {
+            output += "–";
+        }
+    }
+    return output;
+}
 /*FRAMES*/
 $("#proceed-step-1a-btn").click(function () {
     $(this).hide();
@@ -32,7 +47,7 @@ $("#proceed-step-2-btn").click(function () {
 $("#proceed-step-3-btn").click(function () {
     $(this).hide();
     $("#step-3").slideDown();
-    button = document.getElementById('proceed-step-4-btn');
+    button = document.getElementById('submit-btn');
     button.scrollIntoView(true);
 });
 $("#proceed-step-4-btn").click(function () {
@@ -47,34 +62,31 @@ $("#proceed-step-5-btn").click(function () {
 
 /*SUBMIT (frame, button, validation*/
 $("#submit-btn").click(function () {
+    console.log("submit")
     $("#step-3 .incorrect-msg").hide();
-    var humanPlayerRanking = [
+    const userRanking = [
         parseInt(forminputs.first_priority.value) - 1,
         parseInt(forminputs.second_priority.value) - 1,
         parseInt(forminputs.third_priority.value) - 1,
         parseInt(forminputs.fourth_priority.value) - 1
     ]
 
-    var unique = humanPlayerRanking.filter((value, index, array) => array.indexOf(value) === index);
-    if (unique.length < 4) {
+    const isUnique = () => {
+        userRanking.filter((value, index, array) => array.indexOf(value) === index);
+        return userRanking.length === 4;
+    }
+    const isRankingMatchExpected = () => {
+        console.log(state.expectedRanking, userRanking)
+        return state.expectedRanking.every((value, index) => value === userRanking[index]);
+    }
+    if (!isUnique() || !isRankingMatchExpected()) {
         $("#step-3 .incorrect-msg").show();
         return;
+    } else {
+        $("#id_player_bid_text").prop("disabled", true);
+        $(this).hide();
     }
-    /* check if priorities are in the right order */
-    if (playerExpectedRanking.every((value, index) => value === humanPlayerRanking[index]) === false) {
-        console.log(humanPlayerRanking, playerExpectedRanking)
-        $("#step-3 .incorrect-msg").show();
-        return;
-    }
-    /* disable input element */
-    $("#id_player_bid_text").prop("disabled", true);
-    $(this).hide();
-
-    var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
-
     $("#step-4").slideDown();
-    button = document.getElementById('proceed-step-5-btn');
-    button.scrollIntoView(true);
 });
 
 
@@ -109,19 +121,6 @@ $(".btn-question").click(function () {
     nextQuestion.find(".question").first().slideDown();
 });
 
-var players = js_vars.players;
-var prizes = js_vars.prizes;
-
-var prizesPriorities = js_vars.prizes_priorities;
-
-var otherPlayersRankings = js_vars.players_rankings;
-var playerExpectedRanking = js_vars.player_expected_ranking;
-
-var expectedRanknigString = expectedRankingString(prizes, playerExpectedRanking);
-
-var questionsAnswers = js_vars.questions_answers;
-
-var currQuestionIncorrectAnswers = [];
 
 $("#step-1a").hide();
 $("#step-2").hide();
@@ -137,7 +136,7 @@ $(".incorrect-seq-field").hide();
 $(".correct-msg").hide();
 $(".incorrect-msg").hide();
 
-$(".expected-rank").text(expectedRanknigString);
+$(".expected-rank").text(convertExpectedRankingToString(state));
 
 /*POP UPS (REMINDERS)*/
 /*first - general*/
@@ -203,3 +202,60 @@ window.onclick = function (event) {
         modal3.style.display = "none";
     }
 }
+
+function generatePrioritiesTable() {
+    var prioritiesTabel = document.querySelector("#priorities-table");
+    var tabelBody = document.createElement("tbody");
+
+    var prioritiesTextList = [
+        "1<sup>st</sup> priority (highest)",
+        "2<sup>nd</sup> priority",
+        "3<sup>rd</sup> priority",
+        "4<sup>th</sup> priority (lowest)"
+    ];
+
+    // for (var i = 0; i < prioritiesTextList.length; i++) {
+    //     // Create a <tr> element and the leftmost <td> element
+    //     // that contains a description of the values in that row
+    //     var row = document.createElement("tr");
+    //     var rowInfoCell = document.createElement("td");
+    //     rowInfoCell.innerHTML = prioritiesTextList[i];
+    //     row.appendChild(rowInfoCell);
+    //
+    //     for (var j = 0; j < priorities.length; j++) {
+    //         // Create a <td> element and a text node, make the text
+    //         // node the contents of the <td>, and put the <td> at
+    //         // the end of the table row
+    //         var cell = document.createElement("td");
+    //         var playerIdx = priorities[j][i];
+    //         var cellText = document.createTextNode(`${players[playerIdx]}`);
+    //         cell.appendChild(cellText);
+    //         row.appendChild(cell);
+    //     }
+    //
+    //     // add the row to the end of the table body
+    //     tabelBody.appendChild(row);
+    // }
+    //
+    // // put the <tbody> in the <table>
+    // prioritiesTabel.appendChild(tabelBody);
+    const numberOfParticipants = Object.keys(state.participantsNames).length;
+    const numberOfPrizes = Object.keys(state.prizesNames).length;
+    for (let i = 0; i < numberOfParticipants; i++) {
+        const row = document.createElement("tr");
+        const rowInfoCell = document.createElement("td");
+        rowInfoCell.innerHTML = prioritiesTextList[i];
+        row.appendChild(rowInfoCell);
+        for (let prize in state.prizesNames) {
+            const cell = document.createElement("td");
+            const participantName = state.prizesPriorities[prize][i];
+            const cellText = document.createTextNode(`${participantName}`);
+            cell.appendChild(cellText);
+            row.appendChild(cell);
+        }
+        tabelBody.appendChild(row);
+    }
+    prioritiesTabel.appendChild(tabelBody);
+}
+
+generatePrioritiesTable();

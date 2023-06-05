@@ -108,25 +108,25 @@ def make_priority_field(label):
 
 def get_prizes_priorities_by_round(round):
     first_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["R", "S", "Y", "T"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
-    second_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
-    third_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
-    fourth_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["T", "R", "S", "Y"], "C": ["S", "T", "R", "Y"], "D": ["Y", "T", "S", "R"]}
+    second_round_priorities = {"A": ["T", "Y", "S", "R"], "B": ["S", "T", "Y", "R"], "C": ["S", "Y", "R", "T"], "D": ["T", "R", "Y", "S"]}
+    third_round_priorities = {"A": ["R", "S", "T", "Y"], "B": ["R", "Y", "S", "T"], "C": ["T", "Y", "S", "R"], "D": ["T", "S", "R", "Y"]}
+    fourth_round_priorities = {"A": ["R", "Y", "S", "T"], "B": ["S", "Y", "T", "R"], "C": ["R", "Y", "T", "S"], "D": ["S", "T", "Y", "R"]}
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
 
 
 def get_participants_priorities_by_round(round):
-    first_round_priorities = {"R": ["A", "C", "B", "D"], "S": ["A", "C", "D", "B"], "T": ["B", "A", "D", "C"], "Y": ["C", "A", "B", "D"]}
-    second_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
-    third_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
-    fourth_round_priorities = {"R": ["A", "B", "C", "D"], "S": ["A", "B", "C", "D"], "T": ["A", "B", "C", "D"], "Y": ["A", "B", "C", "D"]}
+    first_round_priorities = {"R": ["A", "C", "D", "B"], "S": ["A", "C", "D", "B"], "T": ["B", "A", "D", "C"], "Y": ["C", "A", "B", "D"]}
+    second_round_priorities = {"R": ["D", "C", "B", "A"], "S": ["B", "C", "A", "D"], "T": ["B", "A", "D", "C"], "Y": ["D", "A", "C", "B"]}
+    third_round_priorities = {"R": ["D", "A", "B", "C"], "S": ["C", "B", "A", "D"], "T": ["C", "D", "A", "B"], "Y": ["D", "C", "B", "A"]}
+    fourth_round_priorities = {"R": ["C", "A", "B", "D"], "S": ["A", "D", "C", "B"], "T": ["A", "D", "B", "C"], "Y": ["C", "D", "A", "B"]}
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
 
 
 def get_expected_prizes_ranking_by_round(round):
     first_round_ranking = [2, 0, 1, 3]
-    second_round_ranking = [3, 2, 1, 0]
+    second_round_ranking = [3, 0, 2, 1]
     third_round_ranking = [3, 2, 1, 0]
     fourth_round_ranking = [2, 3, 0, 1]
     rankings = [first_round_ranking, second_round_ranking, third_round_ranking, fourth_round_ranking]
@@ -167,7 +167,7 @@ class C(BaseConstants):
     ]
 
     # this list keeps the correct answers for the multiple choice questions
-    CORRECT_ANSWERS_BY_ROUND = [[4, 2, 1, 1, 1, 1, 2, 2, 1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [2, 2, 1, 1, 2], [1, 1, 2, 2, 2], [1, 1, 2, 2, 1]]
+    CORRECT_ANSWERS_BY_ROUND = [[4, 2, 1, 1, 1, 1, 2, 2, 1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [3, 2, 4, 1, 3], [2, 4, 3, 1, 2], [4, 3, 1, 2, 1]]
 
     # this dict keeps the max participants that can be assigned to each prize. in traditional mechanism, this is the same for all prizes.
     MAX_PARTICIPANTS_ASSIGNED_TO_PRIZE = {"A": NUMBER_OF_PARTICIPANTS, "B": NUMBER_OF_PARTICIPANTS, "C": NUMBER_OF_PARTICIPANTS, "D": NUMBER_OF_PARTICIPANTS}
@@ -194,6 +194,7 @@ class Player(BasePlayer):
     prize_c_obtainable = make_participant_field("Prize C")
     prize_d_obtainable = make_participant_field("Prize D")
 
+    obtainable_prize = make_priority_field("Finally, select the prize that you get based on the allocation.")
     obtainable_prize_round_2 = make_obtainable_field_round_2('Answer')
     obtainable_prize_round_3_4 = make_obtainable_field_round_3_4('Answer')
 
@@ -342,18 +343,11 @@ class DAalghoInterface(Page):
             questions = ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6", "question_7", "question_8", "prize_a_obtainable",
                          "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "question_9", "question_10"]
 
-            incorrect_answers = ["incorrect_seq_question_1", "incorrect_seq_question_2", "incorrect_seq_question_3", "incorrect_seq_question_4",
-                                 "incorrect_seq_question_5", "incorrect_seq_question_6", "incorrect_seq_question_7", "incorrect_seq_question_8"]
-
-            return questions + incorrect_answers
+            return questions
 
         else:
-            if player.round_number == 2:
-                questions = ["prize_a_obtainable", "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "obtainable_prize_round_2"]
-                return questions
-            else:
-                questions = ["prize_a_obtainable", "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "obtainable_prize_round_3_4"]
-                return questions
+            questions = ["prize_a_obtainable", "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "obtainable_prize"]
+            return questions
 
     @staticmethod
     def live_method(player: Player, data):
@@ -464,4 +458,8 @@ class MechanicsIntro(Page):
         return player.round_number == 1
 
 
-page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface ]
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == C.NUM_ROUNDS
+page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface,EndTraining ]

@@ -2,48 +2,111 @@
     <section id="step-1-rounds">
         <p>In this training round, you will perform the allocation process by yourself, instead of the computer.</p>
         <div class="btn-container">
-            <button id="proceed-step-2-btn-rounds" type="button" class="btn btn-primary">Proceed</button>
+            <button class="btn btn-primary" id="proceed-step-2-btn-rounds" type="button">Proceed</button>
         </div>
         <br>
     </section>
 
     <section id="step-2-rounds">
-        Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned. <br>
+        First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned. <br>
         Click Submit when you are done.
         <br>
         <div class="btn-container">
-            <button id="proceed-step-3-btn-rounds" type="button" class="btn btn-primary">Submit</button>
+            <button class="btn btn-primary" id="proceed-step-3-btn-rounds" type="button">Submit</button>
         </div>
         <div class="incorrect-msg">
             <p>
-                Incorrect allocation. Please try again.
-            </p>
-        </div>
-        <div class="incorrect-skip-msg">
-            <p>
-                Incorrect allocation. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                Incorrect temporary allocation. Please try again.
             </p>
         </div>
         <div class="correct-msg">
             <p>
-                Correct allocation!
+                Correct temporary allocation!
+            </p>
+        </div>
+        <div class="incorrect-skip-msg">
+            <p>
+                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
             </p>
         </div>
         <br>
     </section>
 
     <section id="step-3-rounds">
-        {{ if player.round_number < 4 }}
-        <p></p>
-        {{ endif }}
-        {{ if player.round_number == 4 }}
-        <p>You completed the training rounds. <br>
-        Click the button below to proceed to real rounds of the game.
-        </p>
-        {{ endif }}
+        Next, find your <b>Obtainable Prizes</b>.
+        For each of the four prizes below, Click on “Obtainable” or “Unobtainable“
+        based on what you learned in the previous screens.
+        <ol>
+            <li class="question" id="prize-a-obtainable">
+                {{formfield "prize_a_obtainable"}}
+            </li>
+
+            <li class="question" id="prize-b-obtainable">
+                {{formfield "prize_b_obtainable"}}
+            </li>
+            <li class="question" id="prize-c-obtainable">
+                {{formfield "prize_c_obtainable"}}
+            </li>
+
+            <li class="question" id="prize-d-obtainable">
+                {{formfield "prize_d_obtainable"}}
+            </li>
+        </ol>
+
         <div class="btn-container">
-            <button id="proceed-step-4-btn-rounds" type="button" class="btn btn-primary">Proceed</button>
+            <button class="btn btn-primary" id="proceed-step-4-btn-rounds" type="button">Submit</button>
+        </div>
+
+        <div class="incorrect-msg">
+            <p>
+                Incorrect answer. Please try again.
+            </p>
+        </div>
+
+        <div class="correct-msg">
+            <p>
+                Correct!
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            <p>
+                Correct! Since you were right on your first try, you get a bonus.
+            </p>
         </div>
         <br>
-    {{ endif }}
+
     </section>
+
+    <section id="step-4-rounds">
+        <p>Finally, select <b>the prize that will be allocated to you</b> out of the Obtainable Prizes.</p>
+
+        {{formfield "obtainable_prize"}}
+
+        <div class="btn-container">
+            <button class="btn btn-primary" type="button">Submit</button>
+        </div>
+
+        <div class="incorrect-msg">
+            <p>
+                Incorrect answer. Please try again.
+            </p>
+        </div>
+        <div class="correct-msg">
+            <p>
+                Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest.
+                Hence it is allocated to you.
+            </p>
+        </div>
+        <div class="correct-first-msg">
+            Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest. Hence it is allocated to you.<br/>
+            Since you were right on your first try, you get a bonus.
+        </div>
+        <br>
+    </section>
+
+{{ endif }}

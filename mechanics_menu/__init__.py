@@ -29,7 +29,7 @@ def players_rankings_list():
 
 
 def expected_rankings_list():
-    first_round_ranking = [2, 1, 0, 3]
+    first_round_ranking = [2, 0, 1, 3]
     second_round_ranking = [3, 0, 2, 1]
     third_round_ranking = [3, 2, 1, 0]
     fourth_round_ranking = [2, 3, 0, 1]

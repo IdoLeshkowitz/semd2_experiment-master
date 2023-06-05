@@ -156,12 +156,25 @@ const steps = [
     },
     {
         id: "step-3-rounds",
-        type: "instructions",
+        type: "dropdown",
+        formFields: [
+            {element: "prize_a_obtainable", correctAnswerIndex: 0},
+            {element: "prize_b_obtainable", correctAnswerIndex: 1},
+            {element: "prize_c_obtainable", correctAnswerIndex: 2},
+            {element: "prize_d_obtainable", correctAnswerIndex: 3},
+        ],
+    },
+    {
+        id: "step-4-rounds",
+        type: "dropdown",
+        formFields: [
+            {element: "obtainable_prize", correctAnswerIndex: 4},
+        ],
     }
 ]
 
 function reducer(state = initialState, action) {
-    console.log(state, action)
+    console.log(action)
     if (action.type === ACTION_TYPES.MOUSE_ENTERED_PARTICIPANT_BUTTON) {
         const newState = {...state, mouseOnParticipant: action.payload}
         renderUiFromState(newState)
@@ -449,7 +462,74 @@ function reducer(state = initialState, action) {
                 }
                 const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
                 const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
-                console.log(nextStep)
+                setTimeout(() => {
+                    /* hide current step */
+                    $(`#${state.currentStep.id}`).hide();
+                    /* show next step */
+                    startStep(nextStep)
+                }, delay)
+                const newState = {
+                    ...state,
+                    currentStep: nextStep,
+                    mistakesCounter: 0,
+                }
+                return newState
+            }
+            if (!isCorrect) {
+                /* show incorrect message */
+                $(`#${state.currentStep.id} .incorrect-msg`).show();
+                /* update state */
+                const newState = {
+                    ...state,
+                    mistakesCounter: state.mistakesCounter + 1,
+                }
+                return newState
+            }
+        }
+        if (currentStep.type === "dropdown") {
+            const formFields = currentStep.formFields
+            const inputElements = formFields.map(formField => {
+                return forminputs[formField.element]
+            })
+            const expectedAnswers = formFields.map(formField => {
+                return state.correctAnswers[formField.correctAnswerIndex]
+            })
+            const userAnswers = inputElements.map(inputElement => {
+                return parseInt(inputElement.value)
+            })
+            const isCorrect = expectedAnswers.every((expectedAnswer, index) => {
+                return expectedAnswer === userAnswers[index]
+            })
+            const understandingBonus = (() => {
+                /* if mistakes counter is 0, add 1 to the understanding bonus */
+                if (state.mistakesCounter === 0 && isCorrect) {
+                    return 1
+                }
+                return 0
+            })
+            debugger
+            liveSend({
+                "information_type": "question_submission",
+                question_id: currentStep.formFields.element,
+                "is_correct": isCorrect,
+                "understanding_bonus": understandingBonus,
+                "answer": userAnswers,
+            })
+            if (isCorrect) {
+                /* hide incorrect message if it is shown */
+                $(`#${state.currentStep.id} .incorrect-msg`).hide();
+                /* disable button */
+                const buttonElement = action.payload ?? null;
+                buttonElement?.prop('disabled', true)
+                /* display the matching correct message */
+                const isFirstAttempt = state.mistakesCounter === 0
+                if (isFirstAttempt) {
+                    $(`#${state.currentStep.id} .correct-first-msg`).show();
+                } else {
+                    $(`#${state.currentStep.id} .correct-msg`).show();
+                }
+                const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
+                const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
                 setTimeout(() => {
                     /* hide current step */
                     $(`#${state.currentStep.id}`).hide();
@@ -507,7 +587,8 @@ function reducer(state = initialState, action) {
 
 function startStep(stepToBeStarted) {
     if (!stepToBeStarted) {
-        $("#last").show()
+        // $("#last").show()
+        document.querySelector("form").submit()
         return
     }
     liveSend({
@@ -533,7 +614,7 @@ function startStep(stepToBeStarted) {
         $(`#${sectionId}`).show()
         return
     }
-    if (stepToBeStarted.type === "radio") {
+    if (stepToBeStarted.type === "radio" || stepToBeStarted.type === "dropdown") {
         const sectionId = stepToBeStarted.id
         /* hide error and success messages */
         $(`#${sectionId} .incorrect-msg`).hide()
@@ -542,11 +623,10 @@ function startStep(stepToBeStarted) {
         $(`#${sectionId} .incorrect-seq-field`).hide()
         // show section
         $(`#${sectionId}`).show()
-
     }
 }
 
-const delay = 400;
+const delay = 1000;
 let store;
 let modal = document.getElementById("GenModal"); // Get the modal
 let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
@@ -930,6 +1010,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         stepToBeStarted = steps.find((step) => store.getState().currentStep === step.id)
     } else {
         const currentRoundSteps = getStepsByRound(store.getState().currentRound)
+        console.log(currentRoundSteps)
         stepToBeStarted = currentRoundSteps[0]
     }
     store.dispatch({type: ACTION_TYPES.SET_CURRENT_STEP, payload: stepToBeStarted})
