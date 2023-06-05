@@ -18,19 +18,22 @@ function liveRecv(data) {
     var subQuestions = firstQuestion.find(".question");
     subQuestions.first().slideDown();
 }
-function convertExpectedRankingToString(state){
+
+function convertExpectedRankingToString(state) {
     function findKeyByValue(object, value) {
         return Object.keys(object).find(key => object[key] === value);
     }
+
     let output = "";
     for (let i = 0; i < state.expectedRanking.length; i++) {
-        output += findKeyByValue(state.prizesNames, state.expectedRanking[i]) ;
+        output += findKeyByValue(state.prizesNames, state.expectedRanking[i]);
         if (i < state.expectedRanking.length - 1) {
             output += "–";
         }
     }
     return output;
 }
+
 /*FRAMES*/
 $("#proceed-step-1a-btn").click(function () {
     $(this).hide();
@@ -57,7 +60,10 @@ $("#proceed-step-4-btn").click(function () {
     button.scrollIntoView(true);
 });
 $("#proceed-step-5-btn").click(function () {
-    document.getElementById("form").submit();
+    $(this).hide();
+    $("#step-5").slideDown();
+    button = document.querySelector("#next_btn");
+    button.scrollIntoView(true);
 });
 
 /*SUBMIT (frame, button, validation*/
@@ -76,8 +82,10 @@ $("#submit-btn").click(function () {
         return userRanking.length === 4;
     }
     const isRankingMatchExpected = () => {
-        console.log(state.expectedRanking, userRanking)
         return state.expectedRanking.every((value, index) => value === userRanking[index]);
+    }
+    const userReceivedPrize = () => {
+        return state.participantsPriorities["Y"][0]
     }
     if (!isUnique() || !isRankingMatchExpected()) {
         $("#step-3 .incorrect-msg").show();
@@ -87,6 +95,11 @@ $("#submit-btn").click(function () {
         $(this).hide();
     }
     $("#step-4").slideDown();
+    setTimeout(function () {
+        $("#step-4 #round-results #prize-won").text(userReceivedPrize());
+        $("#step-4 #load").hide();
+        $("#step-4 #round-results").show();
+    }, 3000);
 });
 
 

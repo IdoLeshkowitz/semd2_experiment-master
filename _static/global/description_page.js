@@ -103,7 +103,6 @@ $("#proceed-step-10-btn").click(function () {
 $("#proceed-step-11-btn").click(function () {
     $(this).hide();
     $("#step-11").slideDown();
-    button = document.getElementById('proceed-step-12-btn');
     button.scrollIntoView(true);
 });
 /*$("#proceed-step-12-btn").click(function () {
