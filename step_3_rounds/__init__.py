@@ -7,7 +7,7 @@ Your app description
 """
 
 
-def generate_prizes_values():
+def generate_prize_values():
     """
     Returns a randomly generated list of the values (in pennies)
     of the prizes for round i.
@@ -19,17 +19,23 @@ def generate_prizes_values():
     -------
     list
         a list of the prizes values
+        a list of the prizes values
+    Ranodmizes 4 prizes value
     """
+    import random
 
-    # TODO: This function needs to be randomized.
-    #       I also think it would be more robust to get the
-    #       get the list of prizes (or just its length) and
-    #       adjust the values list accordingly. 
-    return [27, 57, 12, 7]
+    v1 = random.uniform(55, 60)
+    v2 = random.uniform(33, 54)
+    v3 = random.uniform(11, 32)
+    v4 = random.uniform(5, 10)
+
+    values = [v1, v2, v3, v4]
+    random.shuffle(values)
+    return values
 
 
 def generate_prizes_values_list(num_rounds):
-    return [generate_prizes_values() for _ in range(num_rounds)]
+    return [generate_prize_values() for _ in range(num_rounds)]
 
 
 def generate_priorities(first_group, second_group):
@@ -59,15 +65,7 @@ def generate_priorities_list(first_group, second_group, num_rounds):
 
 
 def make_priority_field(label):
-    return models.IntegerField(
-        choices=[
-            [1, "A"],
-            [2, "B"],
-            [3, "C"],
-            [4, "D"]
-        ],
-        label=label
-    )
+    return models.IntegerField(choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
 
 
 def da(preferences):
@@ -156,7 +154,7 @@ def da(preferences):
 class C(BaseConstants):
     NAME_IN_URL = 'step_3_rounds'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 2  # change to 10 in real pilot
+    NUM_ROUNDS = 10  # change to 20 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
@@ -178,27 +176,41 @@ class Player(BasePlayer):
     second_priority = make_priority_field("Second:")
     third_priority = make_priority_field("Third:")
     fourth_priority = make_priority_field("Fourth:")
+    prizes_values = models.StringField(initial="")
+    prizes_priorities = models.StringField(initial="")
+    other_participants_rankings = models.StringField(initial="")
 
 
+
+def get_prizes_in_round(prizes_by_round_str, round_number):
+    return eval(prizes_by_round_str)[round_number - 1]
+def get_prizes_priorities_in_round(prizes_priorities_by_round_str, round_number):
+    return eval(prizes_priorities_by_round_str)[round_number - 1]
+def get_players_rankings_in_round(players_rankings_by_round_str, round_number):
+    return eval(players_rankings_by_round_str)[round_number - 1]
 # PAGES
 class RoundPage(Page):
     form_model = "player"
-    form_fields = [
-        "first_priority",
-        "second_priority",
-        "third_priority",
-        "fourth_priority"
-    ]
+    form_fields = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(
-            prizes=C.PRIZES,
-            prizes_values=C.PRIZES_VALUES[player.round_number - 1],
-            prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1],
-            players=C.PLAYERS,
-            players_rankings=C.PLAYERS_RANKINGS[player.round_number - 1]
-        )
+        return {
+            "prizes": C.PRIZES,
+            "prizes_values": get_prizes_in_round(player.prizes_values, player.round_number),
+            "prizes_priorities": get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
+            "players": C.PLAYERS,
+            "players_rankings": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
+        }
+
+    @staticmethod
+    def vars_for_template(player: Player):
+        return {
+            "first_prize":  get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[0],
+            "second_prize": get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[1],
+            "third_prize":  get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[2],
+            "fourth_prize": get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[3]
+            }
 
     @staticmethod
     def live_method(player: Player, data):
@@ -230,27 +242,125 @@ class RoundPage(Page):
         preferences = data["preferences"]
         prizes = data["prizes"]
         values = data["values"]
+
         matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
         user_prize = matching[0][0]
-        # since the prize is in cents, we divide by 100 to get the dollar value
-        payoff = round(values[user_prize] / 100, 2)
-        # update the player's payoff
-        player.payoff = payoff
-        response = dict(
-            payoff=payoff,
-            prize=prizes[user_prize],
-            value=values[user_prize]
-        )
-
+        # since prize values are in cents, we divide by 100 to get dollars
+        payoff = values[user_prize]
+        # add it to the user's payoff
+        player.payoff += payoff
+        response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
 
-    @staticmethod  # so page count will continue to 30
-    def vars_for_template(player: Player):
-        return {"adj_num_rounds": player.round_number + 20,
-                "first_prize": C.PRIZES_VALUES[player.round_number - 1][0] / 100,
-                "second_prize": C.PRIZES_VALUES[player.round_number - 1][1] / 100,
-                "third_prize": C.PRIZES_VALUES[player.round_number - 1][2] / 100,
-                "fourth_prize": C.PRIZES_VALUES[player.round_number - 1][3] / 100}
+
+########################################################################################################################
+
+def randomize_prize_values():
+    """
+    Ranodmizes 4 prizes value
+    """
+    import random
+
+    v1 = round(random.uniform(55, 60)) / 100
+    v2 = round(random.uniform(33, 54)) / 100
+    v3 = round(random.uniform(11, 32)) / 100
+    v4 = round(random.uniform(5, 10)) / 100
+
+    values = [v1, v2, v3, v4]
+    random.shuffle(values)
+    return values
 
 
-page_sequence = [RoundPage]
+### helping functions ###
+#########################
+
+def randomize_permutation(r, kind):
+    """
+    draw a permutation given the follwoing distributions:
+
+    For rankings, i.e., participants preferences over prizes:
+    * at each step, we pick an element from an array and place it below the previous one in the ranking
+    * the chance to pick each one at each step is decreasing/increasing in its size/importance. For example, if we pick a prize from [0,1,2,3]
+    the highest/lowest chance is to pick 0, then 1, then 2 and then 3.
+    * Their chances are proportional to r**(their position in the order - 1)
+    * (of course, the chances are also normalized to sum up to 1)
+
+    For priorities, i.e., prizes preferences over participants:
+    * at each step, we pick a participant from an array and place it below the previous one in the priorities
+    * the chance to pick index_you ("You") is higher/lower than the chance to pick anyone else
+    * the chance for "You" is proportional to 1, and the others to r.
+    * (of course, the chances are also normalized to sum up to 1)
+    """
+
+    import numpy as np
+    index_you = 0
+    index_others = [i for i in [0, 1, 2, 3] if i != index_you]
+
+    if kind == 'ranking':
+        p_first = lambda n: (1 - r) / (1 - r ** n)
+
+        side2_left = [0, 1, 2, 3]
+        perm = []
+        while side2_left != []:
+            n = len(side2_left)
+            p = p_first(n)
+            next_side2 = np.random.choice(side2_left, p=[p * r ** i for i in range(n)])
+            perm = perm + [next_side2]
+            side2_left.remove(next_side2)
+
+    if kind == 'priorities':
+        n = 4
+        p_pos_you = lambda pos: r ** pos * ((1 - r) / (1 - r ** n))
+
+        # first, randomize a permutation of the side-1 participants other than "You"
+        perm = list(np.random.permutation(index_others))
+
+        # second, randomize the position of "You" (side-1 index 3) out of the 4 possible positions [0,1,2,3]
+        you_pos = np.random.choice([0, 1, 2, 3], p=[p_pos_you(i) for i in range(4)])
+
+        # insert "You" to the permutation
+        perm.insert(you_pos, index_you)
+
+    return perm
+def randomize_others_rankings(prize_values,r=0.5):
+    """
+    returns a list of the three rankings of the other participants, where the prize order affects the ranking distribution
+    """
+    return [[get_prizes_dict(prize_values)[i] for i in randomize_permutation(r, kind='ranking')] for _ in range(3)]
+def get_prizes_dict(prize_values):
+    """
+    Translates index 0 to the index of the highest-earning prize, index 1 to the second highest, and so on.
+    """
+    import numpy as np
+    index_list = (-1*np.array(prize_values)).argsort().tolist()
+    return {i:j for i,j in zip([0,1,2,3],index_list)}
+def randomize_prize_priorities(prize_values, r_highest=1.7, r_regular=0.999):
+    """
+    returns a list of 4 prize priorities, where the highest-prize priorities are randomized differently than the other prizes' priorities
+    """
+    all_prize_priorities = [[], [], [], []]
+
+    # set the highest prize's priorities
+    highest_prize_index = get_prizes_dict(prize_values)[0]
+    all_prize_priorities[highest_prize_index] = randomize_permutation(r_highest, kind='priorities')
+
+    # set the other prizes' priorities
+    other_prize_indices = [get_prizes_dict(prize_values)[i] for i in range(1, 4)]
+    for index in other_prize_indices:
+        all_prize_priorities[index] = randomize_permutation(r_regular, kind='priorities')
+    return all_prize_priorities
+
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        if (player.round_number == 1):
+            player.prizes_values = str([randomize_prize_values() for i in range(C.NUM_ROUNDS)])
+            player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values, i+1 )) for i in range(C.NUM_ROUNDS)])
+            player.other_participants_rankings = str([randomize_others_rankings(get_prizes_in_round(player.prizes_values, i+1 )) for i in range(C.NUM_ROUNDS)])
+        else :
+            player.prizes_values = player.in_round(1).prizes_values
+            player.prizes_priorities = player.in_round(1).prizes_priorities
+            player.other_participants_rankings = player.in_round(1).other_participants_rankings
+
+
+page_sequence = [PreProcess, RoundPage]

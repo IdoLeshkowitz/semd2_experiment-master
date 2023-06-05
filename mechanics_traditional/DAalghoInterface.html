@@ -12,6 +12,7 @@
  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.17.0/babel.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/react-markdown/umd/react-markdown.min.js"></script>
     <script src="{{ static 'global/DAalghoInterface.js' }}"></script>
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
 {{ endblock }}
@@ -29,38 +30,6 @@
 <div id="react-root"></div>
     {{ include_sibling "Dashboard.html" }}
 <p style="display: flex; justify-content: center">Allocation Dashboard</p>
-<!---
-    <div style="text-align: center">
-        <button type="button" class="submitButton" onclick="submitButton()">Submit Matching</button>
-    </div>
-
-
-    <div class="modal fade" id="finishModal" role="dialog">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-body">
-                        <p style="font-size: 20px;margin-bottom: 0">
-                            To submit your answers click on the button bellow.<br>
-                            Once you submit your answers you will not be able go back and change your answers.
-                        </p>
-                </div>
-                <div class="modal-footer justify-content-center">
-                    <button type="button" class="cancelButton" onclick="dismissFinishModal()">
-                        Cancel
-                    </button>
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                    <button type="button" class="submitButton" onclick="confirmSubmission()">
-                        Submit
-                    </button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <button type="button" onclick="confirmStage()">
-        TEST
-    </button>
-    --->
 {{ endblock }}
 
 

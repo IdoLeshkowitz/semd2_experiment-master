@@ -37,9 +37,10 @@ function liveRecv(data) {
         }
     }
 
-    const evaluatedPrizeValue = data.payoff;
+    const evaluatedPrizeValue = data['value'];
     const currentCurrency = getCurrentCurrency()
     const evaluatedPrizeString = getEvaluatedPrizeString(evaluatedPrizeValue, currentCurrency);
+    debugger
     $("#prize-won").text(data.prize);
     $("#points-won").text(evaluatedPrizeString);
     $("#load").slideUp();
@@ -89,9 +90,8 @@ $("#submit-btn").click(function () {
     $("#id_player_bid_text").prop("disabled", true);
 
     $(this).hide();
-
     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
-
+    console.log([playersRankings, prizesPriorities])
     liveSend({
         "preferences": [playersRankings, prizesPriorities], "prizes": prizes, "values": prizesValues
     });
@@ -106,7 +106,8 @@ var prizes = js_vars.prizes;
 var prizesValues = js_vars.prizes_values;
 var prizesPriorities = js_vars.prizes_priorities;
 var otherPlayersRankings = js_vars.players_rankings;
-
+console.log(otherPlayersRankings+'otherPlayersRankings')
+console.log(prizesPriorities+'prizesPriorities')
 $("#step-1a").hide();
 $("#step-2").hide();
 $("#step-3").hide();

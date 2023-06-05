@@ -29,20 +29,23 @@ class Player(BasePlayer):
         ]
     )
 
-    prolific_id = models.StringField(
-        label = "Please enter your Prolific ID:"
-    )
 
 
 # PAGES
 class ConsentForm(Page):
     form_model = "player"
-    form_fields = ["consent", "prolific_id"]
+    form_fields = ["consent"]
+    @staticmethod
+    def app_after_this_page(player: Player, upcoming_apps):
+        if player.consent == False:
+            return upcoming_apps[-1]
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.consent = player.consent
 
 
-class Exit(Page):
-    pass
 
 
-page_sequence = [ConsentForm #, Exit
-                 ]
+
+page_sequence = [ConsentForm]

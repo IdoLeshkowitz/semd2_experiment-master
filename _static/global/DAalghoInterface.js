@@ -1453,8 +1453,11 @@ function renderUiFromState(state) {
         }
 
         function MiddleRow(participants) {
+        var markdownText = '# Hello, *world*!\\n\\nThis is some **bold** text.\\n\\n- Item 1\\n- Item 2\\n- Item 3';
+        var ReactMarkdown = window.ReactMarkdown;
             return (
                 <>
+                <ReactMarkdown>{markdownText}</ReactMarkdown>
                         <span>
                             <b style={{fontSize: "1.5rem"}}>Unpaired participants:</b>
                         </span>

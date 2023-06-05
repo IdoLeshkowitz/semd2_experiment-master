@@ -154,7 +154,7 @@ def da(preferences):
 class C(BaseConstants):
     NAME_IN_URL = 'step_2_rounds'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 2  # change to 20 in real pilot
+    NUM_ROUNDS = 20  # change to 20 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
@@ -186,7 +186,8 @@ def get_prizes_in_round(prizes_by_round_str, round_number):
     return eval(prizes_by_round_str)[round_number - 1]
 def get_prizes_priorities_in_round(prizes_priorities_by_round_str, round_number):
     return eval(prizes_priorities_by_round_str)[round_number - 1]
-
+def get_players_rankings_in_round(players_rankings_by_round_str, round_number):
+    return eval(players_rankings_by_round_str)[round_number - 1]
 # PAGES
 class RoundPage(Page):
     form_model = "player"
@@ -199,7 +200,7 @@ class RoundPage(Page):
             "prizes_values": get_prizes_in_round(player.prizes_values, player.round_number),
             "prizes_priorities": get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
             "players": C.PLAYERS,
-            "players_rankings": player.other_participants_rankings
+            "players_rankings": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
         }
 
     @staticmethod
@@ -241,10 +242,11 @@ class RoundPage(Page):
         preferences = data["preferences"]
         prizes = data["prizes"]
         values = data["values"]
+
         matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
         user_prize = matching[0][0]
         # since prize values are in cents, we divide by 100 to get dollars
-        payoff = round(values[user_prize] / 100, 2)
+        payoff = values[user_prize]
         # add it to the user's payoff
         player.payoff += payoff
         response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)

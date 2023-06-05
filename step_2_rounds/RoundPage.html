@@ -1,11 +1,7 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 <!-- this is where it is most updated!! change all other round pages from here-->
-Round {{ player.round_number }}/{{if player.participant.trajectory_num == 1
-or player.participant.trajectory_num == 3
-or player.participant.trajectory_num == 5
-or player.participant.trajectory_num == 7
-or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
+Round {{ player.round_number }}/20
 <!--there is a difference between double and single treatments in the overall number of rounds-->
 {{ endblock }}
 
@@ -35,16 +31,7 @@ or player.participant.trajectory_num == 9}}20{{else}}30{{endif}}
 
 {{if player.participant.trajectory_num == 9 or player.participant.trajectory_num == 10}}
 {{else}}
-<button id="GenBtn4" class="button-2">
-            <!--  after properties 3,4,7,8-->
-            {{if player.participant.trajectory_num == 3 or player.participant.trajectory_num == 4
-            or player.participant.trajectory_num == 7 or player.participant.trajectory_num == 8}}
-            Click for a reminder on the important principle of the allocation
-    <!--  after mechanics 1,2,5,6  -->
-            {{else}}
-            Click for a reminder on the technical details of the allocation process
-            {{endif}}
-</button><br>
+
     <div id="GenModal4" class="modal">
       <div class="modal-content">
         <span class="close4">&times;</span>

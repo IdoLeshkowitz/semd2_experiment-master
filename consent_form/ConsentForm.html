@@ -1,70 +1,48 @@
 {{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-{{ endblock}}
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>{{ endblock}}
 
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-    Welcome
-{{ endblock }}
+{{ block title }}{{ include "components/bonus_indicator.html" }}Welcome{{ endblock }}
 
 {{ block content }}
-
-    <!-- Introduction -->
-    <div>
+<section>
+    <p>This study takes around 45 minutes to complete. Everything you will earn in the study is <b>actual money</b>.</p>
+    <p>In this study you will learn about a game, and play the game.</p>
+    <p>For completing the study, you will earn <b>{{ 9 | cu }}</b>. However,your total earnings can increase by <b>additional {{ 16 | cu }}</b> (up to a total of <b>{{25 | cu }}</b>) in two ways:</p>
+    1. <b>Earnings from playing </b>, which are no less than <b>{{ 1 | cu }}</b> and can be up to <b>{{ 12 | cu }}</b>: You will play a lot of rounds of the game, and each round earns you money, as you will learn shortly.<br/>Make sure you play the game thoughtfully!<br/><br/>
+    2. An <b>Understanding Bonus</b>, which can be up to <b>{{ 4 | cu}}</b> : You will learn about the game in different parts of this study and we will ask you a lot of understanding questions. At the end of the study, each question you answer correctly on the <b>first attempt</b> will be counted for an Understanding Bonus.<br/>
+    <ul>
+        <li>
+            If you answered all questions correctly on the first attempt, you will earn the full Understanding Bonus of {{ 4 | cu }}.
+        </li>
+        <li>
+            If you answered some fraction of the questions correctly on the first attempt, you will earn this fraction of the Understanding Bonus. For example, if you answered 80% of the questions correctly on the first attempt, you will earn 80% times {{ 4 | cu }} = {{ 3.20 | cu }}.
+        </li>
+        <li>
+            You will <b>not</b> earn money for questions that you only answered correctly after more than one attempt, unless stated otherwise.
+        </li>
+    </ul>
+    <p>Make sure you pay close attention to the game instructions to earn this money!</p>
+    <p>You can always see your total earnings so far in the upper right corner of the screen.</p>
+    <p>Please <b>maximize the browser’s window</b> on your screen to properly view the study.<br/>
+    Make sure to copy the <b>completion code</b> in the last page of the study.</p>
+</section>
+<section>
+    <h2 class="otree-title page-header"><b>Consent</b></h2>
         <p>
-            This survey takes around 45 minutes to complete.
+            Thank you for participating in this study! Your participation is voluntary, and is greatly appreciated. We anticipate that your participation in this study presents no greater risk than everyday use of the internet. We are committed to protecting your privacy. After validating that your response qualifies for payment, your answers will remain anonymous and will take part in aggregate statistical analyses only. You may withdraw from the study at any time or skip questions you feel uncomfortable answering.
         </p>
-
         <p>
-            You begin this survey with
-            <span class="fw-bold money-amount">{{ 1.5 | cu }}</span> in your total earnings.
-            Your total earnings can increase <b>up to <span class="money-amount">{{ 6 | cu }}</span></b> during the survey, depending on your outcomes.
-            You can always see your total earnings in the upper right corner of the window.
+            It is very important that you complete this study on your own and with adequate effort. Responding without adequate effort may result in a rejection of your submission.
         </p>
-
+</section>
+<section>
+    <h2><b>Additional Information</b></h2>
         <p>
-            Please <b>maximize this window</b> on your screen to properly view the survey.
-            Make sure to copy the <b>completion code</b> in the last page of the survey.
+        The main researcher conducting this study is Ori Heffetz, a professor at Cornell University. Please ask any questions you have using the Prolific messaging system. If you have any questions or concerns regarding your rights as a subject in this study, you may contact the Institutional Review Board (IRB) for Human Participants at 607-255-5138 or access their website at http://www.irb.cornell.edu. You may also report your concerns or complaints anonymously through Ethicspoint online at www.hotline.cornell.edu or by calling toll free at 1-866-293-3077. Ethicspoint is an independent organization that serves as a liaison between the University and the person bringing the complaint so that anonymity can be ensured.
         </p>
-    </div>
-
-    <br>
-
+</section>
     <!-- Consent -->
-    <div>
-        <h4>Consent</h4>
-        <p>
-            Thank you for participating in this survey!
-            Your participation is voluntary, and is greatly appreciated.
-            We do not anticipate any risks from participating in this survey.
-            We anticipate that your participation in this survey presents no greater risk than everyday use of the internet.
-            We are committed to protecting your privacy.
-            After validating that your response qualifies for payment,
-            your answers will remain anonymous and will take partin an aggregate statistical analysis only.
-            You may withdraw from the survey at any time or skip questions you feel uncomfortable answering.
-            <br>
-            <br>
-            It is very important that you complete this survey on your own and with adequate effort.
-            Responding without adequate effort may result in a rejection of your submission.
-        </p>
-    </div>
-
-    <br>
-
-    <!-- Additional Information -->
-    <div>
-        <h4>Additional Information</h4>
-        <p>
-            The main researcher conducting this study is Ori Heffetz, a professor at Cornell University.
-            Please ask any questions you have using the Prolific messaging system.
-            If you have any questions or concerns regarding your rights as a subject in this study,
-            you may contact the Institutional Review Board (IRB) for Human Participants at 607-255-5138 or access their website at <a href="http://www.irb.cornell.edu">http://www.irb.cornell.edu</a>.
-            You may also report your concerns or complaints anonymously through Ethicspoint online at <a href="www.hotline.cornell.edu">www.hotline.cornell.edu</a> or by calling toll free at 1-866-293-3077.
-            Ethicspoint is an independent organization that serves as a liaison between the University and the person bringing the complaint so that anonymity can be ensured. 
-        </p>
-    </div>
-
-    {{ formfields }}
+{{ formfields }}
 <div style="text-align: center">
     {{ next_button }}
 </div>
