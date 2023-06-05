@@ -10,7 +10,7 @@ const expectedResults = {
     "third_situation_a": "Definitely False",
     "third_situation_b": "Definitely False",
     "third_situation_c": "Possibly True",
-    "third_situation_d": "Possibly True",
+    "third_situation_d": "Definitely False",
 }
 const errorMessages = {
     "missing": "Please select an answer",

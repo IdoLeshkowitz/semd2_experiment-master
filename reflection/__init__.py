@@ -36,8 +36,8 @@ class Player(BasePlayer):
         choices=["Yes", "No"],
         widget=widgets.RadioSelect,
         )
-    why_not = models.LongStringField()
-    why_yes = models.LongStringField( )
+    why_not = models.LongStringField(blank=True)
+    why_yes = models.LongStringField(blank=True)
     # lead_explanation = models.IntegerField(
     #     choices=[1, 2, 3, 4, 5, 6, 7],
     #     widget=widgets.RadioSelect,

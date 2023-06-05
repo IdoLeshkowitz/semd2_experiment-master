@@ -1,6 +1,6 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
-Final questions (1/4)
+Final Questions (1/4)
 {{ endblock }}
 
 {{ block styles}}
@@ -66,7 +66,7 @@ Final questions (1/4)
 }
 </style>
 	<div class="instructions">
-		<p> You completed all rounds of the game. We will now ask you some final questions about the game, about yourself and some general questions. This will take a few more minutes. Please answer thoughtfully and honestly.</br>
+		<p> You completed all rounds of the game. We will now ask you some final questions about the game, about yourself and some general questions. This will take a few more minutes. Please answer thoughtfully.</br>
             </br> First, <b>Imagine</b> that you have participated in a round with the following scenario. The prizes in this imaginary round were </p>
 		<table class="T_understand">
 			<caption style="color: #000">The prizes in this imaginary round were:</caption>
@@ -79,10 +79,10 @@ Final questions (1/4)
 			</tr>
 			<tr>
 				<td>Money worth</td>
-				<td>27p</td>
-				<td>57p</td>
-				<td>12p</td>
-				<td>7p</td>
+				<td class="money-amount">{{ 0.27 | cu }}</td>
+				<td class="money-amount">{{ 0.57 | cu }}</td>
+				<td class="money-amount">{{ 12 | cu }}</td>
+				<td class="money-amount">{{ 7 | cu }}</td>
 			</tr>
 		</table>
         </br>
@@ -125,9 +125,12 @@ Final questions (1/4)
 			</tr>
 		</table>
         </br>
-        <p>Finally, imagine that you have submitted the ranking <b>B–A–C–D</b>, and got <b>Prize C.</b></p>
+        <p>
+			Finally, imagine that you have submitted the ranking <b>B–A–C–D</b>, and got <b>Prize C.</b>
+		</p>
 		<p>
-			Please answer the following questions.</br>These questions are counted for your Understanding Bonus
+			Please answer the following questions.<br/>
+			(Each question answered correctly will count for your Understanding Bonus)
 		</p>
         <p>If I had instead submitted <b>A–B–C–D</b> then it is possible that I would have gotten…</p>
 
