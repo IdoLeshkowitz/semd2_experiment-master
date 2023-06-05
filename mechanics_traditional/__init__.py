@@ -14,21 +14,21 @@ class Group(BaseGroup):
 
 
 def make_question_1():
-    return models.IntegerField(choices=[[1, "It is determined at random"], [2, "The prize who got paired to Ruth first"],
-                                        [3, "The prize at which Ruth is in the highest priority."],
-                                        [4, "The prize highest in Ruth’s ranking."]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(choices=[[1, "It is determined at random."], [2, "The participant who got paired to Prize A first."],
+                                        [3, "The participant for whom Prize A is in is in the highest rank."],
+                                        [4, "The participant highest in Prize A’s priorities."]], label='', widget=widgets.RadioSelect)
 
 
 def make_question_2():
-    return models.IntegerField(choices=[[1, "A random participant that is currently unpaired to any prize"],
-                                        [2, "Its highest-priority participant, among the participants it was not yet paired with, and expect for you"],
-                                        [3, "Its highest-priority participant"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(choices=[[1, "A random prize that is currently unpaired to any participant."],
+                                        [2, "Their highest-rank prize among the prizes they were not yet paired with."],
+                                        [3, "Their highest-rank prize."]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_3():
-    return models.IntegerField(choices=[[1, "No, there are new conflicts: two (or more) prizes are paired to the same participant"],
-                                        [2, "No, some prizes are paired to participants that are not in their highest priority"], [3,
-                                                                                                                                   "Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway"],
+    return models.IntegerField(choices=[[1, "No, there are new conflicts: two (or more) participants are paired to the same prize."],
+                                        [2, "No, some participants are paired to prizes that are not in their highest rank."],
+                                        [3,"Yes, it is fine that two (or more) participants are paired to the same prize because they all get different amounts of money anyway."],
                                         [4, "Yes, there are no more conflicts"]], label='Answer', widget=widgets.RadioSelect)
 
 
@@ -189,7 +189,7 @@ class Player(BasePlayer):
     question_7 = make_question_7()
     question_8 = make_question_8()
     question_9 = make_question_9()
-    question_10 = make_priority_field("Based on the allocation determined by the allocation process, click on the prize that you get in this round.(Get it right on first try to increase your bonus)")
+    question_10 = make_priority_field("Based on the outcome of the allocation process, click on the prize that you get in this round.(Get it right on first try to increase your bonus)")
     prize_a_obtainable = make_participant_field("Prize A")
     prize_b_obtainable = make_participant_field("Prize B")
     prize_c_obtainable = make_participant_field("Prize C")

@@ -41,6 +41,10 @@ const steps = [
         type: "instructions",
     },
     {
+        id:'instructions-3',
+        type: 'instructions',
+    },
+    {
         id: "step-3",
         type: "matching",
         stage: 0,
