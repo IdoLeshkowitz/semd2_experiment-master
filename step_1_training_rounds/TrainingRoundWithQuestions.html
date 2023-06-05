@@ -1,13 +1,9 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-<!-- null training rounds -->
-Training Round {{ player.round_number }}/2
-{{ endblock }}
+{{ block title }}{{ include "components/bonus_indicator.html" }}<!-- null training rounds -->
+Training Round {{ player.round_number }}/2{{ endblock }}
 
 {{ block styles}}
-    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
-    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
-{{ endblock }}
+    <link href="{{ static 'global/styles.css' }}" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f5aad88875.js"></script> <!-- Font Awesome -->{{ endblock }}
 
 {{ block content }}
 <!--<p style="text-align:right;">-->
@@ -17,8 +13,8 @@ Training Round {{ player.round_number }}/2
 
 {{if player.round_number == 1}}
 <!--first general pop up window-->
-<button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
-    <div id="GenModal" class="modal">
+<button class="button-2" id="GenBtn" type="button">Click for a general reminder on this study</button><br>
+    <div class="modal" id="GenModal">
       <div class="modal-content">
         <span class="close">&times;</span>
             <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
@@ -41,15 +37,17 @@ need to program conditions
 -->
 
 <section id="step-1">
-<div class="explain">
-    This is a training round. <br>
-    Everything is <b>the same</b> as in the real rounds you will play later on,
-        except that we will ask you a few questions along the way,
-        and that you will earn <span class="fw-bold money-amount">{{ 0.3 | cu }}</span> for completing the round, no matter what prize you get. <br>
-        Please answer the questions shown to you as best you can.
-</div>
+        <div class="explain">
+            <p>
+            This is a training round. <br>
+            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+            </p>
+            <p>
+                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully! .
+            </p>
+        </div>
     <div class="btn-container">
-        <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-1a-btn" type="button">Proceed</button>
     </div>
 </section>
 
@@ -77,8 +75,8 @@ need to program conditions
         </thead>
     </table><br>
     <!--second pop up window-->
-<button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
-    <div id="GenModal1" class="modal">
+<button class="button-2" id="GenBtn1" type="button">Click for a reminder on what the prizes mean</button><br>
+    <div class="modal" id="GenModal1">
       <div class="modal-content">
         <span class="close1">&times;</span>
             <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
@@ -92,21 +90,20 @@ need to program conditions
     </div><br>
 
     <div class="btn-container">
-        <button id="proceed-question1-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-question1-btn" type="button">Proceed</button>
     </div>
 </section>
 
 <section id="question1">
-    <li id="independence">
-    Please determine whether the following statement is true or false:<br>
-        If I win some prize which I rank very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above.
-        If I win some prize which I rank very <b>high</b>, I may earn <b>more</b> than its money worth.
+    <p>Please determine whether the following statement is true or false:</p>
+    <p>If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize which very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
+    (Get it right on first try to increase your bonus)
         {{ formfield 'independence' }}
            <div class="incorrect_seq_independence">
                 {{ formfield 'incorrect_seq_independence' }}
             </div>
             <div class="btn-container">
-                <button id="question1-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+                <button class="btn btn-danger btn-question" id="question1-btn" type="button">Submit</button>
             </div>
             <div class="incorrect-msg">
                 <p>
@@ -118,18 +115,19 @@ need to program conditions
                     Correct! Your own ranking cannot affect the money amounts shown in your table, which are determined beforehand.
                 </p>
             </div>
-    </li>
 </section>
 <section id="question2">
-    <li id="value_table">
-    Please determine whether the following statement is true or false:<br>
-    Every participant, including me and the computerized participants, has the same earnings table.
+    <p>Please determine whether the following statement is true or false</p>
+        <p>
+            Every participant, including me and the computerized participants, has the same earnings table.<br/>
+            (Get it right on first try to increase your bonus)
+        </p>
         {{ formfield 'value_table' }}
            <div class="incorrect_seq_value_table">
                 {{ formfield 'incorrect_seq_value_table' }}
             </div>
             <div class="btn-container">
-                <button id="question2-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+                <button class="btn btn-danger btn-question" id="question2-btn" type="button">Submit</button>
             </div>
             <div class="incorrect-msg">
                 <p>
@@ -141,7 +139,6 @@ need to program conditions
                     Correct! Each prize might be worth a different amount for each participant
                 </p>
             </div>
-    </li>
 </section>
 
 <section id="step-2">
@@ -161,8 +158,8 @@ need to program conditions
     </table><br>
     
     <!--third pop up window-->
-<button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button><br>
-        <div id="GenModal2" class="modal">
+<button class="button-2" id="GenBtn2" type="button">Click for a reminder on what the priorities mean</button><br>
+        <div class="modal" id="GenModal2">
       <div class="modal-content">
         <span class="close2">&times;</span>
             <p>All four participants have some <b>priority</b> at each of the four prizes. <br>
@@ -180,21 +177,22 @@ need to program conditions
     </div> <br>
 
     <div class="btn-container">
-        <button id="proceed-question3-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-question3-btn" type="button">Proceed</button>
     </div>
 </section>
 
 <section id="question3">
-    <li id="self_rank_independence">
-        Please determine whether the following statement is true or false:<br>
-        If I place a prize very <b>low</b> in my ranking, then my priority at that prize might <b>decrease</b>.
-        If I place a prize very <b>high</b> in my ranking, then my priority at that prize might <b>increase</b>.
+    <p> Please determine whether the following statement is true or false:</p>
+    <p>
+        If I place a prize very low in my ranking, then my priority for getting that prize might decrease. If I place a prize very high in my ranking, then my priority for getting that prize might increase.<br/>
+        (Get it right on first try to increase your bonus)
+    </p>
         {{ formfield 'self_rank_independence' }}
         <div class="incorrect_seq_self_rank_independence">
             {{ formfield 'incorrect_seq_self_rank_independence' }}
         </div>
         <div class="btn-container">
-                <button id="question3-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+                <button class="btn btn-danger btn-question" id="question3-btn" type="button">Submit</button>
         </div>
         <div class="incorrect-msg">
             <p>
@@ -206,14 +204,13 @@ need to program conditions
                 Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.
             </p>
         </div>
-    </li>
 </section>
 
 <section id="step-3">
     <h4>Step 2: Submit Your Ranking</h4>
     <!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button><br>
-    <div id="GenModal3" class="modal">
+<button class="button-2" id="GenBtn3" type="button">Click for a reminder on what this ranking means</button><br>
+    <div class="modal" id="GenModal3">
       <div class="modal-content">
         <span class="close3">&times;</span>
             <p>In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.</p>
@@ -257,22 +254,24 @@ need to program conditions
     </div>
 
     <div class="btn-container">
-        <button id="proceed-question4-btn" type="button" class="btn btn-primary btn-container">Proceed</button><br>
+        <button class="btn btn-primary btn-container" id="proceed-question4-btn" type="button">Proceed</button><br>
     </div>
 </section>
 
 <section id="question4">
-    <li id="competitors_rank_independence">
-        Please determine whether the following statement is true or false:<br>
-        I just submitted some ranking and got some prize. It is possible that if I had submitted a different ranking,
-        my ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.
+    <p> Please determine whether the following statement is true or false:</p>
+    <p>
+        I just submitted some ranking and got some prize. It is possible that if I had submitted a different ranking, my ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.<br/>
+        (Get it right on first try to increase your bonus)
+    </p>
+        
 
         {{ formfield 'competitors_rank_independence' }}
         <div class="incorrect_seq_competitors_rank_independence">
             {{ formfield 'incorrect_seq_competitors_rank_independence' }}
         </div>
         <div class="btn-container">
-            <button id="question4-btn" type="button" class="btn btn-danger btn-question">Submit</button>
+            <button class="btn btn-danger btn-question" id="question4-btn" type="button">Submit</button>
         </div>
         <div class="incorrect-msg">
             <p>
@@ -285,7 +284,6 @@ need to program conditions
                 with each possible ranking being equally likely.
             </p>
         </div>
-    </li>
 </section>
 <section id="next">
     <div style="text-align: center">
@@ -294,8 +292,8 @@ need to program conditions
 </section>
 
 {{else}}
-<button id="GenBtn" class="button-2" type="button">Click for a general reminder on this study</button><br>
-    <div id="GenModal" class="modal">
+<button class="button-2" id="GenBtn" type="button">Click for a general reminder on this study</button><br>
+    <div class="modal" id="GenModal">
       <div class="modal-content">
         <span class="close">&times;</span>
             <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
@@ -319,12 +317,16 @@ need to program conditions
 
 <section id="step-1">
 <div class="explain">
-    <p>This is a training round. <br>
-    Everything is <b>the same</b> as in the real rounds you will play later on,
-        except that you will earn <span class="money-amount"><b>{{ 0.3 | cu }}</b></span> for completing the round, no matter what prize you get.</p>
+       <p>
+            This is a training round. <br>
+            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+            </p>
+            <p>
+                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully! .
+            </p>
 </div>
     <div class="btn-container">
-        <button id="proceed-step-1a-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-1a-btn" type="button">Proceed</button>
     </div>
 </section>
 
@@ -355,8 +357,8 @@ need to program conditions
     </table>
     <br>
     <!--second pop up window-->
-<button id="GenBtn1" class="button-2" type="button">Click for a reminder on what the prizes mean</button><br>
-    <div id="GenModal1" class="modal">
+<button class="button-2" id="GenBtn1" type="button">Click for a reminder on what the prizes mean</button><br>
+    <div class="modal" id="GenModal1">
       <div class="modal-content">
         <span class="close1">&times;</span>
             <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
@@ -370,7 +372,7 @@ need to program conditions
     </div><br>
 
     <div class="btn-container">
-        <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-2-btn" type="button">Proceed</button>
     </div>
 </section>
 
@@ -391,8 +393,8 @@ need to program conditions
     </table><br>
     
     <!--third pop up window-->
-<button id="GenBtn2" class="button-2" type="button">Click for a reminder on what the priorities mean</button><br>
-    <div id="GenModal2" class="modal">
+<button class="button-2" id="GenBtn2" type="button">Click for a reminder on what the priorities mean</button><br>
+    <div class="modal" id="GenModal2">
       <div class="modal-content">
         <span class="close2">&times;</span>
             <p>All four participants have some <b>priority</b> at each of the four prizes. <br>
@@ -410,15 +412,15 @@ need to program conditions
     </div>
 
     <div class="btn-container">
-        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container">Proceed</button><br>
+        <button class="btn btn-primary btn-container" id="proceed-step-3-btn" type="button">Proceed</button><br>
     </div>
 </section>
 
 <section id="step-3">
     <h4>Step 2: Submit Your Ranking</h4>
     <!-- fourth general pop up window-->
-<button id="GenBtn3" class="button-2" type="button">Click for a reminder on what this ranking means</button><br>
-    <div id="GenModal3" class="modal">
+<button class="button-2" id="GenBtn3" type="button">Click for a reminder on what this ranking means</button><br>
+    <div class="modal" id="GenModal3">
       <div class="modal-content">
         <span class="close3">&times;</span>
             <p>In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.</p>
@@ -452,17 +454,12 @@ need to program conditions
     <div style="text-align: center">
         {{ next_button }}
     </div>
-</section>
-{{endif}}
+</section>{{endif}}
 
 {{ endblock }}
 
-{{ block scripts }}
-{{if player.round_number == 1}}
-    <script src="{{ static 'global/training_page_with_questions.js' }}"></script>
-{{else}}
-    <script src="{{ static 'global/round_page.js' }}"></script>
-{{endif}}
+{{ block scripts }}{{if player.round_number == 1}}
+    <script src="{{ static 'global/training_page_with_questions.js' }}"></script>{{else}}
+    <script src="{{ static 'global/round_page.js' }}"></script>{{endif}}
     <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-{{ endblock }}
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>{{ endblock }}
