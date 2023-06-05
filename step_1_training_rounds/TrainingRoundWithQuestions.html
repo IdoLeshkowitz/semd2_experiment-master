@@ -166,7 +166,7 @@ need to program conditions
              These priorities can affect the allocation of prizes. </p>
             <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
             <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
-              For example, the column under <b>Prize A</b> shows its priorities.
+              For example, the column  <b>Prize A</b> shows its priorities.
               Prize A has Ruth in the 1st priority (the highest),
               Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
               So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
@@ -249,7 +249,7 @@ need to program conditions
         <p>
             <b>You get Prize <span id="prize-won"></span></b>.
             If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>.<br>
-            Since this is a training round, your total earnings increase by <span class="money-amount"><b>{{ 0.3 | cu }}</b></span>.
+            Since this is a training round, it will count for your Understanding Bonus.
         </p>
     </div>
 
@@ -441,12 +441,13 @@ need to program conditions
         </p>
     </div>
 
-    <div id="round-results">
+       <div id="round-results">
         <p>
             <b>You get Prize <span id="prize-won"></span></b>.
-            If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>. <br>
-            Since this is a training round, your total earnings increase by <span class="money-amount">{{ 0.3 | cu }}</span>
+            If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>.<br>
+            Since this is a training round, it will count for your Understanding Bonus.
         </p>
+    </div>
         <!--    {{if player.round_number == C.NUM_ROUNDS}}-->
         <!--        <p> You completed the training rounds. <br> Click the button below to proceed to real rounds of the game.</p>-->
         <!--    {{else}}-->
