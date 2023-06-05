@@ -20,10 +20,10 @@ The Basics
     <div class="explain">
         <p>
             In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.
-            Each prize is worth money, but is worth a different amount of money for each participant.
+            Each prize is worth money, but might be worth a different amount of money for each participant.
         </p>
         <p>
-            You and the computerized participants will each rank the four prizes from most preferred to least preferred. <br>
+           You and the computerized participants will each rank the four prizes in any order you wish.<br>
             Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
         </p>
     </div>
@@ -40,7 +40,7 @@ The Basics
         </p>
         <p>
             You will learn about the game and allocation process while playing a round of the game.
-            The text in blue provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
+            The text in blue bubbles, such as this text, provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
         </p>
     </div>
     <div class="btn-container">
@@ -63,8 +63,7 @@ The Basics
     <h4>Step 1: Round Information</h4>
     <div class="explain">
         <p>
-            In Step 1, you first see the <b>prizes</b> you can get in this round.
-            Each prize is worth money, but might be worth a different amount of money for each participant.
+            In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>.
         </p>
     </div>
     <div class="btn-container">
@@ -86,7 +85,7 @@ The Basics
                 <th>D</th>
             </tr>
         <tr>
-            <td>Addition to your earnings if you get this prize</td>
+            <td>Money worth</td>
             <td class="money-amount">{{ prize_value_1 | cu }}</td>
             <td class="money-amount">{{ prize_value_2 | cu }}</td>
             <td class="money-amount">{{ prize_value_3 | cu }}</td>
@@ -105,11 +104,10 @@ The Basics
             In the table above, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.
         </p>
         <p>
-            The money amounts shown in your table can be different in different rounds of the game, and they were <b>determined beforehand</b>. <br>
-            You and the other participants <b>cannot affect the money amounts</b> shown in your table.
+            Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn <b>you</b> a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
         </p>
         <p>
-            In addition, the computerized participants <b>do not know</b> the money amounts shown in your table, and the allocation process is not affected by these money amounts.
+          The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
         </p>
     </div>
     <div class="btn-container">
@@ -119,14 +117,14 @@ The Basics
 <section id="step-7">
     <div class="explain">
         <p>
-            Next, you see what we call the <b>prize priorities</b>.
+            Still in Step 1, you see next what we call the <b>prize priorities</b>.
         </p>
         <p>
-            All four participants have some <b>priority</b> at each of the four prizes.
+            All four participants have some <b>priority</b> for getting each of the four prizes.
         </p>
         <p>
-            These priorities can affect the allocation of prizes. <br>
-            The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.
+            These priorities can affect the allocation of prizes. <br/>
+            The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
         </p>
     </div>
     <div class="btn-container">
@@ -157,7 +155,7 @@ The Basics
 <section id="step-9">
     <div class="explain">
         <p>
-            Each column shows the priorities of all participants at some prize, written from highest to lowest. <br>
+           Each column shows the priorities of all participants for getting some prize, written from highest to lowest. <br>
             For example, the column under <b>Prize A</b> shows its priorities. Prize A has Ruth in the 1st priority (the highest),
             Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
             So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.
@@ -176,7 +174,11 @@ The Basics
     <h4>Step 2: Submit Your Ranking</h4>
     <div class="explain">
         <p>
-            In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.
+            In Step 2, you are asked to <b>rank the four prizes</b>.
+        </p>
+        <p>
+            Please type your ranking of the four prizes in an order of your choice in the box below.<br/>
+            For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D.”
         </p>
     </div>
     <div class="btn-container">
@@ -190,11 +192,10 @@ The Basics
 <section id="step-12">
     <div class="explain">
         <p>
-            The computerized participants simultaneously submit their own rankings.
+            The computerized participants simultaneously submit their own rankings. They <b>do not know your own ranking</b>.
         </p>
         <p>
-            Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.
-            Your own ranking <b>cannot affect the computerized participants’ rankings</b>.
+            Their rankings are aimed at getting them their high-earning prizes.Your own ranking <b>cannot affect the computerized participants’ rankings.</b>
         </p>
     </div>
     <div class="btn-container">
@@ -206,6 +207,19 @@ The Basics
     <div class="explain">
         <p>
             In Step 3, the allocation process allocates the prizes to participants.
+        </p>
+        <p>
+            Remember:
+        </p>
+        <p>
+            The allocation process will try to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
+        </p>
+        <p>
+            The prize priorities can affect the allocation of prizes.<br/>
+            The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+        </p>
+        <p>
+            Then, you get the prize that was allocated to you.
         </p>
     </div>
         <div class="btn-container">
@@ -223,37 +237,11 @@ The Basics
     </div>
 </section>
 
-
-<section id="step-15">
-    <div class="explain">
-        <p>
-            Remember:
-        </p>
-        <p>
-            The allocation process will try to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
-            while taking into account the rankings of all participants.
-        </p>
-        <p>
-            The prize priorities can affect the allocation of prizes. <br>
-            The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.
-        </p>
-    </div>
-    <div class="btn-container">
-        <button id="proceed-step-16-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
-    </div>
-</section>
-
 <section id="step-16">
-    <div class="explain">
-        <p>
-            Then, you get the prize that was allocated to you
-        </p>
-    </div>
     <div id="round-results">
            <p>
             <b>You get Prize <span id="prize-won"></span></b>.
-            If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>. <br>
-            Since this is a training round, your total earnings increase by <span class="money-amount">{{ 0.3 | cu }}</span>
+            If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>.
         </p>
     </div>
     <div class="btn-container">
@@ -264,7 +252,7 @@ The Basics
 <section id="step-17">
     <div class="explain">
         <p>
-            That's it! <br>Click on the button below to proceed to training rounds.
+            That's it! <br>Click on the button below to proceed to more training rounds.
         </p>
         </p>
     </div>

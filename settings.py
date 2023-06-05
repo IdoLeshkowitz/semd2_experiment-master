@@ -143,6 +143,7 @@ SESSION_CONFIGS=[
         'name' : 'MECH_TRAD_LT',
         'display_name' : 'Mechanics Traditional Long Training',
         'num_demo_participants' : 1,
+        'participation_fee': 9,
         'app_sequence' : ["trajectory1", "consent_form", "step_1_null_description", "step_1_training_rounds","mechanics_traditional", "step_2_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {

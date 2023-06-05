@@ -506,14 +506,14 @@ function reducer(state = initialState, action) {
 }
 
 function startStep(stepToBeStarted) {
-    liveSend({
-        "information_type": "set_step",
-        "step": stepToBeStarted.id,
-    })
     if (!stepToBeStarted) {
         $("#last").show()
         return
     }
+    liveSend({
+        "information_type": "set_step",
+        "step": stepToBeStarted.id,
+    })
     if (stepToBeStarted.type === 'instructions') {
         const sectionId = stepToBeStarted.id
         // show section
@@ -942,6 +942,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
         event.preventDefault()
     })
     $("section button").click(function (event) {
+        console.log($(this).attr("id"))
         if ($(this).attr("id") == "submit-page") {
             document.getElementById("form").submit();
             return
@@ -1457,7 +1458,6 @@ function renderUiFromState(state) {
         var ReactMarkdown = window.ReactMarkdown;
             return (
                 <>
-                <ReactMarkdown>{markdownText}</ReactMarkdown>
                         <span>
                             <b style={{fontSize: "1.5rem"}}>Unpaired participants:</b>
                         </span>

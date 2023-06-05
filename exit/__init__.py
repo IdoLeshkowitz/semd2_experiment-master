@@ -40,7 +40,7 @@ class EndSurvey(Page):
     def vars_for_template(player: Player):
         total_payoff = player.participant.payoff_plus_participation_fee()
         understanding_bonus_ratio = round(player.participant.understanding_bonus / player.participant.max_understanding_bonus)
-        understanding_bonus_money = round(understanding_bonus_ratio * 0.5,2)
+        understanding_bonus_money = round(understanding_bonus_ratio * 4,2)
         return {
             "understanding_bonus_ratio": understanding_bonus_ratio,
             "understanding_bonus_money": understanding_bonus_money,

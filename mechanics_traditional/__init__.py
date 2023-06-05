@@ -464,4 +464,4 @@ class MechanicsIntro(Page):
         return player.round_number == 1
 
 
-page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface, ]
+page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface ]
