@@ -53,10 +53,6 @@ class EndSurvey(Page):
         return player.participant.consent == True
 
 
-
-class AbortSurvey(Page):
-    @staticmethod
-    def is_displayed(player: Player):
-        return player.participant.consent == False
-
-page_sequence = [AbortSurvey,EndSurvey]
+class ThankYou(Page):
+    pass
+page_sequence = [EndSurvey,ThankYou]
