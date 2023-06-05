@@ -40,10 +40,10 @@ need to program conditions
         <div class="explain">
             <p>
             This is a training round. <br>
-            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will not earn the money worth of the prize you will get. Instead, completing this round will count for your <b>Understanding Bonus</b> at the end of the study.
             </p>
             <p>
-                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully! .
+                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
             </p>
         </div>
     <div class="btn-container">
@@ -66,7 +66,7 @@ need to program conditions
                 <th>D</th>
             </tr>
         <tr>
-            <td>Addition to your earnings if you get this prize</td>
+            <td>Money worth</td>
             <td class="money-amount">{{ firstPrize | cu }}</td>
             <td class="money-amount">{{ secondPrize | cu }}</td>
             <td class="money-amount">{{ thirdPrize | cu }}</td>
@@ -96,7 +96,7 @@ need to program conditions
 
 <section id="question1">
     <p>Please determine whether the following statement is true or false:</p>
-    <p>If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize which very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
+    <p>If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
     (Get it right on first try to increase your bonus)
         {{ formfield 'independence' }}
            <div class="incorrect_seq_independence">
@@ -112,12 +112,12 @@ need to program conditions
             </div>
             <div class="correct-msg">
                 <p>
-                    Correct! Your own ranking cannot affect the money amounts shown in your table, which are determined beforehand.
+                    Correct! Your own ranking cannot affect the money worth of prizes shown in your table, which are determined beforehand.
                 </p>
             </div>
 </section>
 <section id="question2">
-    <p>Please determine whether the following statement is true or false</p>
+    <p>Please determine whether the following statement is true or false:</p>
         <p>
             Every participant, including me and the computerized participants, has the same earnings table.<br/>
             (Get it right on first try to increase your bonus)
@@ -136,7 +136,7 @@ need to program conditions
             </div>
             <div class="correct-msg">
                 <p>
-                    Correct! Each prize might be worth a different amount for each participant
+                    Correct! Each prize might be worth a different amount for each participant.
                 </p>
             </div>
 </section>
@@ -184,7 +184,7 @@ need to program conditions
 <section id="question3">
     <p> Please determine whether the following statement is true or false:</p>
     <p>
-        If I place a prize very low in my ranking, then my priority for getting that prize might decrease. If I place a prize very high in my ranking, then my priority for getting that prize might increase.<br/>
+        If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize might <b>increase</b>.<br/>
         (Get it right on first try to increase your bonus)
     </p>
         {{ formfield 'self_rank_independence' }}
@@ -235,7 +235,7 @@ need to program conditions
             Remember:
         </p>
         <p>
-            The allocation process will try to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
+            The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
             while taking into account the rankings of all participants.
         </p>
         <p>
@@ -249,7 +249,7 @@ need to program conditions
         <p>
             <b>You get Prize <span id="prize-won"></span></b>.
             If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>.<br>
-            Since this is a training round, it will count for your Understanding Bonus.
+            Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.
         </p>
     </div>
 
@@ -280,8 +280,7 @@ need to program conditions
         </div>
         <div class="correct-msg">
             <p>
-                Correct! Your own ranking cannot affect the other participants' rankings. Instead, these are chosen completely at random,
-                with each possible ranking being equally likely.
+                Correct! Your own ranking cannot affect the other participants' rankings..
             </p>
         </div>
 </section>
@@ -319,10 +318,10 @@ need to program conditions
 <div class="explain">
        <p>
             This is a training round. <br>
-            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will not earn the money worth of the prize you will get. Instead, completing this round will count for your <b>Understanding Bonus</b> at the end of the study.
             </p>
             <p>
-                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully! .
+                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
             </p>
 </div>
     <div class="btn-container">
@@ -347,7 +346,7 @@ need to program conditions
         </thead>
        <tbody>
         <tr>
-            <td>Addition to your earnings if you get this prize</td>
+            <td>Money worth</td>
             <td class="money-amount">{{ firstPrize | cu }}</td>
             <td class="money-amount">{{ secondPrize | cu }}</td>
             <td class="money-amount">{{ thirdPrize | cu }}</td>
@@ -429,7 +428,6 @@ need to program conditions
                   Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
-    <ul>
         {{ include_sibling "ranking_form.html" }}
 </section>
 
@@ -445,7 +443,7 @@ need to program conditions
         <p>
             <b>You get Prize <span id="prize-won"></span></b>.
             If this were a real round, your total earning would increase by <b><span id="points-won"></span></b>.<br>
-            Since this is a training round, it will count for your Understanding Bonus.
+            Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.
         </p>
     </div>
         <!--    {{if player.round_number == C.NUM_ROUNDS}}-->
