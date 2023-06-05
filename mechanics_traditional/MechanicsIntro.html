@@ -1,12 +1,7 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-    How the Allocation Process Works
-{{ endblock }}
-{{ block styles}}
-    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+{{ block title }}{{ include "components/bonus_indicator.html" }}How the Allocation Process Works{{ endblock }}{{ block styles}}
+    <link href="{{ static 'global/styles.css' }}" rel="stylesheet">
 <!-- Font Awesome -->
-    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
-{{ endblock }}
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f5aad88875.js"></script>{{ endblock }}
 
 {{ block content }}
 <section id="step-1">
@@ -14,87 +9,80 @@
         <p>
             You will now learn the full technical details of the allocation process.
         </p>
-        <p>
-            The allocation process is a multi-step process, as follows:
-        </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-2-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-2-btn" type="button">Proceed</button>
     </div>
 </section>
 <section id="step-2">
-    <div class="explain_mech">
+    <div class="explain">
         <p>
-            In the first step, each participant is paired to their <b>highest-rank</b> prize.
+           <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.
+        </p>
+        <p>
+            The allocation process is a multi-step process, as follows:
+                <p>
+                In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                </p>
         </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-3-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-3-btn" type="button">Proceed</button>
     </div>
 </section>
 
 <section id="step-3">
-    <div class="explain_mech">
+    <div class="explain">
         <p>
-            In the next step, possible conflicts are detected and solved.
-        </br></br>
-            If two (or more) participants are paired to the same prize, this is a conflict.
+                In the next step, possible conflicts are detected and solved.<br/>
+                If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                Each conflict is solved in two steps:
+                    <ul>
+                        <li>
+                           <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                        </li>
+                        <li>
+                            <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                        </li>
+                    </ul>
         </p>
-              </p>
-      <p class="indent_all">
-         Each conflict is solved in two steps:</br>
-      <ul>
-      <li><b> Unpair:</b> only the participant with the highest priority at that prize remains paired to
-         that prize. The others get unpaired.<br/>
-      </li>
-      <li><b> Re-pair:</b> all unpaired participants can only get re-paired to prizes
-         that they were not paired with before. Each unpaired participant is re-paired to
-         its highest-rank prize, among the prizes they <b>were not yet paired with.</b>
-      </li>
-      </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-4-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-4-btn" type="button">Proceed</button>
     </div>
 </section>
-
 <section id="step-4">
-    <div class="explain_mech">
+    <div class="explain">
        <p>
-         Later steps continue in the same way, by detecting and solving new conflicts.
-         </br></br>
-         Like before, if two (or more) participants are paired to the same prize, this is a conflict.
-      </p>
-      <p class="indent_all">
-      <ul>
-         Like before, each conflict is solved in two steps:</br>
-         <li><b> Unpair:</b> only the participant with the highest priority at that prize
-            remains paired to that prize. The others get unpaired, <b>even if they successfully
-            got paired to that prize in the first step.</b> </br>
-         </li>
-         <li><b> Re-pair:</b> Every unpaired participant get re-paired to their highest-rank
-            prize, among the prizes they <b>were not previously paired with.</b>
-         </li>
-      </ul>
-      </p>
+                    Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                    Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                    Like before, each conflict is solved in two steps:
+                    <ul>
+                        <li>
+                            <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired, <b>even if they successfully got paired to that prize in a previous step</b>.
+                        </li>
+                        <li>
+                            <b>Re-pair</b>: Every unpaired participant gets re-paired to their highest-rank prize among the prizes they <b>were not previously paired with</b>.
+                        </li>
+                    </ul>
+        </p>
+       
     </div>
     <div class="btn-container">
-        <button id="proceed-step-5-btn" type="button" class="btn btn-primary btn-container" >Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-5-btn" type="button">Proceed</button>
     </div>
-
 </section>
-
 <section id="step-5">
     <div class="explain">
         <p>
-            When there are no more conflicts, the process is over. The result is each participant, being paired to a different prize.
+            When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
         </p>
         <p>
             Each prize is then allocated to the participant paired to it.
         </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-6-btn" type="button" class="btn btn-primary btn-container">Proceed</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-6-btn" type="button">Proceed</button>
     </div>
 </section>
 
@@ -103,17 +91,13 @@
 <section id="step-6">
     <div class="explain">
         <p>
-            On the next screens you will play training rounds of the game to master your understanding of the allocation
-            process. Click the button below to proceed to these rounds.
+            On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
         </p>
     </div>
     <div class="btn-container">
-        <button id="proceed-step-7-btn" type="button" class="btn btn-primary btn-container">Next</button>
+        <button class="btn btn-primary btn-container" id="proceed-step-7-btn" type="button">Proceed to training rounds</button>
     </div>
 </section>
-
-
-
 
 {{ endblock }}
 
@@ -121,5 +105,4 @@
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/traditional_description_page.js' }}"></script>
     <script src="{{ static 'global/generate_prizes_table.js' }}"></script>
-    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
-{{ endblock }}
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>{{ endblock }}
