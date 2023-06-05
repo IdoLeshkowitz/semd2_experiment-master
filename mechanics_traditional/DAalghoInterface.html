@@ -1,34 +1,72 @@
-{{ block title }}
-{{ include "components/bonus_indicator.html" }}
-    How the Allocation Process Works: Training Round {{player.round_number}}/{{ C.NUM_ROUNDS }}
-{{ endblock }}
-{{ block styles }}
-    <link rel="stylesheet" href="{{ static 'global/globalstyle.css' }}">
-    <link rel="stylesheet" href="{{ static 'global/DAalghoInterface.css' }}">
-{{ endblock }}
-{{ block scripts }}
+{{ block title }}{{ include "components/bonus_indicator.html" }}How the Allocation Process Works: Training Round {{player.round_number}}/{{ C.NUM_ROUNDS }}{{ endblock }}{{ block styles }}
+    <link href="{{ static 'global/globalstyle.css' }}" rel="stylesheet">
+    <link href="{{ static 'global/DAalghoInterface.css' }}" rel="stylesheet">{{ endblock }}{{ block scripts }}
     <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.1.1/redux.min.js"></script>
  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.17.0/babel.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/react-markdown/umd/react-markdown.min.js"></script>
     <script src="{{ static 'global/DAalghoInterface.js' }}"></script>
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-{{ endblock }}
-{{ block content }}
-{% load index %}
-    <button id="GenBtn" class="button-2" type="button">Click for a general reminder on how the allocation process works</button><br>
-        <div id="GenModal" class="modal">
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>{{ endblock }}{{ block content }}{% load index %}
+    <button class="button-2" id="GenBtn" type="button">Click for a reminder on the technical details of the allocation process</button><br>
+        <div class="modal" id="GenModal">
           <div class="modal-content">
             <span class="close">&times;</span>
-              <p>filler</p>
+              <div>
+                  <p>
+                      <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.
+                  </p>
+                  <p>
+                      The allocation process is a multi-step process , as follows:
+                  </p>
+                  <ol>
+                      <li>
+                      In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                      </li>
+                      <li>
+                          <p>
+                              In the next step, possible conflicts are detected and solved. If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                          </p>
+                          <p>
+                              Each conflict is solved in two steps:
+                              <ul>
+                                    <li>
+                                        <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                    </li>
+                                    <li>
+                                        <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                    </li>
+                            </ul>
+                          </p>
+                      </li>
+                      <li>
+                          <p>
+                              Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                              Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                          </p>
+                          <p>
+                              Like before, each conflict is solved in two steps:
+                            <ul>
+                                <li>
+                                    <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize . The others get unpaired, <b>even if they successfully got paired to that prize in a previous step</b>.
+                                </li>
+                                  <li>
+                                      <b>Re-pair:</b> Every unpaired participant gets re-paired to their highest-rank prize among the prizes they <b>were not previously paired with</b>.
+                                  </li>
+                            </ul>
+                          </p>
+                      </li>
+                  </ol>
+                  <p>
+                      When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
+                  </p><br/>
+                  <p>
+                      Each prize is then <b>allocated</b> to the participant paired to it.
+                  </p>
+              </div>
           </div>
-        </div>
-    {{ include_sibling "RoundOne.html" }}
-    {{ include_sibling "LastRounds.html" }}
-<div id="react-root"></div>
-    {{ include_sibling "Dashboard.html" }}
-<p style="display: flex; justify-content: center">Allocation Dashboard</p>
-{{ endblock }}
+        </div>{{ include_sibling "RoundOne.html" }}{{ include_sibling "LastRounds.html" }}
+<div id="react-root"></div>{{ include_sibling "Dashboard.html" }}
+<p style="display: flex; justify-content: center">Allocation Dashboard</p>{{ endblock }}
 
 

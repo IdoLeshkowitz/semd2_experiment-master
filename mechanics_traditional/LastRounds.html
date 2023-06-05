@@ -1,6 +1,11 @@
 {{ if player.round_number > 1 }}
     <section id="step-1-rounds">
-        <p>In this training round, you will perform the allocation process by yourself, instead of the computer.</p>
+        <p>
+            In this training round, you will perform the allocation process by yourself, instead of the computer.
+        </p>
+        <p>
+            Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+        </p>
         <div class="btn-container">
             <button class="btn btn-primary" id="proceed-step-2-btn-rounds" type="button">Proceed</button>
         </div>
@@ -8,39 +13,55 @@
     </section>
 
     <section id="step-2-rounds">
-        First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned. <br>
-        Click Submit when you are done.
-        <br>
+        <p>
+            Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+        </p>
+        <p>
+            Click Submit when you are done.<br/>
+            (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
+            If you only get it right on the second it will still count for your bonus; it will count as <b>2 questions</b>.)
+        </p>
         <div class="btn-container">
             <button class="btn btn-primary" id="proceed-step-3-btn-rounds" type="button">Submit</button>
         </div>
         <div class="incorrect-msg">
             <p>
-                Incorrect temporary allocation. Please try again.
+                Incorrect allocation. Please try again.
             </p>
         </div>
         <div class="correct-msg">
             <p>
-                Correct temporary allocation!
+                Correct allocation!
             </p>
         </div>
         <div class="incorrect-skip-msg">
             <p>
-                Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                Incorrect allocation. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
             </p>
         </div>
         <div class="correct-first-msg">
             <p>
-                Correct! Since you were right on your first try, you get a bonus.
+                Correct allocation!<br/>
+                Since you were right on your first try, you get a bonus.
+            </p>
+        </div>
+        <div class="correct-second-msg">
+            <p>
+                Correct allocation!<br/>
+                Since you were right on your second try, you get a bonus.
             </p>
         </div>
         <br>
     </section>
 
     <section id="step-3-rounds">
-        Next, find your <b>Obtainable Prizes</b>.
-        For each of the four prizes below, Click on “Obtainable” or “Unobtainable“
-        based on what you learned in the previous screens.
+        <p>
+            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+        </p>
+        <p>
+            Click Submit when you are done.<br/>
+            (Get it right on first try to increase your bonus)
+        </p>
         <ol>
             <li class="question" id="prize-a-obtainable">
                 {{formfield "prize_a_obtainable"}}
@@ -83,8 +104,13 @@
     </section>
 
     <section id="step-4-rounds">
-        <p>Finally, select <b>the prize that will be allocated to you</b> out of the Obtainable Prizes.</p>
-
+        <p>
+            Finally, select <b>the prize that you get</b> based on the allocation.
+        </p>
+        <p>
+            Click Submit when you are done.<br/>
+            (Get it right on first try to increase your bonus)
+        </p>
         {{formfield "obtainable_prize"}}
 
         <div class="btn-container">
@@ -98,13 +124,12 @@
         </div>
         <div class="correct-msg">
             <p>
-                Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest.
-                Hence it is allocated to you.
+                Correct! At the end of the process, each participant gets the prize they were allocated with.
             </p>
         </div>
         <div class="correct-first-msg">
-            Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest. Hence it is allocated to you.<br/>
-            Since you were right on your first try, you get a bonus.
+                Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                Since you were right on your first try, you get a bonus.
         </div>
         <br>
     </section>

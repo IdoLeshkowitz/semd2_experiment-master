@@ -53,6 +53,16 @@ class EndSurvey(Page):
         return player.participant.consent == True
 
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.full_name = player.full_name
+        player.participant.email = player.email
+        understanding_bonus_ratio = round(player.participant.understanding_bonus / player.participant.max_understanding_bonus)
+        understanding_bonus_money = round(understanding_bonus_ratio * 4, 2)
+        player.participant.understanding_bonus_ratio = understanding_bonus_ratio
+        player.participant.understanding_bonus_money = understanding_bonus_money
+
+
 class ThankYou(Page):
     pass
 page_sequence = [EndSurvey,ThankYou]
