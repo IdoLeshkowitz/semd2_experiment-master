@@ -7,7 +7,7 @@ const initialState = {
     'currentStep': js_vars.currentStep,
     'currentRound': js_vars.currentRound,
     'prizesNames': js_vars.prizesNames,
-    'participantsNames': js_vars.participantsNames,
+    'participantsNumbers': js_vars.participantsNumbers,
     'mistakesCounter': 0,
     'mouseOnParticipant': null,
     'mouseOnPrize': null,
@@ -559,7 +559,7 @@ function reducer(state = initialState, action) {
     if (action.type === ACTION_TYPES.RESET) {
         /* reset currentMatching */
         const newCurrentMatching = {};
-        for (const participant in state.participantsNames) {
+        for (const participant in state.participantsNumbers) {
             newCurrentMatching[participant] = 'none'
         }
         /* reset participantsMatchMemo */
@@ -1566,7 +1566,7 @@ function renderUiFromState(state) {
         }
 
         `
-        const participants = Object.keys(state.participantsNames).map((participantName, index) => {
+        const participants = Object.keys(state.participantsNumbers).map((participantName, index) => {
             const isMatched = state.currentMatching[participantName] !== 'none'
             const isSelected = state.selectedParticipant && state.selectedParticipant === participantName
             return {
@@ -1666,7 +1666,7 @@ function renderUiFromState(state) {
         const prizesRowsProps = Object.keys(state.prizesNames).sort().map((prizeName, index) => {
                 const isFull = () => {
                     const maxParticipants = state.maxParticipantsPerPrize[prizeName]
-                    const numberOfParticipantsMatched = Object.keys(state.participantsNames).reduce((acc, participantName) => {
+                    const numberOfParticipantsMatched = Object.keys(state.participantsNumbers).reduce((acc, participantName) => {
                         if (state.currentMatching[participantName] === prizeName) {
                             acc++
                         }
@@ -1677,7 +1677,7 @@ function renderUiFromState(state) {
                 /* show plus button if there is a selected participant and the prize is not full */
 
                 /* get the participants that are currently matched to the prize */
-                const matchedParticipants = Object.keys(state.participantsNames).filter(participantName => state.currentMatching[participantName] === prizeName)
+                const matchedParticipants = Object.keys(state.participantsNumbers).filter(participantName => state.currentMatching[participantName] === prizeName)
                 /* sort them by participnats match memo */
                 const orderedMatchedParticipants = []
                 for (let i = state.participantsMatchMemo.length - 1; i >= 0; i--) {

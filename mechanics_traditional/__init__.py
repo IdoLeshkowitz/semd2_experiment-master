@@ -140,7 +140,8 @@ class C(BaseConstants):
 
     NUMBER_OF_PARTICIPANTS = 4
     NUMBER_OF_PRIZES = 4
-    PARTICIPANTS_NAMES = {'R': 1, "S": 2, "T": 3, "Y": 0}
+    PARTICIPANTS_NUMBERS = {'R': 1, "S": 2, "T": 3, "Y": 0}
+    PARTICIPANTS_FULL_NAMES = {"R":"Ruth","S":"Shirley","T":"Theresa","Y":"You"}
     PRIZES_NAMES = {"A": 0, "B": 1, "C": 2, "D": 3}
 
     # this dict is used to determine the allocation of prizes in each round. if the round is divided into stages, then the allocation is determined by the
@@ -291,8 +292,9 @@ class TrainingRound(Page):
             "prizesPriorities":       get_prizes_priorities_by_round(player.round_number),
             "participantsPriorities": get_participants_priorities_by_round(player.round_number),
             "prizesNames":            C.PRIZES_NAMES,
-            "participantsNames":      C.PARTICIPANTS_NAMES,
+            "participantsNames":      C.PARTICIPANTS_NUMBERS,
             "expectedRanking":        get_expected_prizes_ranking_by_round(player.round_number),
+            "participantsFullNames":  C.PARTICIPANTS_FULL_NAMES,
         }
 
     @staticmethod
@@ -301,7 +303,7 @@ class TrainingRound(Page):
         player.time_stamps = 'L:'
         # initialize clicks
         player.clicks = ''
-        player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NAMES}
+        player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NUMBERS}
         # the priorities of each prize .
         player.participant.prizes_priorities = get_prizes_priorities_by_round(player.round_number)
         # the priorities of each participant .
@@ -318,7 +320,7 @@ class DAalghoInterface(Page):
             "prizesPriorities":       player.participant.prizes_priorities,
             "participantsPriorities": player.participant.participants_priorities,
             "prizesNames":            C.PRIZES_NAMES,
-            "participantsNames":      C.PARTICIPANTS_NAMES,
+            "participantsNames":      C.PARTICIPANTS_NUMBERS,
         }
 
     @staticmethod
@@ -329,12 +331,13 @@ class DAalghoInterface(Page):
             "prizesPriorities":        player.participant.prizes_priorities,
             "participantsPriorities":  player.participant.participants_priorities,
             "prizesNames":             C.PRIZES_NAMES,
-            "participantsNames":       C.PARTICIPANTS_NAMES,
+            "participantsNumbers":       C.PARTICIPANTS_NUMBERS,
             "maxParticipantsPerPrize": C.MAX_PARTICIPANTS_ASSIGNED_TO_PRIZE,
             "currentStep":             player.field_maybe_none("current_step"),
             "currentRound":            player.round_number,
             "correctAnswers":          C.CORRECT_ANSWERS_BY_ROUND[player.round_number - 1],
             "expectedMatchingByRound": C.EXPECTED_MATCHING_BY_ROUND[player.round_number - 1],
+            "participantsFullNames": C.PARTICIPANTS_FULL_NAMES
         }
 
     @staticmethod
@@ -443,7 +446,7 @@ class DAalghoInterface(Page):
             pass
         elif data['information_type'] == "reset":
             player.clicks += '|reset'
-            player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NAMES}
+            player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NUMBERS}
             player.participant.matching_memo = []
 
     @staticmethod

@@ -25,7 +25,7 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly. 
-    return [27, 7, 12, 57]
+    return [37, 7, 25, 57]
 
 
 def generate_prizes_priorities():

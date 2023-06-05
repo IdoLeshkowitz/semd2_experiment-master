@@ -8,7 +8,6 @@ function generatePrioritiesTable(players, priorities) {
         "3<sup>rd</sup> priority",
         "4<sup>th</sup> priority (lowest)"
     ];
-    
     for (var i = 0; i < prioritiesTextList.length; i++) {
         // Create a <tr> element and the leftmost <td> element
         // that contains a description of the values in that row

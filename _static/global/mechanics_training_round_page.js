@@ -4,6 +4,7 @@ const state = {
     "expectedRanking": js_vars.expectedRanking,
     "participantsPriorities": js_vars.participantsPriorities,
     "prizesPriorities": js_vars.prizesPriorities,
+    "participantsFullNames": js_vars.participantsFullNames,
 }
 
 function liveRecv(data) {
@@ -226,7 +227,7 @@ function generatePrioritiesTable() {
         "3<sup>rd</sup> priority",
         "4<sup>th</sup> priority (lowest)"
     ];
-
+    console.log(state.participantsNames)
     // for (var i = 0; i < prioritiesTextList.length; i++) {
     //     // Create a <tr> element and the leftmost <td> element
     //     // that contains a description of the values in that row
@@ -261,7 +262,8 @@ function generatePrioritiesTable() {
         row.appendChild(rowInfoCell);
         for (let prize in state.prizesNames) {
             const cell = document.createElement("td");
-            const participantName = state.prizesPriorities[prize][i];
+            const participantFirstLetter = state.prizesPriorities[prize][i];
+            const participantName = state.participantsFullNames[participantFirstLetter];
             const cellText = document.createTextNode(`${participantName}`);
             cell.appendChild(cellText);
             row.appendChild(cell);

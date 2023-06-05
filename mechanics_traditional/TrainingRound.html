@@ -1,4 +1,4 @@
-{{ block title }}{{ include "components/bonus_indicator.html" }}How the Allocation Process Works: <br>Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}{{ endblock }}
+{{ block title }}{{ include "components/bonus_indicator.html" }}How the Allocation Process Works: Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}{{ endblock }}
 
 {{ block styles}}
     <link href="{{ static 'global/styles.css' }}" rel="stylesheet">
@@ -33,9 +33,12 @@ Only after properties or mechanics
 <section id="step-1">
 <div class="explain">
     <p>
-        This is a training round.<br>
-        Please follow the instructions and answer the questions shown to you as best you can.<br>
-        The prizes are not worth money this round, but <b>you will earn <span class="money-amount">{{ 0.3 | cu }}</span></b> for completing it.</p>
+        This is a training round.<br/>
+        Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+    </p>
+    <p>
+        Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+    </p>
 </div>
     <div class="btn-container">
         <button class="btn btn-primary btn-container" id="proceed-step-1a-btn" type="button">Proceed</button>
@@ -59,7 +62,7 @@ Only after properties or mechanics
             </thead>
             <tbody>
                 <tr>
-                    <td>Addition to your earnings if you get this prize</td>
+                    <td>Money worth</td>
                     <td colspan="4">- Training round. No earnings from prizes -</td>
                 </tr>
             </tbody>
@@ -151,7 +154,7 @@ Only after properties or mechanics
 
     <div id="round-results">
         <p>
-            <b>You get Prize <span id="prize-won"></span></b>
+            <b>You get Prize <span id="prize-won"></span></b>.
         </p>
        <div class="btn-container">
             <button class="btn btn-primary" id="proceed-step-5-btn" type="button">Proceed</button>
@@ -163,7 +166,7 @@ Only after properties or mechanics
         You completed this training round!. Click the button below to proceed.
     </p>
       <div class="btn-container">
-            <button class="btn btn-primary" id="next_btn" type="submit">Proceed to next rounds</button>
+            <button class="btn btn-primary" id="next_btn" type="submit">Proceed</button>
         </div>
 </section>
 
@@ -172,5 +175,4 @@ Only after properties or mechanics
 {{ block scripts }}
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'global/mechanics_training_round_page.js' }}"></script>
-
 {{ endblock }}
