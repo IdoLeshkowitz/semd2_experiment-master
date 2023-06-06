@@ -14,62 +14,62 @@ class Group(BaseGroup):
 
 
 def make_question_1():
-    return models.IntegerField(choices=[[1, "It is determined at random."], [2, "The participant who got paired to Prize A first."],
+    return models.IntegerField(blank=True,choices=[[1, "It is determined at random."], [2, "The participant who got paired to Prize A first."],
                                         [3, "The participant for whom Prize A is in is in the highest rank."],
                                         [4, "The participant highest in Prize A’s priorities."]], label='', widget=widgets.RadioSelect)
 
 
 def make_question_2():
-    return models.IntegerField(choices=[[1, "A random prize that is currently unpaired to any participant."],
+    return models.IntegerField(blank=True,choices=[[1, "A random prize that is currently unpaired to any participant."],
                                         [2, "Their highest-rank prize among the prizes they were not yet paired with."],
                                         [3, "Their highest-rank prize."]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_3():
-    return models.IntegerField(choices=[[1, "No, there are new conflicts: two (or more) participants are paired to the same prize."],
+    return models.IntegerField(blank=True,choices=[[1, "No, there are new conflicts: two (or more) participants are paired to the same prize."],
                                         [2, "No, some participants are paired to prizes that are not in their highest rank."],
                                         [3,"Yes, it is fine that two (or more) participants are paired to the same prize because they all get different amounts of money anyway."],
                                         [4, "Yes, there are no more conflicts"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_4():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_5():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_6():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_7():
-    return models.IntegerField(choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "No"], [2, "Yes"]], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_8():
-    return models.IntegerField(choices=[[1, "I can get any prize that I was paired with at some point in the allocation process, with equal chances."],
-                                        [2, "It is certain that I will get the prize allocated to me at the end of the allocation process. [Correct]"], [3,
+    return models.IntegerField(blank=True,choices=[[1, "I can get any prize that I was paired with at some point in the allocation process, with equal chances."],
+                                        [2, "It is certain that I will get the prize allocated to me at the end of the allocation process."], [3,
                                                                                                                                                          "I can only get one of the prizes I was paired with at some point in the allocation process, but I cannot know which one."],
                                         [4,
                                          "I am more likely to get a prize I was paired with at an earlier point in the allocation process than at a later point in the process."], ], label='Answer', widget=widgets.RadioSelect)
 
 
 def make_question_9():
-    return models.IntegerField(choices=[
+    return models.IntegerField(blank=True,choices=[
         [1, "I will sometimes receive a prize which I ranked lower than any prize I was paired with during the allocation process."],
         [2, "Out of all the prizes I was paired with at some point in the allocation process, I will get the last one I was paired with."],
         [3, "If another participant does not want the prize allocated to them, then I may be able to switch prizes with them."], [4,
-                                                                                                                                  "I am as likely to get a prize I was paired with at a later point in the allocation process as to get a prize I was paired with at an earlier point in the process"]], label='Which of the following is true?(Get it right on first try to increase your bonus)', widget=widgets.RadioSelect)
+                                                                                                                                  "I am as likely to get a prize I was paired with at a later point in the allocation process as to get a prize I was paired with at an earlier point in the process"]], label='', widget=widgets.RadioSelect)
 
 
 def make_participant_field(label):
-    return models.IntegerField(choices=[[1, "R"], [2, "S"], [3, "T"], [4, "Y"]], label=label)
+    return models.IntegerField(blank=True,choices=[[1, "R"], [2, "S"], [3, "T"], [4, "Y"]], label=label)
 
 
 def make_prize(label):
-    return models.IntegerField(choices=[[1, "Obtainable"], [2, "Unobtainable"]], label=label, widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "Obtainable"], [2, "Unobtainable"]], label=label, widget=widgets.RadioSelect)
 
 
 def make_prize_a():
@@ -89,21 +89,21 @@ def make_prize_d():
 
 
 def make_obtainable_field_round_2(label):
-    return models.IntegerField(choices=[[1, "C"], [2, "D"]], label=label, widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "C"], [2, "D"]], label=label, widget=widgets.RadioSelect)
 
 
 def make_obtainable_field_round_3_4(label):
-    return models.IntegerField(choices=[[1, "A"], [2, "B"]], label=label, widget=widgets.RadioSelect)
+    return models.IntegerField(blank=True,choices=[[1, "A"], [2, "B"]], label=label, widget=widgets.RadioSelect)
 
 
 def make_prize_question():
-    return models.IntegerField(choices=[[1, "The prize that was left unpaired in the temporary allocation"],
+    return models.IntegerField(blank=True,choices=[[1, "The prize that was left unpaired in the temporary allocation"],
                                         [2, "The prize that other participants placed last in rankings on average"], [3, "The prize that I ranked the highest"],
                                         [4, "The prize at which I have the highest priority"], ], label='Answer', widget=widgets.RadioSelect)
 
 
-def make_priority_field(label):
-    return models.IntegerField(choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
+def make_priority_field(label=""):
+    return models.IntegerField(blank=True,choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
 
 
 def get_prizes_priorities_by_round(round):
@@ -189,39 +189,35 @@ class Player(BasePlayer):
     question_7 = make_question_7()
     question_8 = make_question_8()
     question_9 = make_question_9()
-    question_10 = make_priority_field("Based on the outcome of the allocation process, click on the prize that you get in this round.(Get it right on first try to increase your bonus)")
+    question_10 = make_priority_field()
     prize_a_obtainable = make_participant_field("Prize A")
     prize_b_obtainable = make_participant_field("Prize B")
     prize_c_obtainable = make_participant_field("Prize C")
     prize_d_obtainable = make_participant_field("Prize D")
 
     obtainable_prize = make_priority_field("Finally, select the prize that you get based on the allocation.")
-    obtainable_prize_round_2 = make_obtainable_field_round_2('Answer')
-    obtainable_prize_round_3_4 = make_obtainable_field_round_3_4('Answer')
-
-    incorrect_seq_question_1 = models.LongStringField(initial="")
-    incorrect_seq_question_2 = models.LongStringField(initial="")
-    incorrect_seq_question_3 = models.LongStringField(initial="")
-    incorrect_seq_question_4 = models.LongStringField(initial="")
-    incorrect_seq_question_5 = models.LongStringField(initial="")
-    incorrect_seq_question_6 = models.LongStringField(initial="")
-    incorrect_seq_question_7 = models.LongStringField(initial="")
-    incorrect_seq_question_8 = models.LongStringField(initial="")
-    incorrect_seq_question_9 = models.LongStringField(initial="")
-    incorrect_seq_question_10 = models.LongStringField(initial="")
-    incorrect_seq_prize_a_obtainable = models.LongStringField(initial="")
-    incorrect_seq_prize_b_obtainable = models.LongStringField(initial="")
-    incorrect_seq_prize_c_obtainable = models.LongStringField(initial="")
-    incorrect_seq_prize_d_obtainable = models.LongStringField(initial="")
 
 
-    incorrect_seq_obtainable_prize_round_2 = models.LongStringField(blank=True)
-    incorrect_seq_obtainable_prize_round_3_4 = models.LongStringField(blank=True)
+    incorrect_seq_question_1 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_2 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_3 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_4 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_5 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_6 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_7 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_8 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_9 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_10 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_prize_a_obtainable = models.LongStringField(initial="", blank=True)
+    incorrect_seq_prize_b_obtainable = models.LongStringField(initial="", blank=True)
+    incorrect_seq_prize_c_obtainable = models.LongStringField(initial="", blank=True)
+    incorrect_seq_prize_d_obtainable = models.LongStringField(initial="", blank=True)
 
-    allocation_dashboard_question_1 = models.LongStringField(initial="")
-    allocation_dashboard_question_2 = models.LongStringField(initial="")
-    allocation_dashboard_question_3 = models.LongStringField(initial="")
-    allocation_dashboard_question_4 = models.LongStringField(initial="")
+
+    allocation_dashboard_question_1 = models.LongStringField(initial="", blank=True)
+    allocation_dashboard_question_2 = models.LongStringField(initial="", blank=True)
+    allocation_dashboard_question_3 = models.LongStringField(initial="", blank=True)
+    allocation_dashboard_question_4 = models.LongStringField(initial="", blank=True)
 
     # Player's ranking variables
     first_priority = make_priority_field("First:")

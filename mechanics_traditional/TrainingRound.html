@@ -10,15 +10,16 @@
     <div class="modal" id="GenModal">
       <div class="modal-content">
         <span class="close">&times;</span>
-            <p>In this study, you and three computerized participants, Ruth, Shirley, and Theresa,
-              are playing rounds of a game for four prizes. <br>
-              Each prize is worth money, but is worth a different amount of money for each participant.
+            <p>
+                In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.<br/>
+                Each prize is worth money, but might be worth a different amount of money for each participant.
             </p>
-            <p>In each round, you and the computerized participants each rank the four prizes from most preferred to least preferred.<br>
-            Then, an <b>allocation process</b> uses these rankings to allocate the prizes—one prize for each participant.
+            <p>
+                You and the computerized participants will each rank the four prizes in any order you wish.<br/>
+                Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
             </p>
-            <p>The allocation process tries to give each participant a prize that they ranked higher rather
-                than a prize that they ranked lower, while taking into account the rankings of all participants.
+            <p>
+                The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
             </p>
       </div>
     </div>
@@ -72,12 +73,14 @@ Only after properties or mechanics
     <div class="modal" id="GenModal1">
       <div class="modal-content">
         <span class="close1">&times;</span>
-            <p>In Step 1, you first see the <b>prizes</b> you can get in this round.
-                Each prize is worth money, but might be worth a different amount of money for each participant. </p>
-            <p>In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.</p>
-            <p>The money amounts shown in your table can be different in different rounds of the game,
-                and they were <b>determined beforehand</b>. <br>
-                You and the other participants <b>cannot affect the money amounts</b> shown in your table.
+            <p>
+                In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>. In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings if <b>you get it</b>.
+            </p>
+            <p>
+                Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn you a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
+            </p>
+            <p>
+                The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
             </p>
       </div>
     </div><br>
@@ -108,9 +111,13 @@ Only after properties or mechanics
     <div class="modal" id="GenModal2">
       <div class="modal-content">
         <span class="close2">&times;</span>
-            <p>All four participants have some <b>priority</b> at each of the four prizes. <br>
-             These priorities can affect the allocation of prizes. </p>
-            <p>The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.</p>
+            <p>
+                All four participants have some <b>priority</b> for getting each of the four prizes.
+                These priorities can affect the allocation of prizes.
+            </p>
+            <p>
+                The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+            </p>
             <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
               For example, the column under <b>Prize A</b> shows its priorities.
               Prize A has Ruth in the 1st priority (the highest),
@@ -135,10 +142,9 @@ Only after properties or mechanics
     <div class="modal" id="GenModal3">
       <div class="modal-content">
         <span class="close3">&times;</span>
-            <p>In Step 2, you are asked to <b>rank the four prizes</b>, from most preferred to least preferred.</p>
-            <p>The computerized participants simultaneously submit their own rankings. </p>
-            <p>Their rankings are chosen <b>completely at random</b>, with each possible ranking being equally likely.<br>
-                  Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
+            <p>In Step 2, you are asked to <b>rank the four prizes</b> in an order of your choice.</p>
+            <p>The computerized participants simultaneously submit their own rankings. They <b>do not know</b> your own ranking.</p>
+            <p>Their rankings are aimed at getting them their high-earning prizes. Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
       </div>
     </div>
     {{ include_sibling "ranking_form.html" }}
@@ -154,20 +160,13 @@ Only after properties or mechanics
 
     <div id="round-results">
         <p>
-            <b>You get Prize <span id="prize-won"></span></b>.
+        You are going to perform the allocation process by yourself, according to what you learned.<br/>
+            Click on the button below to start.
         </p>
        <div class="btn-container">
-            <button class="btn btn-primary" id="proceed-step-5-btn" type="button">Proceed</button>
-        </div>
-    </div>
-</section>
-<section id="step-5">
-    <p>
-        You completed this training round!. Click the button below to proceed.
-    </p>
-      <div class="btn-container">
             <button class="btn btn-primary" id="next_btn" type="submit">Proceed</button>
         </div>
+    </div>
 </section>
 
 {{ endblock }}

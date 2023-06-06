@@ -41,7 +41,11 @@ const steps = [
         type: "instructions",
     },
     {
-        id:'instructions-3',
+        id: 'instructions-3',
+        type: 'instructions',
+    },
+    {
+        id: "instructions-4",
         type: 'instructions',
     },
     {
@@ -511,7 +515,6 @@ function reducer(state = initialState, action) {
                 }
                 return 0
             })
-            debugger
             liveSend({
                 "information_type": "question_submission",
                 question_id: currentStep.formFields.element,
@@ -630,7 +633,7 @@ function startStep(stepToBeStarted) {
     }
 }
 
-const delay = 5000;
+const delay = 7000;
 let store;
 let modal = document.getElementById("GenModal"); // Get the modal
 let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
@@ -1544,7 +1547,7 @@ function renderUiFromState(state) {
             return (
                 <>
                         <span>
-                            <b style={{fontSize: "1.5rem"}}>Unpaired participants:</b>
+                            <b style={{fontSize: "1.5rem"}}>Pick participants to pair →</b>
                         </span>
                     {Object.keys(participants).map((_, index) => {
                         const participantName = participants[index].participantName

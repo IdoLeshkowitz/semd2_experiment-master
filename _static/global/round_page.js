@@ -134,6 +134,8 @@ window.onclick = function (event) {
 }// When the user clicks anywhere outside of the modal, close it
 
 var modal1 = document.getElementById("GenModal1");
+var modal2 = document.getElementById("GenModal2");
+var btn2 = document.getElementById("GenBtn2");
 var btn1 = document.getElementById("GenBtn1");
 var span1 = document.getElementsByClassName("close1")[0];
 btn1.onclick = function () {
