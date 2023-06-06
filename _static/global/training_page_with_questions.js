@@ -212,6 +212,8 @@ $("#question4-btn").click(function () {
     $("#question4-btn").hide();
     $("#question4 .incorrect-msg").hide();
     $("#next").slideDown();
+    const next_btn = document.querySelector("#next_btn");
+    next_btn.scrollIntoView(true);
     mistakesCounter = 0;
     /*    button = document.getElementById('proceed-step-3-btn');
         button.scrollIntoView(true);*/

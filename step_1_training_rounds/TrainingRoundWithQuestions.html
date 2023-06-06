@@ -295,8 +295,6 @@ need to program conditions
         I just submitted some ranking and got some prize. It is possible that if I had submitted a different ranking, my ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.<br/>
         (Get it right on first try to increase your bonus)
     </p>
-        
-
         {{ formfield 'competitors_rank_independence' }}
         <div class="incorrect_seq_competitors_rank_independence">
             {{ formfield 'incorrect_seq_competitors_rank_independence' }}
@@ -322,8 +320,8 @@ need to program conditions
         </div>
 </section>
 <section id="next">
-    <div style="text-align: center">
-        {{ next_button }}
+    <div class="btn-container">
+            <button class="btn btn-danger btn-question" id="next_btn" type="submit">Next</button>
     </div>
 </section>
 
