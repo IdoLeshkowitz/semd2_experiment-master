@@ -91,4 +91,10 @@ class Understanding_test(Page):
                    "second_situation_a", "second_situation_b", "second_situation_c", "second_situation_d",
                    "third_situation_a", "third_situation_b", "third_situation_c", "third_situation_d"]
 
+    @staticmethod
+    def live_method(player: Player, data):
+        if data['information_type'] == "add_understanding_bonus":
+            points = data["points"]
+            player.participant.understanding_bonus += points
+
 page_sequence = [Understanding_test]

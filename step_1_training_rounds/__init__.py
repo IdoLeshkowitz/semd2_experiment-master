@@ -164,8 +164,7 @@ class C(BaseConstants):
     PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
     PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
     # QUESTIONS_ANSWERS = questions_answers()
-    QUESTIONS_ANSWERS = {"independence": "False", "value_table": "False", "self_rank_independence": "False",
-                         "competitors_rank_independence": "False"}
+    QUESTIONS_ANSWERS = {"independence": "False", "value_table": "False", "self_rank_independence": "False", "competitors_rank_independence": "False"}
 
 
 class Subsession(BaseSubsession):
@@ -203,11 +202,10 @@ class TrainingRoundWithQuestions(Page):
     def get_form_fields(player: Player):
         priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
         if player.round_number == 1:
-            training_questions = ["independence", "value_table", "self_rank_independence",
-                                  "competitors_rank_independence"]
+            training_questions = ["independence", "value_table", "self_rank_independence", "competitors_rank_independence"]
             # Fields for tracking incorrect answers for round 1 only.
-            incorrect_answers = ["incorrect_seq_independence", "incorrect_seq_value_table",
-                                 "incorrect_seq_self_rank_independence", "incorrect_seq_competitors_rank_independence"]
+            incorrect_answers = ["incorrect_seq_independence", "incorrect_seq_value_table", "incorrect_seq_self_rank_independence",
+                                 "incorrect_seq_competitors_rank_independence"]
             return priorities + training_questions + incorrect_answers
         else:
             return priorities
@@ -216,18 +214,17 @@ class TrainingRoundWithQuestions(Page):
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1],
-                    prizes_priorities=C.PRIZES_PRIORITIES[player.round_number - 1], players=C.PLAYERS,
-                    players_rankings=C.PLAYERS_RANKINGS[player.round_number - 1], questions_answers=C.QUESTIONS_ANSWERS,
-                    round_number=player.round_number)
+        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1], prizes_priorities=C.PRIZES_PRIORITIES[
+            player.round_number - 1], players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS[
+            player.round_number - 1], questions_answers=C.QUESTIONS_ANSWERS, round_number=player.round_number)
 
     @staticmethod
     def live_method(player: Player, data):
         print(data)
-        if data["information_type"] == "add_understanding_bonus":
+        if "information_type" in data and data["information_type"] == "add_understanding_bonus":
             points = data["points"]
             player.participant.understanding_bonus += points
-        else :
+        else:
             """
             Recieves a data stracture from the client side, calls the
             Differed-Acceptance algorithm and sends the client side the
@@ -260,21 +257,21 @@ class TrainingRoundWithQuestions(Page):
             user_prize = matching[0][0]
             # since the prizes are in cents, we need to divide by 100 to get the real value
             payoff = round(values[user_prize] / 100, 2)
-            response = dict(prize=prizes[user_prize], value=cu(values[user_prize]),payoff=payoff)
+            response = dict(prize=prizes[user_prize], value=cu(values[user_prize]), payoff=payoff)
             return {0: response}
 
     def before_next_page(player: Player, timeout_happened):
         if player.round_number > 1:
-            player.participant.understanding_bonus +=1
-
+            player.participant.understanding_bonus += 1
 
     @staticmethod
     def vars_for_template(player: Player):
-        return {'firstPrize': C.PRIZES_VALUES[player.round_number - 1][0] / 100,
-                'secondPrize': C.PRIZES_VALUES[player.round_number - 1][1] / 100,
-                'thirdPrize': C.PRIZES_VALUES[player.round_number - 1][2] / 100,
-                'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100}
-
+        return {
+            'firstPrize':  C.PRIZES_VALUES[player.round_number - 1][0] / 100,
+            'secondPrize': C.PRIZES_VALUES[player.round_number - 1][1] / 100,
+            'thirdPrize':  C.PRIZES_VALUES[player.round_number - 1][2] / 100,
+            'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100
+            }
 
 
 page_sequence = [TrainingRoundWithQuestions]

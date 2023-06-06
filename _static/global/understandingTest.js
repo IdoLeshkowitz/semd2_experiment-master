@@ -25,6 +25,7 @@ document.querySelector(".otree-btn-next").addEventListener("click", function (e)
 
 function checkAllElements(allElements, allErrors) {
     let allValid = true;
+    let understanding_bonus_counter = 0;
     for (let radioElementsGroup of allElements) {
         /*
         radioElementsGroup is an array of radio elements
@@ -34,7 +35,13 @@ function checkAllElements(allElements, allErrors) {
         if incorrect then show incorrect answer error message.
          */
         if (Array(...radioElementsGroup).some(radioElement => radioElement.checked)){
-            continue
+            // at least one element is checked
+            const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
+            if (checkedElement.value.trim() !== expectedResults[checkedElement.name]){
+                // checked answer is incorrect
+                allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = errorMessages["incorrect"]
+                understanding_bonus_counter += 1;
+            }
         }
         else{
             // no element is checked
@@ -44,6 +51,12 @@ function checkAllElements(allElements, allErrors) {
         }
         /* answer is correct */
         allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = ""
+    }
+    if (understanding_bonus_counter === 0){
+        liveSend({
+            "information_type":"add_understanding_bonus",
+            "points":understanding_bonus_counter,
+        })
     }
     return allValid;
 }

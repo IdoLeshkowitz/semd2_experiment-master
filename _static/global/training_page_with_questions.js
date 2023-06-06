@@ -204,14 +204,13 @@ $("#question4-btn").click(function () {
         $("#question4 .correct-first-msg").hide();
     }else{
         sendBonus(1)
-        $("#question4 .correct-first-msg").show();
         $("#question4 .correct-msg").hide();
+        $("#question4 .correct-first-msg").show();
     }
     /* disbale input elements */
     document.querySelector("#question4 input").disabled = true;
     $("#question4-btn").hide();
     $("#question4 .incorrect-msg").hide();
-    $("#question4 .correct-msg").show();
     $("#next").slideDown();
     mistakesCounter = 0;
     /*    button = document.getElementById('proceed-step-3-btn');

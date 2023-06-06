@@ -322,6 +322,8 @@ PARTICIPANT_FIELDS = ["trajectory_num",'matchingalgho',  # History of the partic
     "consent",
     "understanding_bonus",
     "max_understanding_bonus",
+    "full_name",
+    "email"
                       ]
 SESSION_FIELDS = []
 
