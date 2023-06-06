@@ -633,7 +633,7 @@ function startStep(stepToBeStarted) {
     }
 }
 
-const delay = 200;
+const delay =7000;
 let store;
 let modal = document.getElementById("GenModal"); // Get the modal
 let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
