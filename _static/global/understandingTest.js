@@ -34,14 +34,7 @@ function checkAllElements(allElements, allErrors) {
         if incorrect then show incorrect answer error message.
          */
         if (Array(...radioElementsGroup).some(radioElement => radioElement.checked)){
-            // at least one element is checked
-            const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
-            if (checkedElement.value.trim() !== expectedResults[checkedElement.name]){
-                // checked answer is incorrect
-                allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = errorMessages["incorrect"]
-                allValid = false;
-                continue
-            }
+            continue
         }
         else{
             // no element is checked

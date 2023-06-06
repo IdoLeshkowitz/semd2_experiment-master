@@ -269,8 +269,5 @@ class TrainingRoundWithQuestions(Page):
                 'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100}
 
 
-class EndTraining(Page):
-    def is_displayed(player: Player):
-        return player.round_number == C.NUM_ROUNDS
 
-page_sequence = [TrainingRoundWithQuestions,EndTraining]
+page_sequence = [TrainingRoundWithQuestions]
