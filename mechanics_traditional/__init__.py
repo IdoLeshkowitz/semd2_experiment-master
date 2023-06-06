@@ -381,13 +381,13 @@ class DAalghoInterface(Page):
                 player.allocation_dashboard_question_3 += create_submission_string(matching,is_correct,understanding_bonus)
             elif stage == 3:
                 player.allocation_dashboard_question_4 += create_submission_string(matching,is_correct,understanding_bonus)
-            player.understanding_bonus += understanding_bonus
+            player.participant.understanding_bonus += understanding_bonus
         elif data['information_type'] == 'question_submission':
             question_id = data['question_id']
             answer = data['answer']
             is_correct = data['is_correct']
             understanding_bonus = data['understanding_bonus']
-            player.understanding_bonus += understanding_bonus
+            player.participant.understanding_bonus += understanding_bonus
             def create_question_submission_string(answer, is_correct, understanding_bonus):
                 def get_correct_answer_string(is_correct):
                     if is_correct:

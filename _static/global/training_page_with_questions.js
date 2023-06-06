@@ -68,6 +68,7 @@ $("#proceed-question1-btn").click(function () {
 $("#question1-btn").click(function () {
     var formInputName = "independence";
     if (forminputs[formInputName].value != "False") {
+        mistakesCounter++;
         $("#question1 .incorrect-msg").show();
         return;
     }
@@ -75,25 +76,42 @@ $("#question1-btn").click(function () {
     document.querySelector("#question1 input").disabled = true;
     $("#question1-btn").hide();
     $("#question1 .incorrect-msg").hide();
-    $("#question1 .correct-msg").show();
+    if (mistakesCounter > 0) {
+        $("#question1 .correct-msg").show();
+        $("#question1 .correct-first-msg").hide();
+    }else{
+        sendBonus(1)
+        $("#question1 .correct-first-msg").show();
+        $("#question1 .correct-msg").hide();
+    }
     $("#question2").slideDown();
     button = document.getElementById('question2-btn');
     button.scrollIntoView(true);
+    mistakesCounter = 0;
 });
 $("#question2-btn").click(function () {
     var formInputName = "value_table";
     if (forminputs[formInputName].value != "False") {
+        mistakesCounter++;
         $("#question2 .incorrect-msg").show();
         return;
     }
     /* disbale input elements */
     document.querySelector("#question2 input").disabled = true;
     $("#question2-btn").hide();
+    if (mistakesCounter > 0) {
+        $("#question2 .correct-msg").show();
+        $("#question2 .correct-first-msg").hide();
+    }else{
+        sendBonus(1)
+        $("#question2 .correct-first-msg").show();
+        $("#question2 .correct-msg").hide();
+    }
     $("#question2 .incorrect-msg").hide();
-    $("#question2 .correct-msg").show();
     $("#step-2").slideDown();
     button = document.getElementById('proceed-question3-btn');
     button.scrollIntoView(true);
+    mistakesCounter = 0;
 });
 $("#proceed-question3-btn").click(function () {
     $(this).hide();
@@ -104,17 +122,26 @@ $("#proceed-question3-btn").click(function () {
 $("#question3-btn").click(function () {
     var formInputName = "self_rank_independence";
     if (forminputs[formInputName].value != "False") {
+        mistakesCounter++;
         $("#question3 .incorrect-msg").show();
         return;
+    }
+    if (mistakesCounter > 0) {
+        $("#question3 .correct-msg").show();
+        $("#question3 .correct-first-msg").hide();
+    }else{
+        sendBonus(1)
+        $("#question3 .correct-first-msg").show();
+        $("#question3 .correct-msg").hide();
     }
     /* disbale input elements */
     document.querySelector("#question3 input").disabled = true;
     $("#question3-btn").hide();
     $("#question3 .incorrect-msg").hide();
-    $("#question3 .correct-msg").show();
     $("#step-3").slideDown();
     button = document.getElementById('proceed-step-3-btn');
     button.scrollIntoView(true);
+    mistakesCounter = 0;
 });
 $("#proceed-step-3-btn").click(function () {
     $(this).hide();
@@ -167,8 +194,17 @@ $("#proceed-question4-btn").click(function () {
 $("#question4-btn").click(function () {
     var formInputName = "competitors_rank_independence";
     if (forminputs[formInputName].value != "False") {
+        mistakesCounter++;
         $("#question4 .incorrect-msg").show();
         return;
+    }
+    if (mistakesCounter > 0) {
+        $("#question4 .correct-msg").show();
+        $("#question4 .correct-first-msg").hide();
+    }else{
+        sendBonus(1)
+        $("#question4 .correct-first-msg").show();
+        $("#question4 .correct-msg").hide();
     }
     /* disbale input elements */
     document.querySelector("#question4 input").disabled = true;
@@ -176,6 +212,7 @@ $("#question4-btn").click(function () {
     $("#question4 .incorrect-msg").hide();
     $("#question4 .correct-msg").show();
     $("#next").slideDown();
+    mistakesCounter = 0;
     /*    button = document.getElementById('proceed-step-3-btn');
         button.scrollIntoView(true);*/
 });
@@ -236,7 +273,8 @@ $("#next").click(function () {
 
 var players = js_vars.players;
 var prizes = js_vars.prizes;
-
+const roundNumber = js_vars.round_number;
+let mistakesCounter = 0 ;
 var prizesValues = js_vars.prizes_values;
 var prizesPriorities = js_vars.prizes_priorities;
 
@@ -336,4 +374,11 @@ window.onclick = function (event) {
     if (event.target == modal3) {
         modal3.style.display = "none";
     }
+}
+
+function sendBonus(points){
+        liveSend({
+            "information_type":"add_understanding_bonus",
+            "points": points,
+        })
 }
