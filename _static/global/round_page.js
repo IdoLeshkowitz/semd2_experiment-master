@@ -40,7 +40,6 @@ function liveRecv(data) {
     const evaluatedPrizeValue = data['value'];
     const currentCurrency = getCurrentCurrency()
     const evaluatedPrizeString = getEvaluatedPrizeString(evaluatedPrizeValue, currentCurrency);
-    debugger
     $("#prize-won").text(data.prize);
     $("#points-won").text(evaluatedPrizeString);
     $("#load").slideUp();
