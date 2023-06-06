@@ -12,6 +12,13 @@ Training Round {{ player.round_number }}/2{{ endblock }}
 <!--</p>-->
 
 {{if player.round_number == 1}}
+<style>
+    .correct-first-msg {
+    color: green;
+    text-align: center;
+    margin: 1rem 0;
+}
+</style>
 <!--first general pop up window-->
 <button class="button-2" id="GenBtn" type="button">Click for a general reminder on this study</button><br>
     <div class="modal" id="GenModal">

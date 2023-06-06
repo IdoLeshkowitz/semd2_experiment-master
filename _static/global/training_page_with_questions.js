@@ -53,6 +53,7 @@ function liveRecv(data) {
 
 
 /*FRAMES*/
+$(".correct-first-msg").hide()
 $("#proceed-step-1a-btn").click(function () {
     $(this).hide();
     $("#step-1a").slideDown();

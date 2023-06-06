@@ -264,7 +264,9 @@ class TrainingRoundWithQuestions(Page):
             return {0: response}
 
     def before_next_page(player: Player, timeout_happened):
-        pass
+        if player.round_number > 1:
+            player.participant.understanding_bonus +=1
+
 
     @staticmethod
     def vars_for_template(player: Player):

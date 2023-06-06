@@ -123,3 +123,9 @@
 .cancelButton:hover {
     background-color: #00e9c4;
 }
+
+.correct-first-msg {
+    color: green;
+    text-align: center;
+    margin: 1rem 0;
+}
