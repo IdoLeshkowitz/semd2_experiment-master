@@ -1,0 +1,32 @@
+{{ block content }}
+    <section id="self_rank_independence">
+        <p> Please determine whether the following statement is true or false:</p>
+        <p>
+            If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize might <b>increase</b>.<br/>
+            (Get it right on first try to increase your bonus)
+        </p>
+            {{ formfield 'self_rank_independence' }}
+            <div class="incorrect_seq_self_rank_independence">
+                {{ formfield 'incorrect_seq_self_rank_independence' }}
+            </div>
+            <div class="btn-container">
+                    <button class="btn btn-danger btn-question" id="question3-btn" type="button">Submit</button>
+            </div>
+            <div class="incorrect-msg">
+                <p>
+                    Incorrect answer. Please try again.
+                </p>
+            </div>
+            <div class="correct-msg">
+                <p>
+                    Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.
+                </p>
+            </div>
+            <div class="correct-first-msg">
+                <p>
+                    Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.<br/>
+                    Good job on the first try! This will count for your Understanding Bonus.
+                </p>
+            </div>
+    </section>
+{{ endblock }}

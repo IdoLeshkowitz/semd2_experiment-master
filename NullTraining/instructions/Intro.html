@@ -1,0 +1,20 @@
+{{ block content }}
+    <section id="intro">
+        <p>
+            This is a training round.<br/>
+            {{ if player.round_number == 1 }}
+            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+            {{ else }}
+            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, completing this round will count for your <b>Understanding Bonus</b> at the end of the study. .
+            {{ endif }}
+        </p>
+        {{ if player.round_number == 1 }}
+            <p>
+                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+            </p>
+        {{ endif }}
+        <div class="btn-container">
+            <button class="btn btn-primary btn-container" type="button">Proceed</button>
+        </div>
+    </section>
+{{ endblock }}

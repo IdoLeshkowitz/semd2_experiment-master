@@ -1,0 +1,32 @@
+{{ block content }}
+    <section id="competitors_rank_independence">
+        <p> Please determine whether the following statement is true or false:</p>
+        <p>
+            I just submitted some ranking and got some prize. It is possible that if I had submitted a different ranking, my ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.<br/>
+            (Get it right on first try to increase your bonus)
+        </p>
+            {{ formfield 'competitors_rank_independence' }}
+            <div class="incorrect_seq_competitors_rank_independence">
+                {{ formfield 'incorrect_seq_competitors_rank_independence' }}
+            </div>
+            <div class="btn-container">
+                <button class="btn btn-danger btn-question" type="button">Submit</button>
+            </div>
+            <div class="incorrect-msg">
+                <p>
+                    Incorrect answer. Please try again.
+                </p>
+            </div>
+            <div class="correct-msg">
+                <p>
+                    Correct! Your own ranking cannot affect the other participants' rankings..
+                </p>
+            </div>
+            <div class="correct-first-msg">
+                <p>
+                    Correct! Your own ranking cannot affect the other participants' rankings.<br/>
+                    Good job on the first try! This will count for your Understanding Bonus.
+                </p>
+            </div>
+    </section>
+{{ endblock }}

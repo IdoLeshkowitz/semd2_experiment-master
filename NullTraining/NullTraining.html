@@ -1,0 +1,58 @@
+{{ block scripts }}
+    <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+    <script src="{{ static 'global/generate_priorities_table.js' }}"></script>
+{{ endblock }}
+
+{{ block styles}}
+    <link href="{{ static 'global/styles.css' }}" rel="stylesheet">
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f5aad88875.js"></script> <!-- Font Awesome -->
+{{ endblock }}
+
+{{ block title }}
+    {{ include "components/bonus_indicator.html" }}
+    Training Round {{ player.round_number }}/2
+{{ endblock }}
+
+{{ block content }}
+    <style>
+        .correct-first-msg {
+            color: green;
+            text-align: center;
+            margin: 1rem 0;
+        }
+    </style>
+    <button class="button-2" id="GenBtn" type="button">Click for a general reminder on this study</button><br>
+    <div class="modal" id="GenModal">
+      <div class="modal-content">
+        <span class="close">&times;</span>
+            <p>
+                In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.<br/>
+                Each prize is worth money, but might be worth a different amount of money for each participant.
+            </p>
+            <p>
+                You and the computerized participants will each rank the four prizes in any order you wish.<br/>
+                Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
+            </p>
+            <p>
+                The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
+            </p>
+      </div>
+    </div>
+    {{ include "NullTraining/instructions/Intro.html" }}
+    {{ include "NullTraining/instructions/PrizesTable.html" }}
+    {{ if player.round_number == 1 }}
+        {{ include "NullTraining/questions/Independence.html" }}
+        {{ include "NullTraining/questions/ValueTable.html" }}
+    {{ endif }}
+    {{ include "NullTraining/instructions/PrizePriorities.html" }}
+    {{ if player.round_number == 1}}
+        {{ include "NullTraining/questions/SelfRankIndependence.html" }}
+    {{ endif }}
+        {{ include "NullTraining/questions/RankingForm.html" }}
+        {{ include "NullTraining/instructions/AllocationResults.html" }}
+    {{ if player.round_number == 1 }}
+        {{ include "NullTraining/questions/CompetitorsRankIndependence.html" }}
+    {{ endif }}
+{{ endblock }}
+
+

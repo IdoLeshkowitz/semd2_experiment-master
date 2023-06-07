@@ -124,7 +124,7 @@ def da(preferences):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'step_1_null_description'
+    NAME_IN_URL = 'NullIntro'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
@@ -150,7 +150,7 @@ class Player(BasePlayer):
 
 
 # PAGES
-class NullDescription(Page):
+class NullIntro(Page):
     form_model = "player"
     form_fields = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
 
@@ -206,4 +206,4 @@ class NullDescription(Page):
     def before_next_page(player: Player, timeout_happened):
         player.session.vars['stam'] = "stam"
 
-page_sequence = [NullDescription]
+page_sequence = [NullIntro]

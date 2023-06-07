@@ -1,6 +1,8 @@
-from otree.api import *
-import time, random
+import random
+import time
+
 import numpy
+from otree.api import *
 
 doc = """
 Your app description
@@ -10,12 +12,6 @@ Your app description
 # def questions_answers():
 #     return {"independence": "False", "value-table": "False",
 #             "self-rank-independence": "False", "competitors-rank-independence": "False"}
-
-
-def make_boolean_field(label):
-    return models.BooleanField(choices=[[True, "True"], [False, "False"]], label=label, widget=widgets.RadioSelect)
-
-
 def generate_prizes_values():
     """
     Returns a randomly generated list of the values (in pennies)
@@ -65,10 +61,6 @@ def generate_priorities(first_group, second_group):
 
 def generate_priorities_list(first_group, second_group, num_rounds):
     return [generate_priorities(first_group, second_group) for _ in range(num_rounds)]
-
-
-def make_priority_field(label):
-    return models.IntegerField(choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
 
 
 def da(preferences):
@@ -158,12 +150,11 @@ class C(BaseConstants):
     NAME_IN_URL = 'step_1_training_rounds'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
-    PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
+    PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
-    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
-    PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
-    # QUESTIONS_ANSWERS = questions_answers()
+    PRIZE_PRIORITIES = generate_priorities_list(PRIZES, PARTICIPANTS, NUM_ROUNDS)
+    PARTICIPANT_PRIORITIES = generate_priorities_list(PARTICIPANTS[1:], PRIZES, NUM_ROUNDS)  # for all participants except the player "You"
     QUESTIONS_ANSWERS = {"independence": "False", "value_table": "False", "self_rank_independence": "False", "competitors_rank_independence": "False"}
 
 
@@ -177,45 +168,43 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # Player's ranking variables
-    first_priority = make_priority_field("First:")
-    second_priority = make_priority_field("Second:")
-    third_priority = make_priority_field("Third:")
-    fourth_priority = make_priority_field("Fourth:")
+    first_priority = models.StringField()
+    second_priority = models.StringField()
+    third_priority = models.StringField()
+    fourth_priority = models.StringField()
 
-    # for questions
-    independence = make_boolean_field(label="Answer:")
-    value_table = make_boolean_field(label="Answer:")
-    self_rank_independence = make_boolean_field(label="Answer:")
-    competitors_rank_independence = make_boolean_field(label="Answer:")
     # Fields for saving each question's incorrect submitted answers
-    incorrect_seq_independence = models.LongStringField(blank=True)
-    incorrect_seq_value_table = models.LongStringField(blank=True)
-    incorrect_seq_self_rank_independence = models.LongStringField(blank=True)
-    incorrect_seq_competitors_rank_independence = models.LongStringField(blank=True)
+    independence_actions = models.LongStringField(blank=True)
+    value_table_actions = models.LongStringField(blank=True)
+    self_rank_independence_actions = models.LongStringField(blank=True)
+    competitors_rank_independence_actions = models.LongStringField(blank=True)
 
 
 # PAGES
-class TrainingRoundWithQuestions(Page):
+class NullTraining(Page):
     form_model = "player"
 
     @staticmethod
     def get_form_fields(player: Player):
         priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
+        questions_actions = ["independence_actions", "value_table_actions", "self_rank_independence_actions", "competitors_rank_independence_actions"]
         if player.round_number == 1:
-            training_questions = ["independence", "value_table", "self_rank_independence", "competitors_rank_independence"]
-            # Fields for tracking incorrect answers for round 1 only.
-            incorrect_answers = ["incorrect_seq_independence", "incorrect_seq_value_table", "incorrect_seq_self_rank_independence",
-                                 "incorrect_seq_competitors_rank_independence"]
-            return priorities + training_questions + incorrect_answers
-        else:
-            return priorities
-
-        # return priorities + training_questions + incorrect_answers
+            return questions_actions + priorities
+        elif player.round_number == 2:
+            return questions_actions
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1], prizes_priorities=C.PRIZES_PRIORITIES[
-            player.round_number - 1], players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS[
+        return {
+            "round_number":           player.round_number,
+            "prizes":                 C.PRIZES,
+            "participants":           C.PARTICIPANTS,
+            "prize_priorities":       C.PRIZE_PRIORITIES[player.round_number - 1],
+            "participant_priorities": C.PARTICIPANT_PRIORITIES[player.round_number - 1],
+
+        }
+        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1], prizes_priorities=C.PRIZE_PRIORITIES[
+            player.round_number - 1], players=C.PARTICIPANTS, players_rankings=C.PARTICIPANT_PRIORITIES[
             player.round_number - 1], questions_answers=C.QUESTIONS_ANSWERS, round_number=player.round_number)
 
     @staticmethod
@@ -271,7 +260,7 @@ class TrainingRoundWithQuestions(Page):
             'secondPrize': C.PRIZES_VALUES[player.round_number - 1][1] / 100,
             'thirdPrize':  C.PRIZES_VALUES[player.round_number - 1][2] / 100,
             'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100
-            }
+        }
 
 
-page_sequence = [TrainingRoundWithQuestions]
+page_sequence = [NullTraining]

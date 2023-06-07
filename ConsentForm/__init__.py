@@ -7,7 +7,7 @@ Your app description
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'consent_form'
+    NAME_IN_URL = 'ConsentForm'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 

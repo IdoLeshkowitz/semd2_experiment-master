@@ -1,0 +1,43 @@
+{{ block content }}
+    <section id="prizes-table">
+        <h4>Step 1: Round Information</h4>
+        <p>In this round, your <b>prizes</b> are:</p>
+        <table id="prize-table">
+            <thead>
+                <tr>
+                    <th>Prize</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                </tr>
+                <tr>
+                    <td>Money worth</td>
+                    <td class="money-amount">{{ firstPrize | cu }}</td>
+                    <td class="money-amount">{{ secondPrize | cu }}</td>
+                    <td class="money-amount">{{ thirdPrize | cu }}</td>
+                    <td class="money-amount">{{ fourthPrize | cu }}</td>
+                </tr>
+            </thead>
+        </table><br/>
+        <!--second pop up window-->
+        <button class="button-2" id="GenBtn1" type="button">Click for a reminder on what the prizes mean</button><br>
+        <div class="modal" id="GenModal1">
+          <div class="modal-content">
+            <span class="close1">&times;</span>
+                <p>
+                    In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>. In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings if <b>you get it</b>.
+                </p>
+                <p>
+                    Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn you a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
+                </p>
+                <p>
+                    The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
+                </p>
+          </div>
+        </div><br/>
+        <div class="btn-container">
+            <button class="btn btn-primary btn-container" id="proceed-question1-btn" type="button">Proceed</button>
+        </div>
+    </section>
+{{ endblock }}

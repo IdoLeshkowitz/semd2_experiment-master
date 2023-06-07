@@ -1,0 +1,32 @@
+{{ block content }}
+    <section id="value_table">
+        <p>Please determine whether the following statement is true or false:</p>
+            <p>
+                Every participant, including me and the computerized participants, has the same earnings table.<br/>
+                (Get it right on first try to increase your bonus)
+            </p>
+            {{ formfield 'value_table' }}
+               <div class="incorrect_seq_value_table">
+                    {{ formfield 'incorrect_seq_value_table' }}
+                </div>
+                <div class="btn-container">
+                    <button class="btn btn-danger btn-question" id="question2-btn" type="button">Submit</button>
+                </div>
+                <div class="incorrect-msg">
+                    <p>
+                        Incorrect answer. Please try again.
+                    </p>
+                </div>
+                <div class="correct-msg">
+                    <p>
+                        Correct! Each prize might be worth a different amount for each participant.
+                    </p>
+                </div>
+                <div class="correct-first-msg">
+                    <p>
+                        Correct! Each prize might be worth a different amount for each participant.<br/>
+                        Good job on the first try! This will count for your Understanding Bonus.
+                    </p>
+                </div>
+    </section>
+{{ endblock }}

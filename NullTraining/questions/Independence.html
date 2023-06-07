@@ -1,0 +1,30 @@
+{{ block content }}
+    <section id="independence">
+        <p>Please determine whether the following statement is true or false:</p>
+        <p>If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
+        (Get it right on first try to increase your bonus)
+            {{ formfield 'independence' }}
+               <div class="incorrect_seq_independence">
+                    {{ formfield 'incorrect_seq_independence' }}
+                </div>
+                <div class="btn-container">
+                    <button class="btn btn-danger btn-question" id="question1-btn" type="button">Submit</button>
+                </div>
+                <div class="incorrect-msg">
+                    <p>
+                        Incorrect answer. Please try again.
+                    </p>
+                </div>
+                <div class="correct-msg">
+                    <p>
+                        Correct! Your own ranking cannot affect the money worth of prizes shown in your table, which are determined beforehand.
+                    </p>
+                </div>
+                <div class="correct-first-msg">
+                    <p>
+                        Correct! Your own ranking cannot affect the money worth of prizes shown in your table, which are determined beforehand.<br/>
+                        Good job on the first try! This will count for your Understanding Bonus.
+                    </p>
+                </div>
+    </section>
+{{ endblock }}
