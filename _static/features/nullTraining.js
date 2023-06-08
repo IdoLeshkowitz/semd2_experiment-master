@@ -532,9 +532,9 @@ function renderUiFromState(step) {
         }   
         function RankingModal(props){
             return (
-                <div className="modal" id="GenModal3" onClick={props.onClose}>
+                <div className="modal" id="GenModal3" style={{display:'flex'}} onClick={props.onClose}>
                     <div className="modal-content" onClick={(e)=>{e.stopPropagation()}}>
-                        <span className="close3">&times;</span>
+                        <span className="close3" style={{cursor:'pointer'}} onClick={props.onClose}>&times;</span>
                         <p>In Step 2, you are asked to <b>rank the four prizes</b> in an order of your choice.</p>
                         <p>The computerized participants simultaneously submit their own rankings. They <b>do not know</b> your own ranking.</p>
                         <p>Their rankings are aimed at getting them their high-earning prizes. Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
