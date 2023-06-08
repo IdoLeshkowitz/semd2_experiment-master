@@ -1,3 +1,5 @@
+from datetime import datetime, timezone
+
 from otree.api import *
 import time, random
 import numpy
@@ -127,11 +129,11 @@ class C(BaseConstants):
     NAME_IN_URL = 'NullIntro'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
+    PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values()
     PRIZES_PRIORITIES = generate_prizes_priorities()
-    PLAYERS_RANKINGS = generate_players_rankings()
+    PARTICIPANTS_PRIORITIES = generate_players_rankings()
 
 
 class Subsession(BaseSubsession):
@@ -143,12 +145,22 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    first_priority = make_priority_field("First:")
-    second_priority = make_priority_field("Second:")
-    third_priority = make_priority_field("Third:")
-    fourth_priority = make_priority_field("Fourth:")
+    first_priority = models.StringField(blank=True)
+    second_priority = models.StringField(blank=True)
+    third_priority = models.StringField(blank=True)
+    fourth_priority = models.StringField(blank=True)
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField(blank=True)
+    prizes_values = models.StringField(blank=True)
+    prizes_priorities = models.StringField(blank=True)
+    participants_priorities = models.StringField(blank=True)
+    allocated_prize = models.StringField(blank=True)
 
 
+def convert_participant_index_to_name(index):
+    return C.PARTICIPANTS[index]
+def convert_prize_index_to_name(index):
+    return C.PRIZES[index]
 # PAGES
 class NullIntro(Page):
     form_model = "player"
@@ -157,10 +169,14 @@ class NullIntro(Page):
     @staticmethod
     def js_vars(player: Player):
         return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES, prizes_priorities=C.PRIZES_PRIORITIES,
-                    players=C.PLAYERS, players_rankings=C.PLAYERS_RANKINGS)
+                    players=C.PARTICIPANTS, players_rankings=C.PARTICIPANTS_PRIORITIES)
 
     def before_next_page(player: Player, timeout_happened):
-        player.payoff += 0.3
+        print("here")
+        player.participants_priorities = str([{C.PARTICIPANTS[index]:[convert_prize_index_to_name(prize)for prize in participant_priorities]}for index,participant_priorities in enumerate( C.PARTICIPANTS_PRIORITIES)])
+        player.prizes_priorities = str([{C.PRIZES[index]:[convert_participant_index_to_name(participant)for participant in prize_priorities]}for index,prize_priorities in enumerate( C.PRIZES_PRIORITIES)])
+        player.prizes_values = str({prize : round(C.PRIZES_VALUES[index] / 100 ,2)for index,prize in enumerate(C.PRIZES)})
+        player.end_time = str(datetime.now(timezone.utc))
 
     @staticmethod
     def vars_for_template(player: Player):
@@ -195,15 +211,19 @@ class NullIntro(Page):
         #       works fine, we should consider refactoring all the source code to avoid redundant
         #       transfer of data.
         preferences = data["preferences"]
+        user_ranking = data["preferences"][0][0]
+        player.first_priority = C.PRIZES[user_ranking[0]]
+        player.second_priority = C.PRIZES[user_ranking[1]]
+        player.third_priority = C.PRIZES[user_ranking[2]]
+        player.fourth_priority = C.PRIZES[user_ranking[3]]
         prizes = data["prizes"]
         values = data["values"]
         matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
         user_prize = matching[0][0]
+        player.allocated_prize = C.PRIZES[user_prize]
         # since prize is in cents convert to dollars
         payoff = round(values[user_prize] / 100, 2)
         response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
-    def before_next_page(player: Player, timeout_happened):
-        player.session.vars['stam'] = "stam"
 
 page_sequence = [NullIntro]
