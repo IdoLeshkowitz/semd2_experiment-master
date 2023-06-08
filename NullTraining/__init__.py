@@ -172,10 +172,10 @@ class Player(BasePlayer):
     end_time = models.StringField()
 
     # Fields for saving each question's incorrect submitted answers
-    independence_actions = models.LongStringField()
-    value_table_actions = models.LongStringField()
-    self_rank_independence_actions = models.LongStringField()
-    competitors_rank_independence_actions = models.LongStringField()
+    independence_actions = models.LongStringField(initial="")
+    value_table_actions = models.LongStringField(initial="")
+    self_rank_independence_actions = models.LongStringField(initial="")
+    competitors_rank_independence_actions = models.LongStringField(initial="")
 
 
 # PAGES
@@ -226,11 +226,11 @@ class NullTraining(Page):
             preferences = prizes_priorities + participants_priorities
             print(preferences)
             values = list((C.PRIZES_VALUES[player.round_number - 1]).values())
-            matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
-            user_prize = matching[0][0]
-            prizes = C.PRIZES
-            response = {"prize_name": prizes[user_prize], "prize_value": values[user_prize]}
-            return {player.id_in_group: response}
+            # matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
+            # user_prize = matching[0][0]
+            # prizes = C.PRIZES
+            # response = {"prize_name": prizes[user_prize], "prize_value": values[user_prize]}
+            return {player.id_in_group: 'response'}
         if data["information_type"] == "question_submission":
             question_id = data["question_id"]
             if question_id == "independence":
