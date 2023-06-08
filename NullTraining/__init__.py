@@ -1,4 +1,5 @@
 import random
+import time
 from datetime import datetime, timezone
 
 import numpy
@@ -56,6 +57,19 @@ def generate_priorities(first_group, second_group):
 
 def generate_priorities_list(first_group, second_group, num_rounds):
     return [generate_priorities(first_group, second_group) for _ in range(num_rounds)]
+
+
+def convert_priorities_dict_to_list(priorities_dict):
+    return [[priorities_dict[key][i] for i in range(len(priorities_dict[key]))] for key in priorities_dict.keys()]
+
+
+def convert_prizes_names_to_indexes(prizes_priorities, prizes_list):
+    return [[prizes_list.index(prizes_priorities[i][j]) for j in range(len(prizes_priorities[i]))] for i in range(len(prizes_priorities))]
+
+
+def convert_participants_names_to_indexes(participants_priorities, participants_list):
+    return [[participants_list.index(participants_priorities[i][j]) for j in range(len(participants_priorities[i]))] for i in
+            range(len(participants_priorities))]
 
 
 def da(preferences):
@@ -146,6 +160,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
+    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [4, 1]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = [generate_prizes_values() for _ in range(NUM_ROUNDS)]
     PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PARTICIPANTS, NUM_ROUNDS)
@@ -163,19 +178,25 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # Player's ranking variables
-    first_priority = models.StringField()
-    second_priority = models.StringField()
-    third_priority = models.StringField()
-    fourth_priority = models.StringField()
-    allocated_prize = models.StringField()
+    first_priority = models.StringField(blank=True)
+    second_priority = models.StringField(blank=True)
+    third_priority = models.StringField(blank=True)
+    fourth_priority = models.StringField(blank=True)
+    allocated_prize = models.StringField(blank=True)
     start_time = models.StringField(initial=datetime.now(timezone.utc))
-    end_time = models.StringField()
+    end_time = models.StringField(blank=True)
+    understanding_bonus_from_round = models.IntegerField(initial=0)
+
+    understanding_bonus_limit = models.IntegerField(initial="")
+    prizes_values = models.LongStringField(initial="", blank=True)
+    prizes_priorities = models.LongStringField(initial="", blank=True)
+    participants_priorities = models.LongStringField(initial="", blank=True)
 
     # Fields for saving each question's incorrect submitted answers
-    independence_actions = models.LongStringField(initial="")
-    value_table_actions = models.LongStringField(initial="")
-    self_rank_independence_actions = models.LongStringField(initial="")
-    competitors_rank_independence_actions = models.LongStringField(initial="")
+    independence_actions = models.LongStringField(blank=True, initial="")
+    value_table_actions = models.LongStringField(initial="", blank=True)
+    self_rank_independence_actions = models.LongStringField(initial="", blank=True)
+    competitors_rank_independence_actions = models.LongStringField(initial="", blank=True)
 
 
 # PAGES
@@ -207,30 +228,29 @@ class NullTraining(Page):
     @staticmethod
     def live_method(player: Player, data):
         if data["information_type"] == "ranking_form_submission":
+            participants_priorities = data["participants_priorities"]
+            prizes_priorities = data["prizes_priorities"]
+            # convert dicts to lists
+            enumerated_participants_priorities = convert_priorities_dict_to_list(participants_priorities)
+            enumerated_prizes_priorities = convert_priorities_dict_to_list(prizes_priorities)
+            # convert prize and participants names in indexes
+            enumerated_prizes_priorities = convert_participants_names_to_indexes(enumerated_prizes_priorities, C.PARTICIPANTS)
+            enumerated_participants_priorities = convert_prizes_names_to_indexes(enumerated_participants_priorities, C.PRIZES)
+            preferences = [enumerated_participants_priorities, enumerated_prizes_priorities]
+            matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
+            user_prize_index = matching[0][0]
+            user_prize_name = C.PRIZES[user_prize_index]
+            user_prize_value = C.PRIZES_VALUES[player.round_number - 1][user_prize_name]
+            response = {"prize_name": user_prize_name, "prize_value": user_prize_value, "information_type": "allocation_results"}
             # save the player's ranking
-            user_ranking = data["participants_priorities"]["You"]
-            player.first_priority = user_ranking[0]
-            player.second_priority = user_ranking[1]
-            player.third_priority = user_ranking[2]
-            player.fourth_priority = user_ranking[3]
-            # resolve the matching
-            participants_priorities = [data["participants_priorities"][participant] for participant in data["participants_priorities"]]
-            prizes_priorities = [C.PRIZES_PRIORITIES[player.round_number - 1][prize] for prize in C.PRIZES_PRIORITIES[player.round_number - 1]]
-            # convert prize names to indices
-            for prize_priorities in prizes_priorities:
-                for i, prize in enumerate(prize_priorities):
-                    prize_priorities[i] = C.PARTICIPANTS.index(prize)
-            for participant_priorities in participants_priorities:
-                for i, prize in enumerate(participant_priorities):
-                    participant_priorities[i] = C.PRIZES.index(prize)
-            preferences = prizes_priorities + participants_priorities
-            print(preferences)
-            values = list((C.PRIZES_VALUES[player.round_number - 1]).values())
-            # matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
-            # user_prize = matching[0][0]
-            # prizes = C.PRIZES
-            # response = {"prize_name": prizes[user_prize], "prize_value": values[user_prize]}
-            return {player.id_in_group: 'response'}
+            player.first_priority = participants_priorities["You"][0]
+            player.second_priority = participants_priorities["You"][1]
+            player.third_priority = participants_priorities["You"][2]
+            player.fourth_priority = participants_priorities["You"][3]
+            # save the allocated prize
+            player.allocated_prize = user_prize_name
+            time.sleep(2)
+            return {player.id_in_group: response}
         if data["information_type"] == "question_submission":
             question_id = data["question_id"]
             if question_id == "independence":
@@ -241,11 +261,18 @@ class NullTraining(Page):
                 player.self_rank_independence_actions += str(data)
             elif question_id == "competitors_rank_independence":
                 player.competitors_rank_independence_actions += str(data)
+            understanding_bonus_from_question = data['understanding_bonus']
+            player.understanding_bonus_from_round += understanding_bonus_from_question
             return {player.id_in_group: data}
 
     def before_next_page(player: Player, timeout_happened):
+        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
+        player.prizes_values += str(C.PRIZES_VALUES[player.round_number - 1])
+        player.prizes_priorities += str(C.PRIZES_PRIORITIES[player.round_number - 1])
+        player.participants_priorities += str(C.PARTICIPANTS_PRIORITIES[player.round_number - 1])
         if player.round_number > 1:
-            player.participant.understanding_bonus += 1
+            player.understanding_bonus_from_round += C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
+        player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
 
 

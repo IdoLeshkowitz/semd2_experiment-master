@@ -45,7 +45,6 @@ function renderUiFromState(step) {
             const [rankingModal, setRankingModal] = React.useState(false);
             const [activeSteps, setActiveSteps] = React.useState([initialStep])
             const [buttonRole, setButtonRole] = React.useState("next");
-            const [allocationLoader, setAllocationLoader] = React.useState(false);
             const sectionsRefs = {
                 "intro": React.useRef(null),
                 "prize_table": React.useRef(null),
@@ -175,7 +174,7 @@ function renderUiFromState(step) {
                     }
                     errorMessage.classList.add("hidden");
                     input.disabled = true;
-                    setButtonRole("next");
+                    onNext(e);
                     const participantsPriorities = {
                         "You":[firstPriority, secondPriority, thirdPriority, fourthPriority],
                         ...props.participantsPriorities
@@ -183,11 +182,11 @@ function renderUiFromState(step) {
                     liveSend({
                         information_type: "ranking_form_submission",
                         participants_priorities: participantsPriorities,
+                        prizes_priorities: props.prizesPriorities,
                     })
                 }
            }
-            function onNext(e){
-                e.preventDefault();
+            function onNext(){
                 const currentStep = activeSteps.at(-1);
                 const stepIndex = stepsInRound.findIndex((possibleStep) => possibleStep === currentStep.id);
                 const isLastStep = stepIndex === stepsInRound.length - 1;
@@ -209,11 +208,8 @@ function renderUiFromState(step) {
                     setButtonRole("submit");
                 }
                 if (nextStep.type === "allocationResults") {
-                    setAllocationLoader(true);
+                    setButtonRole("next");
                     setActiveSteps([...activeSteps, nextStep]);
-                    setTimeout(() => {
-                        setAllocationLoader(false);
-                    }, 2000);
                 }
             }
             return (
@@ -459,16 +455,9 @@ function renderUiFromState(step) {
                             <button className="button-2" id="GenBtn3" type="button" onClick={()=>{setRankingModal(true)}}>Click for a reminder on what this ranking means</button><br/>
                             <p>Please rank the four prizes in an order of your choice.</p>
                             <RankingForm refs={rankingFormRefs}/>
-                            <div class="btn-container">
-                                <Button 
-                                    type="button"
-                                    className="btn btn-danger btn-container"
-                                    onClick={onClick}
-                                    text={buttonRole === "submit" ? "Submit":"Proceed"}
-                                >
-                                    Submit ranking
-                                </Button><br/>
-                            </div>
+                            { activeSteps.at(-1).id === "ranking_form" &&
+                                <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
+                            }
                             <div className="incorrect-msg hidden" ref={rankingFormRefs.error_message}>
                                 <p>You submitted an invalid ranking. Please resubmit.</p>
                             </div>
@@ -477,13 +466,6 @@ function renderUiFromState(step) {
                     { activeSteps.some(step=>step.id === "allocation_results") &&
                         <section ref={sectionsRefs.allocation_results}>
                             <h4>Step 3: Allocation Process</h4>
-                                { allocationLoader && 
-                                    <div id="load">
-                                        <p>
-                                            Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
-                                        </p>
-                                    </div>
-                                }
                                 { props.roundNumber === 1 &&
                                     <div class="explain">
                                         <p>
@@ -499,8 +481,47 @@ function renderUiFromState(step) {
                                         </p>
                                     </div>
                                 }
-                                <div id="round-results" />
+                                    <div  id="round-results">
+                                        <p>
+                                            Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+                                        </p>
+                                    </div>
+                                { activeSteps.at(-1).id === "allocation_results" &&
+                                    <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
+                                }
                         </section>
+                    }
+                    { activeSteps.some(step=>step.id === "competitors_rank_independence") &&
+                        <section ref={sectionsRefs.competitors_rank_independence}>
+                            <p>Please determine whether the following statement is true or false:</p>
+                            <p>
+                                I just submitted some ranking and got some prize. It is possible that if I had submitted a different ranking, my ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                            <p>
+                                <div className="radio">
+                                    <input type="radio" name="competitors_rank_independence" value={0} id="competitors_rank_independence-0" onChange={(e)=>{questionsRefs.competitors_rank_independence.value.current = e.target.value}} />
+                                    <label htmlFor="competitors_rank_independence-0">True</label>
+                                </div>
+                                <div className="radio">
+                                    <input type="radio" name="competitors_rank_independence" value={1} id="competitors_rank_independence-1" onChange={(e)=>{questionsRefs.competitors_rank_independence.value.current = e.target.value}} />
+                                    <label htmlFor="competitors_rank_independence-1">False</label>
+                                </div>
+                            </p>
+                            { activeSteps.at(-1).id === "competitors_rank_independence" &&
+                                <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
+                            }
+                            <div class="incorrect-msg hidden" ref={questionsRefs.competitors_rank_independence.incorrect}>
+                                <p>Incorrect answer. Please try again.</p>
+                            </div>
+                            <div class="correct-msg hidden" ref={questionsRefs.competitors_rank_independence.correct}>
+                                 <p>Correct! Your own ranking cannot affect the other participants' rankings..</p>
+                            </div>
+                            <div class="correct-first-msg hidden" ref={questionsRefs.competitors_rank_independence.correctFirstAttempt}>
+                                <p>Correct! Your own ranking cannot affect the other participants' rankings.<br/>
+                                Good job on the first try! This will count for your Understanding Bonus.</p>
+                            </div>                                 
+                       </section> 
                     }
                 </div>
             )
@@ -667,15 +688,16 @@ function renderAllocationResults(prizeName,prizeValue){
             }
     }
     function AllocationResults(props){
+    const moneyString = getMoneyString(props.prizeValue, props.currency);
         return (
              <p>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
-                If this were a real round, your total earning would increase by <span id="points-won">{getMoneyString(props.prizeValue)}</span>.<br/>
+                If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
                 { props.roundNumber === 1 &&
-                    Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.
+                    <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
                 }
                 { props.roundNumber !== 1 &&
-                    Since this is a training round, it will count for your Understanding Bonus.
+                   <span> Since this is a training round, it will count for your Understanding Bonus.</span>
                 }
             </p>
         )
