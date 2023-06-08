@@ -1,5 +1,5 @@
 import random
-import time
+from datetime import datetime, timezone
 
 import numpy
 from otree.api import *
@@ -29,12 +29,8 @@ def generate_prizes_values():
     # TODO: This function needs to be randomized.
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
-    #       adjust the values list accordingly. 
-    return [27, 57, 12, 7]
-
-
-def generate_prizes_values_list(num_rounds):
-    return [generate_prizes_values() for _ in range(num_rounds)]
+    #       adjust the values list accordingly.
+    return {"A": 0.27, "B": 0.57, "C": 0.12, "D": 0.7}
 
 
 def generate_priorities(first_group, second_group):
@@ -55,8 +51,7 @@ def generate_priorities(first_group, second_group):
         a list of lists of indices where each index is the location of individual i
         in second_group.
     """
-    players_indices = list(range(len(second_group)))
-    return [random.sample(players_indices, len(second_group)) for _ in first_group]
+    return {item: random.sample(second_group, len(second_group)) for item in first_group}
 
 
 def generate_priorities_list(first_group, second_group, num_rounds):
@@ -152,9 +147,9 @@ class C(BaseConstants):
     NUM_ROUNDS = 2
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
-    PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
-    PRIZE_PRIORITIES = generate_priorities_list(PRIZES, PARTICIPANTS, NUM_ROUNDS)
-    PARTICIPANT_PRIORITIES = generate_priorities_list(PARTICIPANTS[1:], PRIZES, NUM_ROUNDS)  # for all participants except the player "You"
+    PRIZES_VALUES = [generate_prizes_values() for _ in range(NUM_ROUNDS)]
+    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PARTICIPANTS, NUM_ROUNDS)
+    PARTICIPANTS_PRIORITIES = generate_priorities_list(PARTICIPANTS[1:], PRIZES, NUM_ROUNDS)  # for all participants except the player "You"
     QUESTIONS_ANSWERS = {"independence": "False", "value_table": "False", "self_rank_independence": "False", "competitors_rank_independence": "False"}
 
 
@@ -172,6 +167,9 @@ class Player(BasePlayer):
     second_priority = models.StringField()
     third_priority = models.StringField()
     fourth_priority = models.StringField()
+    allocated_prize = models.StringField()
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField()
 
     # Fields for saving each question's incorrect submitted answers
     independence_actions = models.LongStringField(blank=True)
@@ -196,71 +194,53 @@ class NullTraining(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
-            "round_number":           player.round_number,
+            "roundNumber":            player.round_number,
             "prizes":                 C.PRIZES,
             "participants":           C.PARTICIPANTS,
-            "prize_priorities":       C.PRIZE_PRIORITIES[player.round_number - 1],
-            "participant_priorities": C.PARTICIPANT_PRIORITIES[player.round_number - 1],
-
-        }
-        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1], prizes_priorities=C.PRIZE_PRIORITIES[
-            player.round_number - 1], players=C.PARTICIPANTS, players_rankings=C.PARTICIPANT_PRIORITIES[
-            player.round_number - 1], questions_answers=C.QUESTIONS_ANSWERS, round_number=player.round_number)
+            "prizesPriorities":       C.PRIZES_PRIORITIES[player.round_number - 1],
+            "participantsPriorities": C.PARTICIPANTS_PRIORITIES[player.round_number - 1],
+            "roundNumber":            player.round_number,
+            "currency":               player.session.config["currency"],
+            "prizesValues":           C.PRIZES_VALUES[player.round_number - 1],
+        }  # return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1], prizes_priorities=C.PRIZE_PRIORITIES[  #     player.round_number - 1], players=C.PARTICIPANTS, players_rankings=C.PARTICIPANT_PRIORITIES[  #     player.round_number - 1], questions_answers=C.QUESTIONS_ANSWERS, round_number=player.round_number)
 
     @staticmethod
     def live_method(player: Player, data):
-        print(data)
-        if "information_type" in data and data["information_type"] == "add_understanding_bonus":
-            points = data["points"]
-            player.participant.understanding_bonus += points
-        else:
-            """
-            Recieves a data stracture from the client side, calls the
-            Differed-Acceptance algorithm and sends the client side the
-            player's matched prize and its value
-    
-            Parameters
-            ----------
-            player: Player
-                Otree's object representing the current player.
-            data: dictionary
-                A data set with all the information needed from the client side
-                for the matching algorithm.
-            Returns
-            -------
-            dictionary
-                A data set with the player's matched prize and its value.
-            """
-            # Sleep for 2 seconds to give the feeling the allocation process
-            # takes more time than it really is (which practically 0 in our case).
-            time.sleep(2)
-            # TODO: Back when this was implemented, all the rounds data was determined
-            #       in the frontend side (preferences of competitors and prizes, prizes values, etc.).
-            #       Now, everything is implemented in the backend side. So, while everything still
-            #       works fine, we should consider refactoring all the source code to avoid redundant
-            #       transfer of data.
-            preferences = data["preferences"]
-            prizes = data["prizes"]
-            values = data["values"]
+        if data["information_type"] == "ranking_form_submission":
+            # save the player's ranking
+            user_ranking = data["participants_priorities"]["You"]
+            player.first_priority = user_ranking[0]
+            player.second_priority = user_ranking[1]
+            player.third_priority = user_ranking[2]
+            player.fourth_priority = user_ranking[3]
+            # resolve the matching
+            preferences = [data["participants_priorities"][participant] for participant in data["participants_priorities"]]
+            for (i, preference) in enumerate(preferences):
+                preferences[i] = [C.PRIZES.index(prize) for prize in preference]
+            print(preferences)
+            values = list((C.PRIZES_VALUES[player.round_number - 1]).values())
             matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
             user_prize = matching[0][0]
-            # since the prizes are in cents, we need to divide by 100 to get the real value
-            payoff = round(values[user_prize] / 100, 2)
-            response = dict(prize=prizes[user_prize], value=cu(values[user_prize]), payoff=payoff)
-            return {0: response}
+            prizes = C.PRIZES
+            response = {"prize_name": prizes[user_prize], "prize_value": values[user_prize]}
+            return {player.id_in_group: response}
+        if data["information_type"] == "question_submission":
+            question_id = data["question_id"]
+            if question_id == "independence":
+                player.independence_actions += str(data)
+            elif question_id == "value_table":
+                player.value_table_actions += str(data)
+            elif question_id == "self_rank_independence":
+                player.self_rank_independence_actions += str(data)
+            elif question_id == "competitors_rank_independence":
+                player.competitors_rank_independence_actions += str(data)
+            return {player.id_in_group: data}
+
 
     def before_next_page(player: Player, timeout_happened):
         if player.round_number > 1:
             player.participant.understanding_bonus += 1
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        return {
-            'firstPrize':  C.PRIZES_VALUES[player.round_number - 1][0] / 100,
-            'secondPrize': C.PRIZES_VALUES[player.round_number - 1][1] / 100,
-            'thirdPrize':  C.PRIZES_VALUES[player.round_number - 1][2] / 100,
-            'fourthPrize': C.PRIZES_VALUES[player.round_number - 1][3] / 100
-        }
+        player.end_time = str(datetime.now(timezone.utc))
 
 
 page_sequence = [NullTraining]

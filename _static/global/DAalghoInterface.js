@@ -16,8 +16,6 @@ const initialState = {
     "expectedMatchingByRound": js_vars.expectedMatchingByRound,
 }
 const ACTION_TYPES = {
-    START_STEP: 'START_STEP',
-    END_STEP: 'END_STEP',
     PARTICIPANT_SELECTED: 'PARTICIPANT_SELECTED',
     PLUS_BUTTON_CLICKED: 'PLUS_BUTTON_CLICKED',
     RENDER: 'RENDER',
@@ -249,9 +247,6 @@ function reducer(state = initialState, action) {
         const newState = {...state, selectedParticipant}
         renderUiFromState(newState)
         return {...state, selectedParticipant}
-    }
-    if (action.type === ACTION_TYPES.RENDER) {
-        renderUiFromState(state)
     }
     if (action.type === ACTION_TYPES.HIDE_ALL_SECTIONS) {
         $("section").hide();
@@ -662,20 +657,17 @@ window.addEventListener('DOMContentLoaded', (event) => {
         stepToBeStarted = steps.find((step) => store.getState().currentStep === step.id)
     } else {
         const currentRoundSteps = getStepsByRound(store.getState().currentRound)
-        console.log(currentRoundSteps)
         stepToBeStarted = currentRoundSteps[0]
     }
     store.dispatch({type: ACTION_TYPES.SET_CURRENT_STEP, payload: stepToBeStarted})
     store.dispatch({type: ACTION_TYPES.HIDE_ALL_SECTIONS})
     startStep(stepToBeStarted)
-    // store.dispatch({type: ACTION_TYPES.NEXT_BUTTON_CLICKED})
-    store.dispatch({type: ACTION_TYPES.RENDER})
+    renderUiFromState(store.getState())
     liveSend({'information_type': 'onload', 'time': Date.now()})
     $("button").click(function (event) {
         event.preventDefault()
     })
     $("section button").click(function (event) {
-        console.log($(this).attr("id"))
         if ($(this).attr("id") == "submit-page") {
             document.getElementById("form").submit();
             return
@@ -684,296 +676,6 @@ window.addEventListener('DOMContentLoaded', (event) => {
     })
 });
 
-function submitButton() {
-    $('#finishModal').modal('show');
-}
-
-function dismissFinishModal() {
-    $('#finishModal').modal('hide');
-}
-
-/*function liveRecv(data) {
-    if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
-        student = data['student'];
-        updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.
-        openPlus();
-    } else if (data['information_type'] === 'student_unmatched') { // The student was unmatched if it was previously matched. Else, it wasn't matched.
-        containment = data['matched_number'];
-        partial = data['partialmatching'];
-        student = 0; // before the update function is executed.
-        updateCurrentMatching();
-    } else if (data['information_type'] === 'student_matched') { // student was matched by clicking on a plus button.
-        containment = data['matched_number'];
-        partial = data['partialmatching'];
-        student = 0; // before the update function is executed.
-        updateCurrentMatching();
-    } else if (data['information_type'] === 'ready_for_rematch') { // A matched student's button was pressed, ready to remach.
-        student = data['student']; // before the update function is executed.
-        updateCurrentMatching(); // It is important for this function to be executed first (but after setting the student variable)!! It is like a reset of the system before the rest is activated.
-        openPlus();
-    } else if (data['information_type'] === 'canceled_rematch') {
-        student = 0;
-        updateCurrentMatching();
-    } else if (data['information_type'] === 'matching_status') {
-        if (data['round'] == 1) {
-            if (data['status']) {
-                mistakes_counter = 0;
-                if (stage == 1) {
-                    $("#step-3 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-3 .correct-first-msg").show();
-                    } else {
-                        $("#step-3 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-3").hide();
-                        $("#step-4").toggle();
-                    }, 2000);
-                }
-                if (stage == 2) {
-                    $("#step-4 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-4 .correct-first-msg").show();
-                    } else {
-                        $("#step-4 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-4").hide();
-                        $("#step-5").toggle();
-                    }, 2000);
-                }
-                if (stage == 3) {
-                    $("#step-7 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-7 .correct-first-msg").show();
-                    } else {
-                        $("#step-7 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-7").hide();
-                        $("#step-8").toggle();
-                    }, 2000);
-                }
-                if (stage == 4) {
-                    $("#step-9 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-9 .correct-first-msg").show();
-                    } else {
-                        $("#step-9 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-9").hide();
-                        $("#step-10").toggle();
-                    }, 2000);
-                }
-                if (stage == 5) {
-                    $("#step-11 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-11 .correct-first-msg").show();
-                    } else {
-                        $("#step-11 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-11").hide();
-                        $("#step-12").toggle();
-                    }, 2000);
-                }
-                if (stage == 6) {
-                    $("#step-13 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-13 .correct-first-msg").show();
-                    } else {
-                        $("#step-13 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-13").hide();
-                        $("#step-14").toggle();
-                    }, 2000);
-                }
-                if (stage == 7) {
-                    $("#step-15 .incorrect-msg").hide();
-                    if (bonus_flag) {
-                        bonus = bonus + 1;
-                        $("#step-15 .correct-first-msg").show();
-                    } else {
-                        $("#step-11 .correct-msg").show();
-                    }
-                    bonus_flag = true;
-                    setTimeout(() => {
-                        $("#step-15").hide();
-                        $("#step-16").toggle();
-                    }, 2000);
-                }
-                stage = stage + 1;
-            } else {
-                bonus_flag = false;
-                mistakes_counter = mistakes_counter + 1;
-                if (stage == 1) {
-                    if (mistakes_counter < 3) {
-                        $("#step-3 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-3 .incorrect-msg").hide();
-                        $("#step-3 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-3").hide();
-                            $("#step-4").toggle();
-                        }, 5000);
-                        return;
-                    }
-                }
-                if (stage == 2) {
-                    if (mistakes_counter < 3) {
-                        $("#step-4 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-4 .incorrect-msg").hide();
-                        $("#step-4 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-4").hide();
-                            $("#step-5").toggle();
-                        }, 5000);
-                        return;
-                    }
-                }
-                if (stage == 3) {
-                    if (mistakes_counter < 3) {
-                        $("#step-7 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-7 .incorrect-msg").hide();
-                        $("#step-7 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-7").hide();
-                            $("#step-8").toggle();
-                        }, 5000);
-                        return;
-                    }
-                }
-                if (stage == 4) {
-                    if (mistakes_counter < 3) {
-                        $("#step-9 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-9 .incorrect-msg").hide();
-                        $("#step-9 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-9").hide();
-                            $("#step-10").toggle();
-                        }, 5000);
-                        return;
-                    }
-                }
-                if (stage == 5) {
-                    if (mistakes_counter < 3) {
-                        $("#step-11 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-11 .incorrect-msg").hide();
-                        $("#step-11 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-11").hide();
-                            $("#step-12").toggle();
-                        }, 5000);
-                        return;
-                    }
-                }
-                if (stage == 6) {
-                    if (mistakes_counter < 3) {
-                        $("#step-13 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-13 .incorrect-msg").hide();
-                        $("#step-13 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-13").hide();
-                            $("#step-14").toggle();
-                        }, 5000);
-                        return;
-                    }
-                }
-                if (stage == 7) {
-                    if (mistakes_counter < 3) {
-                        $("#step-15 .incorrect-msg").show();
-                        updateMatching(data['matching']);
-                    } else {
-                        mistakes_counter = 0;
-                        bonus_flag = true;
-                        $("#step-15 .incorrect-msg").hide();
-                        $("#step-15 .incorrect-skip-msg").show();
-                        updateMatching(data['next_matching']);
-                        stage = stage + 1;
-                        setTimeout(() => {
-                            $("#step-15").hide();
-                            $("#step-16").toggle();
-                        }, 5000);
-
-                    }
-                }
-            }
-        } else {
-            if (data['status']) {
-                $("#step-2-rounds .incorrect-msg").hide();
-                $("#step-2-rounds .correct-msg").show();
-                setTimeout(() => {
-                    $("#step-2-rounds .btn-container").hide();
-                    $("#step-3-rounds").show();
-                }, 2000);
-            } else {
-                mistakes_counter = mistakes_counter + 1;
-                if (mistakes_counter < 3) {
-                    $("#step-2-rounds .incorrect-msg").show();
-                } else {
-                    $("#step-2-rounds .incorrect-msg").hide();
-                    $("#step-2-rounds .incorrect-skip-msg").show();
-                    updateMatching(data['correct_allocation']);
-                    setTimeout(() => {
-                        $("#step-2-rounds .btn-container").hide();
-                        $("#step-3-rounds").show();
-                    }, 5000);
-                }
-            }
-        }
-    } else if (data['information_type'] === 'submit') {
-        document.getElementById('form').submit();
-    }
-}*/
 function getStepsByRound(round) {
     if (round === 1) {
         return steps.filter(step => !step.id.includes("rounds"))
@@ -1069,7 +771,6 @@ function renderUiFromState(state) {
             }
         })
         renderReactComponent(jsxCode, "prizes-priorities-table", "PrizesPrioritiesTable", JSON.stringify(prizesPrioritiesProps))
-
     }
 
     function renderParticipantsPrioritiesTable() {
