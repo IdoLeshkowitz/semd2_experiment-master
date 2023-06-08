@@ -19,7 +19,7 @@ const steps = [
     }, {
         id: 'allocation_results', type: 'allocationResults',
     }, {
-        id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 0,
+        id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 1,
     }
 ]
 const stepsDividedToRounds = [
@@ -57,29 +57,29 @@ function renderUiFromState(step) {
                 "competitors_rank_independence": React.useRef(null),
             }
             const questionsRefs = {
-                // "independence": React.useRef(null),
-                // "value_table": React.useRef(null),
-                // "self_rank_independence": React.useRef(null),
-                // "competitors_rank_independence": React.useRef(null),
                 independence: {
+                    input: React.useRef(null),
                     value: React.useRef(null),
                     incorrect: React.useRef(null),
                     correct: React.useRef(null),
                     correctFirstAttempt: React.useRef(null), 
                 },
                 value_table: {
+                    input: React.useRef(null),
                     value: React.useRef(null),
                     incorrect: React.useRef(null),
                     correct: React.useRef(null),
                     correctFirstAttempt: React.useRef(null),
                 },
                 self_rank_independence: {
+                    input: React.useRef(null),
                     value: React.useRef(null),
                     incorrect: React.useRef(null),
                     correct: React.useRef(null),
                     correctFirstAttempt: React.useRef(null),
                 },
                 competitors_rank_independence: {
+                    input: React.useRef(null),
                     value: React.useRef(null),
                     incorrect: React.useRef(null),
                     correct: React.useRef(null),
@@ -146,6 +146,13 @@ function renderUiFromState(step) {
                                 if (correct === null) return ;
                                 correct.classList.remove("hidden");
                             }
+                            /* disable inputs */
+                            const parentElement = questionsRefs[currentStep.id].input.current;
+                            if (parentElement === null) return ;
+                            const inputs = parentElement.querySelectorAll("input");
+                            inputs.forEach((input) => {
+                                input.disabled = true;
+                            })
                             mistakesCounter.current = 0;
                             setButtonRole("next");
                         }
@@ -278,7 +285,7 @@ function renderUiFromState(step) {
                                 If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
-                            <p>
+                            <p ref={questionsRefs.independence.input}>
                                 <div className="radio">
                                     <input type="radio" name="independence" value={0} id="independence-0" onChange={(e)=>{questionsRefs.independence.value.current = e.target.value}} />
                                     <label htmlFor="independence-0">True</label>
@@ -315,7 +322,7 @@ function renderUiFromState(step) {
                                 Every participant, including me and the computerized participants, has the same earnings table.<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
-                            <p>
+                            <p ref={questionsRefs.value_table.input}>
                                 <div className="radio">
                                     <input type="radio" name="value_table" value={0} id="value_table-0" onChange={(e)=>{questionsRefs.value_table.value.current = e.target.value}} />
                                     <label htmlFor="value_table-0">True</label>
@@ -424,7 +431,7 @@ function renderUiFromState(step) {
                                 If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize might <b>increase</b>.<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
-                            <p>
+                            <p ref={questionsRefs.self_rank_independence.input}>
                                 <div className="radio">
                                     <input type="radio" name="self_rank_independence" value={0} id="self_rank_independence-0" onChange={(e)=>{questionsRefs.self_rank_independence.value.current = e.target.value}} />
                                     <label htmlFor="self_rank_independence-0">True</label>
@@ -498,7 +505,7 @@ function renderUiFromState(step) {
                                 I just submitted some ranking and got some prize. It is possible that if I had submitted a different ranking, my ranking would have <b>affected the other participants’ rankings</b> such that I would have gotten a different prize.<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
-                            <p>
+                            <p ref={questionsRefs.competitors_rank_independence.input}>
                                 <div className="radio">
                                     <input type="radio" name="competitors_rank_independence" value={0} id="competitors_rank_independence-0" onChange={(e)=>{questionsRefs.competitors_rank_independence.value.current = e.target.value}} />
                                     <label htmlFor="competitors_rank_independence-0">True</label>
