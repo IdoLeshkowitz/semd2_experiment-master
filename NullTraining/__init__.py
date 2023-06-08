@@ -172,10 +172,10 @@ class Player(BasePlayer):
     end_time = models.StringField()
 
     # Fields for saving each question's incorrect submitted answers
-    independence_actions = models.LongStringField(blank=True)
-    value_table_actions = models.LongStringField(blank=True)
-    self_rank_independence_actions = models.LongStringField(blank=True)
-    competitors_rank_independence_actions = models.LongStringField(blank=True)
+    independence_actions = models.LongStringField()
+    value_table_actions = models.LongStringField()
+    self_rank_independence_actions = models.LongStringField()
+    competitors_rank_independence_actions = models.LongStringField()
 
 
 # PAGES
@@ -214,9 +214,16 @@ class NullTraining(Page):
             player.third_priority = user_ranking[2]
             player.fourth_priority = user_ranking[3]
             # resolve the matching
-            preferences = [data["participants_priorities"][participant] for participant in data["participants_priorities"]]
-            for (i, preference) in enumerate(preferences):
-                preferences[i] = [C.PRIZES.index(prize) for prize in preference]
+            participants_priorities = [data["participants_priorities"][participant] for participant in data["participants_priorities"]]
+            prizes_priorities = [C.PRIZES_PRIORITIES[player.round_number - 1][prize] for prize in C.PRIZES_PRIORITIES[player.round_number - 1]]
+            # convert prize names to indices
+            for prize_priorities in prizes_priorities:
+                for i, prize in enumerate(prize_priorities):
+                    prize_priorities[i] = C.PARTICIPANTS.index(prize)
+            for participant_priorities in participants_priorities:
+                for i, prize in enumerate(participant_priorities):
+                    participant_priorities[i] = C.PRIZES.index(prize)
+            preferences = prizes_priorities + participants_priorities
             print(preferences)
             values = list((C.PRIZES_VALUES[player.round_number - 1]).values())
             matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
@@ -235,7 +242,6 @@ class NullTraining(Page):
             elif question_id == "competitors_rank_independence":
                 player.competitors_rank_independence_actions += str(data)
             return {player.id_in_group: data}
-
 
     def before_next_page(player: Player, timeout_happened):
         if player.round_number > 1:

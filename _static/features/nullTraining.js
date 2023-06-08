@@ -32,8 +32,11 @@ window.addEventListener("load", () => {
 
 function renderUiFromState(step) {
     const jsxCode = `
+        function MoreStam(){
+            return (<div>MoreStam</div>)
+        }
         function Stam(){
-            return <div>Stam</div>
+            return (<div>Stam</div>)
         }
         function NullTrainingPage(props){
             const {initialStep, stepsInRound,roundNumber,prizePriorities,currency} = props;
@@ -177,7 +180,6 @@ function renderUiFromState(step) {
                         "You":[firstPriority, secondPriority, thirdPriority, fourthPriority],
                         ...props.participantsPriorities
                     }
-                    console.log(participantsPriorities)
                     liveSend({
                         information_type: "ranking_form_submission",
                         participants_priorities: participantsPriorities,
