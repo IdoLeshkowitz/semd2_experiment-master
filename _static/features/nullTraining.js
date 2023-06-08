@@ -488,14 +488,11 @@ function renderUiFromState(step) {
                                         </p>
                                     </div>
                                 }
-                                    <div  id="round-results">
+                                    <div  id="round-results" onClick={onClick}>
                                         <p>
                                             Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
                                         </p>
-                                    </div>
-                                { activeSteps.at(-1).id === "allocation_results" &&
-                                    <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
-                                }
+                                    </div> 
                         </section>
                     }
                     { activeSteps.some(step=>step.id === "competitors_rank_independence") &&
@@ -696,7 +693,9 @@ function renderAllocationResults(prizeName,prizeValue){
     }
     function AllocationResults(props){
     const moneyString = getMoneyString(props.prizeValue, props.currency);
+    const buttonRef = React.useRef(null);
         return (
+        <>
              <p>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
@@ -707,6 +706,10 @@ function renderAllocationResults(prizeName,prizeValue){
                    <span> Since this is a training round, it will count for your Understanding Bonus.</span>
                 }
             </p>
+            <div className="btn-container">
+                <button class="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
+            </div>
+        </>
         )
     }
     `
