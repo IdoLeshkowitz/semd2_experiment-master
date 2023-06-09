@@ -12,53 +12,44 @@ const expectedResults = {
     "third_situation_c": "Possibly True",
     "third_situation_d": "Definitely False",
 }
-const errorMessages = {
-    "missing": "Please select an answer",
-    "incorrect": "Incorrect answer",
-}
+const errorMessages = "Please select an answer";
 document.querySelector(".otree-btn-next").addEventListener("click", function (e) {
-    const isAllValid = checkAllElements(getAllRadioElementsGroups(), getAllErrors())
-    if (!isAllValid) {
-        e.preventDefault();
-    }
-})
-
-function checkAllElements(allElements, allErrors) {
-    let allValid = true;
+    /*
+    iterate over all radio elements groups and check that at least one element is checked.
+    if not then show missing answer error message. and prevent the form from submitting.
+    if not, submit the form. and send the understanding bonus counter to the server.
+     */
     let understanding_bonus_counter = 0;
-    for (let radioElementsGroup of allElements) {
-        /*
-        radioElementsGroup is an array of radio elements
-        for every group check that at least one element is checked.
-        if not then show missing answer error message.
-        if true, validate the checked answer.
-        if incorrect then show incorrect answer error message.
-         */
-        if (Array(...radioElementsGroup).some(radioElement => radioElement.checked)){
-            // at least one element is checked
+    const allElements = getAllRadioElementsGroups();
+    const allErrors = getAllErrors();
+    allElements.forEach(radioElementsGroup => {
+        if (!isQuestionAnswered(radioElementsGroup)) {
+            activateErrorMessage(allErrors[allElements.indexOf(radioElementsGroup)])
+            e.preventDefault();
+        } else {
+            /* clear error message */
+            allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = ""
+            /* check if the checked answer is incorrect */
             const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
-            if (checkedElement.value.trim() !== expectedResults[checkedElement.name]){
+            if (checkedElement.value.trim() === expectedResults[checkedElement.name]) {
+                debugger
                 // checked answer is incorrect
-                allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = errorMessages["incorrect"]
                 understanding_bonus_counter += 1;
             }
         }
-        else{
-            // no element is checked
-            allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = errorMessages["missing"]
-            allValid = false;
-            continue
-        }
-        /* answer is correct */
-        allErrors[allElements.indexOf(radioElementsGroup)].innerHTML = ""
-    }
-    if (understanding_bonus_counter === 0){
-        liveSend({
-            "information_type":"add_understanding_bonus",
-            "points":understanding_bonus_counter,
-        })
-    }
-    return allValid;
+    })
+    liveSend({
+        "information_type": "add_understanding_bonus",
+        "points": understanding_bonus_counter,
+    })
+})
+
+function isQuestionAnswered(radioElementsGroup) {
+    return Array(...radioElementsGroup).some(radioElement => radioElement.checked)
+}
+
+function activateErrorMessage(errorElement) {
+    errorElement.innerHTML = errorMessages
 }
 
 function getAllRadioElementsGroups() {

@@ -10,6 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'understanding_test'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
+    UNDERSTANDING_BONUS_LIMIT = 12
 
 
 class Subsession(BaseSubsession):
@@ -81,6 +82,8 @@ class Player(BasePlayer):
         choices=["Possibly True", " Definitely False"],
         widget=widgets.RadioSelect,
     )
+    understanding_bonus_limit = models.IntegerField(initial=C.UNDERSTANDING_BONUS_LIMIT)
+    understanding_bonus_from_round = models.IntegerField(initial=0)
     def first_situation_a_error_message(self, value):
         if value != "Possibly True":
             return 'Please select the correct answer'
@@ -95,6 +98,9 @@ class Understanding_test(Page):
     def live_method(player: Player, data):
         if data['information_type'] == "add_understanding_bonus":
             points = data["points"]
-            player.participant.understanding_bonus += points
+            player.understanding_bonus_from_round = points
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.participant.understanding_bonus += player.understanding_bonus_from_round
 
 page_sequence = [Understanding_test]
