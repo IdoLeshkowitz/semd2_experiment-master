@@ -132,7 +132,7 @@ function renderCognitiveAbilitiesForm() {
                                     {form[key].label}
                                     <div>
                                         <input
-                                            style={{width:'7rem',lineHeight:'1.5rem',paddingLeft:'1rem'}}
+                                            style={{width:'7rem',lineHeight:'2rem',paddingLeft:'.5rem'}}
                                             name={key}
                                             type="text"
                                             value={form[key].value}
