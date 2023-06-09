@@ -43,9 +43,9 @@ class Player(BasePlayer):
 
 
 # PAGES
-class MyPage(Page):
+class CognitiveAbilities(Page):
     form_model = "player"
     form_fields = ["bat_and_ball", "machines", "lily_pads", "choir"]
 
 
-page_sequence = [MyPage]
+page_sequence = [CognitiveAbilities]

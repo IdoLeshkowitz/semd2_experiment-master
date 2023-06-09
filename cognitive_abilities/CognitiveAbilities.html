@@ -1,5 +1,10 @@
 {{ block scripts }}
-<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.1.1/redux.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/17.0.2/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/17.0.2/umd/react-dom.development.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@babel/standalone@7.17.0/babel.min.js"></script>
+    <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+    <script src="{{ static 'features/cognitiveAbilities.js' }}"></script>
 {{ endblock }}
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
@@ -46,16 +51,7 @@ btn.btn-default:hover {
 
 
 
-<div class="instructions">
-    <p>Please answer the following questions:</p>
-    {{ formfield 'bat_and_ball' }}
-    <div class="append"><p>cents</p></div>
-    {{ formfield 'machines' }}
-    <div class="append"><p>minutes</p></div>
-    {{ formfield 'lily_pads' }}
-    <div class="append"><p>days</p></div>
-    {{ formfield 'choir' }}
-    <div class="append"><p>percent chance</p></div>
+<div class="instructions" id="cognitive-abilities">
     <div style="text-align: center">
         <button class="btn btn-default" id="Next">
                 Next
