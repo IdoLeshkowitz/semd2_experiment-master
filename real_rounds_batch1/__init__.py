@@ -185,7 +185,6 @@ class Player(BasePlayer):
     end_time = models.StringField(blank=True)
 
 
-
 def get_prizes_in_round(prizes_by_round_str, round_number):
     return eval(prizes_by_round_str)[round_number - 1]
 

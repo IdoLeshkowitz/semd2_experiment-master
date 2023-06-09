@@ -1,5 +1,5 @@
 from otree.api import *
-
+from datetime import datetime, timezone
 
 doc = """
 Your app description
@@ -84,6 +84,8 @@ class Player(BasePlayer):
     )
     understanding_bonus_limit = models.IntegerField(initial=C.UNDERSTANDING_BONUS_LIMIT)
     understanding_bonus_from_round = models.IntegerField(initial=0)
+    start_time = models.StringField(initial=str(datetime.now(timezone.utc)))
+    end_time = models.StringField(blank=True)
     def first_situation_a_error_message(self, value):
         if value != "Possibly True":
             return 'Please select the correct answer'
@@ -102,5 +104,6 @@ class Understanding_test(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus_from_round
+        player.end_time = str(datetime.now(timezone.utc))
 
 page_sequence = [Understanding_test]
