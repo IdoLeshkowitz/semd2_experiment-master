@@ -690,8 +690,16 @@ function renderUiFromState(state) {
         return <div></div>
     }
     function DaAlgoInterface(props){
-    
+    return <TraditionalSteps[0] />
     }
+    const TraditionalSteps = [
+        function step1(){
+            return <div>step1</div>        
+        },
+        function step2(){
+            return <div>step2</div>
+        }
+    ]
     `
     function renderPrizesPrioritiesTable() {
         /*
@@ -1051,4 +1059,5 @@ function renderUiFromState(state) {
     function getPropsFromJsVars(){
         return {...js_vars}
     }
+    renderReactComponent(jsxCode, "react-root", "DaAlgoInterface")
 }

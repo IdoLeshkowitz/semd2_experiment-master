@@ -126,14 +126,14 @@ def get_expected_matching_by_round(round):
         [{'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"}], [{'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"}]]
     return EXPECTED_MATCHING_BY_ROUND[round - 1]
 
-
 class C(BaseConstants):
     NAME_IN_URL = 'mechanics_traditional'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 4
     NUMBER_OF_PARTICIPANTS = 4
     CUSTOMERS = ["Ruth", "Shirley", "Theresa", "You"]
-    MAX_PARTICIPANTS_BY_CUSTOMER = {"A": NUMBER_OF_PARTICIPANTS, "B": NUMBER_OF_PARTICIPANTS, "C": NUMBER_OF_PARTICIPANTS, "D": NUMBER_OF_PARTICIPANTS}
+    PRODUCTS = ["A", "B", "C", "D"]
+    MAX_PRODUCTS_PER_CUSTOMER = {"A": NUMBER_OF_PARTICIPANTS, "B": NUMBER_OF_PARTICIPANTS, "C": NUMBER_OF_PARTICIPANTS, "D": NUMBER_OF_PARTICIPANTS}
 
 
 class Player(BasePlayer):
@@ -158,11 +158,16 @@ class Player(BasePlayer):
     third_priority = models.StringField(blank=True)
     fourth_priority = models.StringField(blank=True)
 
-    current_step = models.LongStringField(blank=True)
-    matching_counter = models.IntegerField(initial=0)
+    current_step = models.LongStringField(blank=True, initial=0)
+    current_stage = models.IntegerField(initial=1, blank=True)
+    matching_counter = models.IntegerField(initial=0, blank=True)
     understanding_bonus = models.IntegerField(initial=0)
     start_time = models.StringField(initial=datetime.now(timezone.utc))
     end_time = models.StringField(blank=True)
+    matching_memo = models.LongStringField(initial="", blank=True)
+    current_matching = models.LongStringField(initial="", blank=True)
+    prizes_priorities = models.LongStringField(initial="", blank=True)
+    participants_priorities = models.LongStringField(initial="", blank=True)
 
 
 def GetParticpantNumber(char):
@@ -223,10 +228,8 @@ class TrainingRound(Page):
         return {
             "prizesPriorities":       get_customers_priorities_by_round(player.round_number),
             "participantsPriorities": get_products_priorities_by_round(player.round_number),
-            "prizesNames":            C.PRIZES_NAMES,
-            "participantsNames":      C.PARTICIPANTS_NUMBERS,
             "expectedRanking":        get_expected_prizes_ranking_by_round(player.round_number),
-            "participantsFullNames":  C.PARTICIPANTS_FULL_NAMES,
+            "prizes":                C.CUSTOMERS,
         }
 
     @staticmethod
@@ -248,24 +251,15 @@ class DAalghoInterface(Page):
     form_model = "player"
 
     @staticmethod
-    def vars_for_template(player: Player):
-        return {
-            "prizesPriorities":       player.participant.prizes_priorities,
-            "participantsPriorities": player.participant.participants_priorities,
-            "prizesNames":            C.PRIZES_NAMES,
-            "participantsNames":      C.PARTICIPANTS_NUMBERS,
-        }
-
-    @staticmethod
     def js_vars(player: Player):
         return {
-            "matchingMemo":            player.participant.matching_memo,
-            "currentMatching":         player.participant.current_matching,
-            "customersPriorities":     player.participant.prizes_priorities,
-            "productsPriorities":      player.participant.participants_priorities,
-            "prizesNames":             C.PRIZES_NAMES,
-            "participantsNumbers":     C.PARTICIPANTS_NUMBERS,
-            "maxParticipantsPerPrize": C.MAX_PARTICIPANTS_BY_CUSTOMER,
+            "matchingMemo":            player.matching_memo,
+            "currentMatching":         player.current_matching,
+            "customersPriorities":     player.prizes_priorities,
+            "productsPriorities":      player.participants_priorities,
+            "productsNames":           C.PRODUCTS,
+            "customersNames":          C.CUSTOMERS,
+            "maxProductsPerCustomer": C.MAX_PRODUCTS_PER_CUSTOMER,
             "currentStep":             player.field_maybe_none("current_step"),
             "currentRound":            player.round_number,
             "correctAnswers":          C.CORRECT_ANSWERS_BY_ROUND[player.round_number - 1],
@@ -275,30 +269,9 @@ class DAalghoInterface(Page):
         }
 
     @staticmethod
-    def get_form_fields(player: Player):
-        if player.round_number == 1:
-            questions = ["question_1", "question_2", "question_3", "question_4", "question_5", "question_6", "question_7", "question_8", "prize_a_obtainable",
-                         "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "question_9", "question_10"]
-
-            return questions
-
-        else:
-            questions = ["prize_a_obtainable", "prize_b_obtainable", "prize_c_obtainable", "prize_d_obtainable", "obtainable_prize"]
-            return questions
-
-    @staticmethod
     def live_method(player: Player, data):
         print(data)
-        # onload event
-        if data['information_type'] == 'onload':
-            player.time_stamps = player.time_stamps + '|R:' + str(data['time'])
-            player.clicks = player.clicks + '|load'
-        # end event
-        elif data['information_type'] == 'onend':
-            player.time_stamps = player.time_stamps + '|F:' + str(data['time'])
-            player.clicks = player.clicks + '||'
-            return {player.id_in_group: {'information_type': 'submit'}}
-        elif data['information_type'] == 'matching_submission':
+        if data['information_type'] == 'matching_submission':
             matching = data['matching']
             is_correct = data['is_correct']
             understanding_bonus = data['understanding_bonus']
