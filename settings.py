@@ -154,31 +154,8 @@ SESSION_CONFIG_DEFAULTS = dict(
     real_world_currency_per_point=1.00, participation_fee=0.00, doc="",currency="USD"
 )
 
-PARTICIPANT_FIELDS = ["trajectory_num",'matchingalgho',  # History of the participant's choices until that point. To be presented somehow on the screen.
-    'schools_lists',
-    # This is a list of sublist. Each sublist corresponds to a school: the nth sublist represents the nth school's preferences: The first number represents the most preferred student by the school, the second entery represents the second-best preferred student etc.
-    'students_lists',
-    # This is a list of sublist. Each sublist corresponds to a student: the nth sublist represents the nth student's preferences: The first number represents the most preferred school by the student, the second entery represents the second-best preferred school etc.
-    'partialmatching',
-    # The current partial matching according to the participant's choices until that point. The length of the list equals the number of students. The value of each entery is the number of the school that the student has been matched too. Equals -10 if the student hasn't been matched yet.
-    'schools_alphabet',  # A list [A,B,...,X] where X is the nth letter of the alphabet and n is the number of schools.
-    'students_alphabet',
-    'students_names',  # A list [1,2,...,m] where m is the number of students.
-    'schools_range',  # A list [0,1,...,n-1] where n is the number of schools.
-    'students_range',  # A list [0,1,...,m-1] where m is the number of students.
-    'schoolsAPC',
-    # This is a list of sublist. Each sublist corresponds to a school: its first entery is the name/letter of the school, and the other enteries are the students' numbers according to the school's preferences.
-    'studentsAPC',
-    # This is a list of sublist. Each sublist corresponds to a students: its first entery is the name/number of the student, and the other enteries are the schools' numbers according to the student's preferences.
-    'max_students_per_school',
-    # The nth number in the list represents the maximal number of students that can be matched to the nth school.
-    'matched_number',
-    "expected_ranking",
-    "participants_priorities",
-    "prizes_priorities",
-    "current_matching",
-    "expected_matching",
-    "matching_memo",
+PARTICIPANT_FIELDS = [
+    "trajectory_num",
     "full_training",
     "consent",
     "understanding_bonus",

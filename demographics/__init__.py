@@ -1,5 +1,5 @@
 from otree.api import *
-
+from datetime import datetime, timezone
 
 doc = """
 Your app description
@@ -126,14 +126,19 @@ class Player(BasePlayer):
                " Please share with us any other comments about the study, we highly value any feedback!",
         blank=True
     )
+    start_time = models.StringField(initial=str(datetime.now(timezone.utc)))
+    end_time = models.StringField(blank=True)
 
 
 # PAGES
 class Demographics(Page):
     form_model = "player"
     form_fields = ["state", "zip_code", "household_size", "household_over18", "birth_year", "gender", "race",
-                   "educ_lvl", "educ_prime", "marital_stat", "social_views", "economic_views", "party",
+                   "educ_lvl", "educ_prime", "marital_stat","employment", "social_views", "economic_views", "party",
                    "election_2020", "income", "unclear"]
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.end_time = str(datetime.now(timezone.utc))
 
 page_sequence = [Demographics]

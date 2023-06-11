@@ -685,6 +685,14 @@ function getStepsByRound(round) {
 }
 
 function renderUiFromState(state) {
+    const jsxCode = `
+    function Stam(){
+        return <div></div>
+    }
+    function DaAlgoInterface(props){
+    
+    }
+    `
     function renderPrizesPrioritiesTable() {
         /*
         the prizesPriorities table is a table that contains all the prizes priorities.
@@ -698,7 +706,7 @@ function renderUiFromState(state) {
         function Stam(){
         return <div></div>
         }
-        function PrizesPrioritiesTable(props) {
+        function CustomersPrioritiesTable(props) {
             return (
                 <>
                           {
@@ -743,34 +751,6 @@ function renderUiFromState(state) {
             )
         }
         `
-        const prizesPrioritiesProps = Object.keys(state.prizesPriorities).map((prizeName, index) => {
-            const prizePriorities = state.prizesPriorities[prizeName]
-            const highlitedParticipants = () => {
-                /* a participant cell should be highlited if the prize that the columns relates to was chosen by the participant */
-                return Object.keys(state.currentMatching).filter(participantName => {
-                    const prizeMatchedToParticipant = state.currentMatching[participantName]
-                    return prizeMatchedToParticipant === prizeName
-                })
-            }
-            const isHighlited = () => {
-                /*
-                  a column is highlighted if all of these terms are met:
-                     1.there is no currently selected participant
-                     2.the user is hovering over prize row that matches the column prize
-                 */
-                return state.selectedParticipant === null && state.mouseOnPrize === prizeName
-            }
-            const isLast = index === Object.keys(state.prizesPriorities).length - 1
-            return {
-                isHighlited: isHighlited(),
-                prizeName,
-                columnIndex: index,
-                highlitedParticipants: highlitedParticipants(),
-                isLast,
-                priorities: prizePriorities
-            }
-        })
-        renderReactComponent(jsxCode, "prizes-priorities-table", "PrizesPrioritiesTable", JSON.stringify(prizesPrioritiesProps))
     }
 
     function renderParticipantsPrioritiesTable() {
@@ -895,25 +875,29 @@ function renderUiFromState(state) {
                         <span>
                             <b style={{fontSize: "1.5rem"}}>Pick participants to pair →</b>
                         </span>
-                    {Object.keys(participants).map((_, index) => {
-                        const participantName = participants[index].participantName
-                        const isMatched = participants[index].isMatched
-                        if (isMatched === true) return null
-                        const isSelected = participants[index].isSelected
-                        const className = isSelected ? "iButtonSelected" : "iButton"
-                        return (
-                            <button 
-                            className={className}
-                            onClick={(e) => {
-                                e.preventDefault()
-                                store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
-                            }} 
-                            key={index}
-                            >
-                                {participantName}
-                            </button>
-                        )
-                    })}
+                        <div class="products-row">
+                            {Object.keys(participants).map((_, index) => {
+                                const participantName = participants[index].participantName
+                                const isMatched = participants[index].isMatched
+                                if (isMatched === true) return null
+                                const isSelected = participants[index].isSelected
+                                const className = isSelected ? "iButton dark-purple" : "iButton purple"
+                                return (
+                                    <div className="iButton-container">
+                                        <button 
+                                        className={className}
+                                        onClick={(e) => {
+                                            e.preventDefault()
+                                            store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
+                                        }} 
+                                        key={index}
+                                        >
+                                            {participantName}
+                                        </button>
+                                    </div>
+                                )
+                            })}
+                        </div>
                     </>
             )
         }
@@ -953,65 +937,69 @@ function renderUiFromState(state) {
 
         function PrizesRows(prizesRowsProps) {
             return (
-                <>
+                <div className="customers-rows-container">
                             {Array.from(Object.keys(prizesRowsProps)).map((_, index) => {
                                 return (
-                                        <div 
-                                            key={index}
-                                            onMouseEnter={() => {
-                                                store.dispatch({
-                                                                 type: ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW,
-                                                                 payload: prizesRowsProps[index].prizeName
-                                                })
-                                            }}
-                                            onMouseLeave={() => {
-                                                store.dispatch({
-                                                                type: ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW,
-                                                                payload: prizesRowsProps[index].prizeName
-                                                })
-                                            }}
-                                            > 
+                                        <> 
                                             {/* prize name */}
                                             <span>{prizesRowsProps[index].prizeName}</span>
                                             {/* participants that are currently matched to the prize */}
-                                            <div className="buttons-grid">
+                                            <div
+                                                onMouseEnter={() => {
+                                                    store.dispatch({
+                                                                     type: ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW,
+                                                                     payload: prizesRowsProps[index].prizeName
+                                                    })
+                                                }}
+                                                onMouseLeave={() => {
+                                                    store.dispatch({
+                                                                    type: ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW,
+                                                                    payload: prizesRowsProps[index].prizeName
+                                                    })
+                                                }}
+                                                className="products-row"
+                                             >
                                                 {
                                                     prizesRowsProps[index].matchedParticipants.map((participantName, index) => {
                                                         function isSelected() {
                                                             return prizesRowsProps[index].selectedParticipant === participantName
                                                         }
-                                                        const className = isSelected() ? "iButtonSelected" : "iButton"
+                                                        const className = isSelected() ? "iButton dark-purple " : "iButton purple"
                                                         return (
-                                                           <button
-                                                            key={index}
-                                                            onClick={(e)=>{
-                                                                e.preventDefault()
-                                                                store.dispatch({type:ACTION_TYPES.PARTICIPANT_SELECTED, payload: participantName})
-                                                            }} 
-                                                            className={className}>
-                                                                 {participantName}
-                                                           </button>
+                                                            <div className="iButton-container">
+                                                               <button
+                                                                key={index}
+                                                                onClick={(e)=>{
+                                                                    e.preventDefault()
+                                                                    store.dispatch({type:ACTION_TYPES.PARTICIPANT_SELECTED, payload: participantName})
+                                                                }} 
+                                                                className={className}>
+                                                                     {participantName}
+                                                               </button>
+                                                           </div>
                                                            )
                                                     })
                                                 }
                                                 {/* plus button */}
                                                 { prizesRowsProps[index].showPlus &&
-                                                    <button 
-                                                        className="pButton"
-                                                        onClick={(e) => {
-                                                          e.preventDefault()
-                                                          store.dispatch({type:ACTION_TYPES.PLUS_BUTTON_CLICKED, payload: prizesRowsProps[index].prizeName})
-                                                          store.dispatch({type:ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW, payload: prizesRowsProps[index].prizeName})  
-                                                        }}
-                                                    >
-                                                    +
-                                                    </button>
+                                                    <div className="iButton-container">
+                                                        <button 
+                                                            className="iButton red"
+                                                            onClick={(e) => {
+                                                              e.preventDefault()
+                                                              store.dispatch({type:ACTION_TYPES.PLUS_BUTTON_CLICKED, payload: prizesRowsProps[index].prizeName})
+                                                              store.dispatch({type:ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW, payload: prizesRowsProps[index].prizeName})  
+                                                            }}
+                                                        >
+                                                        +
+                                                        </button>
+                                                    </div>
                                                 }
                                             </div>
-                                        </div>
+                                        </>
                                    )
                             })}
-                        </>
+                        </div>
             )
         }
 
@@ -1060,20 +1048,7 @@ function renderUiFromState(state) {
         renderReactComponent(jsxCode, "prizes-rows", "PrizesRows", JSON.stringify(prizesRowsProps))
     }
 
-    renderPrizesPrioritiesTable()
-    renderParticipantsPrioritiesTable()
-    renderMiddleRow()
-    renderPrizesRows()
-}
-
-function renderReactComponent(jsxCode, renderAt, componentName, props) {
-    const renderString = jsxCode.concat(`
-        ReactDOM.render(<${componentName} {...${props}} />, document.getElementById('${renderAt}'));
-        `)
-    /* transpile jsx code to js code */
-    const transPiledCode = Babel.transform(renderString, {
-        presets: ['react'],
-    }).code;
-    /* evaluate the transpiled code */
-    eval(transPiledCode);
+    function getPropsFromJsVars(){
+        return {...js_vars}
+    }
 }
