@@ -104,10 +104,10 @@ def get_products_priorities_by_round(round):
 
 
 def get_expected_prizes_ranking_by_round(round):
-    first_round_ranking = [2, 0, 1, 3]
-    second_round_ranking = [3, 0, 2, 1]
-    third_round_ranking = [3, 2, 1, 0]
-    fourth_round_ranking = [2, 3, 0, 1]
+    first_round_ranking = ["C", "A", "B", "D"]
+    second_round_ranking = ["D", "A", "C", "B"]
+    third_round_ranking = ["D", "C", "B", "A"]
+    fourth_round_ranking = ["C", "D", "A", "B"]
     rankings = [first_round_ranking, second_round_ranking, third_round_ranking, fourth_round_ranking]
     return rankings[round - 1]
 
@@ -126,14 +126,15 @@ def get_expected_matching_by_round(round):
         [{'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"}], [{'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"}]]
     return EXPECTED_MATCHING_BY_ROUND[round - 1]
 
+
 class C(BaseConstants):
     NAME_IN_URL = 'mechanics_traditional'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 4
-    NUMBER_OF_PARTICIPANTS = 4
-    CUSTOMERS = ["Ruth", "Shirley", "Theresa", "You"]
-    PRODUCTS = ["A", "B", "C", "D"]
-    MAX_PRODUCTS_PER_CUSTOMER = {"A": NUMBER_OF_PARTICIPANTS, "B": NUMBER_OF_PARTICIPANTS, "C": NUMBER_OF_PARTICIPANTS, "D": NUMBER_OF_PARTICIPANTS}
+    PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You"]
+    PRIZES = ["A", "B", "C", "D"]
+    STEPS_IN_TRAINING_ROUND = ["intro", "prizes_table", "prizes_priorities", "ranking_form", "allocation_results"]
+    MAX_PRODUCTS_PER_CUSTOMER = {"A": len(PARTICIPANTS), "B": len(PARTICIPANTS), "C": len(PARTICIPANTS), "D": len(PARTICIPANTS)}
 
 
 class Player(BasePlayer):
@@ -158,9 +159,8 @@ class Player(BasePlayer):
     third_priority = models.StringField(blank=True)
     fourth_priority = models.StringField(blank=True)
 
+    active_steps = models.LongStringField(initial="", blank=True)
     current_step = models.LongStringField(blank=True, initial=0)
-    current_stage = models.IntegerField(initial=1, blank=True)
-    matching_counter = models.IntegerField(initial=0, blank=True)
     understanding_bonus = models.IntegerField(initial=0)
     start_time = models.StringField(initial=datetime.now(timezone.utc))
     end_time = models.StringField(blank=True)
@@ -168,6 +168,8 @@ class Player(BasePlayer):
     current_matching = models.LongStringField(initial="", blank=True)
     prizes_priorities = models.LongStringField(initial="", blank=True)
     participants_priorities = models.LongStringField(initial="", blank=True)
+
+    expected_ranking = models.StringField(initial="", blank=True)
 
 
 def GetParticpantNumber(char):
@@ -226,25 +228,21 @@ class TrainingRound(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
+            "steps":                  C.STEPS_IN_TRAINING_ROUND,
+            "currency":               player.session.config["currency"],
             "prizesPriorities":       get_customers_priorities_by_round(player.round_number),
             "participantsPriorities": get_products_priorities_by_round(player.round_number),
             "expectedRanking":        get_expected_prizes_ranking_by_round(player.round_number),
-            "prizes":                C.CUSTOMERS,
+            "prizes":                 C.PRIZES,
+            "participants":           C.PARTICIPANTS,
+            "currentStep":            player.current_step,
         }
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        # Setting the field so that it is not empty.
-        player.time_stamps = 'L:'
-        # initialize clicks
         player.clicks = ''
-        player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NUMBERS}
-        # the priorities of each prize .
-        player.participant.prizes_priorities = get_customers_priorities_by_round(player.round_number)
-        # the priorities of each participant .
-        player.participant.participants_priorities = get_products_priorities_by_round(player.round_number)
-        player.participant.expected_ranking = get_expected_prizes_ranking_by_round(player.round_number)
-        player.participant.matching_memo = []
+        player.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NUMBERS}
+        player.matching_memo = []
 
 
 class DAalghoInterface(Page):
@@ -253,13 +251,14 @@ class DAalghoInterface(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
+            "prizesPriorities":        get_customers_priorities_by_round(player.round_number),
+            "participantsPriorities":  get_products_priorities_by_round(player.round_number),
+            "expectedRanking":         get_expected_prizes_ranking_by_round(player.round_number),
+            "prizes":                  C.PARTICIPANTS,
+            "participants":            C.PRIZES,
             "matchingMemo":            player.matching_memo,
             "currentMatching":         player.current_matching,
-            "customersPriorities":     player.prizes_priorities,
-            "productsPriorities":      player.participants_priorities,
-            "productsNames":           C.PRODUCTS,
-            "customersNames":          C.CUSTOMERS,
-            "maxProductsPerCustomer": C.MAX_PRODUCTS_PER_CUSTOMER,
+            "maxProductsPerCustomer":  C.MAX_PRODUCTS_PER_CUSTOMER,
             "currentStep":             player.field_maybe_none("current_step"),
             "currentRound":            player.round_number,
             "correctAnswers":          C.CORRECT_ANSWERS_BY_ROUND[player.round_number - 1],
@@ -372,6 +371,12 @@ class MechanicsIntro(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == 1
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
+        player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
+        player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
 
 
 class EndTraining(Page):

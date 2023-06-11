@@ -129,10 +129,10 @@ table {
     align-items: center;
 }
 
-section:not(:first-child) {
-    padding-top:2rem;
-    padding-bottom: 1rem;
-}
+/*section:not(:first-child) {*/
+/*    padding-top:2rem;*/
+/*    padding-bottom: 1rem;*/
+/*}*/
 
 .hidden{
     display: none;
