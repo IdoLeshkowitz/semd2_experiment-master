@@ -3,103 +3,96 @@ function renderPage() {
     const CurrencyContext = React.createContext(null);
     function MechanicsTrainingRound(props){
         const [modals,setModals]= React.useState({prizes:false,ranking:false,study:false,priorities:false});
-        const [buttonRole,setButtonRole] = React.useState("next");
+        const [ranking,setRanking] = React.useState(null);
+        const [allocationTimer,setAllocationTimer] = React.useState(null);
         const [activeStepsIds,setActiveStepsIds] = React.useState(props.activeSteps ?? [props.steps[0]]);
         const steps = [
-                {
-                    id:"intro",
-                    type : "information",
-                    content :(
-                            <div class="explain">
-                                <p>
-                                This is a training round.<br/>
-                                Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
-                                </p>
-                                <p>
-                                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
-                                </p>
-                            </div> 
-                    ),
-                    ref : React.createRef(null),
-                },
-                {
-                  id:"prizes_table",
-                  type:"information",
-                  content:(
+            {
+                id:"intro",
+                type : "information",
+                content :(
+                        <div class="explain">
+                            <p>
+                            This is a training round.<br/>
+                            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+                            </p>
+                            <p>
+                            Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                            </p>
+                        </div> 
+                ),
+                sectionRef : React.createRef(null),
+            },
+            {
+              id:"prizes_table",
+              type:"information",
+              content:(
+                <>
+                    <h4>Step 1: Round Information</h4>
+                    <p>In this round, the <b>prizes</b> are:</p>
+                    <EmptyPrizesTable prizes={props.prizes}/>
+                    <button type="button" className="button-2" onClick={()=>{setModals({...modals,prizes:true})}}  style={{marginTop:'1rem',marginBottom:'1rem'}}>Click for a reminder on what the prizes mean</button>
+                </>    
+              ),
+              sectionRef:React.createRef(null),
+            },
+            {
+                id:"prizes-priorities",
+                type:"information",
+                sectionRef:React.createRef(null),
+                content:(
                     <>
-                        <h4>Step 1: Round Information</h4>
-                        <p>In this round, the <b>prizes</b> are:</p>
-                        <EmptyPrizesTable prizes={props.prizes}/>
-                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,prizes:true})}}  style={{marginTop:'1rem',marginBottom:'1rem'}}>Click for a reminder on what the prizes mean</button>
-                    </>    
-                  ),
-                  ref:React.createRef(null),
-                },
-                {
-                    id:"prizes-priorities",
-                    type:"information",
-                    ref:React.createRef(null),
-                    content:(
-                        <>
-                            <p>The <b>prize priorities</b> for you and for the other participants are:</p>
-                            <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
-                            <button type="button" className="button-2" type="button" onClick={()=>setModals({...modals,priorities:true})}>Click for a reminder on what the priorities mean</button>
-                        </>
-                    )
-                },
-                {
-                    id:"ranking_form",
-                    type:"rankingForm",
-                    ref:React.createRef(null),
-                },
-                {
-                    id:"allocation_results",
-                    type:"information",
-                    ref:React.createRef(null),
-                },
+                        <p>The <b>prize priorities</b> for you and for the other participants are:</p>
+                        <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
+                        <button type="button" className="button-2" type="button" onClick={()=>setModals({...modals,priorities:true})}>Click for a reminder on what the priorities mean</button>
+                    </>
+                )
+            },
+            {
+                id:"ranking_form",
+                type:"rankingForm",
+                sectionRef:React.createRef(null),
+                inputRef:React.createRef(null),
+                buttonRef:React.createRef(null),
+            },
+            {
+                id:"allocation_results",
+                type:"allocationResults",
+                sectionRef:React.createRef(null),
+            },
         ]
         function onClick(){
-            if (buttonRole === "next"){
-                function isLastStep(activeStepsIds,steps){
-                    const activeStepId = activeStepsIds.at(-1);
-                    const nextStepIndex = steps.findIndex(step=>step.id===activeStepId)+1;
-                    return nextStepIndex >= steps.length;
-                }
-                function getNextStepId(activeStepsIds,steps){
-                    const activeStepId = activeStepsIds.at(-1);
-                    const nextStepIndex = steps.findIndex(step=>step.id===activeStepId)+1;
-                    return steps[nextStepIndex].id;
-                }
-                function isNextStepInformation(nextStepId,steps){
-                    const nextStep = steps.find(step=>step.id===nextStepId);
-                    return nextStep.type === "information";
-                }
-                /* when button role is next, we want to go to the next step or to finish the page */
-                const isLast = isLastStep(activeStepsIds,steps);
-                if (isLast){
-                    /* if last step, submit the form */
-                    document.querySelector("form").submit();
-                }
-                /* else continue to next step */
-                /* update active steps */
-                const nextStepId = getNextStepId(activeStepsIds,steps);
-                setActiveStepsIds([...activeStepsIds,nextStepId]);
-                /* update button role */
-                const isNextInformation = isNextStepInformation(nextStepId,steps);
-                if (isNextInformation){
-                    setButtonRole("next");
-                }
-                else {  
-                    setButtonRole("submit");
-                }
+            function isLastStep(activeStepsIds,steps){
+                const activeStepId = activeStepsIds.at(-1);
+                const nextStepIndex = steps.findIndex(step=>step.id===activeStepId)+1;
+                return nextStepIndex >= steps.length;
             }
+            function getNextStepId(activeStepsIds,steps){
+                const activeStepId = activeStepsIds.at(-1);
+                const nextStepIndex = steps.findIndex(step=>step.id===activeStepId)+1;
+                return steps[nextStepIndex].id;
+            }
+            function isNextStepInformation(nextStepId,steps){
+                const nextStep = steps.find(step=>step.id===nextStepId);
+                return nextStep.type === "information";
+            }
+            /* when button role is next, we want to go to the next step or to finish the page */
+            const isLast = isLastStep(activeStepsIds,steps);
+            if (isLast){
+                /* if last step, submit the form */
+                document.querySelector("form").submit();
+            }
+            /* else continue to next step */
+            /* update active steps */
+            const nextStepId = getNextStepId(activeStepsIds,steps);
+            setActiveStepsIds([...activeStepsIds,nextStepId]);
         }
         React.useEffect(()=>{
             /* scroll the latest step into view in any step except the first */
             if (activeStepsIds.length === 1)return ;
             const latestStepId = activeStepsIds.at(-1);
             const latestStep = steps.find(step=>step.id===latestStepId);
-            latestStep.ref.current?.scrollIntoView({behavior:"smooth"});
+            latestStep.sectionRef.current?.scrollIntoView({behavior:"smooth"});
         },[activeStepsIds]) 
         return (
             <CurrencyContext.Provider>
@@ -115,22 +108,59 @@ function renderPage() {
                                 const step = steps.find(step=>step.id===stepId);
                                 if (step.type === "information"){
                                     return (
-                                        <section ref={step.ref}>
+                                        <section ref={step.sectionRef}>
                                             {step.content}
-                                            {index === activeStepsIds.length-1 && <Button onClick={onClick} text="Proceed"/>}
+                                            {index === activeStepsIds.length-1 && <Button onClick={onClick} text="Proceed" buttonRef={step.buttonRef}/>}
                                         </section>
                                     )
                                 }
                                 if (step.type === "rankingForm"){
+                                    const expectedRanking = props.participantsPriorities["You"];
                                     return (
-                                        <section ref={step.ref}>
+                                        <section ref={step.sectionRef}>
                                             <h4>Step 2: Submit Your Ranking</h4>
                                             <button
                                              className="button-2"
                                              onClick={()=>{setModals({...modals,ranking:true})}}
+                                             type="button"
                                                 >
                                                 Click for a reminder on what this ranking means
                                             </button>
+                                            <p class="ms-1">Please rank the four prizes <b>in the fixed, specific order {expectedRanking.join("–")}</b>.</p>
+                                            <RankingForm 
+                                                participantsPriorities={props.participantsPriorities}
+                                                inputRef={step.inputRef}
+                                                onInput={(ranking)=>{
+                                                    const expectedRanking = props.participantsPriorities["You"];
+                                                    const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
+                                                    if (!isCorrect){
+                                                        setRanking(null);
+                                                        step.buttonRef.current.disabled = true;
+                                                        return 
+                                                    }
+                                                    setRanking(ranking);
+                                                    step.buttonRef.current.disabled = false;
+                                                }}
+                                                />
+                                            { index === activeStepsIds.length-1 && 
+                                                <Button 
+                                                    onClick={()=>{
+                                                        step.inputRef.current.disabled = true;
+                                                        onClick();
+                                                    }}
+                                                    className="btn btn-danger"
+                                                    buttonRef={step.buttonRef}
+                                                    text="Submit Ranking"
+                                                    disabled={!ranking}
+                                                    />
+                                            }
+                                        </section>
+                                    )
+                                }
+                                if (step.type === "allocationResults"){
+                                    return (
+                                        <section ref={step.sectionRef}>
+                                            <AllocationResults onClick={onClick}/>
                                         </section>
                                     )
                                 }
@@ -145,8 +175,45 @@ function renderPage() {
         const {onClick,text ,className} = props;
         return (
             <div class="btn-container">
-                <button className={"btn btn-primary "+className} onClick={onClick} type="button">{text ?? "Proceed"}</button>
+                <button
+                    className={className || "btn btn-primary"}
+                    onClick={onClick}
+                    type="button"
+                    disabled={props.disabled ?? false}
+                    ref={props.buttonRef}
+                   >
+                   {text ?? "Proceed"}
+                </button>
             </div>
+        )
+    }
+    function AllocationResults(props){
+        const [showLoader,setShowLoader] = React.useState(true);
+        React.useEffect(()=>{
+            setTimeout(()=>{
+                setShowLoader(false);
+            },2000)
+        },[])
+        return (
+             <>
+                <h4>Step 3: Allocation Process</h4>
+                { showLoader &&
+                    <div id="load">
+                        <p>
+                            Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+                        </p>
+                    </div>
+                }
+                { !showLoader &&
+                    <div id="round-results">
+                        <p>
+                        You are going to perform the allocation process by yourself, according to what you learned.<br/>
+                            Click on the button below to start.
+                        </p>
+                        <Button onClick={props.onClick} text="Proceed"/>
+                    </div>
+                }
+            </>
         )
     }
     function PrizesModal(props){
@@ -309,12 +376,10 @@ function renderPage() {
             function removeEnDash(str) {
                 return str.replace(/–/g, '');
             }
-    
             function addEnDash(str) {
                 /* add en dash between each character */
                 return str.split('').join('–');
             }
-    
             function validateInput(str) {
                 /*
                 validate that input is max 4 characters long
@@ -333,7 +398,6 @@ function renderPage() {
                 if (!containsOnlyUniqueChars) return false;
                 return true;
             }
-    
             function replaceCharWithNumericValue(str) {
                 if (str === 'A') return 1;
                 if (str === 'B') return 2;
@@ -346,10 +410,7 @@ function renderPage() {
                 const isValid = validateInput(uppercasedCleanedInput);
                 if (isValid === false)return;
                 setInputValue(addEnDash(uppercasedCleanedInput));
-                props.refs.first_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[0]);
-                props.refs.second_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[1]);
-                props.refs.third_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[2]);
-                props.refs.fourth_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[3]);
+                props.onInput(uppercasedCleanedInput.split(''));
             }
             return (
                 <div style={{display: "flex", justifyContent: "center"}}>
@@ -358,7 +419,7 @@ function renderPage() {
                             className="form-control fw-bold fs-5 mt-2 mb-3 "
                             value={inputValue}
                             onInput={onInput}
-                            ref = {props.refs.input}
+                            ref = {props.inputRef}
                     />
                 </div>
             )

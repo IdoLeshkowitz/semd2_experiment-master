@@ -95,10 +95,10 @@ def get_customers_priorities_by_round(round):
 
 
 def get_products_priorities_by_round(round):
-    first_round_priorities = {"R": ["A", "C", "D", "B"], "S": ["A", "C", "D", "B"], "T": ["B", "A", "D", "C"], "Y": ["C", "A", "B", "D"]}
-    second_round_priorities = {"R": ["D", "C", "B", "A"], "S": ["B", "C", "A", "D"], "T": ["B", "A", "D", "C"], "Y": ["D", "A", "C", "B"]}
-    third_round_priorities = {"R": ["D", "A", "B", "C"], "S": ["C", "B", "A", "D"], "T": ["C", "D", "A", "B"], "Y": ["D", "C", "B", "A"]}
-    fourth_round_priorities = {"R": ["C", "A", "B", "D"], "S": ["A", "D", "C", "B"], "T": ["A", "D", "B", "C"], "Y": ["C", "D", "A", "B"]}
+    first_round_priorities = {"Ruth": ["A", "C", "D", "B"], "Shirley": ["A", "C", "D", "B"], "Theresa": ["B", "A", "D", "C"], "You": ["C", "A", "B", "D"]}
+    second_round_priorities = {"Ruth": ["D", "C", "B", "A"], "Shirley": ["B", "C", "A", "D"], "Theresa": ["B", "A", "D", "C"], "You": ["D", "A", "C", "B"]}
+    third_round_priorities = {"Ruth": ["D", "A", "B", "C"], "Shirley": ["C", "B", "A", "D"], "Theresa": ["C", "D", "A", "B"], "You": ["D", "C", "B", "A"]}
+    fourth_round_priorities = {"Ruth": ["C", "A", "B", "D"], "Shirley": ["A", "D", "C", "B"], "Theresa": ["A", "D", "B", "C"], "You": ["C", "D", "A", "B"]}
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
 
