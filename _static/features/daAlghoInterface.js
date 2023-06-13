@@ -222,7 +222,7 @@ function renderDaAlgoPage() {
                         <span>Their highest-rank prize among the prizes they were not yet paired with.</span>,
                         <span>Their highest-rank prize.</span>,
                     ],
-                    expectedAnswerIndex: 3,
+                    expectedAnswerIndex: 1,
                     content : (
                         <>
                             <p>
@@ -308,7 +308,6 @@ function renderDaAlgoPage() {
                 {
                     id: "question_3",
                     type: "radio",
-                    inputRef: React.createRef(null),
                     expectedAnswerIndex: 0,
                     content:(
                         <p>Is the process over?</p>
@@ -339,7 +338,6 @@ function renderDaAlgoPage() {
                 {
                     id: "matching_4",
                     type: 'matching',
-                    inputRef: React.createRef(null),
                     expectedMatching :  {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "A"},
                     content : (
                         <>
@@ -361,7 +359,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style="color: #0b1ae3;font-weight: bold;">Only solve the conflict you see first on this screen!</span>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                             </p>
                             <p>
@@ -442,7 +440,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style="color: #0b1ae3;font-weight: bold;">Only solve the conflict you see first on this screen!</span>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!</span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                             </p>
                             <p>
@@ -503,7 +501,7 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 0,
                 },
                 {
-                    id: "matching_5",
+                    id: "matching_6",
                     inputRef: React.createRef(null),
                     type: "matching",
                     content : (
@@ -522,7 +520,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style="color: #0b1ae3;font-weight: bold;">
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>
                                 Only solve the conflict you see first on this screen!
                                 </span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
@@ -603,7 +601,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style="color: #0b1ae3;font-weight: bold;">Only solve the conflict you see first on this screen!</span>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!</span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                             </p>
                             <p>
@@ -900,8 +898,7 @@ function renderDaAlgoPage() {
         const [currentMatching, setCurrentMatching] = React.useState(props.currentMatching)
         const [modals,setModals] = React.useState({allocation : false})
         const steps = getSteps(props.round,props.variant)
-        const [currentStepId,setCurrentStepId] = React.useState(props.currentStepId || steps[0].id) 
-        const [readyToProceed,setReadyToProceed] = React.useState(false)
+        const [currentStepId,setCurrentStepId] = React.useState(props.currentStepId || steps[0].id)      
         const [selectedProduct,setSelectedProduct] = React.useState(null)
         const matchingCounter = React.useRef(props.matchingCounter)
         const [highlightedCustomer,setHighlightedCustomer] = React.useState(null)
@@ -956,23 +953,11 @@ function renderDaAlgoPage() {
         }
         function onProceed(){
             const currentStepIndex = steps.findIndex(step => step.id === currentStepId)
-            const currentStep = steps[currentStepIndex]
             const nextStep = steps[currentStepIndex + 1]
-            if (!readyToProceed){
-                setReadyToProceed(true)
-                liveSend({
-                    information_type : "step_update",
-                    step_id : nextStep.id
-                })
-                return
-            }
             if (!nextStep){
                 document.querySelector("form").submit()
                 return 
-            }
-            if (nextStep.type !== "instructions"){
-                setReadyToProceed(false)
-            }
+            }           
             setCurrentStepId(nextStep.id)
         }
         React.useEffect(()=>{
@@ -988,6 +973,7 @@ function renderDaAlgoPage() {
             })
         },[matchingMemo.current])
         React.useEffect(()=>{
+            console.log("matchingCounter.current",matchingCounter.current)
             liveSend({
             information_type : "matching_counter_update",
             matching_counter : matchingCounter.current
@@ -1026,7 +1012,6 @@ function renderDaAlgoPage() {
                     steps,
                     onProceed,
                     matchingCounter,
-                    readyToProceed,
                 }}
                     >
                     <Questions />
@@ -1036,42 +1021,47 @@ function renderDaAlgoPage() {
             )
     }
     function Questions(){
-        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,readyToProceed} = React.useContext(DashboardContext)
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
+        const [readyToProceed,setReadyToProceed] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
         function onSubmit(){
-            debugger
-            if (readyToProceed){
+            if (readyToProceed || currentStep.type === "instructions"){
                 setMessage(null)
+                setReadyToProceed(false)
                 onProceed()
                 return 
             }
             if (currentStep.type === "radio"){
-                const expectedAnswer = currentStep.expectedAnswer
-                const selectedAnswer = inputRef.current.querySelector("input:checked")?.value || null
-                const isCorrect = expectedAnswer === selectedAnswer
-                const currentMatchingCounter = matchingCounter.current
+                const expectedAnswerIndex = currentStep.expectedAnswerIndex
+                const selectedAnswerIndex = parseInt(inputRef.current.querySelector("input:checked")?.value || null)
+                const isCorrect = expectedAnswerIndex === selectedAnswerIndex   
+                let currentMatchingCounter = matchingCounter.current            
                 let understanding_bonus = 0 ;
-                debugger
                 if (isCorrect){
+                    debugger
                     if (matchingCounter.current === 0){
+                        debugger
                         setMessage("correctFirstMsg")
                         understanding_bonus+= 1 
                     }
                     else{
-                        setMessage("correct")
+                        debugger
+                        setMessage("correctMsg")
                     }
                     matchingCounter.current =  0
-                    onProceed()
+                    setReadyToProceed(true)
+                    debugger
                 }
                 else{
                     matchingCounter.current = matchingCounter.current + 1
+                    currentMatchingCounter = matchingCounter.current
                     setMessage("incorrectMsg")
                 }
                 liveSend({
                     information_type : "question_submission",
-                    expected_answer : expectedAnswer,
-                    selected_answer : selectedAnswer,
+                    expected_answer : expectedAnswerIndex,
+                    selected_answer : selectedAnswerIndex,
                     is_correct : isCorrect,
                     understanding_bonus : understanding_bonus,
                     matching_counter : currentMatchingCounter,
@@ -1085,17 +1075,17 @@ function renderDaAlgoPage() {
                 const isCorrect = Object.keys(expectedMatching).every(product => {
                     return expectedMatching[product] === currentMatching[product]
                 })
-                const currentMatchingCounter = matchingCounter.current
+                let currentMatchingCounter = matchingCounter.current
                 if (isCorrect){
                     if (matchingCounter.current === 0){
                         setMessage("correctFirstMsg")
                         understanding_bonus+= 1    
                     }
                     else{
-                        setMessage("correct")
+                        setMessage("correctMsg")
                     }
                     matchingCounter.current =  0 
-                    onProceed()
+                    setReadyToProceed(true)
                 }
                 else{
                     const isLastAttempt = matchingCounter.current === 2
@@ -1103,11 +1093,12 @@ function renderDaAlgoPage() {
                         matchingCounter.current = 0
                         setMessage("incorrectSkipMsg")
                         setCurrentMatching(expectedMatching)
-                        onProceed()
+                        setReadyToProceed(true)
                     }
                     else{
                         matchingCounter.current = matchingCounter.current + 1
-                        setMessage("incorrect")
+                        currentMatchingCounter = matchingCounter.current
+                        setMessage("incorrectMsg")
                     }
                 }
                 liveSend({
@@ -1120,6 +1111,19 @@ function renderDaAlgoPage() {
                 })
             }
         }
+        React.useEffect(()=>{
+            if (!readyToProceed) return ;
+            const currentStepIndex = steps.findIndex(step => step.id === currentStepId)
+            const nextStep = steps[currentStepIndex + 1]
+            const nextStepId = nextStep?.id
+            if (!nextStepId){
+                return
+            }
+            liveSend({
+                information_type : "step_update",
+                step_id : nextStepId
+            })
+        },[readyToProceed])
         const inputRef = React.useRef(null)
         return (
             <section>
@@ -1145,13 +1149,13 @@ function renderDaAlgoPage() {
                 </button>
             </div>
                 {
-                    message && message === "incorrect" && 
+                    message && message === "incorrectMsg" && 
                         <div class="incorrect-msg">
                             {currentStep.incorrectMsg}
                         </div>
                 }
                 {
-                    message && message === "correct" &&
+                    message && message === "correctMsg" &&
                         <div class="correct-msg">
                             {currentStep.correctMsg}
                         </div>       

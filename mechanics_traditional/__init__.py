@@ -221,51 +221,47 @@ class DAalghoInterface(Page):
             player.clicks += '|submit'
             player.understanding_bonus += understanding_bonus
             player.incorrect_seq_matching += str(data)
+            matching_counter = data['matching_counter']
+            player.matching_counter = matching_counter
         elif data['information_type'] == 'question_submission':
             question_id = data['question_id']
-            answer = data['answer']
-            is_correct = data['is_correct']
             understanding_bonus = data['understanding_bonus']
-            player.participant.understanding_bonus += understanding_bonus
+            player.understanding_bonus += understanding_bonus
+            matching_counter = data['matching_counter']
+            player.matching_counter = matching_counter
+            def create_question_submission_string(data):
+                return str(data)
 
-            def create_question_submission_string(answer, is_correct, understanding_bonus):
-                def get_correct_answer_string(is_correct):
-                    if is_correct:
-                        return 'correct'
-                    else:
-                        return 'incorrect'
-
-                return f"[{str(answer)},{str(get_correct_answer_string(is_correct))},{str(understanding_bonus)}]"
 
             if question_id == "question_1":
-                player.incorrect_seq_question_1 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_1 += create_question_submission_string(data)
             elif question_id == "question_2":
-                player.incorrect_seq_question_2 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_2 += create_question_submission_string(data)
                 print(player.incorrect_seq_question_2)
             elif question_id == "question_3":
-                player.incorrect_seq_question_3 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_3 += create_question_submission_string(data)
             elif question_id == "question_4":
-                player.incorrect_seq_question_4 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_4 += create_question_submission_string(data)
             elif question_id == "question_5":
-                player.incorrect_seq_question_5 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_5 += create_question_submission_string(data)
             elif question_id == "question_6":
-                player.incorrect_seq_question_6 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_6 += create_question_submission_string(data)
             elif question_id == "question_7":
-                player.incorrect_seq_question_7 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_7 += create_question_submission_string(data)
             elif question_id == "question_8":
-                player.incorrect_seq_question_8 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_8 += create_question_submission_string(data)
             elif question_id == "question_9":
-                player.incorrect_seq_question_9 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_9 += create_question_submission_string(data)
             elif question_id == "question_10":
-                player.incorrect_seq_question_10 += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_question_10 += create_question_submission_string(data)
             elif question_id == "prize_a_obtainable":
-                player.incorrect_seq_prize_a_obtainable += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_prize_a_obtainable += create_question_submission_string(data)
             elif question_id == "prize_b_obtainable":
-                player.incorrect_seq_prize_b_obtainable += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_prize_b_obtainable += create_question_submission_string(data)
             elif question_id == "prize_c_obtainable":
-                player.incorrect_seq_prize_c_obtainable += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_prize_c_obtainable += create_question_submission_string(data)
             elif question_id == "prize_d_obtainable":
-                player.incorrect_seq_prize_d_obtainable += create_question_submission_string(answer, is_correct, understanding_bonus)
+                player.incorrect_seq_prize_d_obtainable += create_question_submission_string(data)
         elif data['information_type'] == 'matching_update':
             """
             this event is called when the user clicks on a participant to match
@@ -295,7 +291,7 @@ class DAalghoInterface(Page):
         elif data["information_type"] == "matching_memo_update":
             new_memo = data["matching_memo"]
             player.matching_memo = str(new_memo)
-        elif data["information_type"] == "matching_counter":
+        elif data["information_type"] == "matching_counter_update":
             new_counter = data["matching_counter"]
             player.matching_counter = new_counter
         elif data["information_type"] == "step_update":
