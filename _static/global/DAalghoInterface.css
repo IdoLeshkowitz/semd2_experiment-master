@@ -184,7 +184,7 @@ body {
 }
 .flexItemButtonsBackground.highlited {
     background-color: #92c6e5;
-    transition: background-color 1s ease;
+    transition: background-color .2s ease-in-out;
 }
 
 .flexItemButtonsBackground :first-child {

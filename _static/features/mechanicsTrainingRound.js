@@ -81,6 +81,7 @@ function renderPage() {
             if (isLast){
                 /* if last step, submit the form */
                 document.querySelector("form").submit();
+                return ;
             }
             /* else continue to next step */
             /* update active steps */
@@ -428,4 +429,4 @@ function renderPage() {
     renderReactComponent(jsxCode, "react-root", "MechanicsTrainingRound", JSON.stringify({...js_vars}))
 }
 
-renderPage()
+window.addEventListener("load", renderPage)

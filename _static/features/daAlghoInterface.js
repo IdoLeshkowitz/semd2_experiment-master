@@ -1,1063 +1,1590 @@
-const initialState = {
-    'selectedParticipant': null,
-    "currentMatching": js_vars.currentMatching,
-    'maxParticipantsPerPrize': js_vars.maxParticipantsPerPrize,
-    'participantsPriorities': js_vars.participantsPriorities,
-    'prizesPriorities': js_vars.prizesPriorities,
-    'currentStep': js_vars.currentStep,
-    'currentRound': js_vars.currentRound,
-    'prizesNames': js_vars.prizesNames,
-    'participantsNumbers': js_vars.participantsNumbers,
-    'mistakesCounter': 0,
-    'mouseOnParticipant': null,
-    'mouseOnPrize': null,
-    'correctAnswers': js_vars.correctAnswers,
-    "participantsMatchMemo": js_vars.matchingMemo,
-    "expectedMatchingByRound": js_vars.expectedMatchingByRound,
-}
-const ACTION_TYPES = {
-    PARTICIPANT_SELECTED: 'PARTICIPANT_SELECTED',
-    PLUS_BUTTON_CLICKED: 'PLUS_BUTTON_CLICKED',
-    RENDER: 'RENDER',
-    MOUSE_ENTERED_PRIZE_ROW: 'MOUSE_ENTERED_PRIZE_ROW',
-    MOUSE_LEFT_PRIZE_ROW: 'MOUSE_LEFT_PRIZE_ROW',
-    MOUSE_ENTERED_PARTICIPANT_BUTTON: 'MOUSE_ENTERED_PARTICIPANT_BUTTON',
-    MOUSE_LEFT_PARTICIPANT_BUTTON: 'MOUSE_LEFT_PARTICIPANT_BUTTON',
-    HIDE_ALL_SECTIONS: 'HIDE_ALL_SECTIONS',
-    NEXT_BUTTON_CLICKED: 'NEXT_BUTTON_CLICKED',
-    RESET: 'RESET',
-    SET_CURRENT_STEP: 'SET_CURRENT_STEP',
-
-}
-const steps = [
-    {
-        id: "step-1",
-        type: "instructions",
-    },
-    {
-        id: "step-2",
-        type: "instructions",
-    },
-    {
-        id: 'instructions-3',
-        type: 'instructions',
-    },
-    {
-        id: "instructions-4",
-        type: 'instructions',
-    },
-    {
-        id: "step-3",
-        type: "matching",
-        stage: 0,
-    },
-    {
-        id: "step-4",
-        type: "matching",
-        stage: 1,
-    },
-    {
-        id: "step-5",
-        type: "radio",
-        formFields: {element: "question_1", correctAnswerIndex: 0},
-    },
-    {
-        id: "step-6",
-        type: "radio",
-        formFields: {element: "question_2", correctAnswerIndex: 1},
-    },
-    {
-        id: "step-7",
-        type: 'matching',
-        stage: 2,
-    },
-    {
-        id: "step-8",
-        type: "radio",
-        formFields: {element: "question_3", correctAnswerIndex: 2},
-    },
-    {
-        id: "step-9",
-        type: 'matching',
-        stage: 3,
-    },
-    {
-        id: "step-10",
-        type: "radio",
-        formFields: {element: "question_4", correctAnswerIndex: 3},
-    },
-    {
-        id: "step-11",
-        type: "matching",
-        stage: 4,
-    },
-    {
-        id: "step-12",
-        type: "radio",
-        formFields: {element: "question_5", correctAnswerIndex: 4},
-    },
-    {
-        id: "step-13",
-        type: "matching",
-        stage: 5,
-    },
-    {
-        id: "step-14",
-        type: "radio",
-        formFields: {element: "question_6", correctAnswerIndex: 5},
-    },
-    {
-        id: "step-15",
-        type: "matching",
-        stage: 6,
-    },
-    {
-        id: "step-16",
-        type: "radio",
-        formFields: {element: "question_7", correctAnswerIndex: 6},
-    },
-    {
-        id: "step-17",
-        type: "radio",
-        formFields: {element: "question_8", correctAnswerIndex: 7},
-    },
-    {
-        id: "step-18",
-        type: "radio",
-        formFields: {element: "prize_a_obtainable", correctAnswerIndex: 8},
-    },
-    {
-        id: "step-19",
-        type: "radio",
-        formFields: {element: "prize_b_obtainable", correctAnswerIndex: 9},
-    },
-    {
-        id: "step-20",
-        type: "radio",
-        formFields: {element: "prize_c_obtainable", correctAnswerIndex: 10},
-    },
-    {
-        id: "step-21",
-        type: "radio",
-        formFields: {element: "prize_d_obtainable", correctAnswerIndex: 11},
-    },
-    {
-        id: "step-22",
-        type: "radio",
-        formFields: {element: "question_9", correctAnswerIndex: 12},
-    },
-    {
-        id: "step-23",
-        type: "radio",
-        formFields: {element: "question_10", correctAnswerIndex: 13},
-    },
-    {
-        id: "step-1-rounds",
-        type: "instructions",
-    },
-    {
-        id: "step-2-rounds",
-        type: "matching",
-        stage: 0,
-    },
-    {
-        id: "step-3-rounds",
-        type: "dropdown",
-        formFields: [
-            {element: "prize_a_obtainable", correctAnswerIndex: 0},
-            {element: "prize_b_obtainable", correctAnswerIndex: 1},
-            {element: "prize_c_obtainable", correctAnswerIndex: 2},
-            {element: "prize_d_obtainable", correctAnswerIndex: 3},
-        ],
-    },
-    {
-        id: "step-4-rounds",
-        type: "dropdown",
-        formFields: [
-            {element: "obtainable_prize", correctAnswerIndex: 4},
-        ],
-    }
-]
-
-function reducer(state = initialState, action) {
-    console.log(action)
-    if (action.type === ACTION_TYPES.MOUSE_ENTERED_PARTICIPANT_BUTTON) {
-        const newState = {...state, mouseOnParticipant: action.payload}
-        renderUiFromState(newState)
-    }
-    if (action.type === ACTION_TYPES.MOUSE_LEFT_PARTICIPANT_BUTTON) {
-        const newState = {...state, mouseOnParticipant: null}
-        renderUiFromState(newState)
-    }
-    if (action.type === ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW) {
-        const newState = {...state, mouseOnPrize: action.payload}
-        renderUiFromState(newState)
-    }
-    if (action.type === ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW) {
-        const newState = {...state, mouseOnPrize: null}
-        renderUiFromState(newState)
-    }
-    if (action.type === ACTION_TYPES.PLUS_BUTTON_CLICKED) {
-        /*
-        when user clicks plus button do the following :
-            state changes:
-                1. update currentMatching set the value of the participant to the prize that he was matched with
-                2. livesend currentMatching to the server
-                3. reset selectedParticipant to null
-                4. push currentMatching to history
-         */
-        const participant = state.selectedParticipant
-        const prize = action.payload
-        const currentMatching = {...state.currentMatching, [participant]: prize}
-        const newState = {
-            ...state,
-            currentMatching,
-            selectedParticipant: null,
-            participantsMatchMemo: [...state.participantsMatchMemo, participant]
-        }
-        renderUiFromState(newState)
-        liveSend({
-            'information_type': "matching_update",
-            'matching': newState.currentMatching,
-            'participant_to_match': participant,
-            'match_to_prize': prize,
-            'matching_memo': newState.participantsMatchMemo,
-        })
-        return newState
-    }
-    if (action.type === ACTION_TYPES.PARTICIPANT_SELECTED) {
-        /*
-        when user clicks participant button do the following :
-            1. set selectedParticipant to the participant that was clicked
-            2. side effect:
-             add iButtonSelected class to the button that was clicked
-             remove iButtonSelected class from last selected participant button
-             show plus buttons
-         */
-        const selectedParticipant = action.payload
-        // /* remove iButtonSelected class from last selected participant button */
-        // const lastSelectedParticipantButton = document.getElementById(`participant${state.selectedParticipant}Button`)
-        // lastSelectedParticipantButton?.classList.remove("iButtonSelected")
-        // /* set selectedParticipant to the participant that was clicked */
-        // const selectedParticipantButton = document.getElementById(`participant${selectedParticipant}Button`)
-        // selectedParticipantButton?.classList.add("iButtonSelected")
-        // /* show plus buttons */
-        // const plusButtons = Array.from(document.querySelectorAll("[id^='plusButton']"))
-        // plusButtons.forEach(button => button.style.display = "inline-block")
-        const newState = {...state, selectedParticipant}
-        renderUiFromState(newState)
-        return {...state, selectedParticipant}
-    }
-    if (action.type === ACTION_TYPES.HIDE_ALL_SECTIONS) {
-        $("section").hide();
-    }
-    if (action.type === ACTION_TYPES.NEXT_BUTTON_CLICKED) {
-        /* in case this is the first step in the round */
-        const currentStep = state.currentStep
-        if (currentStep.type === "instructions") {
-            /* disable button */
-            const buttonElement = action.payload ?? null
-            buttonElement?.prop("disabled", true)
-            const sectionId = currentStep.id
-            $(`#${sectionId}`).hide()
-            const stepsInRound = getStepsByRound(state.currentRound)
-            const currentStepIndex = stepsInRound.findIndex(step => step.id === currentStep.id)
-            const nextStep = stepsInRound[currentStepIndex + 1]
-            startStep(nextStep)
-            return {...state, currentStep: nextStep}
-        }
-        /* check the type of the current step */
-        if (currentStep.type === "matching") {
-            /*
-            if matching is correct do the following:
-                - hide incorrect message if it is shown
-                - disable the button
-                - show  correct/ first-correct message for "delay" seconds, then:
-                    - hide current step
-                    - show next step
-                - reset increment counter
-                - set current step to the next step
-                - set current stage to next stage
-            if matching is incorrect do the following:
-                if user didn't exceed three attempts:
-                    - show incorrect message
-                    - increment mistakes counter
-                if user exceeded three attempts:
-                    - show incorrect skip message. for "delay" seconds, then:
-                        - hide current step
-                        - show next step
-                    - reset increment counter
-                    - set current step to the next step
-                    - set current matching to expected matching and render ui
-            */
-            /* check if matching is correct */
-            const expectedMatchingForStage = state.expectedMatchingByRound[currentStep.stage]
-
-            /* check if matching is correct */
-            function validateMatching(expectedMatching, userMatching) {
-                return Object.keys(expectedMatching).every(participant => {
-                    const expectedPrize = expectedMatching[participant]
-                    const userPrize = userMatching[participant]
-                    return expectedPrize === userPrize
-                })
-            }
-
-            const isMatchingCorrect = validateMatching(expectedMatchingForStage, state.currentMatching)
-            const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
-            const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
-            const understandingBonus = (() => {
-                /*
-                if round is 1 :
-                    1. add 1 to the understanding bonus if the matching is correct.
-                else :
-                    if matching is correct :
-                        if first attempt:
-                            add 5 points .
-                        if second attempt:
-                            add 2 points .
-                        if third attempt:
-                            add 1 point .
-                 */
-                if (state.currentRound === 1) {
-                    if (isMatchingCorrect && state.mistakesCounter === 0) {
-                        return 1
-                    } else {
-                        return 0
-                    }
-                }
-                if (isMatchingCorrect) {
-                    if (state.mistakesCounter === 0) {
-                        return 5
-                    } else if (state.mistakesCounter === 1) {
-                        return 2
-                    } else {
-                        return 1
-                    }
-                }
-                return 0
-            })()
-            liveSend({
-                "information_type": "matching_submission",
-                "matching": state.currentMatching,
-                "is_correct": isMatchingCorrect,
-                "understanding_bonus": understandingBonus,
-                "stage": currentStep.stage,
-            })
-            if (isMatchingCorrect) {
-                /* disable button */
-                const buttonElement = action.payload ?? null;
-                buttonElement?.prop('disabled', true)
-                /* hide incorrect message if it is shown */
-                $(`#${state.currentStep.id} .incorrect-msg`).hide();
-                /* display the matching correct message */
-                if (state.mistakesCounter === 0) {
-                    $(`#${state.currentStep.id} .correct-first-msg`).show();
-                } else if (state.mistakesCounter === 1 && state.currentRound > 1) {
-                    $(`#${state.currentStep.id} .correct-second-msg`).show();
-                } else {
-                    $(`#${state.currentStep.id} .correct-msg`).show();
-                }
-                setTimeout(() => {
-                    /* hide current step */
-                    $(`#${state.currentStep.id}`).hide();
-                    /* show next step */
-                    startStep(nextStep)
-                    /* reset mistakes counter and update current step and current stage */
-                }, delay)
-                const newState = {
-                    ...state,
-                    currentStep: nextStep,
-                    mistakesCounter: 0,
-                }
-                return newState
-            } else {
-                /* if user didn't exceed three attempts */
-                if (state.mistakesCounter < 2) {
-                    /* show incorrect message */
-                    $(`#${state.currentStep.id} .incorrect-msg`).show();
-                    /* update state */
-                    const newState = {
-                        ...state,
-                        mistakesCounter: state.mistakesCounter + 1,
-                    }
-                    return newState
-                }
-                /* if user exceeded three attempts */
-                else {
-                    /* disable button */
-                    const buttonElement = action.payload ?? null;
-                    buttonElement?.prop('disabled', true)
-                    /* hide incorrect message if it is shown */
-                    $(`#${state.currentStep.id} .incorrect-msg`).hide();
-                    /* show incorrect skip message */
-                    $(`#${state.currentStep.id} .incorrect-skip-msg`).show();
-                    const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
-                    const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
-                    setTimeout(() => {
-                        /* hide current step */
-                        $(`#${state.currentStep.id}`).hide();
-                        /* show next step */
-                        startStep(nextStep)
-                    }, delay)
-                    /* reset mistakes counter and update current step and current stage */
-                    const newState = {
-                        ...state,
-                        currentStep: nextStep,
-                        mistakesCounter: 0,
-                        currentMatching: expectedMatchingForStage,
-                        participantsMatchMemo: [
-                            ...state.participantsMatchMemo, ...Object.keys(expectedMatchingForStage).map(participant => {
-                                if (expectedMatchingForStage[participant] !== 'none') {
-                                    return participant
-                                }
-                            })
-                        ]
-                    }
-                    renderUiFromState(newState)
-                    return newState
-                }
-            }
-        }
-        if (currentStep.type === "radio") {
-            /*
-            check if the user answered correctly :
-                - if yes, do the following:
-                    - hide incorrect message if it is shown
-                    - disable the button
-                    - reset mistakes counter
-                    - set current step to the next step
-                    - show  correct message for "delay" seconds, then:
-                        - hide current step
-                        - start next step
-                - if no, do the following:
-                    - show incorrect message
-                    - increment mistakes counter
-             */
-            const expectedAnswer = state.correctAnswers[currentStep.formFields.correctAnswerIndex]
-            const userAnswer = parseInt(forminputs[currentStep.formFields.element].value)
-            const isCorrect = expectedAnswer === userAnswer
-            const understandingBonus = (() => {
-                /* if mistakes counter is 0, add 1 to the understanding bonus */
-                if (state.mistakesCounter === 0 && isCorrect) {
-                    return 1
-                }
-                return 0
-            })()
-            liveSend({
-                "information_type": "question_submission",
-                question_id: currentStep.formFields.element,
-                "is_correct": isCorrect,
-                "understanding_bonus": understandingBonus,
-                "answer": userAnswer,
-            })
-            if (isCorrect) {
-                /* hide incorrect message if it is shown */
-                $(`#${state.currentStep.id} .incorrect-msg`).hide();
-                /* disable button */
-                const buttonElement = action.payload ?? null;
-                buttonElement?.prop('disabled', true)
-                /* display the matching correct message */
-                const isFirstAttempt = state.mistakesCounter === 0
-                if (isFirstAttempt) {
-                    $(`#${state.currentStep.id} .correct-first-msg`).show();
-                } else {
-                    $(`#${state.currentStep.id} .correct-msg`).show();
-                }
-                const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
-                const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
-                setTimeout(() => {
-                    /* hide current step */
-                    $(`#${state.currentStep.id}`).hide();
-                    /* show next step */
-                    startStep(nextStep)
-                }, delay)
-                const newState = {
-                    ...state,
-                    currentStep: nextStep,
-                    mistakesCounter: 0,
-                }
-                return newState
-            }
-            if (!isCorrect) {
-                /* show incorrect message */
-                $(`#${state.currentStep.id} .incorrect-msg`).show();
-                /* update state */
-                const newState = {
-                    ...state,
-                    mistakesCounter: state.mistakesCounter + 1,
-                }
-                return newState
-            }
-        }
-        if (currentStep.type === "dropdown") {
-            const formFields = currentStep.formFields
-            const inputElements = formFields.map(formField => {
-                return forminputs[formField.element]
-            })
-            const expectedAnswers = formFields.map(formField => {
-                return state.correctAnswers[formField.correctAnswerIndex]
-            })
-            const userAnswers = inputElements.map(inputElement => {
-                return parseInt(inputElement.value)
-            })
-            const isCorrect = expectedAnswers.every((expectedAnswer, index) => {
-                return expectedAnswer === userAnswers[index]
-            })
-            const understandingBonus = (() => {
-                /* if mistakes counter is 0, add 1 to the understanding bonus */
-                if (state.mistakesCounter === 0 && isCorrect) {
-                    return 1
-                }
-                return 0
-            })
-            liveSend({
-                "information_type": "question_submission",
-                question_id: currentStep.formFields.element,
-                "is_correct": isCorrect,
-                "understanding_bonus": understandingBonus,
-                "answer": userAnswers,
-            })
-            if (isCorrect) {
-                /* hide incorrect message if it is shown */
-                $(`#${state.currentStep.id} .incorrect-msg`).hide();
-                /* disable button */
-                const buttonElement = action.payload ?? null;
-                buttonElement?.prop('disabled', true)
-                /* display the matching correct message */
-                const isFirstAttempt = state.mistakesCounter === 0
-                if (isFirstAttempt) {
-                    $(`#${state.currentStep.id} .correct-first-msg`).show();
-                } else {
-                    $(`#${state.currentStep.id} .correct-msg`).show();
-                }
-                const currentStepIndex = getStepsByRound(state.currentRound).findIndex(step => step.id === currentStep.id)
-                const nextStep = getStepsByRound(state.currentRound)[currentStepIndex + 1]
-                setTimeout(() => {
-                    /* hide current step */
-                    $(`#${state.currentStep.id}`).hide();
-                    /* show next step */
-                    startStep(nextStep)
-                }, delay)
-                const newState = {
-                    ...state,
-                    currentStep: nextStep,
-                    mistakesCounter: 0,
-                }
-                return newState
-            }
-            if (!isCorrect) {
-                /* show incorrect message */
-                $(`#${state.currentStep.id} .incorrect-msg`).show();
-                /* update state */
-                const newState = {
-                    ...state,
-                    mistakesCounter: state.mistakesCounter + 1,
-                }
-                return newState
-            }
-        }
-        return state
-    }
-    if (action.type === ACTION_TYPES.RESET) {
-        /* reset currentMatching */
-        const newCurrentMatching = {};
-        for (const participant in state.participantsNumbers) {
-            newCurrentMatching[participant] = 'none'
-        }
-        /* reset participantsMatchMemo */
-        const newParticipantsMatchMemo = [];
-        const newState = {
-            ...state,
-            currentMatching: newCurrentMatching,
-            participantsMatchMemo: newParticipantsMatchMemo,
-        }
-        renderUiFromState(newState)
-        liveSend({
-            'information_type': 'reset',
-        })
-        return newState
-    }
-    if (action.type === ACTION_TYPES.SET_CURRENT_STEP) {
-        const newState = {
-            ...state,
-            currentStep: action.payload,
-        }
-        return newState
-    }
-    return state;
-}
-
-function startStep(stepToBeStarted) {
-    if (!stepToBeStarted) {
-        // $("#last").show()
-        document.querySelector("form").submit()
-        return
-    }
-    liveSend({
-        "information_type": "set_step",
-        "step": stepToBeStarted.id,
-    })
-    if (stepToBeStarted.type === 'instructions') {
-        const sectionId = stepToBeStarted.id
-        // show section
-        $(`#${sectionId}`).show()
-        return
-    }
-    if (stepToBeStarted.type === "matching") {
-        const sectionId = stepToBeStarted.id
-        /* hide error and success messages */
-        $(`#${sectionId} .incorrect-msg`).hide()
-        $(`#${sectionId} .correct-msg`).hide()
-        $(`#${sectionId} .correct-first-msg`).hide()
-        $(`#${sectionId} .correct-second-msg`).hide()
-        $(`#${sectionId} .incorrect-msg`).hide()
-        $(`#${sectionId} .incorrect-skip-msg`).hide()
-        // show section
-        $(`#${sectionId}`).show()
-        return
-    }
-    if (stepToBeStarted.type === "radio" || stepToBeStarted.type === "dropdown") {
-        const sectionId = stepToBeStarted.id
-        /* hide error and success messages */
-        $(`#${sectionId} .incorrect-msg`).hide()
-        $(`#${sectionId} .correct-msg`).hide()
-        $(`#${sectionId} .correct-first-msg`).hide()
-        $(`#${sectionId} .incorrect-seq-field`).hide()
-        // show section
-        $(`#${sectionId}`).show()
-    }
-}
-
-const delay =7000;
-let store;
-let modal = document.getElementById("GenModal"); // Get the modal
-let btn = document.getElementById("GenBtn"); // Get the button that opens the modal
-let span = document.getElementsByClassName("close")[0]; // Get the <span> element that closes the modal
-
-btn.onclick = function () {
-    modal.style.display = "block";
-} // When the user clicks the button, open the modal
-span.onclick = function () {
-    modal.style.display = "none";
-}// When the user clicks on <span> (x), close the modal
-window.onclick = function (event) {
-    if (event.target == modal) {
-        modal.style.display = "none";
-    }
-}// When the user clicks anywhere outside of the modal, close it
 window.addEventListener('DOMContentLoaded', (event) => {
-    store = Redux.createStore(reducer);
-    /*
-        this action is dispatched each time that the page is loaded
-        if the server is sending the current step, then the page is reloaded. start the step that the server is sending
-        if the server is not sending the current step, then the page is loaded for the first time. start the first step
-        */
-    let stepToBeStarted;
-    if (store.getState().currentStep) {
-        stepToBeStarted = steps.find((step) => store.getState().currentStep === step.id)
-    } else {
-        const currentRoundSteps = getStepsByRound(store.getState().currentRound)
-        stepToBeStarted = currentRoundSteps[0]
-    }
-    store.dispatch({type: ACTION_TYPES.SET_CURRENT_STEP, payload: stepToBeStarted})
-    store.dispatch({type: ACTION_TYPES.HIDE_ALL_SECTIONS})
-    startStep(stepToBeStarted)
-    renderUiFromState(store.getState())
-    liveSend({'information_type': 'onload', 'time': Date.now()})
-    $("button").click(function (event) {
-        event.preventDefault()
-    })
-    $("section button").click(function (event) {
-        if ($(this).attr("id") == "submit-page") {
-            document.getElementById("form").submit();
-            return
-        }
-        store.dispatch({type: ACTION_TYPES.NEXT_BUTTON_CLICKED, payload: $(this)})
-    })
+    renderDaAlgoPage()
 });
 
-function getStepsByRound(round) {
-    if (round === 1) {
-        return steps.filter(step => !step.id.includes("rounds"))
-    } else {
-        return steps.filter(step => step.id.includes("rounds"))
-    }
-}
-
-function renderUiFromState(state) {
+function renderDaAlgoPage() {
     const jsxCode = `
     function Stam(){
         return <div></div>
     }
-    function DaAlgoInterface(props){
-    return <TraditionalSteps[0] />
+    const steps = {
+        "traditional":{
+            round1:[
+                {
+                    id: "instructions_1",
+                    type: "instructions",
+                    content : (
+                        <>
+                            <p>
+                            The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Remember: each step or question during the process will count for your Understanding Bonus only if you get it correctly on your first attempt. Think about your answers carefully!
+                            </p>
+                            <p>
+                                We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants.
+                            </p>
+                        </>
+                    )
+                },
+                {
+                    id: "instructions_2",
+                    type: "instructions",
+                    content : (
+                        <>
+                            <p>
+                                On the upper left part of the dashboard below you see a condensed version of the <b>Prize Priorities</b> that you saw before.
+                            </p>
+                            <p>
+                                Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize.
+                            </p>
+                            <p>
+                                <b>For example:</b> The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority for getting that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority.
+                            </p>
+                        </>
+                    )
+                },
+                {
+                    id: 'instructions_3',
+                    type: 'instructions',
+                    content :(
+                        <>
+                            <p>
+                                On the upper right part of the dashboard below you see a condensed version of the <b>Participant Rankings</b>.
+                            </p>
+                            <p>
+                                Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
+                            </p>
+                            <Accordion title={<b>For example:...</b>}> 
+                                <p>
+                                    The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest).
+                                </p>
+                                <p>
+                                    Notice that the ranking under “Y” (you) is exactly the ranking that you submitted in the previous screen!
+                                </p>
+                             </Accordion>
+                            <p>
+                                Notice: In real rounds of the game you do not see other participants’ rankings, but now, since you are in charge of the allocation process, you are able to see them.
+                            </p>
+                        </>
+                    )
+                },
+                {
+                    id: "instructions_4",
+                    type: 'instructions',
+                    content :(
+                        <p>
+                           The middle and lower parts of the dashboard enable you to pair participants to prizes, as will be explained next.
+                        </p>
+                    )
+                },
+                {
+                    id: "matching_1",
+                    type: "matching",
+                    expectedMatching :{'Ruth': "A", 'Shirley': 'none', 'Theresa': 'none', 'You': 'none'},
+                    content : (
+                        <>
+                            <p>
+                            First, pair each participant to their <b>highest-rank</b> prize.
+                            </p>
+                            <ol>
+                                <li>
+                                Start from the “Pick participants to pair” row, and click on <b>Ruth (“R”)</b>.
+                                </li>
+                                <li>
+                                Then, in the list of four prizes at the bottom left part of the dashboard, click on “+” next to the prize that is <b>highest in their ranking</b>.
+                                </li>
+                            </ol>
+                            <p>
+                            Hint: the prize that is highest in Ruth’s ranking is indicated by the letter just under “R” in the Participant Rankings table.
+                            </p>
+                            <p>
+                            After pairing, “A” and “R” will be colored purple in the two tables, to indicate that they are paired.
+                            </p>
+                            <p>
+                            Click Submit when done.<br/>
+                            (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    correctMsg:(
+                         <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                         <p>
+                            Correct! <br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    )
+                },
+                {
+                    id: "matching_2",
+                    type: "matching",
+                    expectedMatching: {"Ruth": "A", "Shirley": "A", "Theresa": "B", "You": "C"},
+                    content : (
+                        <>
+                            <p>
+                                Now repeat the same for the three other participants. One by one, pair each of them to their highest-rank prize.
+                            </p>
+                            <p>
+                                Click Submit after completing all three.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                            <p>
+                                Correct!
+                            </p>
+                    ),
+                    correctFirstMsg:(
+                            <p>
+                                Correct! <br/>
+                                Good job on the first try! This will count for your Understanding Bonus.
+                            </p>
+                    ),
+                    incorrectMsg:(
+                            <p>
+                                Incorrect answer. Please try again.
+                            </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_1",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    expectedAnswerIndex: 3,
+                    options :[
+                        <span>It is determined at random.</span>,
+                        <span>The participant who got paired to Prize A first.</span>,
+                        <span>The participant for whom Prize A is in is in the highest rank.</span>,
+                        <span>The participant highest in Prize A’s priorities.</span>,
+                    ],
+                    content : (
+                        <>
+                            <p>
+                                Each participant is now paired to a prize.<br/>
+                                However, there are <b>conflicts</b>: two (or more) participants are paired to the same prize.
+                            </p>
+                            <p>
+                                Notice: <b>Ruth</b> and <b>Shirley</b> are both paired to <b>Prize A</b>. This is a conflict.
+                            </p>
+                            <p>
+                                To solve a conflict, the first step is <b>Unpair</b>.<br/>
+                                According to this step, only one participant should remain paired to Prize A. <b>Which participant should it be?</b>
+                            </p>
+                            <p>
+                                Please select one of the answers below and then click Submit.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! When there is a conflict at some prize, only the participant highest in that prize’s priorities remain paired to that prize. The others should get unpaired.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                             Correct! When there is a conflict at some prize, only the participant highest in that prize’s priorities remain paired to that prize. The others should get unpaired.<br/>
+                             Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_2",
+                    inputRef: React.createRef(null),
+                    type: "radio",
+                    options :[
+                        <span>A random prize that is currently unpaired to any participant.</span>,
+                        <span>Their highest-rank prize among the prizes they were not yet paired with.</span>,
+                        <span>Their highest-rank prize.</span>,
+                    ],
+                    expectedAnswerIndex: 3,
+                    content : (
+                        <>
+                            <p>
+                                The second step in solving conflicts is Re-pair.<br/>
+                                After a participant gets unpaired, what new prize do they get paired to?
+                            </p>
+                            <p>
+                                Please select one of the answers below and then click Submit.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Each unpaired participant is re-paired to their highest-rank prize among the prizes they were <b>not yet paired with</b>.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Each unpaired participant is re-paired to their highest-rank prize among the prizes they were <b>not yet paired with</b>.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                },
+                {
+                    id: "matching_3",
+                    inputRef: React.createRef(null),
+                    type: 'matching',
+                    expectedMatching: {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "C"},
+                    content : (
+                        <>
+                            <p>
+                                Now, let’s solve the conflict.
+                            </p>
+                            <p>
+                                According to the Prize Priorities, <b>Ruth’s</b> priority for getting <b>Prize A</b> is higher than <b>Shirley’s</b>. Hence, <b>Shirley</b> should get unpaired from <b>Prize A</b> , and then get re-paired to her second highest-rank prize.
+                            </p>
+                            <p>
+                                Perform this using the two steps:
+                                <ol>
+                                    <li>
+                                        <b>Unpair</b>: at the lower part of the dashboard, next to Prize A (“A”), click on <b>Shirley (“S”)</b>.
+                                    </li>
+                                    <li>
+                                        <p><b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Shirley’s (“S”) <b>second highest-rank prize</b> among all participants <b>except for you</b>.</p>
+                                        <p>Hint: You can easily find which prize it is, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under Shirley’s name (“S”)</p>
+                                    </li>
+                                </ol>
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_3",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    expectedAnswerIndex: 0,
+                    content:(
+                        <p>Is the process over?</p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    options :[
+                        <span>No, there are new conflicts: two (or more) participants are paired to the same prize.</span>,
+                        <span>No, some participants are paired to prizes that are not in their highest rank.</span>,
+                        <span>Yes, it is fine that two (or more) participants are paired to the same prize because they all get different amounts of money anyway.</span>,
+                        <span>Yes, there are no more conflicts</span>,
+                    ]  
+                },
+                {
+                    id: "matching_4",
+                    type: 'matching',
+                    inputRef: React.createRef(null),
+                    expectedMatching :  {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "A"},
+                    content : (
+                        <>
+                            <p>
+                                Find all conflicts and solve them like before.
+                                First, find all prizes that are paired to two (or more) participants.
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                </li>
+                                <li>
+                                    <p>
+                                        <b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.
+                                    </p>
+                                    <p>
+                                        Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name.
+                                    </p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style="color: #0b1ae3;font-weight: bold;">Only solve the conflict you see first on this screen!</span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ), 
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_4",
+                    inputRef: React.createRef(null),
+                    type: "radio",
+                    expectedAnswerIndex: 0,
+                    content : (
+                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                },
+                {
+                    id: "matching_5",
+                    type: 'matching',
+                    inputRef: React.createRef(null),
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "B"},
+                    content : (
+                        <>
+                            <p>
+                                Find all conflicts and solve them like before.
+                                First, find all prizes that are paired to two (or more) participants.
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                </li>
+                                <li>
+                                    <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
+                                    <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name.</p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style="color: #0b1ae3;font-weight: bold;">Only solve the conflict you see first on this screen!</span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                         </>
+                    ), 
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ), 
+                },
+                {
+                    id: "question_5",
+                    inputRef: React.createRef(null),
+                    type: "radio",
+                    content : (
+                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "matching_5",
+                    inputRef: React.createRef(null),
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find all conflicts and solve them like before.
+                                First, find all prizes that are paired to two (or more) participants.
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                </li>
+                                <li>
+                                    <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
+                                    <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name.</p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style="color: #0b1ae3;font-weight: bold;">
+                                Only solve the conflict you see first on this screen!
+                                </span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "A", "You": "B"},
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),    
+                },
+                {
+                    id: "question_6",
+                    type: "radio",
+                    content : (
+                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "matching_6",
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find all conflicts and solve them like before.
+                                First, find all prizes that are paired to two (or more) participants.
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                </li>
+                                <li>
+                                    <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
+                                    <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name.</p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style="color: #0b1ae3;font-weight: bold;">Only solve the conflict you see first on this screen!</span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "D", "You": "B"},
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),        
+                },
+                {
+                    id: "question_7",
+                    type: "radio",
+                    content : (
+                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>Correct! There are no more conflicts.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! There are no more conflicts.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 1,    
+                },
+                {
+                    id: "question_8",
+                    type: "radio",
+                    content : (
+                        <>
+                            <p>The allocation is the following:
+                                <ul>
+                                    <li>Prize A is allocated to Ruth.</li>
+                                    <li>Prize B is allocated to You.</li>
+                                    <li>Prize C is allocated to Shirely.</li>
+                                    <li>Prize D is allocated to Theresa.</li>
+                                </ul>
+                            </p>
+                            <p>
+                                Which of the following is true?<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p> Correct! The allocation generated by the process is the final one, and each participant now gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The allocation generated by the process is the final one, and each participant now gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>I can get any prize that I was paired with at some point in the allocation process, with equal chances.</span>,
+                        <span>It is certain that I will get the prize allocated to me at the end of the allocation process.</span>,
+                        <span>I can only get one of the prizes I was paired with at some point in the allocation process, but I cannot know which one.</span>,
+                        <span>I am more likely to get a prize I was paired with at an earlier point in the allocation process than at a later point in the process.</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                },
+                {
+                    id: "question_allocation_a",
+                    type: "dropdown",
+                    content : (
+                        <p>
+                            Now please verify you understand what participant each prize is allocated to.
+                            Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>Correct! Prize A is allocated to Ruth.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize A is allocated to Ruth.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "question_allocation_b",
+                    type: "dropdown",
+                    content : (
+                        <p>
+                            Now please verify you understand what participant each prize is allocated to.
+                            Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>Correct! Prize B is allocated to You.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize B is allocated to You.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    expectedAnswerIndex: 3,
+                },
+                {
+                    id: "question_allocation_c",
+                    type: "dropdown",
+                    content : (
+                        <p>
+                            Now please verify you understand what participant each prize is allocated to.
+                            Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>    
+                    ),
+                    correctMsg:(
+                        <p>Correct! Prize C is allocated to Shirley.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize C is allocated to Shirley.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    expectedAnswerIndex: 1,                            
+                },
+                {
+                    id: "question_allocation_d",
+                    type: "dropdown",
+                    content : (
+                        <p>
+                            Now please verify you understand what participant each prize is allocated to.
+                            Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>Correct! Prize D is allocated to Theresa.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize D is allocated to Theresa.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    expectedAnswerIndex: 2,
+                },
+                {
+                    id: "question_9",
+                    type: "radio",
+                    content : (
+                        <p>Which of the following is true?<br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>Correct! The last prize you were paired with is the prize allocated to you at the end of the allocation process, and you get this prize.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The last prize you were paired with is the prize allocated to you at the end of the allocation process, and you get this prize.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                    options :[
+                        <span>I will sometimes receive a prize which I ranked lower than any prize I was paired with during the allocation process.</span>,
+                        <span>Out of all the prizes I was paired with at some point in the allocation process, I will get the last one I was paired with.</span>,
+                        <span>If another participant does not want the prize allocated to them, then I may be able to switch prizes with them.</span>,
+                        <span>I am as likely to get a prize I was paired with at a later point in the allocation process as to get a prize I was paired with at an earlier point in the process</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                },
+                {
+                    id: "step-23",
+                    type: "radio",
+                    formFields: {element: "question_10", correctAnswerIndex: 13},
+                },
+            ],
+            round2:[
+                {
+                    id: "step-1-rounds",
+                    type: "instructions",
+                },
+                {
+                    id: "step-2-rounds",
+                    type: "matching",
+                    stage: 0,
+                },
+                {
+                    id: "step-3-rounds",
+                    type: "dropdown",
+                    formFields: [
+                        {element: "prize_a_obtainable", correctAnswerIndex: 0},
+                        {element: "prize_b_obtainable", correctAnswerIndex: 1},
+                        {element: "prize_c_obtainable", correctAnswerIndex: 2},
+                        {element: "prize_d_obtainable", correctAnswerIndex: 3},
+                    ],
+                },
+                {
+                    id: "step-4-rounds",
+                    type: "dropdown",
+                    formFields: [
+                        {element: "obtainable_prize", correctAnswerIndex: 4},
+                    ],
+                }
+            ]
+        }
     }
-    const TraditionalSteps = [
-        function step1(){
-            return <div>step1</div>        
-        },
-        function step2(){
-            return <div>step2</div>
+    function getSteps(round,variant){
+        return steps[variant]["round"+round]
+    }
+    const DashboardContext = React.createContext()
+    function DaAlgoInterface(props){
+        const [currentMatching, setCurrentMatching] = React.useState(props.currentMatching)
+        const [modals,setModals] = React.useState({allocation : false})
+        const steps = getSteps(props.round,props.variant)
+        const [currentStepId,setCurrentStepId] = React.useState(props.currentStepId || steps[0].id) 
+        const [readyToProceed,setReadyToProceed] = React.useState(false)
+        const [selectedProduct,setSelectedProduct] = React.useState(null)
+        const matchingCounter = React.useRef(props.matchingCounter)
+        const [highlightedCustomer,setHighlightedCustomer] = React.useState(null)
+        const matchingMemo = React.useRef(props.matchingMemo)
+        function onMouseEnterCustomer(customer){
+            /* if there is a selected product, highlight do not highlight the customer */
+            if(selectedProduct){
+                return
+            }
+            setHighlightedCustomer(customer)
         }
-    ]
-    `
-    function renderPrizesPrioritiesTable() {
-        /*
-        the prizesPriorities table is a table that contains all the prizes priorities.
-        each column represents a prize and each row represents a priority of the prize.
-        a column is highlighted if all of these terms are met:
-            1.there is no currently selected participant
-            2.the user is hovering over prize row that matches the column prize
-        a participant in a cell is highlited if it is matched to the prize that this column represents
-         */
-        const jsxCode = `
-        function Stam(){
-        return <div></div>
+        function onMouseLeaveCustomer(){
+            setHighlightedCustomer(null)
         }
-        function CustomersPrioritiesTable(props) {
-            return (
+        function onReset(){
+            setCurrentMatching(props.products.reduce((acc,product) => {
+                acc[product] = "none"
+                return acc
+            },{}))
+            setSelectedProduct(null)
+        }
+        function onMatching(matchedProduct, matchedToCustomer){
+            const productWasMatched = currentMatching[matchedProduct] !== "none"
+            let newMatching = {}
+            if (!productWasMatched){
+                newMatching = {...currentMatching, [matchedProduct]: matchedToCustomer}
+            }
+            else{
+                const productIsCurrentlyMatchedTo = currentMatching[matchedProduct]
+                newMatching = {
+                    ...currentMatching,
+                    [matchedProduct]: matchedToCustomer,
+                    [productIsCurrentlyMatchedTo]: "none"
+                }
+            }
+            setCurrentMatching(newMatching)
+            setSelectedProduct(null)
+            setHighlightedCustomer(matchedToCustomer)
+            matchingMemo.current = [...matchingMemo.current, matchedProduct]
+        }
+        function onProductSelect(product){
+            setHighlightedCustomer(null)
+            const isSelected = selectedProduct === product
+            if (isSelected) {
+                React.startTransition(() => {
+                    setSelectedProduct(null)
+                })
+            }
+            else {
+                setSelectedProduct(product)
+            }
+        }
+        function onProceed(){
+            const currentStepIndex = steps.findIndex(step => step.id === currentStepId)
+            const currentStep = steps[currentStepIndex]
+            const nextStep = steps[currentStepIndex + 1]
+            if (!readyToProceed){
+                setReadyToProceed(true)
+                liveSend({
+                    information_type : "step_update",
+                    step_id : nextStep.id
+                })
+                return
+            }
+            if (!nextStep){
+                document.querySelector("form").submit()
+                return 
+            }
+            if (nextStep.type !== "instructions"){
+                setReadyToProceed(false)
+            }
+            setCurrentStepId(nextStep.id)
+        }
+        React.useEffect(()=>{
+            liveSend({
+            information_type : "matching_update",
+            current_matching : currentMatching
+            })
+        },[currentMatching])
+        React.useEffect(()=>{
+            liveSend({
+            information_type : "matching_memo_update",
+            matching_memo : matchingMemo.current
+            })
+        },[matchingMemo.current])
+        React.useEffect(()=>{
+            liveSend({
+            information_type : "matching_counter_update",
+            matching_counter : matchingCounter.current
+            })
+        },[matchingCounter.current])
+        React.useEffect(()=>{
+            liveSend({
+            information_type : "step_update",
+            step_id : currentStepId
+            })
+        },[currentStepId])
+        return (
                 <>
-                          {
-                            Array.from(Object.keys(props)).map((_,index)=>{
-                                const { isHighlited, prizeName, columnIndex, highlitedParticipants,isLast, priorities} = props[index]
-                                const classNames = () => {
-                                    let classNames = "table-column flexItemButtonsBackground"
-                                    if (columnIndex === 0) {
-                                        classNames += " verticalRight"
-                                    } else if (columnIndex === Object.keys(props).length - 1) {
-                                        classNames += " verticalLeft"
-                                    } else {
-                                        classNames += " verticalBoth"
-                                    }
-                                    if (isHighlited) {
-                                        classNames += " highlited"
-                                    }
-                                    return classNames
-                                 }
-                                return (
-                                    <div className={classNames()} id={\`SchoolsBackground\${index}\`} key={index}>
-                                        <div className="dButtonTop dButton" id={\`School\${prizeName}\`}>{prizeName}</div>
-                                        {
-                                            priorities.map((priority, cellIndex) => {                                           
-                                                const classNames=()=>{
-                                                    let classNames = "dButton"                                                 
-                                                    if (highlitedParticipants.includes(priority)) {
-                                                        classNames += " dButtonMatched"
-                                                    }
-                                                    return classNames
-                                                }
-                                                return (
-                                                    <div className={classNames()} id={\`School\${prizeName}PrefSchool\${priority}\`} key={cellIndex}>{priority}</div>
-                                                ) 
+                <button type="button" className="button-2" onClick={()=>setModals({allocation:true})}>Click for a reminder on the technical details of the allocation process</button>
+                {modals.allocation && <AllocationModal onClose={()=>setModals({allocation:false})} />}
+                <DashboardContext.Provider 
+                value={{
+                    currentMatching,
+                    setCurrentMatching,
+                    products:props.products,
+                    customers:props.customers,
+                    maxProductsPerCustomer:props.maxProductsPerCustomer,
+                    customersPriorities:props.customersPriorities,
+                    productsPriorities:props.productsPriorities,
+                    round:props.round,
+                    onReset,
+                    selectedProduct,
+                    setSelectedProduct,
+                    highlightedCustomer,
+                    onMouseEnterCustomer,
+                    onMouseLeaveCustomer,
+                    onMatching,
+                    matchingMemo,
+                    onProductSelect,
+                    currentStepId,
+                    steps,
+                    onProceed,
+                    matchingCounter,
+                    readyToProceed,
+                }}
+                    >
+                    <Questions />
+                    <Dashboard />
+                </DashboardContext.Provider>
+                </>
+            )
+    }
+    function Questions(){
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,readyToProceed} = React.useContext(DashboardContext)
+        const [message,setMessage] = React.useState(null)
+        const currentStep = steps.find(step => step.id === currentStepId)
+        function onSubmit(){
+            debugger
+            if (readyToProceed){
+                setMessage(null)
+                onProceed()
+                return 
+            }
+            if (currentStep.type === "radio"){
+                const expectedAnswer = currentStep.expectedAnswer
+                const selectedAnswer = inputRef.current.querySelector("input:checked")?.value || null
+                const isCorrect = expectedAnswer === selectedAnswer
+                const currentMatchingCounter = matchingCounter.current
+                let understanding_bonus = 0 ;
+                debugger
+                if (isCorrect){
+                    if (matchingCounter.current === 0){
+                        setMessage("correctFirstMsg")
+                        understanding_bonus+= 1 
+                    }
+                    else{
+                        setMessage("correct")
+                    }
+                    matchingCounter.current =  0
+                    onProceed()
+                }
+                else{
+                    matchingCounter.current = matchingCounter.current + 1
+                    setMessage("incorrectMsg")
+                }
+                liveSend({
+                    information_type : "question_submission",
+                    expected_answer : expectedAnswer,
+                    selected_answer : selectedAnswer,
+                    is_correct : isCorrect,
+                    understanding_bonus : understanding_bonus,
+                    matching_counter : currentMatchingCounter,
+                    time_stamp : new Date().toUTCString(),
+                    question_id : currentStep.id
+                })
+            }
+            if (currentStep.type === "matching"){
+                const expectedMatching = currentStep.expectedMatching
+                let understanding_bonus = 0 ;
+                const isCorrect = Object.keys(expectedMatching).every(product => {
+                    return expectedMatching[product] === currentMatching[product]
+                })
+                const currentMatchingCounter = matchingCounter.current
+                if (isCorrect){
+                    if (matchingCounter.current === 0){
+                        setMessage("correctFirstMsg")
+                        understanding_bonus+= 1    
+                    }
+                    else{
+                        setMessage("correct")
+                    }
+                    matchingCounter.current =  0 
+                    onProceed()
+                }
+                else{
+                    const isLastAttempt = matchingCounter.current === 2
+                    if (isLastAttempt){
+                        matchingCounter.current = 0
+                        setMessage("incorrectSkipMsg")
+                        setCurrentMatching(expectedMatching)
+                        onProceed()
+                    }
+                    else{
+                        matchingCounter.current = matchingCounter.current + 1
+                        setMessage("incorrect")
+                    }
+                }
+                liveSend({
+                    information_type : "matching_submission",
+                    matching:currentMatching,
+                    is_correct:isCorrect,
+                    understanding_bonus:understanding_bonus,
+                    matching_counter:currentMatchingCounter,
+                    time_stamp : new Date().toUTCString()  
+                })
+            }
+        }
+        const inputRef = React.useRef(null)
+        return (
+            <section>
+            {currentStep.content}
+            {
+                currentStep.type === "radio" &&
+                <div ref={inputRef}>
+                    {
+                        currentStep.options.map((option,index) => {
+                            return (
+                                <div style={{display:'flex',gap:'0.5rem'}}>
+                                    <input type="radio" id={index} name={option} value={index} />
+                                    <label htmlFor={index}>{option}</label>
+                                </div>
+                            )
+                        })
+                    }
+                </div>
+            }
+            <div style={{display:"flex",justifyContent:'center'}}>
+                <button type="button" className="btn btn-primary" onClick={onSubmit}>
+                    {currentStep.type === "instructions" ? "Proceed"  :  readyToProceed ? "Proceed" : "Submit"}
+                </button>
+            </div>
+                {
+                    message && message === "incorrect" && 
+                        <div class="incorrect-msg">
+                            {currentStep.incorrectMsg}
+                        </div>
+                }
+                {
+                    message && message === "correct" &&
+                        <div class="correct-msg">
+                            {currentStep.correctMsg}
+                        </div>       
+                }
+                {
+                    message && message === "incorrectSkipMsg" &&
+                        <div class="incorrect-msg">
+                            {currentStep.incorrectSkipMsg}
+                        </div>
+                }
+                {
+                    message && message === "correctFirstMsg" &&
+                        <div class="correct-msg">
+                            {currentStep.correctFirstMsg}
+                        </div>
+                }
+            </section>
+        )
+    }
+    function Accordion(props){
+        const [expanded,setExpanded] = React.useState(false)
+        return (
+            <div className="accordion" id="accordionExample">
+                <span style={{cursor:'pointer'}} onClick={()=>setExpanded(!expanded)}>
+                {props.title}
+                </span>
+                {
+                    expanded &&
+                    <div className="accordion-body">
+                        {props.children}
+                    </div>
+                }  
+            </div>
+        )
+    }
+    function Dashboard(){
+        const props = React.useContext(DashboardContext)
+        return (
+            <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'1rem'}}>
+                {/* reset button */}
+                { props.round === 1 &&
+                    <button
+                        type="button"
+                        className="position-absolute btn btn-outline-dark"
+                        id="reset-button"
+                        style={{ right: '.5rem', top: '.5rem' }}
+                        onClick={props.onReset}
+                     >
+                        reset
+                        <svg className="bi bi-arrow-counterclockwise" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                            <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" fillRule="evenodd" />
+                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+                        </svg>
+                    </button>
+                }
+                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
+                    <div className="column" style={{flex: '1 2 auto'}}>
+                        <b style={{fontSize: "1.5rem"}}>
+                            Prize Priorities:
+                        </b>
+                    </div>
+                    <div className="column" style={{flex: '1 2 auto'}}>
+                        <b style={{fontSize: "1.5rem"}}>
+                            Participant Rankings:
+                        </b>
+                    </div>
+                </div>
+                <div id="tables-row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
+                    {/* products table */}
+                    <ProductsTable />
+                    {/* customers table */}
+                    <CustomersTable />
+                </div>
+                <hr/>
+                {/* middle row */}
+                <ProductsRow/>
+                <hr/>
+                {/* bottom row */}
+                <CustomersRow/>
+                <hr/>
+                <div style={{display:'flex',justifyContent:'center',marginBottom:'0.5rem'}}>
+                    Allocation Dashboard
+                </div>
+            </div>
+        )
+    }
+    function CustomersRow(){
+    const {currentMatching,maxProductsPerCustomer,customers,onMouseEnterCustomer,onMouseLeaveCustomer,selectedProduct,setSelectedProduct,onMatching,matchingMemo,products,onProductSelect} = React.useContext(DashboardContext)
+    /* 
+    each row represents a customer
+    for each row : 
+        the products that the customer is matched to are presented in the order they were matched 
+     */
+        return (
+             <div id="third-row">
+                <div id="prizes-rows">
+                    <div className="customers-rows-container">
+                        {
+                            customers.map((customer,productIndex)=>{
+                                const productsMatchedToCustomers = products.filter((product)=>{
+                                                return currentMatching[product] === customer
                                             })
-                                         }
-                                    </div>
+                                productsMatchedToCustomers.sort((a,b)=>{
+                                    return matchingMemo.current.findIndex((customer)=> customer === b) - matchingMemo.current.findIndex((customer)=> customer === a)
+                                })
+                                function showPlus(){
+                                    if (!selectedProduct) return false
+                                    if (currentMatching[selectedProduct] === customer) return false
+                                    function getNumberOfProductsMatchedToCustomer(){
+                                        let counter = 0
+                                        for (let product in currentMatching){
+                                            if (currentMatching[product] === customer){
+                                                counter = counter + 1
+                                            }
+                                        }
+                                        return counter
+                                    }
+                                    const numberOfProductsMatchedToCustomer = getNumberOfProductsMatchedToCustomer()
+                                    if (numberOfProductsMatchedToCustomer >= maxProductsPerCustomer) return false 
+                                    return true
+                                }
+                                return(
+                                    <>
+                                        <span>{customer}</span>
+                                        <div
+                                            onMouseEnter={()=>{onMouseEnterCustomer(customer)}}
+                                            onMouseLeave={()=>{onMouseLeaveCustomer(customer)}}
+                                            className="products-row"
+                                        >
+                                        { /* plus button */ }
+                                        { showPlus() &&
+                                            <div className="iButton-container">
+                                                <button 
+                                                    className="iButton red"
+                                                    type="button"
+                                                    onClick={() => {
+                                                        onMatching(selectedProduct,customer)
+                                                    }}
+                                                 >
+                                                    +
+                                                </button>
+                                            </div>
+                                        }
+                                        { /* products */ }
+                                        {
+                                            productsMatchedToCustomers.length !== 0 &&  
+                                            productsMatchedToCustomers.map((product,productIndex)=>{
+                                                const isSelected = selectedProduct === product
+                                                const className = isSelected ? "iButton dark-purple " : "iButton purple"
+                                                return (
+                                                    <div className="iButton-container">
+                                                       <button
+                                                            type="button"
+                                                            key={productIndex}
+                                                            onClick={()=>{
+                                                                onProductSelect(product)
+                                                            }} 
+                                                            className={className}
+                                                        >
+                                                             {product.slice(0,1)}
+                                                       </button>
+                                                   </div>
+                                                   )  
+                                                })
+                                        }
+                                        </div>
+                                    </>
                                 )
                             })
                         }
-                </>
-            )
-        }
-        `
-    }
-
-    function renderParticipantsPrioritiesTable() {
-        /*
-        the participantsPriorities table is a table that contains all the participants priorities.
-        it is highlighted if one or more of these terms are met:
-        1. the participant is currently selected
-        2. the user is hovering over the matching participant button
-        the prizes that are displayed in the column is highlited if this term is met: :
-            1. the prize is the current match of the participant that this column represents
-         */
-        const jsxCode = `
-
-        function Stam() {
-            return <div></div>
-        }
-
-        function ParticipantsPrioritiesTable(props) {
-            return (
-                <>
-                       {
-                           Array.from(Object.keys(props)).map((_, index) => {
-                               const {
-                                   isHighlited,
-                                   participantName,
-                                   columnIndex,
-                                   highlitedPrize,
-                                   isLast,
-                                   priorities
-                               } = props[index]
-                               const classNames = () => {
-                                   let classNames = "table-column flexItemButtonsBackground"
-                                   if (columnIndex === 0) {
-                                       classNames += " verticalRight"
-                                   } else if (isLast) {
-                                       classNames += " verticalLeft"
-                                   } else {
-                                       classNames += " verticalBoth"
-                                   }
-                                   if (isHighlited) {
-                                       classNames += " highlited"
-                                   }
-                                   return classNames
-                               }
-                               return (
-                                   <div className={classNames()} key={columnIndex}>
-                                        <div className="dButtonTop dButton" id={participantName}>{participantName}</div>
-                                       {
-                                           priorities.map((priority, cellIndex) => {
-                                               const className = () => {
-                                                   let classNames = "dButton"
-                                                   if (highlitedPrize === priority) {
-                                                       classNames += " dButtonMatched"
-                                                   }
-                                                   return classNames
-                                               }
-                                               return (
-                                                   <div className={className()} id={participantName + "PrefSchool" + priority} key={cellIndex}>{priority}</div>
-                                               )
-                                           })
-                                       }
-                                    </div>
-                               )
-                           })
-                       }
-                 </>
-            )
-        }
-
-        `
-        const participantsPrioritiesTableProps = Object.keys(state.participantsPriorities).map((participantName, index) => {
-            const isHighlited = () => {
-                if (state.selectedParticipant !== null) {
-                    return state.selectedParticipant === participantName
-                } else if (state.mouseOnParticipant) {
-                    return state.mouseOnParticipant === participantName
-                }
-            }
-            const highlitedPrize = state.currentMatching[participantName] === 'none' ? null : state.currentMatching[participantName]
-            const isLast = index === Object.keys(state.participantsPriorities).length - 1
-            return {
-                isHighlited: isHighlited(),
-                participantName,
-                columnIndex: index,
-                priorities: state.participantsPriorities[participantName],
-                highlitedPrize,
-                isLast
-            }
-        })
-        renderReactComponent(jsxCode, "participants-priorities-table", "ParticipantsPrioritiesTable", JSON.stringify(participantsPrioritiesTableProps))
-    }
-
-    function renderMiddleRow() {
-        /*
-        the middle row is presenting the participant that is currently Unmatched.
-        if a participant is currently selected than it is being highlighted.
-        */
-        const jsxCode = `
-
-        function ParticipantButton(isMatched, isSelected, participantName) {
-            if (isMatched === true) return null
-
-            function onClick() {
-                if (isMatched || isSelected) return;
-                store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
-            }
-
-            const className = isSelected ? "iButtonSelected" : "iButton"
-            return (
-                <div className="column" style={{flex: "1 1 auto"}}>
-                        <button className={className} onClick={onClick} children={participantName}>
-                        </button>
                     </div>
-            )
-        }
-
-        function MiddleRow(participants) {
-        var markdownText = '# Hello, *world*!\\n\\nThis is some **bold** text.\\n\\n- Item 1\\n- Item 2\\n- Item 3';
-        var ReactMarkdown = window.ReactMarkdown;
-            return (
-                <>
-                        <span>
-                            <b style={{fontSize: "1.5rem"}}>Pick participants to pair →</b>
-                        </span>
-                        <div class="products-row">
-                            {Object.keys(participants).map((_, index) => {
-                                const participantName = participants[index].participantName
-                                const isMatched = participants[index].isMatched
-                                if (isMatched === true) return null
-                                const isSelected = participants[index].isSelected
-                                const className = isSelected ? "iButton dark-purple" : "iButton purple"
-                                return (
-                                    <div className="iButton-container">
-                                        <button 
-                                        className={className}
-                                        onClick={(e) => {
-                                            e.preventDefault()
-                                            store.dispatch({type: '${ACTION_TYPES.PARTICIPANT_SELECTED}', payload: participantName})
-                                        }} 
-                                        key={index}
-                                        >
-                                            {participantName}
-                                        </button>
-                                    </div>
-                                )
-                            })}
-                        </div>
-                    </>
-            )
-        }
-
-        `
-        const participants = Object.keys(state.participantsNumbers).map((participantName, index) => {
-            const isMatched = state.currentMatching[participantName] !== 'none'
-            const isSelected = state.selectedParticipant && state.selectedParticipant === participantName
-            return {
-                isMatched,
-                isSelected,
-                participantName
-            }
-        })
-        renderReactComponent(jsxCode, "middle-row", "MiddleRow", JSON.stringify(participants))
-    }
-
-    function renderPrizesRows() {
-        /*
-         this component is divided to sub-rows.
-         each sub-row represents a prize.
-         each sub row contains :
-            1. the prize name
-            2. the participant that is currently matched to the prize
-            3. plus button that allows to add a participant to the prize.
-               (shown only if there is a selected participant).
-               (shown only if the current number of participants currently matched to the prize is less than the max number of participants that can be matched to the prize)
-               Onclick - dispatch plus button clicked action.
-            4. onHover - dispatches onHover action.
-            5. non-hoverable - if the prize is already full.
-         */
-        const jsxCode = `
-
-        function Stam() {
-            return <div></div>
-        }
-
-        function PrizesRows(prizesRowsProps) {
-            return (
-                <div className="customers-rows-container">
-                            {Array.from(Object.keys(prizesRowsProps)).map((_, index) => {
-                                return (
-                                        <> 
-                                            {/* prize name */}
-                                            <span>{prizesRowsProps[index].prizeName}</span>
-                                            {/* participants that are currently matched to the prize */}
-                                            <div
-                                                onMouseEnter={() => {
-                                                    store.dispatch({
-                                                                     type: ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW,
-                                                                     payload: prizesRowsProps[index].prizeName
-                                                    })
-                                                }}
-                                                onMouseLeave={() => {
-                                                    store.dispatch({
-                                                                    type: ACTION_TYPES.MOUSE_LEFT_PRIZE_ROW,
-                                                                    payload: prizesRowsProps[index].prizeName
-                                                    })
-                                                }}
-                                                className="products-row"
-                                             >
-                                                {
-                                                    prizesRowsProps[index].matchedParticipants.map((participantName, index) => {
-                                                        function isSelected() {
-                                                            return prizesRowsProps[index].selectedParticipant === participantName
-                                                        }
-                                                        const className = isSelected() ? "iButton dark-purple " : "iButton purple"
-                                                        return (
-                                                            <div className="iButton-container">
-                                                               <button
-                                                                key={index}
-                                                                onClick={(e)=>{
-                                                                    e.preventDefault()
-                                                                    store.dispatch({type:ACTION_TYPES.PARTICIPANT_SELECTED, payload: participantName})
-                                                                }} 
-                                                                className={className}>
-                                                                     {participantName}
-                                                               </button>
-                                                           </div>
-                                                           )
-                                                    })
-                                                }
-                                                {/* plus button */}
-                                                { prizesRowsProps[index].showPlus &&
-                                                    <div className="iButton-container">
-                                                        <button 
-                                                            className="iButton red"
-                                                            onClick={(e) => {
-                                                              e.preventDefault()
-                                                              store.dispatch({type:ACTION_TYPES.PLUS_BUTTON_CLICKED, payload: prizesRowsProps[index].prizeName})
-                                                              store.dispatch({type:ACTION_TYPES.MOUSE_ENTERED_PRIZE_ROW, payload: prizesRowsProps[index].prizeName})  
-                                                            }}
-                                                        >
-                                                        +
-                                                        </button>
-                                                    </div>
-                                                }
-                                            </div>
-                                        </>
-                                   )
-                            })}
-                        </div>
-            )
-        }
-
-        `
-        const prizesRowsProps = Object.keys(state.prizesNames).sort().map((prizeName, index) => {
-                const isFull = () => {
-                    const maxParticipants = state.maxParticipantsPerPrize[prizeName]
-                    const numberOfParticipantsMatched = Object.keys(state.participantsNumbers).reduce((acc, participantName) => {
-                        if (state.currentMatching[participantName] === prizeName) {
-                            acc++
-                        }
-                        return acc
-                    })
-                    return numberOfParticipantsMatched < maxParticipants
-                }
-                /* show plus button if there is a selected participant and the prize is not full */
-
-                /* get the participants that are currently matched to the prize */
-                const matchedParticipants = Object.keys(state.participantsNumbers).filter(participantName => state.currentMatching[participantName] === prizeName)
-                /* sort them by participnats match memo */
-                const orderedMatchedParticipants = []
-                for (let i = state.participantsMatchMemo.length - 1; i >= 0; i--) {
-                    const participantName = state.participantsMatchMemo[i]
-                    if (matchedParticipants.includes(participantName) && !orderedMatchedParticipants.includes(participantName)) {
-                        orderedMatchedParticipants.unshift(participantName)
-                    }
-                    if (orderedMatchedParticipants.length === matchedParticipants.length) {
-                        break
-                    }
-                }
-                const showPlus = () => {
-                    if (state.selectedParticipant && !isFull() && !matchedParticipants.includes(state.selectedParticipant)) {
-                        return true
-                    } else {
-                        return false
-                    }
-                }
-                return {
-                    prizeName,
-                    showPlus: showPlus(),
-                    matchedParticipants: orderedMatchedParticipants,
-                    selectedParticipant: state.selectedParticipant
-                }
-            }
+                </div>
+                <div className="legend-container">
+                    <span><b>R&nbsp;</b>= Ruth</span>
+                    <span><b>S&nbsp;</b>= Shirley</span>
+                    <span><b>T&nbsp;</b>= Theresa</span>
+                    <span><b>Y&nbsp;</b>= You</span>
+                </div>
+             </div>
         )
-        renderReactComponent(jsxCode, "prizes-rows", "PrizesRows", JSON.stringify(prizesRowsProps))
+    }
+    function ProductsTable() {
+        const {products,productsPriorities,currentMatching,selectedProduct}= React.useContext(DashboardContext)
+        return(
+            <div className="priorities-table-container">
+                {products.map((product,columnIndex)=>{
+                    const productPriorities = productsPriorities[product]
+                    const isColumnHighlight = product === selectedProduct
+                    const isLast = columnIndex === products.length - 1
+                    const classNames = () => {
+                       let classNames = "table-column flexItemButtonsBackground"
+                       if (columnIndex === 0) {
+                           classNames += " verticalRight"
+                       } else if (isLast) {
+                           classNames += " verticalLeft"
+                       } else {
+                           classNames += " verticalBoth"
+                       }
+                       if (isColumnHighlight) {
+                           classNames += " highlited"
+                       }
+                       return classNames
+                   }
+                    return (
+                        <div className={classNames()} key={columnIndex}>
+                            <div className="dButtonTop dButton" id={product}>{product.slice(0,1)}</div>
+                                {
+                                    productPriorities.map((customer,rowIndex)=>{
+                                        const isCellHighlight = currentMatching[product] === customer
+                                        const className = () => {
+                                           let classNames = "dButton"
+                                           if (isCellHighlight) {
+                                               classNames += " dButtonMatched"
+                                           }
+                                           return classNames
+                                        }
+                                        return (
+                                            <div className={className()} key={rowIndex}>
+                                                {customer}
+                                            </div>
+                                        )   
+                                    })
+                                }
+                        </div>
+                        )    
+                    })
+                }
+            </div>
+        )
+    }
+    function CustomersTable() {
+        const {customers,customersPriorities,currentMatching,highlightedCustomer}= React.useContext(DashboardContext)
+        return(
+            <div className="priorities-table-container">
+                {
+                    customers.map((customer,columnIndex)=>{
+                        const customerPriorities = customersPriorities[customer]
+                        const isColumnHighlighted = customer === highlightedCustomer
+                        const classNames = () => {
+                            let classNames = "table-column flexItemButtonsBackground"
+                            if (columnIndex === 0) {
+                                classNames += " verticalRight"
+                            }
+                            else if (columnIndex === customers.length - 1) {
+                                classNames += " verticalLeft"
+                            }
+                            else {
+                                classNames += " verticalBoth"
+                            }
+                            if (isColumnHighlighted) {
+                                classNames += " highlited"
+                            }
+                            return classNames
+                        }
+                        return (
+                            <div className={classNames()} key={columnIndex}>
+                                <div className="dButtonTop dButton" id={customer}>{customer}</div>
+                                {
+                                    customerPriorities.map((product,rowIndex)=>{
+                                        const isCellHighlight = currentMatching[product] === customer
+                                        const className = () => {
+                                            let classNames = "dButton"
+                                            if (isCellHighlight) {
+                                                classNames += " dButtonMatched"
+                                            }
+                                            return classNames
+                                        }
+                                        return (
+                                            <div className={className()} key={rowIndex}>
+                                                {product.slice(0,1)}
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        )
+                    })
+                }
+            </div>
+        )
+    }
+    function ProductsRow(){
+        /* 
+            the middle row is presenting the products that is currently Unmatched.
+            on product clicked: 
+               if a product is not selected :
+                it is being selected
+               if a product is selected :
+                it is being unselected
+            if a product is matched : 
+                it is not being presented
+            if a product is selected :
+                it is being highlighted
+         */
+        const {products,currentMatching,selectedProduct,setSelectedProduct,onProductSelect}= React.useContext(DashboardContext)
+        return (
+            <div id="middle-row" >
+                <span>
+                    <b style={{fontSize: "1.5rem"}}>Pick participants to pair →</b>
+                </span>
+                <div class="products-row">
+                    {
+                        products.map((product,index)=>{
+                            const isMatched = currentMatching[product] !== 'none'
+                            const isSelected = selectedProduct === product
+                            if (isMatched) return null
+                            return (
+                                <div className="iButtonContainer" key={index}>
+                                    <button
+                                        type="button"
+                                        className={isSelected ? "iButton dark-purple" : "iButton purple"}
+                                        onClick={()=>{onProductSelect(product)}}
+                                        >
+                                        {product.slice(0,1)}
+                                    </button>
+                                </div>    
+                            )
+                        })
+                    }
+                </div>
+            </div>
+        )
+    }
+    function AllocationModal(props){
+        return (
+            <div class="modal" id="GenModal" onClick={props.onClose} style={{display:'block'}}>
+                <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                    <span class="close" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</span>
+                    <div>
+                        <p>
+                            <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.
+                        </p>
+                        <p>
+                            The allocation process is a multi-step process , as follows:
+                        </p>
+                        <ol>
+                            <li>
+                            In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                            </li>
+                            <li>
+                                <p>
+                                    In the next step, possible conflicts are detected and solved. If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                                </p>
+                                <p>
+                                    Each conflict is solved in two steps:
+                                     <ul>
+                                        <li>
+                                            <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                        </li>
+                                        <li>
+                                            <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                        </li>
+                                    </ul>
+                                </p>
+                            </li>
+                            <li>
+                                <p>
+                                    Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                                    Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                                </p>
+                                <p> 
+                                    Like before, each conflict is solved in two steps:
+                                    <ul>
+                                        <li>
+                                            <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize . The others get unpaired, <b>even if they successfully got paired to that prize in a previous step</b>.
+                                        </li>
+                                        <li>
+                                            <b>Re-pair:</b> Every unpaired participant gets re-paired to their highest-rank prize among the prizes they <b>were not previously paired with</b>.
+                                        </li>
+                                    </ul>
+                                </p>
+                            </li>
+                        </ol>
+                        <p>
+                            When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
+                        </p><br/>
+                        <p>
+                            Each prize is then <b>allocated</b> to the participant paired to it.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        )
+    }
+    `
+
+    function getPropsFromJsVars(js_vars) {
+        function parseDictToObject(str) {
+            const validJsonStr = str.replace(/'/g, '"');
+            const obj = JSON.parse(validJsonStr);
+            return obj
+        }
+
+        function parseArray(str) {
+            const validJsonStr = str.replace(/'/g, '"');
+            const obj = JSON.parse(validJsonStr);
+            return obj
+        }
+
+        const variant = js_vars.variant
+        /*
+        because this script is shared between traditional and menu we are not using the terms "participant" and "prize".
+        since their roles are switching between the two variants.
+        the convention for this micro frontend is "products" and ״customers״.
+        the middle row in the dashboard is presenting the products.
+        since a item in the middle row can only be assigned to one customer this convention is correct.
+        in traditional :
+            the middle row represents the participants.
+            so the conversion is as follows :
+                participant -> product
+                prize -> customer
+        in menu :
+            the middle row represents the prizes.
+            so the conversion is as follows :
+                participant -> customer
+                prize -> product
+         */
+        const participants = js_vars.participants
+        const prizes = js_vars.prizes
+        const products = variant === "traditional" ? participants : prizes
+        const customers = variant === "traditional" ? prizes : participants
+        const customersPriorities = variant === "traditional" ? js_vars.prizesPriorities : js_vars.participantsPriorities
+        const productsPriorities = variant === "traditional" ? js_vars.participantsPriorities : js_vars.prizesPriorities
+        return {
+            ...js_vars,
+            products,
+            customers,
+            customersPriorities,
+            productsPriorities,
+            currentMatching: parseDictToObject(js_vars.currentMatching),
+            matchingMemo: parseArray(js_vars.matchingMemo),
+        }
     }
 
-    function getPropsFromJsVars(){
-        return {...js_vars}
-    }
-    renderReactComponent(jsxCode, "react-root", "DaAlgoInterface")
+    renderReactComponent(jsxCode, "react-root", "DaAlgoInterface", JSON.stringify(getPropsFromJsVars(js_vars)))
 }
