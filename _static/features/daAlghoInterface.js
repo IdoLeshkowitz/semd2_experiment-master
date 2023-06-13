@@ -81,7 +81,7 @@ function renderDaAlgoPage() {
                 {
                     id: "matching_1",
                     type: "matching",
-                    expectedMatching :{'Ruth': "A", 'Shirley': 'none', 'Theresa': 'none', 'You': 'none'},
+                    expectedMatching : {'Ruth': "A", 'Shirley': 'none', 'Theresa': 'none', 'You': 'none'},
                     content : (
                         <>
                             <p>
@@ -132,7 +132,7 @@ function renderDaAlgoPage() {
                 {
                     id: "matching_2",
                     type: "matching",
-                    expectedMatching: {"Ruth": "A", "Shirley": "A", "Theresa": "B", "You": "C"},
+                    expectedMatching: {'Ruth': "A", 'Shirley': 'A', 'Theresa': 'B', 'You': 'C'},
                     content : (
                         <>
                             <p>
@@ -338,7 +338,7 @@ function renderDaAlgoPage() {
                 {
                     id: "matching_4",
                     type: 'matching',
-                    expectedMatching :  {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "A"},
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "A"},
                     content : (
                         <>
                             <p>
@@ -531,7 +531,7 @@ function renderDaAlgoPage() {
                             </p>
                         </>
                     ),
-                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "A", "You": "B"},
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "A", "You": "B"} ,
                     correctMsg:(
                         <p>
                             Correct!
@@ -855,9 +855,28 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 1,
                 },
                 {
-                    id: "step-23",
+                    id: "question_10",
                     type: "radio",
-                    formFields: {element: "question_10", correctAnswerIndex: 13},
+                    content : (
+                        <p>
+                             Based on the outcome of the allocation process, choose the prize that you get in this round.<br/>
+                             (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                    options :[
+                        
                 },
             ],
             round2:[
@@ -1592,3 +1611,12 @@ function renderDaAlgoPage() {
 
     renderReactComponent(jsxCode, "react-root", "DaAlgoInterface", JSON.stringify(getPropsFromJsVars(js_vars)))
 }
+
+
+// {'R': "A", 'S': 'none', 'T': 'none', 'Y': 'none'},
+//        {"R": "A", "S": "A", "T": "B", "Y": "C"},
+//        {"R": "A", "S": "C", "T": "B", "Y": "C"},
+//        {"R": "A", "S": "C", "T": "B", "Y": "A"},
+//        {"R": "A", "S": "C", "T": "B", "Y": "B"},
+//        {"R": "A", "S": "C", "T": "A", "Y": "B"},
+//        {"R": "A", "S": "C", "T": "D", "Y": "B"},
