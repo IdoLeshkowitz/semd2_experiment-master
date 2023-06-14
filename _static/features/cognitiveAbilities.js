@@ -42,6 +42,7 @@ function renderCognitiveAbilitiesForm() {
                 value: "",
                 error: "",
                 isRoundNumber: true,
+                isPositiveNumber: true,
                 label : <label>If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?</label>,
                 units : 'minutes'
             },
@@ -49,6 +50,7 @@ function renderCognitiveAbilitiesForm() {
                 value: "",
                 error: "",
                 isRoundNumber: true,
+                isPositiveNumber: true,
                 label:<label>In a lake, there is a patch of lily pads.<br/>Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake?</label>,
                 units : 'days'
             },
@@ -132,13 +134,13 @@ function renderCognitiveAbilitiesForm() {
                                     {form[key].label}
                                     <div>
                                         <input
-                                            style={{width:'7rem',lineHeight:'2rem',paddingLeft:'.5rem'}}
+                                            style={{width:'7rem',lineHeight:'2rem'}}
                                             name={key}
                                             type="text"
                                             value={form[key].value}
                                             onChange={handleChange}
                                         />
-                                        <b style={{color:'grey', paddingLeft:'1rem'}}>{form[key].units}</b>
+                                        {form[key].units}
                                     </div>
                                     <span style={{ color: "red" }}>{form[key].error}</span>
                                 </div>    

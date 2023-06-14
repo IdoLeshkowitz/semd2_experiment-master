@@ -66,12 +66,6 @@ def get_correct_answers_by_round(round):
     return CORRECT_ANSWERS_BY_ROUND[round - 1]
 
 
-def get_expected_matching_by_round(round):
-    EXPECTED_MATCHING_BY_ROUND = [
-         [{'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"}],
-        [{'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"}], [{'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"}]]
-    return EXPECTED_MATCHING_BY_ROUND[round - 1]
-
 
 class C(BaseConstants):
     VARIANT = "traditional"
@@ -97,7 +91,10 @@ class Player(BasePlayer):
     incorrect_seq_question_8 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_9 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_10 = models.LongStringField(initial="", blank=True)
-    incorrect_seq_obtainable = models.LongStringField(initial="", blank=True)
+    incorrect_seq_allocation_a = models.LongStringField(initial="", blank=True)
+    incorrect_seq_allocation_b = models.LongStringField(initial="", blank=True)
+    incorrect_seq_allocation_c = models.LongStringField(initial="", blank=True)
+    incorrect_seq_allocation_d = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocated_prize = models.LongStringField(initial="", blank=True)
     incorrect_seq_matching = models.LongStringField(initial="", blank=True)
     # Player's ranking variables
@@ -231,13 +228,10 @@ class DAalghoInterface(Page):
             player.matching_counter = matching_counter
             def create_question_submission_string(data):
                 return str(data)
-
-
             if question_id == "question_1":
                 player.incorrect_seq_question_1 += create_question_submission_string(data)
             elif question_id == "question_2":
                 player.incorrect_seq_question_2 += create_question_submission_string(data)
-                print(player.incorrect_seq_question_2)
             elif question_id == "question_3":
                 player.incorrect_seq_question_3 += create_question_submission_string(data)
             elif question_id == "question_4":
@@ -254,14 +248,16 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_question_9 += create_question_submission_string(data)
             elif question_id == "question_10":
                 player.incorrect_seq_question_10 += create_question_submission_string(data)
-            elif question_id == "prize_a_obtainable":
-                player.incorrect_seq_prize_a_obtainable += create_question_submission_string(data)
-            elif question_id == "prize_b_obtainable":
-                player.incorrect_seq_prize_b_obtainable += create_question_submission_string(data)
-            elif question_id == "prize_c_obtainable":
-                player.incorrect_seq_prize_c_obtainable += create_question_submission_string(data)
-            elif question_id == "prize_d_obtainable":
-                player.incorrect_seq_prize_d_obtainable += create_question_submission_string(data)
+            elif question_id == "question_allocation_a":
+                player.incorrect_seq_allocation_a += create_question_submission_string(data)
+            elif question_id == "question_allocation_b":
+                player.incorrect_seq_allocation_b += create_question_submission_string(data)
+            elif question_id == "question_allocation_c":
+                player.incorrect_seq_allocation_c += create_question_submission_string(data)
+            elif question_id == "question_allocation_d":
+                player.incorrect_seq_allocation_d += create_question_submission_string(data)
+            elif question_id == "allocated_prize":
+                player.incorrect_seq_allocated_prize += create_question_submission_string(data)
         elif data['information_type'] == 'matching_update':
             """
             this event is called when the user clicks on a participant to match
@@ -300,9 +296,7 @@ class DAalghoInterface(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        # reset the current step
-        player.current_step = ""
-
+        player.participant.understanding_bonus += player.understanding_bonus
 
 class MechanicsIntro(Page):
     @staticmethod
@@ -314,7 +308,6 @@ class MechanicsIntro(Page):
         player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
         player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
         player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
-
 
 class EndTraining(Page):
     @staticmethod

@@ -7,10 +7,12 @@ const steps = [
     {id: 'self_rank_independence', type: 'radio', expectedAnswerIndex: 1},
     {id: 'ranking_form', type: 'rankingForm'},
     {id: 'allocation_results', type: 'allocationResults'},
-    {id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 1}
+    {id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 1},
+    {id: 'end', type: 'end'},
 ]
 const stepsDividedToRounds = [
-    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence'], ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results'],
+    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence',"end"],
+    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results',"end"],
 ]
 window.addEventListener("load", () => {
     renderUiFromState();
@@ -23,12 +25,13 @@ function renderUiFromState(step) {
         }
         const CurrencyContext = React.createContext(null);
         function NullTrainingPage(props){
-            const {initialStep, stepsInRound,roundNumber,prizePriorities,currency} = props;
+            const {initialStep, stepsInRound,roundNumber,currency} = props;
             const [prizesModal, setPrizesModal] = React.useState(false);
             const [studyModal, setStudyModal] = React.useState(false);
             const [rankingModal, setRankingModal] = React.useState(false);
-            const [activeSteps, setActiveSteps] = React.useState([initialStep])
-            const [buttonRole, setButtonRole] = React.useState("next");
+            const [shownSteps, setShownSteps] = React.useState([initialStep])
+            const latestStep = shownSteps.at(-1);
+            const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions");
             const sectionsRefs = {
                 "intro": React.useRef(null),
                 "prize_table": React.useRef(null),
@@ -78,80 +81,99 @@ function renderUiFromState(step) {
                 "error_message": React.useRef(null),
                 "input": React.useRef(null),
             }
-            const mistakesCounter = React.useRef(0);
+            const [mistakesCounter,setMistakesCounter] = React.useState(props.mistakesCounter);
             React.useEffect(()=>{
-                if (activeSteps.length === 1) return ;
+                if (shownSteps.length === 1) return ;
                 /* when activesteps changes get the ref of latest step and scroll to it */
-                const latestStep = activeSteps.at(-1);
+                const latestStep = shownSteps.at(-1);
                 const latestStepRef = sectionsRefs[latestStep.id];
                 if (latestStepRef.current === null) return ;
                 latestStepRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
-            },[activeSteps])
-            function onClick(e){
+            },[shownSteps])
+            React.useEffect(()=>{
+                const currentStepId = shownSteps.at(-1).id;
+                const currentStep = steps.find((step) => step.id === currentStepId);
+                if (currentStep.type === "end") {
+                    document.querySelector("form").submit();
+                }
+                liveSend({
+                    information_type:"set_current_step",
+                    step_id : currentStepId
+                })
+                const currentStepIndex = stepsInRound.findIndex((stepId) => stepId === currentStepId);
+                const nextStepId = stepsInRound[currentStepIndex + 1] || "end";
+                liveSend({
+                    information_type:"set_next_step",
+                    step_id : nextStepId
+                })
+            },[shownSteps])
+            React.useEffect(()=>{
+                liveSend({
+                    information_type:"set_mistakes_counter",
+                    mistakes_counter : mistakesCounter
+                })
+            },[mistakesCounter])
+            function onClick(e) {
                 e.preventDefault();
-                if (buttonRole === "next") {
-                    return onNext(e);
+                if (readyToProceed) {
+                    onNext()
+                    return 
                 }
-                if (buttonRole === "submit") {
-                    return onSubmit(e);
-                }
-           }
-            function onSubmit(e){
-                const currentStep = activeSteps.at(-1);
+                const currentStep = shownSteps.at(-1);
                 if (currentStep.type === "radio") {
                     const questionInformation = {
-                            is_correct: false,
-                            attemp_number: mistakesCounter.current + 1,
-                            understanding_bonus: 0,
-                            answer: null,
-                            question_id: currentStep.id,
-                            expected_answer: null,
+                        is_correct: false,
+                        attempt_number: mistakesCounter,
+                        understanding_bonus: 0,
+                        answer: null,
+                        question_id: currentStep.id,
+                        expected_answer: null,
+                        time : new Date().toUTCString()
+                    }
+                    const correctAnswer = currentStep.expectedAnswerIndex;
+                    const userAnswer = parseInt(questionsRefs[currentStep.id]?.value.current);
+                    questionInformation.expected_answer = correctAnswer;
+                    questionInformation.answer = userAnswer;
+                    /* hide all messages */
+                    [questionsRefs[currentStep.id].incorrect.current, questionsRefs[currentStep.id].correct.current, questionsRefs[currentStep.id].correctFirstAttempt.current].forEach((ref) => {
+                        ref?.classList.add("hidden");
+                    })
+                    if (correctAnswer === userAnswer) {
+                        questionInformation.is_correct = true;
+                        if (mistakesCounter === 0) {
+                            const correctFirstAttempt = questionsRefs[currentStep.id].correctFirstAttempt.current;
+                            correctFirstAttempt?.classList.remove("hidden");
+                            questionInformation.understanding_bonus = 1;
+                        }else{
+                            /* show correct message*/
+                            const correct = questionsRefs[currentStep.id].correct.current;
+                            if (correct === null) return ;
+                            correct.classList.remove("hidden");
                         }
-                        const correctAnswer = currentStep.expectedAnswerIndex;
-                        const userAnswer = parseInt(questionsRefs[currentStep.id]?.value.current);
-                        questionInformation.expected_answer = correctAnswer;
-                        questionInformation.answer = userAnswer;
-                        /* hide all messages */
-                       [questionsRefs[currentStep.id].incorrect.current, questionsRefs[currentStep.id].correct.current, questionsRefs[currentStep.id].correctFirstAttempt.current].forEach((ref) => {
-                            if (ref === null) return ;
-                            ref.classList.add("hidden");
-                       })
-                        if (correctAnswer === userAnswer) {
-                            questionInformation.is_correct = true;
-                            if (mistakesCounter.current === 0) {
-                                /* show correct first message*/
-                                const correctFirstAttempt = questionsRefs[currentStep.id].correctFirstAttempt.current;
-                                if (correctFirstAttempt === null) return ;
-                                correctFirstAttempt.classList.remove("hidden");
-                                questionInformation.understanding_bonus = 1;
-                            }else{
-                                /* show correct message*/
-                                const correct = questionsRefs[currentStep.id].correct.current;
-                                if (correct === null) return ;
-                                correct.classList.remove("hidden");
-                            }
-                            /* disable inputs */
-                            const parentElement = questionsRefs[currentStep.id].input.current;
-                            if (parentElement === null) return ;
-                            const inputs = parentElement.querySelectorAll("input");
-                            inputs.forEach((input) => {
-                                input.disabled = true;
-                            })
-                            mistakesCounter.current = 0;
-                            setButtonRole("next");
-                        }
-                        else {
-                            mistakesCounter.current += 1;
-                            /* show incorrect message*/
-                            const incorrect = questionsRefs[currentStep.id].incorrect.current;
-                            if (incorrect === null) return ;
-                            incorrect.classList.remove("hidden");
-                        }
-                            liveSend({
-                                "information_type" :"question_submission",
-                                ...questionInformation
-                            })
-                        }
+                        /* disable inputs */
+                        const parentElement = questionsRefs[currentStep.id].input.current;
+                        const inputs = parentElement?.querySelectorAll("input");
+                        inputs?.forEach((input) => {
+                            input.disabled = true;
+                        })
+                        setMistakesCounter(0);
+                        liveSend({
+                            "information_type" :"set_current_step",
+                            "step_id" : "",
+                        })
+                        setReadyToProceed(true);
+                    }
+                    else {
+                        setMistakesCounter(mistakesCounter + 1);
+                        /* show incorrect message*/
+                        const incorrect = questionsRefs[currentStep.id].incorrect.current;
+                        incorrect?.classList.remove("hidden");
+                    }
+                    liveSend({
+                        "information_type" :"question_submission",
+                        ...questionInformation
+                    })
+                }
                 if (currentStep.type === "rankingForm") {
                     const firstPriority = props.prizes[rankingFormRefs.first_priority.current - 1];
                     const secondPriority = props.prizes[rankingFormRefs.second_priority.current - 1];
@@ -178,62 +200,59 @@ function renderUiFromState(step) {
                 }
            }
             function onNext(){
-                const currentStep = activeSteps.at(-1);
+                const currentStep = shownSteps.at(-1);
                 const stepIndex = stepsInRound.findIndex((possibleStep) => possibleStep === currentStep.id);
-                const isLastStep = stepIndex === stepsInRound.length - 1;
-                if (isLastStep === true) {
-                    document.getElementById("form").submit();
-                    return 
+                const stepToBeStarted = steps.find((step) => step.id === stepsInRound[stepIndex + 1])
+                if (stepToBeStarted.type === "radio") {
+                    setReadyToProceed(false)
                 }
-                const nextStep = steps.find((step) => step.id === stepsInRound[stepIndex + 1])        
-                if (nextStep.type === "radio") {
-                    setActiveSteps([...activeSteps, nextStep]);
-                    setButtonRole("submit");
+                if (stepToBeStarted.type === "instructions") {
+                    setReadyToProceed(true)
                 }
-                if (nextStep.type === "instructions") {
-                    setActiveSteps([...activeSteps, nextStep]);
-                    setButtonRole("next");
+                if (stepToBeStarted.type === "rankingForm") {
+                    setReadyToProceed(false)
                 }
-                if (nextStep.type === "rankingForm") {
-                    setActiveSteps([...activeSteps, nextStep]);
-                    setButtonRole("submit");
+                if (stepToBeStarted.type === "allocationResults") {
+                    setReadyToProceed(true)
                 }
-                if (nextStep.type === "allocationResults") {
-                    setButtonRole("next");
-                    setActiveSteps([...activeSteps, nextStep]);
+                if (stepToBeStarted.type === "end") {
+                    document.querySelector("form").submit();
                 }
+                setShownSteps([...shownSteps, stepToBeStarted]);
             }
             return (
-                <CurrencyContext.Provider value={props.currency}>
+                <CurrencyContext.Provider value={currency}>
                     <div>
                         {rankingModal && <RankingModal onClose={()=>{setRankingModal(false)}}/>}
                         {studyModal && <StudyModal onClose={()=>{setStudyModal(false)}}/>}
-                        { activeSteps.some(step => step.id === "intro") &&
-                             <section ref={sectionsRefs.intro}>
-                             <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button> 
-                                <p>
-                                    This is a training round.<br/>
+                        { shownSteps.some(step => step.id === "intro") &&
+                            <>
+                                 <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button> 
+                                 <section ref={sectionsRefs.intro} className="explain">
+                                    <p>
+                                        This is a training round.<br/>
+                                        {
+                                            roundNumber === 1 ?
+                                            <span>Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.</span>
+                                            :
+                                            <span>Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, completing this round will count for your <b>Understanding Bonus</b> at the end of the study.</span>
+                                        }
+                                    </p>
                                     {
-                                        roundNumber === 1 ?
-                                        <span>Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.</span>
-                                        :
-                                        <span>Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, completing this round will count for your <b>Understanding Bonus</b> at the end of the study.</span>
+                                        roundNumber === 1 && <p>Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!</p>
                                     }
-                                </p>
-                                {
-                                    roundNumber === 1 && <p>Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!</p>
-                                }
-                                {
-                                    activeSteps.at(-1).id === "intro" && 
-                                        <Button 
-                                            onClick={onClick} 
-                                            text="Proceed"
-                                            className="btn-primary"
-                                        />
-                                }
-                            </section>
+                                    {
+                                        shownSteps.at(-1).id === "intro" && 
+                                            <Button 
+                                                onClick={onClick} 
+                                                text="Proceed"
+                                                className="btn-primary"
+                                            />
+                                    }
+                                </section>
+                           </> 
                         }
-                        { activeSteps.some(step => step.id === "prize_table") &&
+                        { shownSteps.some(step => step.id === "prize_table") &&
                             <section ref={sectionsRefs.prize_table}>
                                 <h4>Step 1: Round Information</h4>
                                 <p>In this round, your <b>prizes</b> are:</p>
@@ -243,7 +262,7 @@ function renderUiFromState(step) {
                                 <button class="button-2" id="GenBtn1" onClick={()=>{setPrizesModal(true)}} type="button">Click for a reminder on what the prizes mean</button><br/>
                                 {prizesModal === true && <PrizesModal onClose={()=>{setPrizesModal(false)}}/>}
                                 {
-                                    activeSteps.at(-1).id === "prize_table" &&
+                                    shownSteps.at(-1).id === "prize_table" &&
                                         <Button
                                             onClick={onClick}
                                             text="Proceed"
@@ -252,7 +271,7 @@ function renderUiFromState(step) {
                                 }
                             </section>
                         }
-                        { activeSteps.some(step =>step.id === "independence") &&
+                        { shownSteps.some(step =>step.id === "independence") &&
                             <section ref={sectionsRefs.independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
@@ -269,10 +288,6 @@ function renderUiFromState(step) {
                                         <label htmlFor="independence-1">False</label>
                                     </div>
                                 </p>
-                                {
-                                    activeSteps.at(-1).id === "independence" &&
-                                        <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
-                                }
                                 <div class="incorrect-msg hidden" ref={questionsRefs.independence.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
@@ -287,9 +302,13 @@ function renderUiFromState(step) {
                                         Good job on the first try! This will count for your Understanding Bonus.
                                     </p>
                                 </div>
+                                {
+                                    shownSteps.at(-1).id === "independence" &&
+                                        <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
+                                }
                             </section>
                         }
-                        { activeSteps.some(step=>step.id === "value_table") &&
+                        { shownSteps.some(step=>step.id === "value_table") &&
                             <section ref={sectionsRefs.value_table}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                  <p>
@@ -306,10 +325,6 @@ function renderUiFromState(step) {
                                         <label htmlFor="value_table-1">False</label>
                                     </div>
                                 </p>
-                                {
-                                    activeSteps.at(-1).id === "value_table" &&
-                                        <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
-                                }
                                 <div class="incorrect-msg hidden" ref={questionsRefs.value_table.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
@@ -320,21 +335,25 @@ function renderUiFromState(step) {
                                     <p>Correct! Each prize might be worth a different amount for each participant.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>
+                                {
+                                    shownSteps.at(-1).id === "value_table" &&
+                                        <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
+                                }
                             </section>
                         }
-                        { activeSteps.some(step=>step.id === "prize_priorities") &&
+                        { shownSteps.some(step=>step.id === "prize_priorities") &&
                             <section ref={sectionsRefs.prize_priorities}>
                                 <p>The <b>prize priorities</b> for you and for the other participants are:</p>
                                 <p>
                                     <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
                                 </p>
                                 {
-                                    activeSteps.at(-1).id === "prize_priorities" &&
-                                        <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
+                                    shownSteps.at(-1).id === "prize_priorities" &&
+                                        <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
                                 }
                             </section>
                         }
-                        { activeSteps.some(step=>step.id === "self_rank_independence") &&
+                        { shownSteps.some(step=>step.id === "self_rank_independence") &&
                             <section ref={sectionsRefs.self_rank_independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
@@ -351,9 +370,6 @@ function renderUiFromState(step) {
                                         <label htmlFor="self_rank_independence-1">False</label>
                                     </div>
                                 </p>
-                                { activeSteps.at(-1).id === "self_rank_independence" &&
-                                    <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
-                                }
                                 <div class="incorrect-msg hidden" ref={questionsRefs.self_rank_independence.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
@@ -364,23 +380,26 @@ function renderUiFromState(step) {
                                     <p>Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>
+                                { shownSteps.at(-1).id === "self_rank_independence" &&
+                                    <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
+                                }
                             </section>    
                         }
-                        { activeSteps.some(step=>step.id === "ranking_form") &&
+                        { shownSteps.some(step=>step.id === "ranking_form") &&
                             <section ref={sectionsRefs.ranking_form}>
                                 <h4>Step 2: Submit Your Ranking</h4>
                                 <button className="button-2" id="GenBtn3" type="button" onClick={()=>{setRankingModal(true)}}>Click for a reminder on what this ranking means</button><br/>
                                 <p>Please rank the four prizes in an order of your choice.</p>
                                 <RankingForm refs={rankingFormRefs}/>
-                                { activeSteps.at(-1).id === "ranking_form" &&
-                                    <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
+                                { shownSteps.at(-1).id === "ranking_form" &&
+                                    <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
                                 }
                                 <div className="incorrect-msg hidden" ref={rankingFormRefs.error_message}>
                                     <p>You submitted an invalid ranking. Please resubmit.</p>
                                 </div>
                             </section>
                         }
-                        { activeSteps.some(step=>step.id === "allocation_results") &&
+                        { shownSteps.some(step=>step.id === "allocation_results") &&
                             <section ref={sectionsRefs.allocation_results}>
                                 <h4>Step 3: Allocation Process</h4>
                                     { props.roundNumber === 1 &&
@@ -405,7 +424,7 @@ function renderUiFromState(step) {
                                         </div> 
                             </section>
                         }
-                        { activeSteps.some(step=>step.id === "competitors_rank_independence") &&
+                        { shownSteps.some(step=>step.id === "competitors_rank_independence") &&
                             <section ref={sectionsRefs.competitors_rank_independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
@@ -422,9 +441,6 @@ function renderUiFromState(step) {
                                         <label htmlFor="competitors_rank_independence-1">False</label>
                                     </div>
                                 </p>
-                                { activeSteps.at(-1).id === "competitors_rank_independence" &&
-                                    <Button className="btn-primary" onClick={onClick} text={buttonRole === "submit" ? "Submit":"Proceed"}/>
-                                }
                                 <div class="incorrect-msg hidden" ref={questionsRefs.competitors_rank_independence.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
@@ -435,6 +451,9 @@ function renderUiFromState(step) {
                                     <p>Correct! Your own ranking cannot affect the other participants' rankings.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>                                 
+                                { shownSteps.at(-1).id === "competitors_rank_independence" &&
+                                    <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
+                                }
                            </section> 
                         }
                     </div>
@@ -644,11 +663,27 @@ function renderUiFromState(step) {
             )
         }
     `
+
+    function getInitialStepId(currentStepId, nextStepId) {
+        /* if there is current step return it */
+        if (currentStepId) {
+            return currentStepId;
+        }
+        /* else if there is next step return it */
+        else if (nextStepId) {
+            return nextStepId;
+        }
+        /* else return the first step in the round */
+        else {
+            return stepsIdsInRound[0];
+        }
+    }
+
     const roundNumber = js_vars.roundNumber;
-    const stepsInRound = stepsDividedToRounds[roundNumber - 1];
-    const initialStepId = step || (js_vars.stepId ?? stepsInRound[0]);
-    const initialStep = steps.find(step => step.id === initialStepId);
-    const props = {initialStep, stepsInRound, roundNumber, ...js_vars};
+    const stepsIdsInRound = stepsDividedToRounds[roundNumber - 1];
+    const initialStepId = getInitialStepId(js_vars.currentStepId, js_vars.nextStepId);
+    const initialStep = steps.find((step) => step.id === initialStepId);
+    const props = {initialStep, stepsInRound: stepsIdsInRound, roundNumber, ...js_vars};
     renderReactComponent(jsxCode, "content", "NullTrainingPage", JSON.stringify(props))
 }
 

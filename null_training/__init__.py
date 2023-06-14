@@ -198,6 +198,11 @@ class Player(BasePlayer):
     self_rank_independence_actions = models.LongStringField(initial="", blank=True)
     competitors_rank_independence_actions = models.LongStringField(initial="", blank=True)
 
+    current_step_id = models.StringField(initial="", blank=True)
+    next_step_id = models.StringField(initial="", blank=True)
+    mistakes_counter = models.IntegerField(initial=0)
+    ""
+
 
 # PAGES
 class NullTraining(Page):
@@ -223,10 +228,14 @@ class NullTraining(Page):
             "roundNumber":            player.round_number,
             "currency":               player.session.config["currency"],
             "prizesValues":           C.PRIZES_VALUES[player.round_number - 1],
-        }  # return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES[player.round_number - 1], prizes_priorities=C.PRIZE_PRIORITIES[  #     player.round_number - 1], players=C.PARTICIPANTS, players_rankings=C.PARTICIPANT_PRIORITIES[  #     player.round_number - 1], questions_answers=C.QUESTIONS_ANSWERS, round_number=player.round_number)
+            "currentStepId":          player.current_step_id,
+            "nextStepId":             player.next_step_id,
+            "mistakesCounter":        player.mistakes_counter,
+        }
 
     @staticmethod
     def live_method(player: Player, data):
+        print(data)
         if data["information_type"] == "ranking_form_submission":
             participants_priorities = data["participants_priorities"]
             prizes_priorities = data["prizes_priorities"]
@@ -243,10 +252,10 @@ class NullTraining(Page):
             user_prize_value = C.PRIZES_VALUES[player.round_number - 1][user_prize_name]
             response = {"prize_name": user_prize_name, "prize_value": user_prize_value, "information_type": "allocation_results"}
             # save the player's ranking
-            player.first_priority = participants_priorities["You"][0]
-            player.second_priority = participants_priorities["You"][1]
-            player.third_priority = participants_priorities["You"][2]
-            player.fourth_priority = participants_priorities["You"][3]
+            player.first_priority = str(C.PRIZES.index(participants_priorities["You"][0]) + 1)
+            player.second_priority = str(C.PRIZES.index(participants_priorities["You"][1]) + 1)
+            player.third_priority = str(C.PRIZES.index(participants_priorities["You"][2]) + 1)
+            player.fourth_priority = str(C.PRIZES.index(participants_priorities["You"][3]) + 1)
             # save the allocated prize
             player.allocated_prize = user_prize_name
             time.sleep(2)
@@ -264,6 +273,12 @@ class NullTraining(Page):
             understanding_bonus_from_question = data['understanding_bonus']
             player.understanding_bonus_from_round += understanding_bonus_from_question
             return {player.id_in_group: data}
+        if data["information_type"] == "set_current_step":
+            player.current_step_id = data["step_id"]
+        if data["information_type"] == "set_next_step":
+            player.next_step_id = data["step_id"]
+        if data["information_type"] == "set_mistakes_counter":
+            player.mistakes_counter = data["mistakes_counter"]
 
     def before_next_page(player: Player, timeout_happened):
         player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]

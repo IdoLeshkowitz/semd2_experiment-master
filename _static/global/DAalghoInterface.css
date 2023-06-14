@@ -257,3 +257,17 @@ body {
     border-radius:.5rem;
     padding-left: .2rem;
 }
+
+.custom-select {
+  /* Define desired styles for the select element */
+  /* For example: */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  align-self: start;
+    min-width: 7rem;
+
+}

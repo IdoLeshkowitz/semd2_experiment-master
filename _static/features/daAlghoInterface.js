@@ -309,6 +309,7 @@ function renderDaAlgoPage() {
                     id: "question_3",
                     type: "radio",
                     expectedAnswerIndex: 0,
+                    inputRef: React.createRef(null),
                     content:(
                         <p>Is the process over?</p>
                     ),
@@ -502,88 +503,6 @@ function renderDaAlgoPage() {
                 },
                 {
                     id: "matching_6",
-                    inputRef: React.createRef(null),
-                    type: "matching",
-                    content : (
-                        <>
-                            <p>
-                                Find all conflicts and solve them like before.
-                                First, find all prizes that are paired to two (or more) participants.
-                            </p>
-                            <ul>
-                                <li>
-                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
-                                </li>
-                                <li>
-                                    <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
-                                    <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name.</p>
-                                </li>
-                            </ul>
-                            <p>
-                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>
-                                Only solve the conflict you see first on this screen!
-                                </span>
-                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
-                            </p>
-                            <p>
-                                Click Submit when done.<br/>
-                                (Get it right on first try to increase your bonus)
-                            </p>
-                        </>
-                    ),
-                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "A", "You": "B"} ,
-                    correctMsg:(
-                        <p>
-                            Correct!
-                        </p>
-                    ),
-                    correctFirstMsg:(
-                        <p>
-                            Correct!<br/>
-                            Good job on the first try! This will count for your Understanding Bonus.
-                        </p>
-                    ),
-                    incorrectMsg:(
-                        <p>
-                            Incorrect answer. Please try again.
-                        </p>
-                    ),
-                    incorrectSkipMsg:(
-                        <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
-                        </p>
-                    ),    
-                },
-                {
-                    id: "question_6",
-                    type: "radio",
-                    content : (
-                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
-                    ),
-                    correctMsg:(
-                        <p>
-                            Correct!
-                        </p>
-                    ),
-                    correctFirstMsg:(
-                        <p>
-                            Correct!<br/>
-                            Good job on the first try! This will count for your Understanding Bonus.
-                        </p>
-                    ),
-                    incorrectMsg:(
-                        <p>
-                            Incorrect answer. Please try again.
-                        </p>
-                    ),
-                    options :[
-                        <span>No</span>,
-                        <span>Yes</span>,
-                    ],
-                    expectedAnswerIndex: 0,
-                },
-                {
-                    id: "matching_6",
                     type: "matching",
                     content : (
                         <>
@@ -610,7 +529,7 @@ function renderDaAlgoPage() {
                             </p>
                         </>
                     ),
-                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "D", "You": "B"},
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "A", "You": "B"},
                     correctMsg:(
                         <p>
                             Correct!
@@ -636,6 +555,87 @@ function renderDaAlgoPage() {
                 {
                     id: "question_7",
                     type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                          <p>
+                            Correct! The process is only over when there are no more conflicts.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 0,    
+                },
+                {
+                    id: "matching_7",
+                    type: "matching",
+                    content : (
+                    <>
+                        <p>
+                            Find all conflicts and solve them like before.
+                            First, find all prizes that are paired to two (or more) participants.
+                        </p>
+                        <ul>
+                            <li>
+                                <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                            </li>
+                            <li>
+                                <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
+                                <p>Hint: You can easily find which prize you should re-pair the unpaired participant to, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under the unpaired participant’s name.</p>
+                            </li>
+                        </ul>
+                        <p>
+                            <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!</span>
+                            If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                        </p>
+                        <p>
+                            Click Submit when done.<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                     </>
+                    ),
+                    expectedMatching : {"Ruth": "A", "Shirley": "C", "Theresa": "D", "You": "B"},
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_8",
+                    type: "radio",
+                    inputRef: React.createRef(null),
                     content : (
                         <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
                     ),
@@ -657,11 +657,13 @@ function renderDaAlgoPage() {
                         <span>No</span>,
                         <span>Yes</span>,
                     ],
-                    expectedAnswerIndex: 1,    
+                    expectedAnswerIndex: 1,
+                           
                 },
                 {
-                    id: "question_8",
+                    id: "question_9",
                     type: "radio",
+                    inputRef: React.createRef(null),
                     content : (
                         <>
                             <p>The allocation is the following:
@@ -703,6 +705,8 @@ function renderDaAlgoPage() {
                 {
                     id: "question_allocation_a",
                     type: "dropdown",
+                    inputRef: React.createRef(null),
+                    label: "Prize A",
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -735,6 +739,8 @@ function renderDaAlgoPage() {
                 {
                     id: "question_allocation_b",
                     type: "dropdown",
+                    inputRef: React.createRef(null),
+                    label: "Prize B",
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -766,7 +772,9 @@ function renderDaAlgoPage() {
                 },
                 {
                     id: "question_allocation_c",
-                    type: "dropdown",
+                    type: "dropdown",   
+                    inputRef: React.createRef(null),
+                    label: "Prize C",
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -799,6 +807,8 @@ function renderDaAlgoPage() {
                 {
                     id: "question_allocation_d",
                     type: "dropdown",
+                    inputRef: React.createRef(null),
+                    label: "Prize D",
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -829,7 +839,8 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 2,
                 },
                 {
-                    id: "question_9",
+                    id: "question_10",
+                    inputRef: React.createRef(),
                     type: "radio",
                     content : (
                         <p>Which of the following is true?<br/>(Get it right on first try to increase your bonus)</p>
@@ -855,8 +866,9 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 1,
                 },
                 {
-                    id: "question_10",
-                    type: "radio",
+                    id: "allocated_prize",
+                    type: "dropdown",
+                    inputRef: React.createRef(),
                     content : (
                         <p>
                              Based on the outcome of the allocation process, choose the prize that you get in this round.<br/>
@@ -876,37 +888,410 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                     options :[
-                        
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 1,
                 },
             ],
             round2:[
                 {
-                    id: "step-1-rounds",
-                    type: "instructions",
+                    id: "instruction_1",
+                    type:"instructions",
+                    content:(
+                        <>
+                            <p>
+                                In this training round, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                            </p>
+                        </>
+                    ),
                 },
                 {
-                    id: "step-2-rounds",
+                    id: "matching_1",
                     type: "matching",
-                    stage: 0,
+                    content : (
+                        <>
+                            <p>
+                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus; it will count as 5 question.<br/>
+                                If you only get it right on the second try it will still count for your bonus; it will count as 2 questions.)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>Correct allocation!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the first try! This will count as 5 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect allocation. Please try again.
+                        </p>
+                    ),
+                    correctSecondMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the second try! This will count as 2 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect allocation.<br/>
+                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                    expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"},
                 },
                 {
-                    id: "step-3-rounds",
-                    type: "dropdown",
-                    formFields: [
-                        {element: "prize_a_obtainable", correctAnswerIndex: 0},
-                        {element: "prize_b_obtainable", correctAnswerIndex: 1},
-                        {element: "prize_c_obtainable", correctAnswerIndex: 2},
-                        {element: "prize_d_obtainable", correctAnswerIndex: 3},
+                    id: "question_1",
+                    type:"multiDropdown",
+                    content:(
+                        <>
+                            <p>
+                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    options:[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
                     ],
+                    inputsRefs: [
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                    ],
+                    labels:[
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
+                        <span>Prize D</span>,
+                    ],
+                    expectedAnswersIndex: [2,1,3,0],
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
                 },
                 {
-                    id: "step-4-rounds",
-                    type: "dropdown",
-                    formFields: [
-                        {element: "obtainable_prize", correctAnswerIndex: 4},
+                    id: "question_2",
+                    type:"dropdown",
+                    inputRef: React.createRef(),
+                    content:(
+                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                    ),
+                    options:[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
                     ],
-                }
-            ]
+                    expectedAnswerIndex: 1,
+                    correctMsg:(
+                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },  
+            ],
+            round3:[
+                {
+                    id: "instruction_1",
+                    type:"instructions",
+                    content:(
+                        <>
+                            <p>
+                                In this training round, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                            </p>
+                        </>
+                    ),
+                },
+                {
+                    id: "matching_1",
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus; it will count as 5 question.<br/>
+                                If you only get it right on the second try it will still count for your bonus; it will count as 2 questions.)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>Correct allocation!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the first try! This will count as 5 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect allocation. Please try again.
+                        </p>
+                    ),
+                    correctSecondMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the second try! This will count as 2 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect allocation.<br/>
+                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                    expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"},
+                },
+                {
+                    id: "question_1",
+                    type:"multiDropdown",
+                    content:(
+                        <>
+                            <p>
+                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    options:[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    inputsRefs: [
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                    ],
+                    labels:[
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
+                        <span>Prize D</span>,
+                    ],
+                    expectedAnswersIndex: [2,1,3,0],
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },
+                {
+                    id: "question_2",
+                    type:"dropdown",
+                    inputRef: React.createRef(),
+                    content:(
+                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                    ),
+                    options:[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                    correctMsg:(
+                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },  
+            ],
+            round4:[
+                {
+                    id: "instruction_1",
+                    type:"instructions",
+                    content:(
+                        <>
+                            <p>
+                                In this training round, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                            </p>
+                        </>
+                    ),
+                },
+                {
+                    id: "matching_1",
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus; it will count as 5 question.<br/>
+                                If you only get it right on the second try it will still count for your bonus; it will count as 2 questions.)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>Correct allocation!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the first try! This will count as 5 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect allocation. Please try again.
+                        </p>
+                    ),
+                    correctSecondMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the second try! This will count as 2 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect allocation.<br/>
+                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                    expectedMatching:   {'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"},
+                },
+                {
+                    id: "question_1",
+                    type:"multiDropdown",
+                    content:(
+                        <>
+                            <p>
+                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    options:[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    inputsRefs: [
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                    ],
+                    labels:[
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
+                        <span>Prize D</span>,
+                    ],
+                    expectedAnswersIndex: [2,1,3,0],
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },
+                {
+                    id: "question_2",
+                    type:"dropdown",
+                    inputRef: React.createRef(),
+                    content:(
+                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                    ),
+                    options:[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                    correctMsg:(
+                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },  
+            ],
         }
     }
     function getSteps(round,variant){
@@ -992,7 +1377,6 @@ function renderDaAlgoPage() {
             })
         },[matchingMemo.current])
         React.useEffect(()=>{
-            console.log("matchingCounter.current",matchingCounter.current)
             liveSend({
             information_type : "matching_counter_update",
             matching_counter : matchingCounter.current
@@ -1040,7 +1424,7 @@ function renderDaAlgoPage() {
             )
     }
     function Questions(){
-        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching} = React.useContext(DashboardContext)
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
         const [readyToProceed,setReadyToProceed] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
@@ -1053,24 +1437,24 @@ function renderDaAlgoPage() {
             }
             if (currentStep.type === "radio"){
                 const expectedAnswerIndex = currentStep.expectedAnswerIndex
-                const selectedAnswerIndex = parseInt(inputRef.current.querySelector("input:checked")?.value || null)
+                const selectedAnswerIndex = parseInt(currentStep.inputRef.current.querySelector("input:checked")?.value || null)
                 const isCorrect = expectedAnswerIndex === selectedAnswerIndex   
                 let currentMatchingCounter = matchingCounter.current            
                 let understanding_bonus = 0 ;
                 if (isCorrect){
-                    debugger
                     if (matchingCounter.current === 0){
-                        debugger
                         setMessage("correctFirstMsg")
                         understanding_bonus+= 1 
                     }
                     else{
-                        debugger
                         setMessage("correctMsg")
                     }
                     matchingCounter.current =  0
                     setReadyToProceed(true)
-                    debugger
+                    currentStep.inputRef.current.querySelectorAll("input").forEach(input => {
+                        console.log(input)
+                        input.disabled = true
+                    })
                 }
                 else{
                     matchingCounter.current = matchingCounter.current + 1
@@ -1098,16 +1482,31 @@ function renderDaAlgoPage() {
                 if (isCorrect){
                     if (matchingCounter.current === 0){
                         setMessage("correctFirstMsg")
-                        understanding_bonus+= 1    
+                        if (round ===1){
+                            understanding_bonus+= 1    
+                        }
+                        else {
+                            understanding_bonus+= 5
+                        }
                     }
                     else{
-                        setMessage("correctMsg")
+                        if (round !== 1){
+                            if (matchingCounter.current === 1){
+                                understanding_bonus+= 2
+                                setMessage("correctSecondMsg")
+                            }
+                            else {
+                                setMessage("correctMsg")
+                            }
+                        }else{
+                            setMessage("correctMsg")
+                        }
                     }
                     matchingCounter.current =  0 
                     setReadyToProceed(true)
                 }
                 else{
-                    const isLastAttempt = matchingCounter.current === 2
+                    const isLastAttempt = currentMatchingCounter >= 2
                     if (isLastAttempt){
                         matchingCounter.current = 0
                         setMessage("incorrectSkipMsg")
@@ -1129,6 +1528,82 @@ function renderDaAlgoPage() {
                     time_stamp : new Date().toUTCString()  
                 })
             }
+            if (currentStep.type === "dropdown"){
+                const expectedAnswerIndex = currentStep.expectedAnswerIndex
+                const selectedAnswerIndex = parseInt(currentStep.inputRef.current.querySelector("select").value)
+                const isCorrect = expectedAnswerIndex === selectedAnswerIndex
+                let currentMatchingCounter = matchingCounter.current
+                let understanding_bonus = 0 ;
+                if (isCorrect){
+                    if (matchingCounter.current === 0){
+                        setMessage("correctFirstMsg")
+                        understanding_bonus+= 1
+                    }
+                    else{
+                        setMessage("correctMsg")
+                    }
+                    matchingCounter.current =  0
+                    setReadyToProceed(true)
+                    currentStep.inputRef.current.querySelector("select").disabled = true
+                }
+                else{
+                    matchingCounter.current = matchingCounter.current + 1
+                    currentMatchingCounter = matchingCounter.current
+                    setMessage("incorrectMsg")
+                }
+                liveSend({
+                    information_type : "question_submission",
+                    expected_answer : expectedAnswerIndex,
+                    selected_answer : selectedAnswerIndex,
+                    is_correct : isCorrect,
+                    understanding_bonus : understanding_bonus,
+                    matching_counter : currentMatchingCounter,
+                    time_stamp : new Date().toUTCString(),  
+                    question_id : currentStep.id
+                })
+                }
+            if (currentStep.type === "multiDropdown"){
+             const expectedAnswersIndex = currentStep.expectedAnswersIndex   
+                const selectedAnswersIndex = currentStep.inputsRefs.map((inputRef,index) => {
+                    return parseInt(inputRef.current.querySelector("select").value)
+                })
+                const isCorrect = expectedAnswersIndex.every((expectedAnswerIndex,index) => {
+                    return expectedAnswerIndex === selectedAnswersIndex[index]
+                })
+                let currentMatchingCounter = matchingCounter.current
+                let understanding_bonus = 0 ;
+                if (isCorrect){
+                    if (matchingCounter.current === 0){
+                        setMessage("correctFirstMsg")
+                        understanding_bonus+= 1
+                    }
+                    else{
+                        setMessage("correctMsg")
+                    }
+                    matchingCounter.current =  0
+                    setReadyToProceed(true)
+                    currentStep.inputsRefs.forEach(inputRef => {
+                        inputRef.current.querySelectorAll("select").forEach(select => {
+                            select.disabled = true
+                        })
+                    })
+                }
+                else{
+                    matchingCounter.current = matchingCounter.current + 1
+                    currentMatchingCounter = matchingCounter.current
+                    setMessage("incorrectMsg")
+                }
+                liveSend({
+                    information_type : "question_submission",
+                    expected_answer : expectedAnswersIndex,
+                    selected_answer : selectedAnswersIndex,
+                    is_correct : isCorrect,
+                    understanding_bonus : understanding_bonus,
+                    matching_counter : currentMatchingCounter,
+                    time_stamp : new Date().toUTCString(),
+                    question_id : currentStep.id
+                })
+            }
         }
         React.useEffect(()=>{
             if (!readyToProceed) return ;
@@ -1143,54 +1618,108 @@ function renderDaAlgoPage() {
                 step_id : nextStepId
             })
         },[readyToProceed])
-        const inputRef = React.useRef(null)
         return (
             <section>
             {currentStep.content}
             {
                 currentStep.type === "radio" &&
-                <div ref={inputRef}>
+                    <div ref={currentStep.inputRef} id={currentStepId} key={currentStepId}>
                     {
                         currentStep.options.map((option,index) => {
                             return (
-                                <div style={{display:'flex',gap:'0.5rem'}}>
-                                    <input type="radio" id={index} name={option} value={index} />
-                                    <label htmlFor={index}>{option}</label>
+                                <div style={{display:'flex',gap:'0.5rem'}} key={index}>
+                                    <input type="radio" id={currentStepId+"_option_"+index} name={currentStepId} value={index} />
+                                    <label htmlFor={currentStepId+"_option_"+index}>{option}</label>
                                 </div>
                             )
                         })
                     }
                 </div>
             }
-            <div style={{display:"flex",justifyContent:'center'}}>
-                <button type="button" className="btn btn-primary" onClick={onSubmit}>
-                    {currentStep.type === "instructions" ? "Proceed"  :  readyToProceed ? "Proceed" : "Submit"}
-                </button>
-            </div>
-                {
-                    message && message === "incorrectMsg" && 
-                        <div class="incorrect-msg">
-                            {currentStep.incorrectMsg}
+            {
+                currentStep.type === "dropdown" &&
+                    <div ref={currentStep.inputRef} style={{display:'flex',flexDirection:'column',gap:'0.5rem'}} id={currentStepId} key={currentStepId}>
+                        <label htmlFor={currentStepId+'-dropdown'}>{currentStep.label}</label>
+                        <select className="custom-select" id={currentStepId+'-dropdown'}>
+                            <option value={-1} selected key={currentStepId+"-1"}></option>
+                            {
+                                currentStep.options.map((option,index) => {
+                                    return (
+                                        <option value={index} key={currentStepId+index} id={currentStepId+index}>{option}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
+            }   
+            {
+                currentStep.type === "multiDropdown" &&
+                    <div style={{display:'flex', justifyContent:'space-evenly'}}>
+                    {
+                        currentStep.labels.map((label,index) => {
+                            return (
+                                <div ref={currentStep.inputsRefs[index]} style={{display:'flex',flexDirection:'column',gap:'0.5rem'}}>
+                                    <label htmlFor={currentStepId+'-dropdown'+index}>{label}</label>
+                                    <select className="custom-select" id={currentStepId+'-dropdown'+index}>
+                                    <option value={-1} selected></option>
+                                    {
+                                        currentStep.options.map((option,index) => {
+                                            return (
+                                                <option value={index} >{option}</option>
+                                            )
+                                        })
+                                    }
+                                    </select>
+                                </div>
+                                )
+                            })
+                        }
                         </div>
-                }
-                {
-                    message && message === "correctMsg" &&
-                        <div class="correct-msg">
-                            {currentStep.correctMsg}
-                        </div>       
-                }
-                {
-                    message && message === "incorrectSkipMsg" &&
-                        <div class="incorrect-msg">
-                            {currentStep.incorrectSkipMsg}
-                        </div>
-                }
-                {
-                    message && message === "correctFirstMsg" &&
-                        <div class="correct-msg">
-                            {currentStep.correctFirstMsg}
-                        </div>
-                }
+            }     
+            {! readyToProceed && 
+                <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>
+                    <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}}>
+                        {currentStep.type === "instructions" ? "Proceed"  :  readyToProceed ? "Proceed" : "Submit"}
+                    </button>
+                </div>
+            }      
+            {
+                message && message === "incorrectMsg" && 
+                    <div class="incorrect-msg">
+                        {currentStep.incorrectMsg}
+                    </div>
+            }
+            {
+                message && message === "correctMsg" &&
+                    <div class="correct-msg">
+                        {currentStep.correctMsg}
+                    </div>       
+            }
+            {
+                message && message === "incorrectSkipMsg" &&
+                    <div class="incorrect-msg">
+                        {currentStep.incorrectSkipMsg}
+                    </div>
+            }
+            {
+                message && message === "correctFirstMsg" &&
+                    <div class="correct-msg">
+                        {currentStep.correctFirstMsg}
+                    </div>
+            }
+            {
+                message && message === "correctSecondMsg" &&
+                    <div class="correct-msg">
+                        {currentStep.correctSecondMsg}
+                    </div>
+            }
+            {readyToProceed && 
+                <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>
+                    <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}}>
+                        {currentStep.type === "instructions" ? "Proceed"  :  readyToProceed ? "Proceed" : "Submit"}
+                    </button>
+                </div>
+            }      
             </section>
         )
     }
@@ -1213,9 +1742,9 @@ function renderDaAlgoPage() {
     function Dashboard(){
         const props = React.useContext(DashboardContext)
         return (
-            <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'1rem'}}>
+            <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem'}}>
                 {/* reset button */}
-                { props.round === 1 &&
+                { props.round !== 1 &&
                     <button
                         type="button"
                         className="position-absolute btn btn-outline-dark"
@@ -1613,10 +2142,3 @@ function renderDaAlgoPage() {
 }
 
 
-// {'R': "A", 'S': 'none', 'T': 'none', 'Y': 'none'},
-//        {"R": "A", "S": "A", "T": "B", "Y": "C"},
-//        {"R": "A", "S": "C", "T": "B", "Y": "C"},
-//        {"R": "A", "S": "C", "T": "B", "Y": "A"},
-//        {"R": "A", "S": "C", "T": "B", "Y": "B"},
-//        {"R": "A", "S": "C", "T": "A", "Y": "B"},
-//        {"R": "A", "S": "C", "T": "D", "Y": "B"},
