@@ -445,7 +445,7 @@ function renderUiFromState(step) {
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
                                 <div class="correct-msg hidden" ref={questionsRefs.competitors_rank_independence.correct}>
-                                     <p>Correct! Your own ranking cannot affect the other participants' rankings..</p>
+                                     <p>Correct! Your own ranking cannot affect the other participants' rankings.</p>
                                 </div>
                                 <div class="correct-first-msg hidden" ref={questionsRefs.competitors_rank_independence.correctFirstAttempt}>
                                     <p>Correct! Your own ranking cannot affect the other participants' rankings.<br/>

@@ -134,12 +134,12 @@ function renderCognitiveAbilitiesForm() {
                                     {form[key].label}
                                     <div>
                                         <input
-                                            style={{width:'7rem',lineHeight:'2rem'}}
+                                            style={{width:'3rem',lineHeight:'2rem'}}
                                             name={key}
                                             type="text"
                                             value={form[key].value}
                                             onChange={handleChange}
-                                        />
+                                        />&nbsp;
                                         {form[key].units}
                                     </div>
                                     <span style={{ color: "red" }}>{form[key].error}</span>

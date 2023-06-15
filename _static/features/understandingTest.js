@@ -32,7 +32,7 @@ document.querySelector(".otree-btn-next").addEventListener("click", function (e)
             /* check if the checked answer is incorrect */
             const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
             if (checkedElement.value.trim() === expectedResults[checkedElement.name]) {
-                debugger
+                debuggerunderstand_choose_rankings
                 // checked answer is incorrect
                 understanding_bonus_counter += 1;
             }

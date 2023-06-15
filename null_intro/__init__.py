@@ -173,7 +173,7 @@ class NullIntro(Page):
 
     def before_next_page(player: Player, timeout_happened):
         print("here")
-        player.participants_priorities = str([{C.PARTICIPANTS[index]:[convert_prize_index_to_name(prize)for prize in participant_priorities]}for index,participant_priorities in enumerate( C.PARTICIPANTS_PRIORITIES)])
+        player.participants_priorities = str([{C.PARTICIPANTS[1:][index]:[convert_prize_index_to_name(prize)for prize in participant_priorities]}for index,participant_priorities in enumerate( C.PARTICIPANTS_PRIORITIES)])
         player.prizes_priorities = str([{C.PRIZES[index]:[convert_participant_index_to_name(participant)for participant in prize_priorities]}for index,prize_priorities in enumerate( C.PRIZES_PRIORITIES)])
         player.prizes_values = str({prize : round(C.PRIZES_VALUES[index] / 100 ,2)for index,prize in enumerate(C.PRIZES)})
         player.end_time = str(datetime.now(timezone.utc))

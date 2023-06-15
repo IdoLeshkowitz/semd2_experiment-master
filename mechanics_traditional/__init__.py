@@ -66,7 +66,6 @@ def get_correct_answers_by_round(round):
     return CORRECT_ANSWERS_BY_ROUND[round - 1]
 
 
-
 class C(BaseConstants):
     VARIANT = "traditional"
     NAME_IN_URL = 'mechanics_traditional'
@@ -90,13 +89,20 @@ class Player(BasePlayer):
     incorrect_seq_question_7 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_8 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_9 = models.LongStringField(initial="", blank=True)
-    incorrect_seq_question_10 = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_a = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_b = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_c = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_d = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocated_prize = models.LongStringField(initial="", blank=True)
-    incorrect_seq_matching = models.LongStringField(initial="", blank=True)
+    incorrect_seq_allocated_all = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_1 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_2 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_3 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_4 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_5 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_6 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_7 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_matching_all = models.LongStringField(initial="", blank=True)
     # Player's ranking variables
     first_priority = models.StringField(blank=True)
     second_priority = models.StringField(blank=True)
@@ -106,7 +112,7 @@ class Player(BasePlayer):
     active_steps = models.LongStringField(initial="", blank=True)
     current_step_id = models.LongStringField(blank=True, initial="")
     understanding_bonus = models.IntegerField(initial=0, blank=True)
-    understanding_bonus_limit = models.IntegerField(initial=0, blank=True)
+    understanding_bonus_limit = models.IntegerField(initial="", blank=True)
     start_time = models.StringField(initial=datetime.now(timezone.utc))
     end_time = models.StringField(blank=True)
     matching_memo = models.LongStringField(initial=str([]), blank=True)
@@ -188,6 +194,12 @@ class TrainingRound(Page):
         player.clicks = ''
         player.current_matching = str({participant_name: 'none' for participant_name in C.PARTICIPANTS})
         player.matching_memo = str([])
+        def get_understanding_bonus_limit_by_round(round_number):
+            if round ==1 :
+                return 4
+            else :
+                return 1
+        player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
 
 
 class DAalghoInterface(Page):
@@ -217,15 +229,27 @@ class DAalghoInterface(Page):
             understanding_bonus = data['understanding_bonus']
             player.clicks += '|submit'
             player.understanding_bonus += understanding_bonus
-            player.incorrect_seq_matching += str(data)
-            matching_counter = data['matching_counter']
-            player.matching_counter = matching_counter
+            matching_id = data['matching_id']
+            if matching_id == "matching_1":
+                player.incorrect_seq_matching_1 += str(data)
+            elif matching_id == "matching_2":
+                player.incorrect_seq_matching_2 += str(data)
+            elif matching_id == "matching_3":
+                player.incorrect_seq_matching_3 += str(data)
+            elif matching_id == "matching_4":
+                player.incorrect_seq_matching_4 += str(data)
+            elif matching_id == "matching_5":
+                player.incorrect_seq_matching_5 += str(data)
+            elif matching_id == "matching_6":
+                player.incorrect_seq_matching_6 += str(data)
+            elif matching_id == "matching_7":
+                player.incorrect_seq_matching_7 += str(data)
+            elif matching_id == "matching_all":
+                player.incorrect_seq_matching_all += str(data)
         elif data['information_type'] == 'question_submission':
             question_id = data['question_id']
             understanding_bonus = data['understanding_bonus']
             player.understanding_bonus += understanding_bonus
-            matching_counter = data['matching_counter']
-            player.matching_counter = matching_counter
             def create_question_submission_string(data):
                 return str(data)
             if question_id == "question_1":
@@ -258,6 +282,8 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_allocation_d += create_question_submission_string(data)
             elif question_id == "allocated_prize":
                 player.incorrect_seq_allocated_prize += create_question_submission_string(data)
+            elif question_id == "allocated_all":
+                player.incorrect_seq_allocated_all += create_question_submission_string(data)
         elif data['information_type'] == 'matching_update':
             """
             this event is called when the user clicks on a participant to match
@@ -297,6 +323,13 @@ class DAalghoInterface(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus
+        player.end_time = str(datetime.now(timezone.utc))
+        def get_understanding_bonus_limit_by_round(round):
+            if round == 1:
+                return 21
+            else :
+                return 7
+        player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
 
 class MechanicsIntro(Page):
     @staticmethod
@@ -313,6 +346,7 @@ class EndTraining(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == C.NUM_ROUNDS
+
 
 
 page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]

@@ -50,7 +50,6 @@ class EndSurvey(Page):
         understanding_bonus_money = get_understanding_bonus_money(understanding_bonus_ratio)
         total_payment = get_total_payment(understanding_bonus_money, total_payoff)
         return {
-            "stam":                      player.participant.understanding_bonus,
             "understanding_bonus_ratio": understanding_bonus_ratio,
             "understanding_bonus_money": understanding_bonus_money,
             "total_payoff":              total_payoff,

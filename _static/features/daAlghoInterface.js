@@ -39,7 +39,11 @@ function renderDaAlgoPage() {
                                 Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize.
                             </p>
                             <p>
-                                <b>For example:</b> The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority for getting that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority.
+                             <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}>
+                                <p>
+                                    The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority for getting that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority.
+                                </p>
+                             </Accordion>   
                             </p>
                         </>
                     )
@@ -55,7 +59,7 @@ function renderDaAlgoPage() {
                             <p>
                                 Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
                             </p>
-                            <Accordion title={<b>For example:...</b>}> 
+                            <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}> 
                                 <p>
                                     The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest).
                                 </p>
@@ -172,7 +176,7 @@ function renderDaAlgoPage() {
                     inputRef: React.createRef(null),
                     expectedAnswerIndex: 3,
                     options :[
-                        <span>It is determined at random.</span>,
+                        <span>It is determined at random.<br/>ijij</span>,
                         <span>The participant who got paired to Prize A first.</span>,
                         <span>The participant for whom Prize A is in is in the highest rank.</span>,
                         <span>The participant highest in Prize A’s priorities.</span>,
@@ -553,7 +557,7 @@ function renderDaAlgoPage() {
                     ),        
                 },
                 {
-                    id: "question_7",
+                    id: "question_6",
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
@@ -633,7 +637,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "question_8",
+                    id: "question_7",
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
@@ -661,7 +665,7 @@ function renderDaAlgoPage() {
                            
                 },
                 {
-                    id: "question_9",
+                    id: "question_8",
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
@@ -839,7 +843,7 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 2,
                 },
                 {
-                    id: "question_10",
+                    id: "question_9",
                     inputRef: React.createRef(),
                     type: "radio",
                     content : (
@@ -912,7 +916,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "matching_1",
+                    id: "matching_all",
                     type: "matching",
                     content : (
                         <>
@@ -955,7 +959,7 @@ function renderDaAlgoPage() {
                     expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"},
                 },
                 {
-                    id: "question_1",
+                    id: "allocated_all",
                     type:"multiDropdown",
                     content:(
                         <>
@@ -1001,7 +1005,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "question_2",
+                    id: "allocated_prize",
                     type:"dropdown",
                     inputRef: React.createRef(),
                     content:(
@@ -1013,7 +1017,7 @@ function renderDaAlgoPage() {
                         <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 2,
                     correctMsg:(
                         <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
                     ),
@@ -1044,7 +1048,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "matching_1",
+                    id: "matching_all",
                     type: "matching",
                     content : (
                         <>
@@ -1087,7 +1091,7 @@ function renderDaAlgoPage() {
                     expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"},
                 },
                 {
-                    id: "question_1",
+                    id: "allocated_all",
                     type:"multiDropdown",
                     content:(
                         <>
@@ -1118,7 +1122,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [2,1,3,0],
+                    expectedAnswersIndex: [1,3,2,0],
                     correctMsg:(
                         <p>Correct!</p>
                     ),
@@ -1133,7 +1137,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "question_2",
+                    id: "allocated_prize",
                     type:"dropdown",
                     inputRef: React.createRef(),
                     content:(
@@ -1176,7 +1180,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "matching_1",
+                    id: "matching_all",
                     type: "matching",
                     content : (
                         <>
@@ -1219,7 +1223,7 @@ function renderDaAlgoPage() {
                     expectedMatching:   {'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"},
                 },
                 {
-                    id: "question_1",
+                    id: "allocated_all",
                     type:"multiDropdown",
                     content:(
                         <>
@@ -1250,7 +1254,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [2,1,3,0],
+                    expectedAnswersIndex: [3,2,0,1],
                     correctMsg:(
                         <p>Correct!</p>
                     ),
@@ -1265,7 +1269,7 @@ function renderDaAlgoPage() {
                     ),
                 },
                 {
-                    id: "question_2",
+                    id: "allocated_prize",
                     type:"dropdown",
                     inputRef: React.createRef(),
                     content:(
@@ -1277,7 +1281,7 @@ function renderDaAlgoPage() {
                         <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 0,
                     correctMsg:(
                         <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
                     ),
@@ -1304,9 +1308,9 @@ function renderDaAlgoPage() {
         const steps = getSteps(props.round,props.variant)
         const [currentStepId,setCurrentStepId] = React.useState(props.currentStepId || steps[0].id)      
         const [selectedProduct,setSelectedProduct] = React.useState(null)
-        const matchingCounter = React.useRef(props.matchingCounter)
+        const [matchingCounter,setMatchingCounter] = React.useState(props.matchingCounter)
         const [highlightedCustomer,setHighlightedCustomer] = React.useState(null)
-        const matchingMemo = React.useRef(props.matchingMemo)
+        const [matchingMemo,setMatchingMemo] = React.useState(props.matchingMemo)
         function onMouseEnterCustomer(customer){
             /* if there is a selected product, highlight do not highlight the customer */
             if(selectedProduct){
@@ -1338,10 +1342,10 @@ function renderDaAlgoPage() {
                     [productIsCurrentlyMatchedTo]: "none"
                 }
             }
+            setMatchingMemo([...matchingMemo, matchedProduct])
             setCurrentMatching(newMatching)
             setSelectedProduct(null)
             setHighlightedCustomer(matchedToCustomer)
-            matchingMemo.current = [...matchingMemo.current, matchedProduct]
         }
         function onProductSelect(product){
             setHighlightedCustomer(null)
@@ -1373,15 +1377,16 @@ function renderDaAlgoPage() {
         React.useEffect(()=>{
             liveSend({
             information_type : "matching_memo_update",
-            matching_memo : matchingMemo.current
+            matching_memo : matchingMemo
             })
-        },[matchingMemo.current])
+        },[matchingMemo])
         React.useEffect(()=>{
+            console.log("matchingCounter",matchingCounter)
             liveSend({
             information_type : "matching_counter_update",
-            matching_counter : matchingCounter.current
+            matching_counter : matchingCounter
             })
-        },[matchingCounter.current])
+        },[matchingCounter])
         React.useEffect(()=>{
             liveSend({
             information_type : "step_update",
@@ -1415,6 +1420,7 @@ function renderDaAlgoPage() {
                     steps,
                     onProceed,
                     matchingCounter,
+                    setMatchingCounter,
                 }}
                     >
                     <Questions />
@@ -1424,7 +1430,7 @@ function renderDaAlgoPage() {
             )
     }
     function Questions(){
-        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round} = React.useContext(DashboardContext)
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
         const [readyToProceed,setReadyToProceed] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
@@ -1439,17 +1445,17 @@ function renderDaAlgoPage() {
                 const expectedAnswerIndex = currentStep.expectedAnswerIndex
                 const selectedAnswerIndex = parseInt(currentStep.inputRef.current.querySelector("input:checked")?.value || null)
                 const isCorrect = expectedAnswerIndex === selectedAnswerIndex   
-                let currentMatchingCounter = matchingCounter.current            
+                let currentMatchingCounter = matchingCounter      
                 let understanding_bonus = 0 ;
                 if (isCorrect){
-                    if (matchingCounter.current === 0){
+                    if (matchingCounter === 0){
                         setMessage("correctFirstMsg")
                         understanding_bonus+= 1 
                     }
                     else{
                         setMessage("correctMsg")
                     }
-                    matchingCounter.current =  0
+                    setMatchingCounter(0)
                     setReadyToProceed(true)
                     currentStep.inputRef.current.querySelectorAll("input").forEach(input => {
                         console.log(input)
@@ -1457,8 +1463,8 @@ function renderDaAlgoPage() {
                     })
                 }
                 else{
-                    matchingCounter.current = matchingCounter.current + 1
-                    currentMatchingCounter = matchingCounter.current
+                    setMatchingCounter(matchingCounter + 1)
+                    currentMatchingCounter = matchingCounter
                     setMessage("incorrectMsg")
                 }
                 liveSend({
@@ -1478,9 +1484,9 @@ function renderDaAlgoPage() {
                 const isCorrect = Object.keys(expectedMatching).every(product => {
                     return expectedMatching[product] === currentMatching[product]
                 })
-                let currentMatchingCounter = matchingCounter.current
+                let currentMatchingCounter = matchingCounter
                 if (isCorrect){
-                    if (matchingCounter.current === 0){
+                    if (matchingCounter === 0){
                         setMessage("correctFirstMsg")
                         if (round ===1){
                             understanding_bonus+= 1    
@@ -1491,7 +1497,7 @@ function renderDaAlgoPage() {
                     }
                     else{
                         if (round !== 1){
-                            if (matchingCounter.current === 1){
+                            if (matchingCounter === 1){
                                 understanding_bonus+= 2
                                 setMessage("correctSecondMsg")
                             }
@@ -1502,29 +1508,29 @@ function renderDaAlgoPage() {
                             setMessage("correctMsg")
                         }
                     }
-                    matchingCounter.current =  0 
+                    setMatchingCounter(0)
                     setReadyToProceed(true)
                 }
                 else{
                     const isLastAttempt = currentMatchingCounter >= 2
                     if (isLastAttempt){
-                        matchingCounter.current = 0
+                        setMatchingCounter(0)
                         setMessage("incorrectSkipMsg")
                         setCurrentMatching(expectedMatching)
                         setReadyToProceed(true)
                     }
                     else{
-                        matchingCounter.current = matchingCounter.current + 1
-                        currentMatchingCounter = matchingCounter.current
+                        setMatchingCounter(matchingCounter + 1)
                         setMessage("incorrectMsg")
                     }
                 }
                 liveSend({
                     information_type : "matching_submission",
                     matching:currentMatching,
+                    matching_id:currentStep.id,
                     is_correct:isCorrect,
-                    understanding_bonus:understanding_bonus,
                     matching_counter:currentMatchingCounter,
+                    understanding_bonus:understanding_bonus,
                     time_stamp : new Date().toUTCString()  
                 })
             }
@@ -1532,22 +1538,22 @@ function renderDaAlgoPage() {
                 const expectedAnswerIndex = currentStep.expectedAnswerIndex
                 const selectedAnswerIndex = parseInt(currentStep.inputRef.current.querySelector("select").value)
                 const isCorrect = expectedAnswerIndex === selectedAnswerIndex
-                let currentMatchingCounter = matchingCounter.current
+                let currentMatchingCounter = matchingCounter
                 let understanding_bonus = 0 ;
                 if (isCorrect){
-                    if (matchingCounter.current === 0){
+                    if (matchingCounter === 0){
                         setMessage("correctFirstMsg")
                         understanding_bonus+= 1
                     }
                     else{
                         setMessage("correctMsg")
                     }
-                    matchingCounter.current =  0
+                    setMatchingCounter(0)
                     setReadyToProceed(true)
                     currentStep.inputRef.current.querySelector("select").disabled = true
                 }
                 else{
-                    matchingCounter.current = matchingCounter.current + 1
+                    setMatchingCounter(matchingCounter + 1)
                     currentMatchingCounter = matchingCounter.current
                     setMessage("incorrectMsg")
                 }
@@ -1570,17 +1576,17 @@ function renderDaAlgoPage() {
                 const isCorrect = expectedAnswersIndex.every((expectedAnswerIndex,index) => {
                     return expectedAnswerIndex === selectedAnswersIndex[index]
                 })
-                let currentMatchingCounter = matchingCounter.current
+                let currentMatchingCounter = matchingCounter
                 let understanding_bonus = 0 ;
                 if (isCorrect){
-                    if (matchingCounter.current === 0){
+                    if (matchingCounter === 0){
                         setMessage("correctFirstMsg")
                         understanding_bonus+= 1
                     }
                     else{
                         setMessage("correctMsg")
                     }
-                    matchingCounter.current =  0
+                    setMatchingCounter(0)
                     setReadyToProceed(true)
                     currentStep.inputsRefs.forEach(inputRef => {
                         inputRef.current.querySelectorAll("select").forEach(select => {
@@ -1589,7 +1595,7 @@ function renderDaAlgoPage() {
                     })
                 }
                 else{
-                    matchingCounter.current = matchingCounter.current + 1
+                    setMatchingCounter(matchingCounter + 1)
                     currentMatchingCounter = matchingCounter.current
                     setMessage("incorrectMsg")
                 }
@@ -1627,7 +1633,7 @@ function renderDaAlgoPage() {
                     {
                         currentStep.options.map((option,index) => {
                             return (
-                                <div style={{display:'flex',gap:'0.5rem'}} key={index}>
+                                <div style={{display:'flex',gap:'0.5rem',alignItems:'baseline'}} key={index}>
                                     <input type="radio" id={currentStepId+"_option_"+index} name={currentStepId} value={index} />
                                     <label htmlFor={currentStepId+"_option_"+index}>{option}</label>
                                 </div>
@@ -1742,6 +1748,7 @@ function renderDaAlgoPage() {
     function Dashboard(){
         const props = React.useContext(DashboardContext)
         return (
+            <>
             <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem'}}>
                 {/* reset button */}
                 { props.round !== 1 &&
@@ -1762,12 +1769,12 @@ function renderDaAlgoPage() {
                 <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
                     <div className="column" style={{flex: '1 2 auto'}}>
                         <b style={{fontSize: "1.5rem"}}>
-                            Prize Priorities:
+                            Participant Rankings:
                         </b>
                     </div>
                     <div className="column" style={{flex: '1 2 auto'}}>
                         <b style={{fontSize: "1.5rem"}}>
-                            Participant Rankings:
+                            Prize Priorities:
                         </b>
                     </div>
                 </div>
@@ -1784,10 +1791,11 @@ function renderDaAlgoPage() {
                 {/* bottom row */}
                 <CustomersRow/>
                 <hr/>
+            </div>
                 <div style={{display:'flex',justifyContent:'center',marginBottom:'0.5rem'}}>
                     Allocation Dashboard
                 </div>
-            </div>
+                </>
         )
     }
     function CustomersRow(){
@@ -1797,6 +1805,19 @@ function renderDaAlgoPage() {
     for each row : 
         the products that the customer is matched to are presented in the order they were matched 
      */
+     function orderProductsMatchedToCustomer(productsMatchedToCustomer,matchingMemo){
+        const orderedProductsMatchedToCustomer = [];
+        for (let i = matchingMemo.length - 1; i >= 0; i--){
+            const product = matchingMemo[i]
+            if (productsMatchedToCustomer.includes(product) && !orderedProductsMatchedToCustomer.includes(product)){
+                orderedProductsMatchedToCustomer.unshift(product)
+            }
+            if (orderedProductsMatchedToCustomer.length === productsMatchedToCustomer.length){
+                break
+            }
+        }
+        return orderedProductsMatchedToCustomer
+     }
         return (
              <div id="third-row">
                 <div id="prizes-rows">
@@ -1806,9 +1827,7 @@ function renderDaAlgoPage() {
                                 const productsMatchedToCustomers = products.filter((product)=>{
                                                 return currentMatching[product] === customer
                                             })
-                                productsMatchedToCustomers.sort((a,b)=>{
-                                    return matchingMemo.current.findIndex((customer)=> customer === b) - matchingMemo.current.findIndex((customer)=> customer === a)
-                                })
+                                const orderedProductsMatchedToCustomers = orderProductsMatchedToCustomer(productsMatchedToCustomers,matchingMemo)
                                 function showPlus(){
                                     if (!selectedProduct) return false
                                     if (currentMatching[selectedProduct] === customer) return false
@@ -1833,24 +1852,10 @@ function renderDaAlgoPage() {
                                             onMouseLeave={()=>{onMouseLeaveCustomer(customer)}}
                                             className="products-row"
                                         >
-                                        { /* plus button */ }
-                                        { showPlus() &&
-                                            <div className="iButton-container">
-                                                <button 
-                                                    className="iButton red"
-                                                    type="button"
-                                                    onClick={() => {
-                                                        onMatching(selectedProduct,customer)
-                                                    }}
-                                                 >
-                                                    +
-                                                </button>
-                                            </div>
-                                        }
                                         { /* products */ }
                                         {
-                                            productsMatchedToCustomers.length !== 0 &&  
-                                            productsMatchedToCustomers.map((product,productIndex)=>{
+                                            orderedProductsMatchedToCustomers.length !== 0 &&  
+                                            orderedProductsMatchedToCustomers.map((product,productIndex)=>{
                                                 const isSelected = selectedProduct === product
                                                 const className = isSelected ? "iButton dark-purple " : "iButton purple"
                                                 return (
@@ -1868,6 +1873,20 @@ function renderDaAlgoPage() {
                                                    </div>
                                                    )  
                                                 })
+                                        }
+                                        { /* plus button */ }
+                                        { showPlus() &&
+                                            <div className="iButton-container">
+                                                <button 
+                                                    className="iButton red"
+                                                    type="button"
+                                                    onClick={() => {
+                                                        onMatching(selectedProduct,customer)
+                                                    }}
+                                                 >
+                                                    +
+                                                </button>
+                                            </div>
                                         }
                                         </div>
                                     </>
