@@ -260,7 +260,7 @@ function renderDaAlgoPage() {
                     id: "matching_3",
                     inputRef: React.createRef(null),
                     type: 'matching',
-                    expectedMatching: {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "C"},
+                    expectedMatching: {"Ruth": "A", "Shirley": "C", "Theresa": "B", "You": "C"} ,
                     content : (
                         <>
                             <p>
@@ -315,7 +315,10 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 0,
                     inputRef: React.createRef(null),
                     content:(
-                        <p>Is the process over?</p>
+                        <p>
+                        <b>Is the process over?</b><br/>
+                        (Get it right on first try to increase your bonus) 
+                        </p>
                     ),
                     incorrectMsg:(
                         <p>
@@ -347,8 +350,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                Find all conflicts and solve them like before.
-                                First, find all prizes that are paired to two (or more) participants.
+                                Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants. 
                             </p>
                             <ul>
                                 <li>
@@ -401,7 +403,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     expectedAnswerIndex: 0,
                     content : (
-                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>
@@ -481,7 +483,7 @@ function renderDaAlgoPage() {
                     inputRef: React.createRef(null),
                     type: "radio",
                     content : (
-                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>
@@ -561,7 +563,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                           <p>
@@ -641,7 +643,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p>Is the process over? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>Correct! There are no more conflicts.</p>
@@ -899,6 +901,1344 @@ function renderDaAlgoPage() {
                     ],
                     expectedAnswerIndex: 1,
                 },
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            <b>The allocation process is over. You get Prize B.</b>
+                        </p>   
+                    )
+                }
+            ],
+            round2:[
+                {
+                    id: "instruction_1",
+                    type:"instructions",
+                    content:(
+                        <>
+                            <p>
+                                In this training round, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                            </p>
+                        </>
+                    ),
+                },
+                {
+                    id: "matching_all",
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus; it will count as 5 question.<br/>
+                                If you only get it right on the second try it will still count for your bonus; it will count as 2 questions.)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>Correct allocation!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the first try! This will count as 5 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect allocation. Please try again.
+                        </p>
+                    ),
+                    correctSecondMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the second try! This will count as 2 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect allocation.<br/>
+                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                    expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"},
+                },
+                {
+                    id: "allocated_all",
+                    type:"multiDropdown",
+                    content:(
+                        <>
+                            <p>
+                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    options:[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    inputsRefs: [
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                    ],
+                    labels:[
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
+                        <span>Prize D</span>,
+                    ],
+                    expectedAnswersIndex: [2,1,3,0],
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },
+                {
+                    id: "allocated_prize",
+                    type:"dropdown",
+                    inputRef: React.createRef(),
+                    content:(
+                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                    ),
+                    options:[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 2,
+                    correctMsg:(
+                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },  
+            ],
+            round3:[
+                {
+                    id: "instruction_1",
+                    type:"instructions",
+                    content:(
+                        <>
+                            <p>
+                                In this training round, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                            </p>
+                        </>
+                    ),
+                },
+                {
+                    id: "matching_all",
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus; it will count as 5 question.<br/>
+                                If you only get it right on the second try it will still count for your bonus; it will count as 2 questions.)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>Correct allocation!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the first try! This will count as 5 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect allocation. Please try again.
+                        </p>
+                    ),
+                    correctSecondMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the second try! This will count as 2 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect allocation.<br/>
+                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                    expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"},
+                },
+                {
+                    id: "allocated_all",
+                    type:"multiDropdown",
+                    content:(
+                        <>
+                            <p>
+                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    options:[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    inputsRefs: [
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                    ],
+                    labels:[
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
+                        <span>Prize D</span>,
+                    ],
+                    expectedAnswersIndex: [1,3,2,0],
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },
+                {
+                    id: "allocated_prize",
+                    type:"dropdown",
+                    inputRef: React.createRef(),
+                    content:(
+                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                    ),
+                    options:[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                    correctMsg:(
+                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },  
+            ],
+            round4:[
+                {
+                    id: "instruction_1",
+                    type:"instructions",
+                    content:(
+                        <>
+                            <p>
+                                In this training round, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                            </p>
+                        </>
+                    ),
+                },
+                {
+                    id: "matching_all",
+                    type: "matching",
+                    content : (
+                        <>
+                            <p>
+                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus; it will count as 5 question.<br/>
+                                If you only get it right on the second try it will still count for your bonus; it will count as 2 questions.)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>Correct allocation!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the first try! This will count as 5 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect allocation. Please try again.
+                        </p>
+                    ),
+                    correctSecondMsg:(
+                        <p>
+                            Correct allocation!<br/>
+                            Good job on the second try! This will count as 2 questions for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect allocation.<br/>
+                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                    expectedMatching:   {'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"},
+                },
+                {
+                    id: "allocated_all",
+                    type:"multiDropdown",
+                    content:(
+                        <>
+                            <p>
+                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                            </p>
+                            <p>
+                                Click Submit when you are done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    options:[
+                        <span>R</span>,
+                        <span>S</span>,
+                        <span>T</span>,
+                        <span>Y</span>,
+                    ],
+                    inputsRefs: [
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                        React.createRef(),
+                    ],
+                    labels:[
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
+                        <span>Prize D</span>,
+                    ],
+                    expectedAnswersIndex: [3,2,0,1],
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },
+                {
+                    id: "allocated_prize",
+                    type:"dropdown",
+                    inputRef: React.createRef(),
+                    content:(
+                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                    ),
+                    options:[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                    correctMsg:(
+                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                },  
+            ],
+        },
+        "menu":{
+            round1:[
+                {
+                    id: "instructions_1",
+                    type: "instructions",
+                    content : (
+                        <>
+                            <p>
+                                The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer.
+                            </p>
+                            <p>
+                                Remember: each step or question during the process will count for your Understanding Bonus only if you get it correctly on your first attempt. Think about your answers carefully!
+                            </p>
+                            <p>
+                                First, we will guide you how to use the <b>Allocation Dashboard</b> below to find the temporary allocation of prizes to all participants except for you.
+                            </p>
+                        </>
+                    )
+                },
+                {
+                    id: "instructions_2",
+                    type: "instructions",
+                    content : (
+                        <>
+                            <p>
+                                On the upper left part of the dashboard below you see a condensed version of the <b>Participant Rankings</b>.
+                            </p>
+                            <p>
+                                Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
+                            </p>
+                            <p>
+                             <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}>
+                                <p>
+                                    The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest).<br/>
+                                </p>
+                                <p>
+                                    Notice: In real rounds of the game you do not see other participants’ rankings, but now, since you are in charge of the allocation process, you are able to see them.
+                                </p>
+                             </Accordion>   
+                            </p>
+                        </>
+                    )
+                },
+                {
+                    id: 'instructions_3',
+                    type: 'instructions',
+                    content :(
+                        <>
+                            <p>
+                                On the upper right part of the dashboard below you see a condensed version of the <b>Prize Priorities that you saw before.</b><br/>
+                                Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize.
+                            </p>
+                            <p>
+                                Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
+                            </p>
+                            <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}> 
+                                <p>
+                                    The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority for getting that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority.
+                                </p>
+                             </Accordion>
+                        </>
+                    )
+                },
+                {
+                    id: "instructions_4",
+                    type: 'instructions',
+                    content :(
+                        <p>
+                           The middle and lower parts of the dashboard enable you to pair prizes to participants, as will be explained next.
+                        </p>
+                    )
+                },
+                {
+                    id: "matching_1",
+                    type: "matching",
+                    expectedMatching : {"A": "Ruth", "B":"none","C":"none","D":"none"},
+                    content : (
+                        <>
+                            <p>
+                                First, pair each prize to its <b>highest-priority</b> participant.
+                            </p>
+                            <ol>
+                                <li>
+                                    Start from the “Pick prizes to pair” row, and click on <b>Prize A (“A”)</b>.    
+                                </li>
+                                <li>
+                                    Then, in the list of four participants at the bottom left part of the dashboard, click on “+” next to the participant, <b>except for you</b>, that is <b>highest in their priorities</b>.
+                                </li>
+                            </ol>
+                            <p>
+                                Hint: the prize that is highest in Ruth’s ranking is indicated by the letter just under “R” in the Participant Rankings table.
+                            </p>
+                            <p>
+                                After pairing, “R” and “A” will be colored purple in the two tables, to indicate that they are paired.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    correctMsg:(
+                         <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                         <p>
+                            Correct! <br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    )
+                },
+                {
+                    id: "matching_2",
+                    type: "matching",
+                    expectedMatching: {"A":"Ruth","B":"Ruth","C":"Shirley","D":"Theresa"},
+                    content : (
+                        <>
+                            <p>
+                                Now repeat the same for the three other prizes. One by one, pair each of them to its <b>highest-priority</b> participant, except for you.
+                            </p>
+                            <p>
+                                Hint: The highest-priority participant at Prize D is You, but cannot be paired with you during this stage of the process.<br/> 
+                                Who is Prize D’s highest-priority participant, <b>except for you</b>? (Another hint: it is Theresa)
+                            </p>
+                            <p>
+                                Click Submit after completing all three.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                            <p>
+                                Correct!
+                            </p>
+                    ),
+                    correctFirstMsg:(
+                            <p>
+                                Correct! <br/>
+                                Good job on the first try! This will count for your Understanding Bonus.
+                            </p>
+                    ),
+                    incorrectMsg:(
+                            <p>
+                                Incorrect answer. Please try again.
+                            </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_1",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    expectedAnswerIndex: 3,
+                    options :[
+                        <span>It is determined at random.</span>,
+                        <span>The prize who got paired to Ruth first .</span>,
+                        <span>The prize that Ruth has the highest priority of getting.</span>,
+                        <span>The prize highest in Ruth’s ranking.</span>,
+                    ],
+                    content : (
+                        <>
+                            <p>
+                                Each prize is now paired to a participant. <br/>
+                                However, there are <b>conflicts</b>: two (or more) prizes are paired to the same participant.
+                            </p>
+                            <p>
+                                Notice: <b>Prize A</b> and <b>Prize B</b> are both paired to <b>Ruth</b>. This is a conflict.
+                            </p>
+                            <p>
+                                To solve a conflict, the first step is <b>Unpair</b>.<br/>
+                                According to this step, only one prize should remain paired to Ruth. <b>Which prize should it be?</b>
+                            </p>
+                            <p>
+                                Please select one of the answers below and then click Submit.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! When there is a conflict at some participant, only the prize highest in that participant’s ranking should remain paired to that participant. The others should get unpaired.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                             Correct! When there is a conflict at some participant, only the prize highest in that participant’s ranking should remain paired to that participant. The others should get unpaired.<br/>
+                             Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_2",
+                    inputRef: React.createRef(null),
+                    type: "radio",
+                    options :[
+                        <span>A random prize that is currently unpaired to any participant.</span>,
+                        <span>Its highest-priority participant, among the participants it was not yet paired with and except for you.</span>,
+                        <span>Its highest-priority participant.</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                    content : (
+                        <>
+                            <p>
+                                The second step in solving conflicts is <b>Re-pair</b>.<br/>
+                                After a prize gets unpaired, what new participant does it get paired to?
+                            </p>
+                            <p>
+                                Please select one of the answers below and then click Submit.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Each unpaired prize is re-paired to its highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Each unpaired participant is re-paired to their highest-rank prize among the prizes they were <b>not yet paired with</b>.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                },
+                {
+                    id: "matching_3",
+                    inputRef: React.createRef(null),
+                    type: 'matching',
+                    expectedMatching: {"A":"Ruth","B":"Shirley","C":"Shirley","D":"Theresa"},
+                    content : (
+                        <>
+                            <p>
+                                Now, let’s solve the conflict.
+                            </p>
+                            <p>
+                                According to the Participant Rankings, <b>Ruth</b> ranked <b>Prize A</b> higher than <b>Prize B</b>. Hence, Prize B should get unpaired from <b>Ruth</b> , and then get re-paired to its second highest-priority participant, among all participants <b>except for you</b>. 
+
+                            </p>
+                            <p>
+                                Perform this using the two steps:
+                                <ol>
+                                    <li>
+                                        <p>
+                                            <b>Unpair</b>: at the lower part of the dashboard, next to Ruth (“R”), click on <b>Prize B (“B”)</b>.
+                                        </p>
+                                    </li>
+                                    <li>
+                                        <p>
+                                            <b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Prize B’s (“B”) <b>second highest-priority participant</b>, among all participants <b>except for you</b>. 
+                                        </p>
+                                        <p>
+                                            Hint: You can easily find which participant it is, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under Prize B’s name (“B”), or, in case that participant is you (“Y”), the one right below “Y”.
+                                        </p>
+                                    </li>
+                                </ol>
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_3",
+                    type: "radio",
+                    expectedAnswerIndex: 0,
+                    inputRef: React.createRef(null),
+                    content:(
+                        <p>
+                            <b>Is the process over?</b><br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants except for you.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants except for you.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    options :[
+                        <span>No, there are new conflicts: two (or more) prizes are paired to the same participant.</span>,
+                        <span>No, some prizes are paired to participants that are not in their highest priority. </span>,
+                        <span>Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway.</span>,
+                        <span>Yes, there are no more conflicts</span>,
+                    ]  
+                },
+                {
+                    id: "matching_4",
+                    type: 'matching',
+                    expectedMatching : {"A":"Ruth","B":"Theresa","C":"Shirley","D":"Theresa"},
+                    content : (
+                        <>
+                            <p>
+                                Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                </li>
+                                <li>
+                                    <p>
+                                        <b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.
+                                    </p>
+                                    <p>
+                                        Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.
+                                    </p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ), 
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_4",
+                    inputRef: React.createRef(null),
+                    type: "radio",
+                    expectedAnswerIndex: 0,
+                    content : (
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants..<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                },
+                {
+                    id: "matching_5",
+                    type: 'matching',
+                    inputRef: React.createRef(null),
+                    expectedMatching : {"A":"Ruth","B":"Theresa","C":"Shirley","D":"Shirley"},
+                    content : (
+                        <>
+                             <p>
+                                Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                </li>
+                                <li>
+                                    <p>
+                                        <b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.
+                                    </p>
+                                    <p>
+                                        Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.
+                                    </p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                         </>
+                    ), 
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ), 
+                },
+                {
+                    id: "question_5",
+                    inputRef: React.createRef(null),
+                    type: "radio",
+                    content : (
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "matching_6",
+                    type: "matching",
+                    content : (
+                        <>
+                           <p>
+                                Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                            </p>
+                            <ul>
+                                <li>
+                                    <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                </li>
+                                <li>
+                                    <p>
+                                        <b>Re-pair</b>: re-pair these prizes to their highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you</b>.
+                                    </p>
+                                    <p>
+                                        Hint: You can easily find which participant you should re-pair the unpaired prize to, using the Prize Priorities table: this is the participant right below the one that is currently colored purple under the unpaired prize’s name, or, in case that participant is you (“Y”), the one right below you.
+                                    </p>
+                                </li>
+                            </ul>
+                            <p>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
+                                If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                            </p>
+                            <p>
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    expectedMatching : {"A":"Ruth","B":"Theresa","C":"Shirley","D":"Ruth"},
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),        
+                },
+                {
+                    id: "question_6",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                          <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 0,    
+                },
+                {
+                    id: "matching_7",
+                    type: "matching",
+                    content : (
+                    <>
+                        <p>
+                            Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                        </p>
+                        <ul>
+                            <li>
+                                <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                            </li>
+                        </ul>
+                        <p>
+                        <b>Notice</b>: at this stage, <b>Prize D</b> should be unpaired from Ruth, which is its last priority. Hence, there are no participants left to re-pair it to, and <b>it will remain unpaired</b>.
+                        To leave Prize D unpaired, do the following:
+                        After clicking on “D” at the <b>lower</b> part of the dashboard, click on “+” at the bottom “Unpaired” row.
+                        </p>
+                        <p>
+                            <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
+                            If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
+                        </p>
+                        <p>
+                            Click Submit when done.<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                     </>
+                    ),
+                    expectedMatching : {"A":"Ruth","B":"Theresa","C":"Shirley","D":"Unpaired"},
+                    correctMsg:(
+                        <p>
+                            Correct!
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    incorrectSkipMsg:(
+                        <p>
+                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                        </p>
+                    ),
+                },
+                {
+                    id: "question_7",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                    ),
+                    correctMsg:(
+                        <p>Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>No</span>,
+                        <span>Yes</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                           
+                },
+                {
+                    id: "question_8",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <>
+                            <p>
+                                The temporary allocation is the following:
+                                <ul>
+                                    <li>Prize A is temporarily allocated to Ruth.</li>
+                                    <li>Prize B is temporarily allocated to You.</li>
+                                    <li>Prize C is temporarily allocated to Shirely.</li>
+                                    <li>Prize D is temporarily left unpaired.</li>
+                                </ul>
+                            </p>
+                            <p>
+                                All participants <b>except for you</b> are temporarily matched to prizes.<br/> 
+                                What about you? Given the temporary allocation , which prizes can you obtain, in principle? In other words, what are your Obtainable Prizes?<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p> 
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>All four prizes, since I can obtain any prize where the other participant temporarily allocated to that prize does not want it.</span>,
+                        <span>Any prize which my priority of getting is higher than that of the participant it is temporarily allocated to.</span>,
+                        <span>Only the prize that was left unpaired in the temporary allocation.</span>,
+                        <span>Any prize which my priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.</span>,
+                    ],
+                    expectedAnswerIndex: 3,
+                },
+                {
+                    id: "question_allocation_a",
+                    type: "dropdown",
+                    inputRef: React.createRef(null),
+                    label: "Prize A",
+                    content : (
+                        <p>
+                            Now use this rule to determine your Obtainable Prizes.<br/>
+                            Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Prize A is temporarily allocated to Ruth, and your priority for getting that prize is <b>lower</b> than hers. Hence <b>you cannot obtain Prize A</b>.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize A is temporarily allocated to Ruth, and your priority for getting that prize is <b>lower</b> than hers. Hence <b>you cannot obtain Prize A</b>.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.    
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                },
+                {
+                    id: "question_allocation_b",
+                    type: "dropdown",
+                    inputRef: React.createRef(null),
+                    label: "Prize B",
+                    content : (
+                        <p>
+                            Now use this rule to determine your Obtainable Prizes.<br/>
+                            Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Prize B is temporarily allocated to Theresa, but your priority for getting that prize is <b>higher</b> than hers. Hence <b>you can obtain Prize B</b>.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize B is allocated to You.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "question_allocation_c",
+                    type: "dropdown",   
+                    inputRef: React.createRef(null),
+                    label: "Prize C",
+                    content : (
+                        <p>
+                            Now use this rule to determine your Obtainable Prizes.<br/>
+                            Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>    
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Prize C is temporarily allocated to Shirley, and your priority for getting that prize is lower than hers. Hence <b>you cannot obtain Prize C</b>.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize C is temporarily allocated to Shirley, and your priority for getting that prize is lower than hers. Hence <b>you cannot obtain Prize C</b>.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
+                    ],
+                    expectedAnswerIndex: 1,                            
+                },
+                {
+                    id: "question_allocation_d",
+                    type: "dropdown",
+                    inputRef: React.createRef(null),
+                    label: "Prize D",
+                    content : (
+                        <p>
+                            Now use this rule to determine your Obtainable Prizes.<br/>
+                            Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Prize D was left unpaired in the temporary allocation. Hence <b>you can obtain Prize D</b>.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Prize D is allocated to Theresa.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "question_9",
+                    inputRef: React.createRef(),
+                    type: "radio",
+                    content : (
+                        <>
+                            <p>
+                                Your Obtainable Prizes are therefore <b>Prize B</b> and <b>Prize D</b>.
+                            </p>
+                            <p>
+                                Among these Obtainable Prizes, which prize do you actually get?<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! Among the Obtainable Prizes, you get the one that you ranked the highest.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! Among the Obtainable Prizes, you get the one that you ranked the highest.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                    options :[
+                        <span>The prize that was left unpaired in the temporary allocation.</span>,
+                        <span>The prize that other participants placed last in rankings on average.</span>,
+                        <span>The prize that I ranked the highest.</span>,
+                        <span>The prize which I have the highest priority of getting.</span>,
+                    ],
+                    expectedAnswerIndex: 2,
+                },
+                {
+                    id: "allocated_prize",
+                    type: "dropdown",
+                    inputRef: React.createRef(),
+                    content : (
+                        <p>
+                             Out of the Obtainable Prizes below, click on the prize you ranked the highest.<br/>
+                             (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>Correct!</p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct!<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>Incorrect answer. Please try again.</p>
+                    ),
+                    options :[
+                        <span>A</span>,
+                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
+                    ],
+                    expectedAnswerIndex: 1,
+                },
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            <b>The allocation process is over. You get Prize B.</b>
+                        </p>   
+                    )
+                }
             ],
             round2:[
                 {
@@ -1403,6 +2743,7 @@ function renderDaAlgoPage() {
                     setCurrentMatching,
                     products:props.products,
                     customers:props.customers,
+                    variant:props.variant,
                     maxProductsPerCustomer:props.maxProductsPerCustomer,
                     customersPriorities:props.customersPriorities,
                     productsPriorities:props.productsPriorities,
@@ -1421,6 +2762,8 @@ function renderDaAlgoPage() {
                     onProceed,
                     matchingCounter,
                     setMatchingCounter,
+                    setMatchingMemo,
+                    matchingMemo
                 }}
                     >
                     <Questions />
@@ -1430,7 +2773,7 @@ function renderDaAlgoPage() {
             )
     }
     function Questions(){
-        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter} = React.useContext(DashboardContext)
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter,setMatchingMemo,matchingMemo} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
         const [readyToProceed,setReadyToProceed] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
@@ -1514,6 +2857,13 @@ function renderDaAlgoPage() {
                 else{
                     const isLastAttempt = currentMatchingCounter >= 2
                     if (isLastAttempt){
+                        function getMatchedProducts(expectedMatching){
+                            return Object.keys(expectedMatching).filter((product)=>{
+                                if (expectedMatching[product] === "none") return false ; 
+                                return true 
+                            })
+                        }
+                        setMatchingMemo([...matchingMemo,...getMatchedProducts(expectedMatching)])
                         setMatchingCounter(0)
                         setMessage("incorrectSkipMsg")
                         setCurrentMatching(expectedMatching)
@@ -1747,6 +3097,7 @@ function renderDaAlgoPage() {
     }
     function Dashboard(){
         const props = React.useContext(DashboardContext)
+        const tableTitlesDircetion = props.variant === "menu" ? "row-reverse" : "row";
         return (
             <>
             <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem'}}>
@@ -1766,7 +3117,7 @@ function renderDaAlgoPage() {
                         </svg>
                     </button>
                 }
-                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
+                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline',flexDirection:tableTitlesDircetion}}>
                     <div className="column" style={{flex: '1 2 auto'}}>
                         <b style={{fontSize: "1.5rem"}}>
                             Participant Rankings:
@@ -1799,7 +3150,7 @@ function renderDaAlgoPage() {
         )
     }
     function CustomersRow(){
-    const {currentMatching,maxProductsPerCustomer,customers,onMouseEnterCustomer,onMouseLeaveCustomer,selectedProduct,setSelectedProduct,onMatching,matchingMemo,products,onProductSelect} = React.useContext(DashboardContext)
+    const {currentMatching,maxProductsPerCustomer,customers,onMouseEnterCustomer,onMouseLeaveCustomer,selectedProduct,setSelectedProduct,onMatching,matchingMemo,products,onProductSelect,variant} = React.useContext(DashboardContext)
     /* 
     each row represents a customer
     for each row : 
@@ -1818,35 +3169,53 @@ function renderDaAlgoPage() {
         }
         return orderedProductsMatchedToCustomer
      }
+     const containerStyle = ()=>{
+         const gridTemplateRows = ()=>{
+             const numberOfRows = Object.keys(customers).length;
+             return "repeat("+numberOfRows+",57px)"
+         }
+         return {
+          display: 'grid',
+          gridTemplateColumns: '1fr 8fr',
+          gridAutoFlow: 'row',
+          gridRowGap: '.5rem',
+          gridColumnGap: '.3rem',
+          gridTemplateRows: gridTemplateRows(),
+      }
+    }
         return (
              <div id="third-row">
                 <div id="prizes-rows">
-                    <div className="customers-rows-container">
+                    <div className="customers-rows-container" style ={containerStyle()}>
                         {
-                            customers.map((customer,productIndex)=>{
+                            customers.map((customer)=>{
                                 const productsMatchedToCustomers = products.filter((product)=>{
-                                                return currentMatching[product] === customer
-                                            })
+                                    return currentMatching[product] === customer
+                                })
                                 const orderedProductsMatchedToCustomers = orderProductsMatchedToCustomer(productsMatchedToCustomers,matchingMemo)
+                                function isMatchable(){
+                                    const numberOfProductsMatchedToCustomer = getNumberOfProductsMatchedToCustomer()
+                                    if (numberOfProductsMatchedToCustomer >= maxProductsPerCustomer[customer]) return false
+                                    return true  
+                                }
+                                function getNumberOfProductsMatchedToCustomer(){
+                                    let counter = 0
+                                    for (let product in currentMatching){
+                                        if (currentMatching[product] === customer){
+                                            counter = counter + 1
+                                        }
+                                    }
+                                    return counter
+                                }
                                 function showPlus(){
                                     if (!selectedProduct) return false
                                     if (currentMatching[selectedProduct] === customer) return false
-                                    function getNumberOfProductsMatchedToCustomer(){
-                                        let counter = 0
-                                        for (let product in currentMatching){
-                                            if (currentMatching[product] === customer){
-                                                counter = counter + 1
-                                            }
-                                        }
-                                        return counter
-                                    }
-                                    const numberOfProductsMatchedToCustomer = getNumberOfProductsMatchedToCustomer()
-                                    if (numberOfProductsMatchedToCustomer >= maxProductsPerCustomer) return false 
-                                    return true
+                                    const matchable = isMatchable()
+                                    return matchable
                                 }
                                 return(
                                     <>
-                                        <span>{customer}</span>
+                                        <span className={isMatchable() === false && 'text-faded'}>{customer.charAt(0)}</span>
                                         <div
                                             onMouseEnter={()=>{onMouseEnterCustomer(customer)}}
                                             onMouseLeave={()=>{onMouseLeaveCustomer(customer)}}
@@ -1900,12 +3269,16 @@ function renderDaAlgoPage() {
                     <span><b>S&nbsp;</b>= Shirley</span>
                     <span><b>T&nbsp;</b>= Theresa</span>
                     <span><b>Y&nbsp;</b>= You</span>
+                    {
+                        variant === "menu" &&
+                            <span><b>U&nbsp;</b>= Unpaired</span>
+                    }
                 </div>
              </div>
         )
     }
     function ProductsTable() {
-        const {products,productsPriorities,currentMatching,selectedProduct}= React.useContext(DashboardContext)
+        const {products,productsPriorities,currentMatching,selectedProduct,maxProductsPerCustomer}= React.useContext(DashboardContext)
         return(
             <div className="priorities-table-container">
                 {products.map((product,columnIndex)=>{
@@ -1932,16 +3305,20 @@ function renderDaAlgoPage() {
                                 {
                                     productPriorities.map((customer,rowIndex)=>{
                                         const isCellHighlight = currentMatching[product] === customer
+                                        const isCellFaded =  maxProductsPerCustomer[customer] === 0
                                         const className = () => {
                                            let classNames = "dButton"
                                            if (isCellHighlight) {
                                                classNames += " dButtonMatched"
                                            }
+                                           if (isCellFaded){
+                                               classNames += " text-faded"
+                                           }
                                            return classNames
                                         }
                                         return (
                                             <div className={className()} key={rowIndex}>
-                                                {customer}
+                                                {customer.charAt(0)}
                                             </div>
                                         )   
                                     })
@@ -1958,7 +3335,7 @@ function renderDaAlgoPage() {
         return(
             <div className="priorities-table-container">
                 {
-                    customers.map((customer,columnIndex)=>{
+                    Object.keys(customersPriorities).map((customer,columnIndex)=>{
                         const customerPriorities = customersPriorities[customer]
                         const isColumnHighlighted = customer === highlightedCustomer
                         const classNames = () => {
@@ -1979,7 +3356,7 @@ function renderDaAlgoPage() {
                         }
                         return (
                             <div className={classNames()} key={columnIndex}>
-                                <div className="dButtonTop dButton" id={customer}>{customer}</div>
+                                <div className="dButtonTop dButton" id={customer}>{customer.charAt(0)}</div>
                                 {
                                     customerPriorities.map((product,rowIndex)=>{
                                         const isCellHighlight = currentMatching[product] === customer
@@ -2017,11 +3394,16 @@ function renderDaAlgoPage() {
             if a product is selected :
                 it is being highlighted
          */
-        const {products,currentMatching,selectedProduct,setSelectedProduct,onProductSelect}= React.useContext(DashboardContext)
+        const {products,currentMatching,selectedProduct,setSelectedProduct,onProductSelect,variant}= React.useContext(DashboardContext)
         return (
             <div id="middle-row" >
                 <span>
-                    <b style={{fontSize: "1.5rem"}}>Pick participants to pair →</b>
+                    { variant === "traditional" && 
+                        <b style={{fontSize: "1.5rem"}}>Pick participants to pair →</b>
+                    }
+                    { variant === "menu" && 
+                        <b style={{fontSize: "1.5rem"}}>Pick prizes to pair →</b>
+                    }
                 </span>
                 <div class="products-row">
                     {

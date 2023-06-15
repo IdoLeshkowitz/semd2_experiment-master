@@ -212,14 +212,7 @@ body {
     display: grid;
     grid-template-columns: 3fr 1fr;
 }
-.customers-rows-container{
-    display:grid ;
-    grid-template-columns:  1fr 8fr;
-    grid-auto-flow: row;
-    grid-row-gap: .5rem;
-    grid-column-gap: .3rem;
-    grid-template-rows: repeat(4, 55px);
-}
+
 
 .customers-rows-container span{
     display: flex;
