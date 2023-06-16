@@ -2211,12 +2211,10 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                     options :[
-                        <span>A</span>,
                         <span>B</span>,
-                        <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 0,
                 },
                 {
                     id :"allocation_results",
