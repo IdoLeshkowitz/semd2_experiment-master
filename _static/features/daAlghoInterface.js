@@ -176,7 +176,7 @@ function renderDaAlgoPage() {
                     inputRef: React.createRef(null),
                     expectedAnswerIndex: 3,
                     options :[
-                        <span>It is determined at random.<br/>ijij</span>,
+                        <span>It is determined at random.</span>,
                         <span>The participant who got paired to Prize A first.</span>,
                         <span>The participant for whom Prize A is in is in the highest rank.</span>,
                         <span>The participant highest in Prize A’s priorities.</span>,
@@ -901,15 +901,6 @@ function renderDaAlgoPage() {
                     ],
                     expectedAnswerIndex: 1,
                 },
-                {
-                    id :"allocation_results",
-                    type : "instructions",
-                    content : (
-                        <p>
-                            <b>The allocation process is over. You get Prize B.</b>
-                        </p>   
-                    )
-                }
             ],
             round2:[
                 {
@@ -1359,9 +1350,6 @@ function renderDaAlgoPage() {
                             <p>
                                 On the upper right part of the dashboard below you see a condensed version of the <b>Prize Priorities that you saw before.</b><br/>
                                 Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize.
-                            </p>
-                            <p>
-                                Each letter under a participant name indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
                             </p>
                             <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}> 
                                 <p>
@@ -2261,7 +2249,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                                First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2271,32 +2259,32 @@ function renderDaAlgoPage() {
                         </>
                     ),
                     correctMsg:(
-                        <p>Correct allocation!</p>
+                        <p>Correct temporary allocation!</p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct allocation!<br/>
+                            Correct temporary allocation!<br/>
                             Good job on the first try! This will count as 5 questions for your Understanding Bonus.
                         </p>
                     ),
                     incorrectMsg:(
                         <p>
-                            Incorrect allocation. Please try again.
+                            Incorrect temporary allocation. Please try again.
                         </p>
                     ),
                     correctSecondMsg:(
                         <p>
-                            Correct allocation!<br/>
+                            Correct temporary allocation!<br/>
                             Good job on the second try! This will count as 2 questions for your Understanding Bonus.
                         </p>
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect allocation.<br/>
+                            Incorrect temporary allocation.<br/>
                             We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"},
+                    expectedMatching:   {"A":"Theresa","B":"Shirley","C":"Unpaired","D":"Ruth"},
                 },
                 {
                     id: "allocated_all",
@@ -2304,7 +2292,7 @@ function renderDaAlgoPage() {
                     content:(
                         <>
                             <p>
-                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                Next, find your <b>Obtainable Prizes</b>. For each of the four prizes below, click on “Obtainable” or “Unobtainable,” based on what you learned in the previous screens.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2313,10 +2301,8 @@ function renderDaAlgoPage() {
                         </>
                     ),
                     options:[
-                        <span>R</span>,
-                        <span>S</span>,
-                        <span>T</span>,
-                        <span>Y</span>,
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
                     ],
                     inputsRefs: [
                         React.createRef(),
@@ -2330,13 +2316,15 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [2,1,3,0],
+                    expectedAnswersIndex: [0,0,1,1],
                     correctMsg:(
-                        <p>Correct!</p>
+                        <p>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
+                        </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct!<br/>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2349,7 +2337,7 @@ function renderDaAlgoPage() {
                     type:"dropdown",
                     inputRef: React.createRef(),
                     content:(
-                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                       <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
                     ),
                     options:[
                         <span>A</span>,
@@ -2359,11 +2347,11 @@ function renderDaAlgoPage() {
                     ],
                     expectedAnswerIndex: 2,
                     correctMsg:(
-                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                        <p>Correct! Among the Obtainable Prizes, Prize C is the one you ranked highest. Hence it is allocated to you</p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Correct! Among the Obtainable Prizes, Prize C is the one you ranked highest. Hence it is allocated to you<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2393,7 +2381,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                                First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2403,32 +2391,32 @@ function renderDaAlgoPage() {
                         </>
                     ),
                     correctMsg:(
-                        <p>Correct allocation!</p>
+                        <p>Correct temorary allocation!</p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct allocation!<br/>
+                            Correct temorary allocation!<br/>
                             Good job on the first try! This will count as 5 questions for your Understanding Bonus.
                         </p>
                     ),
                     incorrectMsg:(
                         <p>
-                            Incorrect allocation. Please try again.
+                            Incorrect temorary allocation. Please try again.
                         </p>
                     ),
                     correctSecondMsg:(
                         <p>
-                            Correct allocation!<br/>
+                            Correct temorary allocation!<br/>
                             Good job on the second try! This will count as 2 questions for your Understanding Bonus.
                         </p>
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect allocation.<br/>
+                            Incorrect temorary allocation.<br/>
                             We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"},
+                    expectedMatching:   {"A":"Unpaired","B":"Shirley","C":"Theresa","D":"Ruth"},
                 },
                 {
                     id: "allocated_all",
@@ -2436,7 +2424,7 @@ function renderDaAlgoPage() {
                     content:(
                         <>
                             <p>
-                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                Next, find your <b>Obtainable Prizes</b>. For each of the four prizes below, click on “Obtainable” or “Unobtainable,” based on what you learned in the previous screens.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2445,10 +2433,8 @@ function renderDaAlgoPage() {
                         </>
                     ),
                     options:[
-                        <span>R</span>,
-                        <span>S</span>,
-                        <span>T</span>,
-                        <span>Y</span>,
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
                     ],
                     inputsRefs: [
                         React.createRef(),
@@ -2462,13 +2448,15 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [1,3,2,0],
+                    expectedAnswersIndex: [1,0,1,1],
                     correctMsg:(
-                        <p>Correct!</p>
+                        <p>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
+                        </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct!<br/>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2481,7 +2469,7 @@ function renderDaAlgoPage() {
                     type:"dropdown",
                     inputRef: React.createRef(),
                     content:(
-                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                       <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
                     ),
                     options:[
                         <span>A</span>,
@@ -2491,11 +2479,11 @@ function renderDaAlgoPage() {
                     ],
                     expectedAnswerIndex: 1,
                     correctMsg:(
-                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                        <p>Correct! Among the Obtainable Prizes, Prize B is the one you ranked highest. Hence it is allocated to you</p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Correct! Among the Obtainable Prizes, Prize B is the one you ranked highest. Hence it is allocated to you<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2525,7 +2513,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                                First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2535,32 +2523,32 @@ function renderDaAlgoPage() {
                         </>
                     ),
                     correctMsg:(
-                        <p>Correct allocation!</p>
+                        <p>Correct temporary allocation!</p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct allocation!<br/>
+                            Correct temporary allocation!<br/>
                             Good job on the first try! This will count as 5 questions for your Understanding Bonus.
                         </p>
                     ),
                     incorrectMsg:(
                         <p>
-                            Incorrect allocation. Please try again.
+                            Incorrect temporary allocation. Please try again.
                         </p>
                     ),
                     correctSecondMsg:(
                         <p>
-                            Correct allocation!<br/>
+                            Correct temporary allocation!<br/>
                             Good job on the second try! This will count as 2 questions for your Understanding Bonus.
                         </p>
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect allocation.<br/>
+                            Incorrect temporary allocation.<br/>
                             We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"},
+                    expectedMatching:   {"A":"Shirley","B":"Unpaired","C":"Ruth","D":"Theresa"},
                 },
                 {
                     id: "allocated_all",
@@ -2568,7 +2556,7 @@ function renderDaAlgoPage() {
                     content:(
                         <>
                             <p>
-                            For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                Next, find your <b>Obtainable Prizes</b>. For each of the four prizes below, click on “Obtainable” or “Unobtainable,” based on what you learned in the previous screens.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2577,10 +2565,8 @@ function renderDaAlgoPage() {
                         </>
                     ),
                     options:[
-                        <span>R</span>,
-                        <span>S</span>,
-                        <span>T</span>,
-                        <span>Y</span>,
+                        <span>Obtainable</span>,
+                        <span>Unobtainable</span>,
                     ],
                     inputsRefs: [
                         React.createRef(),
@@ -2594,13 +2580,15 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [3,2,0,1],
+                    expectedAnswersIndex: [0,0,1,1],
                     correctMsg:(
-                        <p>Correct!</p>
+                        <p>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
+                        </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct!<br/>
+                            Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2613,7 +2601,7 @@ function renderDaAlgoPage() {
                     type:"dropdown",
                     inputRef: React.createRef(),
                     content:(
-                       <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
+                       <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
                     ),
                     options:[
                         <span>A</span>,
@@ -2623,18 +2611,18 @@ function renderDaAlgoPage() {
                     ],
                     expectedAnswerIndex: 0,
                     correctMsg:(
-                        <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
+                        <p>Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest. Hence it is allocated to you</p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! At the end of the process, each participant gets the prize they were allocated with.<br/>
+                            Correct! Among the Obtainable Prizes, Prize A is the one you ranked highest. Hence it is allocated to you<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
                     incorrectMsg:(
                         <p>Incorrect answer. Please try again.</p>
                     ),
-                },  
+                },
             ],
         }
     }
@@ -2649,6 +2637,7 @@ function renderDaAlgoPage() {
         const [currentStepId,setCurrentStepId] = React.useState(props.currentStepId || steps[0].id)      
         const [selectedProduct,setSelectedProduct] = React.useState(null)
         const [matchingCounter,setMatchingCounter] = React.useState(props.matchingCounter)
+        const [readyToProceed,setReadyToProceed] = React.useState(false)
         const [highlightedCustomer,setHighlightedCustomer] = React.useState(null)
         const [matchingMemo,setMatchingMemo] = React.useState(props.matchingMemo)
         function onMouseEnterCustomer(customer){
@@ -2662,10 +2651,35 @@ function renderDaAlgoPage() {
             setHighlightedCustomer(null)
         }
         function onReset(){
-            setCurrentMatching(props.products.reduce((acc,product) => {
-                acc[product] = "none"
-                return acc
-            },{}))
+            if (props.round === 1){
+                if (readyToProceed) return ; 
+                function getLastExpectedMatching(steps){
+                    let result;
+                    for (let step of steps){
+                        if (step.id === currentStepId){
+                            break
+                        }
+                        if (step.type === "matching"){
+                            result = step.expectedMatching
+                        }
+                    }
+                    if (!result){
+                        result = props.products.reduce((acc,product) => {
+                            acc[product] = "none"
+                            return acc
+                        },{})
+                    }
+                    return result
+                }
+                const lastExpectedMatching = getLastExpectedMatching(steps)
+                setCurrentMatching(lastExpectedMatching)
+            }
+            else {
+                setCurrentMatching(props.products.reduce((acc,product) => {
+                    acc[product] = "none"
+                    return acc
+                },{}))
+            }
             setSelectedProduct(null)
         }
         function onMatching(matchedProduct, matchedToCustomer){
@@ -2721,7 +2735,6 @@ function renderDaAlgoPage() {
             })
         },[matchingMemo])
         React.useEffect(()=>{
-            console.log("matchingCounter",matchingCounter)
             liveSend({
             information_type : "matching_counter_update",
             matching_counter : matchingCounter
@@ -2763,7 +2776,9 @@ function renderDaAlgoPage() {
                     matchingCounter,
                     setMatchingCounter,
                     setMatchingMemo,
-                    matchingMemo
+                    matchingMemo,
+                    setReadyToProceed,
+                    readyToProceed,
                 }}
                     >
                     <Questions />
@@ -2773,9 +2788,8 @@ function renderDaAlgoPage() {
             )
     }
     function Questions(){
-        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter,setMatchingMemo,matchingMemo} = React.useContext(DashboardContext)
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter,setMatchingMemo,matchingMemo,setReadyToProceed,readyToProceed} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
-        const [readyToProceed,setReadyToProceed] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
         function onSubmit(){
             if (readyToProceed || currentStep.type === "instructions"){
@@ -2801,7 +2815,6 @@ function renderDaAlgoPage() {
                     setMatchingCounter(0)
                     setReadyToProceed(true)
                     currentStep.inputRef.current.querySelectorAll("input").forEach(input => {
-                        console.log(input)
                         input.disabled = true
                     })
                 }
@@ -3102,21 +3115,19 @@ function renderDaAlgoPage() {
             <>
             <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem'}}>
                 {/* reset button */}
-                { props.round !== 1 &&
-                    <button
-                        type="button"
-                        className="position-absolute btn btn-outline-dark"
-                        id="reset-button"
-                        style={{ right: '.5rem', top: '.5rem' }}
-                        onClick={props.onReset}
-                     >
-                        reset
-                        <svg className="bi bi-arrow-counterclockwise" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
-                            <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" fillRule="evenodd" />
-                            <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
-                        </svg>
-                    </button>
-                }
+                <button
+                    type="button"
+                    className="position-absolute btn btn-outline-dark"
+                    id="reset-button"
+                    style={{ right: '.5rem', top: '.5rem' }}
+                    onClick={props.onReset}
+                 >
+                    reset
+                    <svg className="bi bi-arrow-counterclockwise" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" fillRule="evenodd" />
+                        <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
+                    </svg>
+                </button>
                 <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline',flexDirection:tableTitlesDircetion}}>
                     <div className="column" style={{flex: '1 2 auto'}}>
                         <b style={{fontSize: "1.5rem"}}>

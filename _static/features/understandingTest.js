@@ -32,8 +32,8 @@ document.querySelector(".otree-btn-next").addEventListener("click", function (e)
             /* check if the checked answer is incorrect */
             const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
             if (checkedElement.value.trim() === expectedResults[checkedElement.name]) {
-                debuggerunderstand_choose_rankings
                 // checked answer is incorrect
+                debugger
                 understanding_bonus_counter += 1;
             }
         }
