@@ -290,5 +290,10 @@ class NullTraining(Page):
         player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
 
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
 
-page_sequence = [NullTraining]
+
+page_sequence = [PreProcess, NullTraining]

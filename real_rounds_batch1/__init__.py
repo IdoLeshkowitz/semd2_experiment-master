@@ -261,6 +261,10 @@ class RoundPage(Page):
         response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.end_time = str(datetime.now(timezone.utc))
+
 
 ########################################################################################################################
 
@@ -369,7 +373,7 @@ def randomize_prize_priorities(prize_values, r_highest=1.7, r_regular=0.999):
 class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        player.end_time = str(datetime.now(timezone.utc))
+        player.start_time = str(datetime.now(timezone.utc))
         if (player.round_number == 1):
             player.prizes_values = str([randomize_prize_values() for i in range(C.NUM_ROUNDS)])
             player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values, i + 1)) for i in range(C.NUM_ROUNDS)])

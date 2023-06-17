@@ -106,4 +106,9 @@ class Understanding_test(Page):
         player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
 
-page_sequence = [Understanding_test]
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
+
+page_sequence = [PreProcess, Understanding_test]

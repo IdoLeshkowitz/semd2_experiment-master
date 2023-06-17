@@ -159,8 +159,12 @@ class Player(BasePlayer):
 
 def convert_participant_index_to_name(index):
     return C.PARTICIPANTS[index]
+
+
 def convert_prize_index_to_name(index):
     return C.PRIZES[index]
+
+
 # PAGES
 class NullIntro(Page):
     form_model = "player"
@@ -168,20 +172,25 @@ class NullIntro(Page):
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES, prizes_priorities=C.PRIZES_PRIORITIES,
-                    players=C.PARTICIPANTS, players_rankings=C.PARTICIPANTS_PRIORITIES)
+        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES, prizes_priorities=C.PRIZES_PRIORITIES, players=C.PARTICIPANTS, players_rankings=C.PARTICIPANTS_PRIORITIES)
 
     def before_next_page(player: Player, timeout_happened):
         print("here")
-        player.participants_priorities = str([{C.PARTICIPANTS[1:][index]:[convert_prize_index_to_name(prize)for prize in participant_priorities]}for index,participant_priorities in enumerate( C.PARTICIPANTS_PRIORITIES)])
-        player.prizes_priorities = str([{C.PRIZES[index]:[convert_participant_index_to_name(participant)for participant in prize_priorities]}for index,prize_priorities in enumerate( C.PRIZES_PRIORITIES)])
-        player.prizes_values = str({prize : round(C.PRIZES_VALUES[index] / 100 ,2)for index,prize in enumerate(C.PRIZES)})
+        player.participants_priorities = str([{C.PARTICIPANTS[1:][index]: [convert_prize_index_to_name(prize) for prize in participant_priorities]} for
+                                              index, participant_priorities in enumerate(C.PARTICIPANTS_PRIORITIES)])
+        player.prizes_priorities = str([{C.PRIZES[index]: [convert_participant_index_to_name(participant) for participant in prize_priorities]} for
+                                        index, prize_priorities in enumerate(C.PRIZES_PRIORITIES)])
+        player.prizes_values = str({prize: round(C.PRIZES_VALUES[index] / 100, 2) for index, prize in enumerate(C.PRIZES)})
         player.end_time = str(datetime.now(timezone.utc))
 
     @staticmethod
     def vars_for_template(player: Player):
-        return {"prize_value_1": C.PRIZES_VALUES[0] / 100, "prize_value_2": C.PRIZES_VALUES[1] / 100,
-                "prize_value_3": C.PRIZES_VALUES[2] / 100, "prize_value_4": C.PRIZES_VALUES[3] / 100}
+        return {
+            "prize_value_1": C.PRIZES_VALUES[0] / 100,
+            "prize_value_2": C.PRIZES_VALUES[1] / 100,
+            "prize_value_3": C.PRIZES_VALUES[2] / 100,
+            "prize_value_4": C.PRIZES_VALUES[3] / 100
+            }
 
     @staticmethod
     def live_method(player: Player, data):
@@ -226,4 +235,11 @@ class NullIntro(Page):
         response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
 
-page_sequence = [NullIntro]
+
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
+
+
+page_sequence = [PreProcess, NullIntro]

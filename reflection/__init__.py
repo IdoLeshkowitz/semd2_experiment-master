@@ -78,4 +78,9 @@ class Reflection(Page):
         player.end_time = str(datetime.now(timezone.utc))
 
 
-page_sequence = [Reflection]
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
+
+page_sequence = [PreProcess,Reflection]

@@ -359,7 +359,11 @@ class EndTraining(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == C.NUM_ROUNDS
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
 
 
 
-page_sequence = [MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]
+page_sequence = [PreProcess,MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]

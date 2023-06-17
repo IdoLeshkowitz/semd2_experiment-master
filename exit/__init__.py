@@ -1,5 +1,5 @@
 from otree.api import *
-
+from datetime import datetime, timezone
 doc = """
 Your app description
 """
@@ -23,6 +23,8 @@ class Player(BasePlayer):
     full_name = models.StringField(label="Full Name:", blank=False)
     email = models.StringField(label="Email Address:", blank=False, )
     total_payment = models.FloatField(initial=0)
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField(blank=True, initial="")
 
 
 def get_understanding_bonus_ratio(understanding_bonus, max_understanding_bonus):
@@ -66,10 +68,16 @@ class EndSurvey(Page):
         player.participant.full_name = player.full_name
         player.participant.email = player.email
         player.total_payment = get_total_payment(get_understanding_bonus_money(get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.max_understanding_bonus)), player.participant.payoff_plus_participation_fee())
+        player.end_time = str(datetime.now(timezone.utc))
 
 
 class ThankYou(Page):
     pass
 
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
 
-page_sequence = [EndSurvey, ThankYou]
+
+page_sequence = [PreProcess,EndSurvey, ThankYou]
