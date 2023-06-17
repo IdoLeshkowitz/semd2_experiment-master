@@ -129,7 +129,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     )
                 },
@@ -166,7 +166,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -305,7 +305,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -340,7 +340,7 @@ function renderDaAlgoPage() {
                         <span>No, there are new conflicts: two (or more) participants are paired to the same prize.</span>,
                         <span>No, some participants are paired to prizes that are not in their highest rank.</span>,
                         <span>Yes, it is fine that two (or more) participants are paired to the same prize because they all get different amounts of money anyway.</span>,
-                        <span>Yes, there are no more conflicts</span>,
+                        <span>Yes, there are no more conflicts.</span>,
                     ]  
                 },
                 {
@@ -350,7 +350,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                Find the next conflict and solve it like before.First, find all prizes that are paired to two (or more) participants. 
+                                Find the next conflict and solve it like before. First, find all prizes that are paired to two (or more) participants. 
                             </p>
                             <ul>
                                 <li>
@@ -393,7 +393,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -403,7 +403,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     expectedAnswerIndex: 0,
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>
@@ -474,7 +474,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ), 
                 },
@@ -483,7 +483,7 @@ function renderDaAlgoPage() {
                     inputRef: React.createRef(null),
                     type: "radio",
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>
@@ -554,7 +554,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),        
                 },
@@ -563,7 +563,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                           <p>
@@ -634,7 +634,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -643,7 +643,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>Correct! There are no more conflicts.</p>
@@ -712,12 +712,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_a",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: "Prize A",
+                    label: (<span>Prize A : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
                             Click on the participant that each prize is allocated to next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>
                     ),
                     correctMsg:(
@@ -746,12 +745,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_b",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: "Prize B",
+                    label: (<span>Prize B : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
                             Click on the participant that each prize is allocated to next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>
                     ),
                     correctMsg:(
@@ -780,12 +778,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_c",
                     type: "dropdown",   
                     inputRef: React.createRef(null),
-                    label: "Prize C",
+                    label: (<span>Prize C : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
                             Click on the participant that each prize is allocated to next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>    
                     ),
                     correctMsg:(
@@ -814,12 +811,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_d",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: "Prize D",
+                    label: (<span>Prize D : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
                             Click on the participant that each prize is allocated to next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>
                     ),
                     correctMsg:(
@@ -955,7 +951,7 @@ function renderDaAlgoPage() {
                     incorrectSkipMsg:(
                         <p>
                             Incorrect allocation.<br/>
-                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                     expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"},
@@ -963,6 +959,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_all",
                     type:"multiDropdown",
+                    dashboardDisabled: true,
                     content:(
                         <>
                             <p>
@@ -1009,6 +1006,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_prize",
                     type:"dropdown",
+                    dashboardDisabled: true,
                     inputRef: React.createRef(),
                     content:(
                        <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
@@ -1087,7 +1085,7 @@ function renderDaAlgoPage() {
                     incorrectSkipMsg:(
                         <p>
                             Incorrect allocation.<br/>
-                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                     expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"},
@@ -1095,6 +1093,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_all",
                     type:"multiDropdown",
+                    dashboardDisabled: true,
                     content:(
                         <>
                             <p>
@@ -1141,6 +1140,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_prize",
                     type:"dropdown",
+                    dashboardDisabled: true,
                     inputRef: React.createRef(),
                     content:(
                        <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
@@ -1219,7 +1219,7 @@ function renderDaAlgoPage() {
                     incorrectSkipMsg:(
                         <p>
                             Incorrect allocation.<br/>
-                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                     expectedMatching:   {'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"},
@@ -1227,6 +1227,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_all",
                     type:"multiDropdown",
+                    dashboardDisabled: true,
                     content:(
                         <>
                             <p>
@@ -1273,6 +1274,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_prize",
                     type:"dropdown",
+                    dashboardDisabled: true,
                     inputRef: React.createRef(),
                     content:(
                        <p>Finally, select <b>the prize that you get</b> based on the allocation.</p>
@@ -1348,8 +1350,8 @@ function renderDaAlgoPage() {
                     content :(
                         <>
                             <p>
-                                On the upper right part of the dashboard below you see a condensed version of the <b>Prize Priorities that you saw before.</b><br/>
-                                Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize.
+                                On the upper right part of the dashboard below you see a condensed version of the <b>Prize Priorities</b> that you saw before.<br/>
+                                Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher that participant’s priority for getting that prize.
                             </p>
                             <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}> 
                                 <p>
@@ -1386,7 +1388,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ol>
                             <p>
-                                Hint: the prize that is highest in Ruth’s ranking is indicated by the letter just under “R” in the Participant Rankings table.
+                                Hint: the participant, except for you, that is highest in Prize A’s priorities, is indicated by the letter just under “A” in the Prize Priorities table.
                             </p>
                             <p>
                                 After pairing, “R” and “A” will be colored purple in the two tables, to indicate that they are paired.
@@ -1415,7 +1417,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     )
                 },
@@ -1456,7 +1458,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -1467,7 +1469,7 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 3,
                     options :[
                         <span>It is determined at random.</span>,
-                        <span>The prize who got paired to Ruth first .</span>,
+                        <span>The prize who got paired to Ruth first.</span>,
                         <span>The prize that Ruth has the highest priority of getting.</span>,
                         <span>The prize highest in Ruth’s ranking.</span>,
                     ],
@@ -1512,7 +1514,7 @@ function renderDaAlgoPage() {
                     inputRef: React.createRef(null),
                     type: "radio",
                     options :[
-                        <span>A random prize that is currently unpaired to any participant.</span>,
+                        <span>A random participant that is currently unpaired to any prize.</span>,
                         <span>Its highest-priority participant, among the participants it was not yet paired with and except for you.</span>,
                         <span>Its highest-priority participant.</span>,
                     ],
@@ -1536,8 +1538,7 @@ function renderDaAlgoPage() {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Each unpaired participant is re-paired to their highest-rank prize among the prizes they were <b>not yet paired with</b>.<br/>
-                            Good job on the first try! This will count for your Understanding Bonus.
+                            Correct! Each unpaired prize is re-paired to its highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you.</b>
                         </p>
                     ),
                     incorrectMsg:(
@@ -1557,8 +1558,7 @@ function renderDaAlgoPage() {
                                 Now, let’s solve the conflict.
                             </p>
                             <p>
-                                According to the Participant Rankings, <b>Ruth</b> ranked <b>Prize A</b> higher than <b>Prize B</b>. Hence, Prize B should get unpaired from <b>Ruth</b> , and then get re-paired to its second highest-priority participant, among all participants <b>except for you</b>. 
-
+                                According to the Participant Rankings, <b>Ruth</b> ranked <b>Prize A</b> higher than <b>Prize B</b>. Hence, Prize B should get unpaired from <b>Ruth</b>, and then get re-paired to its second highest-priority participant, among all participants <b>except for you</b>. 
                             </p>
                             <p>
                                 Perform this using the two steps:
@@ -1602,7 +1602,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -1637,7 +1637,7 @@ function renderDaAlgoPage() {
                         <span>No, there are new conflicts: two (or more) prizes are paired to the same participant.</span>,
                         <span>No, some prizes are paired to participants that are not in their highest priority. </span>,
                         <span>Yes, it is fine that two (or more) prizes are paired to the same participant because they all get different amounts of money anyway.</span>,
-                        <span>Yes, there are no more conflicts</span>,
+                        <span>Yes, there are no more conflicts.</span>,
                     ]  
                 },
                 {
@@ -1647,7 +1647,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
                             </p>
                             <ul>
                                 <li>
@@ -1690,7 +1690,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -1731,7 +1731,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                              <p>
-                                Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
                             </p>
                             <ul>
                                 <li>
@@ -1774,7 +1774,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ), 
                 },
@@ -1783,7 +1783,7 @@ function renderDaAlgoPage() {
                     inputRef: React.createRef(null),
                     type: "radio",
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>
@@ -1813,7 +1813,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                            <p>
-                                Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
                             </p>
                             <ul>
                                 <li>
@@ -1857,7 +1857,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),        
                 },
@@ -1866,7 +1866,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                           <p>
@@ -1896,7 +1896,7 @@ function renderDaAlgoPage() {
                     content : (
                     <>
                         <p>
-                            Find the next conflict and solve it like before.First, find all participants that are paired to two (or more) prizes. 
+                            Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
                         </p>
                         <ul>
                             <li>
@@ -1937,7 +1937,7 @@ function renderDaAlgoPage() {
                     ),
                     incorrectSkipMsg:(
                         <p>
-                            Incorrect answer. We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            Incorrect answer. We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                 },
@@ -1946,7 +1946,7 @@ function renderDaAlgoPage() {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b>? <br/>(Get it right on first try to increase your bonus)</p>
+                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
                     ),
                     correctMsg:(
                         <p>Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.</p>
@@ -1979,14 +1979,14 @@ function renderDaAlgoPage() {
                                 The temporary allocation is the following:
                                 <ul>
                                     <li>Prize A is temporarily allocated to Ruth.</li>
-                                    <li>Prize B is temporarily allocated to You.</li>
-                                    <li>Prize C is temporarily allocated to Shirely.</li>
+                                    <li>Prize B is temporarily allocated to Theresa.</li>
+                                    <li>Prize C is temporarily allocated to Shirley.</li>
                                     <li>Prize D is temporarily left unpaired.</li>
                                 </ul>
                             </p>
                             <p>
                                 All participants <b>except for you</b> are temporarily matched to prizes.<br/> 
-                                What about you? Given the temporary allocation , which prizes can you obtain, in principle? In other words, what are your Obtainable Prizes?<br/>
+                                What about you? Given the temporary allocation, which prizes can you obtain, in principle? In other words, what are your Obtainable Prizes?<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
                         </>
@@ -2019,12 +2019,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_a",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: "Prize A",
+                    label: (<span>Prize A : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>
                     ),
                     correctMsg:(
@@ -2053,12 +2052,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_b",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: "Prize B",
+                    label: (<span>Prize B : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>
                     ),
                     correctMsg:(
@@ -2087,12 +2085,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_c",
                     type: "dropdown",   
                     inputRef: React.createRef(null),
-                    label: "Prize C",
+                    label: (<span>Prize C : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>    
                     ),
                     correctMsg:(
@@ -2121,12 +2118,11 @@ function renderDaAlgoPage() {
                     id: "question_allocation_d",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: "Prize D",
+                    label: (<span>Prize D : <b>(Get it right on first try to increase your bonus)</b></span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
-                            (Get it right on first try to increase your bonus)
                         </p>
                     ),
                     correctMsg:(
@@ -2279,7 +2275,7 @@ function renderDaAlgoPage() {
                     incorrectSkipMsg:(
                         <p>
                             Incorrect temporary allocation.<br/>
-                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                     expectedMatching:   {"A":"Theresa","B":"Shirley","C":"Unpaired","D":"Ruth"},
@@ -2287,6 +2283,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_all",
                     type:"multiDropdown",
+                    dashboardDisabled: true,
                     content:(
                         <>
                             <p>
@@ -2314,7 +2311,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [0,0,1,1],
+                    expectedAnswersIndex: [1,1,0,1],
                     correctMsg:(
                         <p>
                             Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
@@ -2333,6 +2330,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_prize",
                     type:"dropdown",
+                    dashboardDisabled: true,
                     inputRef: React.createRef(),
                     content:(
                        <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
@@ -2411,7 +2409,7 @@ function renderDaAlgoPage() {
                     incorrectSkipMsg:(
                         <p>
                             Incorrect temorary allocation.<br/>
-                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                     expectedMatching:   {"A":"Unpaired","B":"Shirley","C":"Theresa","D":"Ruth"},
@@ -2419,6 +2417,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_all",
                     type:"multiDropdown",
+                    dashboardDisabled: true,
                     content:(
                         <>
                             <p>
@@ -2446,7 +2445,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [1,0,1,1],
+                    expectedAnswersIndex: [1,1,0,0],
                     correctMsg:(
                         <p>
                             Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
@@ -2465,6 +2464,7 @@ function renderDaAlgoPage() {
                 {
                     id: "allocated_prize",
                     type:"dropdown",
+                    dashboardDisabled: true,
                     inputRef: React.createRef(),
                     content:(
                        <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
@@ -2543,7 +2543,7 @@ function renderDaAlgoPage() {
                     incorrectSkipMsg:(
                         <p>
                             Incorrect temporary allocation.<br/>
-                            We set the dashboard correctly for you this time, and you are being automatically directed to the next step. Please make sure you understand your mistake.
+                            We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
                     expectedMatching:   {"A":"Shirley","B":"Unpaired","C":"Ruth","D":"Theresa"},
@@ -2593,6 +2593,7 @@ function renderDaAlgoPage() {
                     incorrectMsg:(
                         <p>Incorrect answer. Please try again.</p>
                     ),
+                    dashboardDisabled: true,
                 },
                 {
                     id: "allocated_prize",
@@ -2620,6 +2621,7 @@ function renderDaAlgoPage() {
                     incorrectMsg:(
                         <p>Incorrect answer. Please try again.</p>
                     ),
+                    dashboardDisabled: true,
                 },
             ],
         }
@@ -2717,7 +2719,7 @@ function renderDaAlgoPage() {
             if (!nextStep){
                 document.querySelector("form").submit()
                 return 
-            }           
+            }         
             setCurrentStepId(nextStep.id)
         }
         React.useEffect(()=>{
@@ -3108,10 +3110,12 @@ function renderDaAlgoPage() {
     }
     function Dashboard(){
         const props = React.useContext(DashboardContext)
-        const tableTitlesDircetion = props.variant === "menu" ? "row-reverse" : "row";
+        const tableTitlesDirection = props.variant === "menu" ? "row-reverse" : "row";
+        const currentStep = props.steps.find(step => step.id === props.currentStepId)
+        const pointerEvents = currentStep.dashboardDisabled ? "none" : "auto"
         return (
             <>
-            <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem'}}>
+                <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem',pointerEvents:pointerEvents}}>
                 {/* reset button */}
                 <button
                     type="button"
@@ -3126,7 +3130,7 @@ function renderDaAlgoPage() {
                         <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
                     </svg>
                 </button>
-                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline',flexDirection:tableTitlesDircetion}}>
+                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
                     <div className="column" style={{flex: '1 2 auto'}}>
                         <b style={{fontSize: "1.5rem"}}>
                             Participant Rankings:
@@ -3138,7 +3142,7 @@ function renderDaAlgoPage() {
                         </b>
                     </div>
                 </div>
-                <div id="tables-row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
+                <div id="" style={{display:'flex',justifyContent:'space-evenly',gap:'2rem',marginTop:'1rem',flexDirection : tableTitlesDirection}}>
                     {/* products table */}
                     <ProductsTable />
                     {/* customers table */}
@@ -3155,7 +3159,7 @@ function renderDaAlgoPage() {
                 <div style={{display:'flex',justifyContent:'center',marginBottom:'0.5rem'}}>
                     Allocation Dashboard
                 </div>
-                </>
+            </>
         )
     }
     function CustomersRow(){
@@ -3226,9 +3230,13 @@ function renderDaAlgoPage() {
                                     <>
                                         <span className={isMatchable() === false && 'text-faded'}>{customer.charAt(0)}</span>
                                         <div
-                                            onMouseEnter={()=>{onMouseEnterCustomer(customer)}}
+                                            onMouseEnter={()=>{
+                                                if (!isMatchable()) return;
+                                                onMouseEnterCustomer(customer)
+                                            }}
                                             onMouseLeave={()=>{onMouseLeaveCustomer(customer)}}
-                                            className="products-row"
+                                            className="products-row" 
+                                            style={{backgroundColor: !isMatchable() && 'var(--very-light-grey)'}}
                                         >
                                         { /* products */ }
                                         {
@@ -3340,7 +3348,7 @@ function renderDaAlgoPage() {
         )
     }
     function CustomersTable() {
-        const {customers,customersPriorities,currentMatching,highlightedCustomer}= React.useContext(DashboardContext)
+        const {customers,customersPriorities,currentMatching,highlightedCustomer,variant}= React.useContext(DashboardContext)
         return(
             <div className="priorities-table-container">
                 {
@@ -3352,7 +3360,7 @@ function renderDaAlgoPage() {
                             if (columnIndex === 0) {
                                 classNames += " verticalRight"
                             }
-                            else if (columnIndex === customers.length - 1) {
+                            else if (columnIndex === Object.keys(customersPriorities).length - 1) {
                                 classNames += " verticalLeft"
                             }
                             else {
@@ -3360,6 +3368,9 @@ function renderDaAlgoPage() {
                             }
                             if (isColumnHighlighted) {
                                 classNames += " highlited"
+                            }
+                            if (variant === "menu" && customer === "You"){
+                                classNames += " text-faded"
                             }
                             return classNames
                         }

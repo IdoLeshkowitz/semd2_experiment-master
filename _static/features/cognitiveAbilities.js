@@ -4,27 +4,31 @@ function renderCognitiveAbilitiesForm() {
         return <div>hello</div>
     }
     function isNumber(string,fieldName) {
-        if ( !isNaN(parseFloat(string)) && isFinite(string)){
+        // Regular expression patterns
+          var numberPattern = /^-?\\d+$/;             // Matches an optional negative sign followed by a sequence of digits
+          var floatPattern = /^-?\\d+(\\.\\d+)?$/; 
+        
+        // Check if the string matches the number or float pattern
+        const isValid = numberPattern.test(string) || floatPattern.test(string);
+        if (isValid){
             return {isValid: true, error: ""};
         }
         return {isValid: false, error: "Please enter a valid number for " + fieldName};
     }        
     function isRoundNumber(str,fieldName) {
-        console.log(str)
-        console.log(isNumber(str))
         if ( isNumber(str).isValid ===  true && str.indexOf('.') === -1){
             return {isValid: true, error: ""};
         }
         return {isValid: false, error: "Please enter a round number for " + fieldName};
     }
     function isPositiveNumber(str,fieldName) {
-        if(isNumber(str) && parseFloat(str) >= 0){
+        if(isNumber(str).isValid && parseFloat(str) >= 0){
             return {isValid: true, error: ""};
         }
         return {isValid: false, error: "Please enter a positive number for " + fieldName.replaceAll("_"," ")};
     }
     function isNumberInRange(str, min, max, fieldName) {
-        if ( isNumber(str) && parseFloat(str) >= min && parseFloat(str) <= max) {
+        if ( isNumber(str).isValid && parseFloat(str) >= min && parseFloat(str) <= max) {
             return {isValid: true, error: ""};
         }
         return {isValid: false, error: "Please enter a number between " + min + " and " + max + " for " + fieldName};

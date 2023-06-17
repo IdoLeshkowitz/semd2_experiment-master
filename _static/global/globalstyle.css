@@ -6,7 +6,6 @@
 .dButton {
     @extend .btn;
     text-align: center;
-    color: black;
     border: none;
     border-radius: .35rem;
     padding: .2rem .75rem;
@@ -17,7 +16,6 @@
 .dButtonTop {
     @extend .btn;
     text-align: center;
-    color: black;
     border-style: solid;
     border-color: transparent;
     border-radius: .35rem;

@@ -1,6 +1,7 @@
 body {
     /*global color */
     --light-grey: #D3D3D3;
+    --very-light-grey: #F5F5F5;
 }
 
 .Box {
@@ -180,7 +181,7 @@ body {
 }
 
 .text-faded {
-    color: var(--light-grey);
+    color: var(--light-grey) !important;
 }
 .flexItemButtonsBackground.highlited {
     background-color: #92c6e5;
