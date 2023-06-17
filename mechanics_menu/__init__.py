@@ -348,6 +348,13 @@ class MechanicsIntro(Page):
         player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
         player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
 
+    @staticmethod
+    def js_vars(player: Player):
+        return {
+            'variant': C.VARIANT
+        }
+
+
 class EndTraining(Page):
     @staticmethod
     def is_displayed(player: Player):

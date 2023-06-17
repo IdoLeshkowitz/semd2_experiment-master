@@ -3504,16 +3504,16 @@ function renderDaAlgoPage() {
                                     <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.
                                 </p>
                                 <p>
-                                    The allocation process is a multi-step process which <b>does not involve your own submitted ranking</b>, as follows:
+                                    The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking, as follows:</b>
                                 </p>
                                 <ol>
                                     <li>
-                                        In the first step, each participant prize is paired to their its <b>highest</b>-rank -priority prize participant, among all participants <b>except for you.</b>
+                                        In the first step, each prize is paired to their its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
                                     </li>
                                     <li>
                                         <p>
                                              In the next step, possible conflicts are detected and solved.<br/>
-                                             If two (or more) participants prizes are paired to the same prize participant, this is a <b>conflict.</b>
+                                             If two (or more) prizes are paired to the same participant, this is a <b>conflict.</b>
                                         </p>
                                         <p>
                                             Each conflict is solved in two steps:
@@ -3529,22 +3529,25 @@ function renderDaAlgoPage() {
                                     </li>
                                     <li>
                                         <p>
-                                            Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                                            Later steps continue in the same way, by detecting and solving new conflicts.
                                             Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b>
                                         </p>
+                                        <p>
+                                            Like before, each conflict is solved in two steps:
+                                        </p>   
                                         <p> 
                                             <ul>
                                                 <li>
                                                      <b>Unpair:</b> only the prize highest in that participant’s ranking remains paired to that participant. The others get unpaired, <b>even if they successfully got paired to that participant in a previous step.</b>
                                                 </li>
                                                 <li>
-                                                    <b>Re-pair:</b> Every unpaired prize gets re-paired to its highest-priority participant, among the participants they <b>were not previously paired with</b> and <b>except for you.</b>
+                                                     <b>Re-pair:</b> Every unpaired prize gets re-paired to its highest-priority participant, among the participants they <b>were not previously paired with</b> and <b>except for you.</b>
                                                 </li>
                                             </ul>
                                         </p>
                                         <p>
                                               There is one <b>exception</b> to the Re-pair step:<br/>
-                                              During the process, one prize will encounter a conflict with <b>every</b> participant, except for you, and will eventually get unpaired from all of them. That prize will <b>remain unpaired</b> at the end of the process.
+                During the process, one prize will encounter a conflict with <b>every</b> participant, except for you, and will eventually get unpaired from all of them. That prize will <b>remain unpaired</b> at the end of the process.
                                         </p>
                                     </li>
                                 </ol>

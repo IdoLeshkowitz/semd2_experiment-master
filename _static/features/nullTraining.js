@@ -581,7 +581,7 @@ function renderUiFromState(step) {
                             {prizesNames.map((prize) => <th>{prize}</th>)}
                         </tr>
                         <tr>
-                        <td>Money Worth</td>
+                        <td>Money worth</td>
                            {prizesNames.map((prize)=>{
                                return <td>{getMoneyString(prizesValues[prize],currency)}</td>
                            })}
