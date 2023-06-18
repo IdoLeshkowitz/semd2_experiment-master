@@ -75,7 +75,7 @@ class Allocator(Page):
         if is_production:
             return {"trajectory_link": C.TRAJECTORIES_LINKS_PROD[player.trajectory]}
         else:
-            return {"trajectory_link": C.TRAJECTORIES_LINKS_DEV[player.trajectory]}
+            return {"trajectory_link": C.TRAJECTORIES_LINKS_PROD[player.trajectory]}
 
 
 page_sequence = [Allocator]
