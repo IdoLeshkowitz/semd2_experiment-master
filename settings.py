@@ -121,7 +121,13 @@ SESSION_CONFIGS=[
         'display_name':"Null Null Short Training",
         'num_demo_participants':1,
         'app_sequence':["trajectory20", "consent_form", "null_intro", "null_training","step_1_null_training_rounds","real_rounds_batch1","step_3_null_description","step_3_null_training_rounds","step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    }, dict(name="allocator", display_name="Treatment Allocator", num_demo_participants=40, app_sequence=["treatment_allocator"])
+    },
+    {
+        "name":"TREATMENT_ALLOCATOR",
+        "display_name":"Treatment Allocator",
+        'num_demo_participants':1,
+        "app_sequence":["treatment_allocator"]
+    }
 ]
 ROOMS =[
     {"name": "trajectory_1", "display_name": "MECH_TRAD_LT"},
@@ -144,7 +150,7 @@ ROOMS =[
     {"name": "trajectory_18", "display_name": "NULL_ST"},
     {"name": "trajectory_19", "display_name": "NULL_NULL_LT"},
     {"name": "trajectory_20", "display_name": "NULL_NULL_ST"},
-    {"name": "treatment_allocator", "display_name": "Treatment Allocator"}
+    {"name": "treatment_allocator", "display_name": "TREATMENT_ALLOCATOR"}
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs
@@ -153,7 +159,7 @@ ROOMS =[
 # e.g. self.session.config['participation_fee']
 
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=16.00, doc="",currency="USD"
+    real_world_currency_per_point=1.00, participation_fee=16.00, doc="",currency="USD",DEBUG=True
 )
 
 PARTICIPANT_FIELDS = [
