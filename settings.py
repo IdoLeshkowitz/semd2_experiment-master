@@ -53,6 +53,7 @@ SESSION_CONFIGS=[
         'name':"MECH_MENU_LT",
         'display_name':"Mechanics Menu Long Training",
         'num_demo_participants':1,
+        'participation_fee': 16,
         'app_sequence':["trajectory9", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
@@ -143,6 +144,7 @@ ROOMS =[
     {"name": "trajectory_18", "display_name": "NULL_ST"},
     {"name": "trajectory_19", "display_name": "NULL_NULL_LT"},
     {"name": "trajectory_20", "display_name": "NULL_NULL_ST"},
+    {"name": "treatment_allocator", "display_name": "Treatment Allocator"}
 ]
 
 # if you set a property in SESSION_CONFIG_DEFAULTS, it will be inherited by all configs

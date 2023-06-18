@@ -2445,7 +2445,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [1,1,0,0],
+                    expectedAnswersIndex: [0,0,1,1],
                     correctMsg:(
                         <p>
                             Correct! The Obtainable Prizes may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
