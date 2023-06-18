@@ -90,7 +90,6 @@ $("#submit-btn").click(function () {
 
     $(this).hide();
     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
-    console.log([playersRankings, prizesPriorities])
     liveSend({
         "preferences": [playersRankings, prizesPriorities], "prizes": prizes, "values": prizesValues
     });

@@ -33,7 +33,7 @@ function renderIntroPage(){
                         <p>
                            The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking,</b> as follows:
                                 <p>
-                                    In the first step, each prize is paired to their its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
+                                    In the first step, each prize is paired to their <b>highest</b>-priority participant, among all participants <b>except for you.</b>
                                 </p>
                         </p>
                     </div>
@@ -129,6 +129,110 @@ function renderIntroPage(){
                 content : (
                     <section id="step-6">
                         <div class="explain">
+                            <p>
+                                On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            }
+        ],
+        "traditional": [
+            {
+                content : (
+                    <section>
+                        <div class="explain">
+                            <p>
+                                You will now learn the full technical details of the allocation process.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                    <div class="explain">
+                        <p>
+                           <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.
+                        </p>
+                        <p>
+                            The allocation process is a multi-step process, as follows:
+                                <p>
+                                In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                                </p>
+                        </p>
+                    </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                    <div class="explain">
+                        <p>
+                                In the next step, possible conflicts are detected and solved.<br/>
+                                If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                                Each conflict is solved in two steps:
+                                    <ul>
+                                        <li>
+                                           <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                        </li>
+                                        <li>
+                                            <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                        </li>
+                                    </ul>
+                        </p>
+                    </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                         <div class="explain">
+                           <p>
+                                        Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                                        Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                                        Like before, each conflict is solved in two steps:
+                                        <ul>
+                                            <li>
+                                                <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired, <b>even if they successfully got paired to that prize in a previous step</b>.
+                                            </li>
+                                            <li>
+                                                <b>Re-pair</b>: Every unpaired participant gets re-paired to their highest-rank prize among the prizes they <b>were not previously paired with</b>.
+                                            </li>
+                                        </ul>
+                            </p>
+                           
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div class="explain">
+                            <p>
+                                When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
+                            </p>
+                            <p>
+                                Each prize is then allocated to the participant paired to it.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                         <div class="explain">
                             <p>
                                 On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
                             </p>

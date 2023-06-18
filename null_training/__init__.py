@@ -31,7 +31,7 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return {"A": 0.37, "B": 0.57, "C": 0.12, "D": 0.7}
+    return [{"A": 0.37, "B": 0.57, "C": 0.12, "D": 0.6},{"A": 0.28, "B": 0.56, "C": 0.05, "D": 0.42}]
 
 
 def generate_priorities(first_group, second_group):
@@ -162,7 +162,7 @@ class C(BaseConstants):
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
     UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [4, 1]
     PRIZES = ["A", "B", "C", "D"]
-    PRIZES_VALUES = [generate_prizes_values() for _ in range(NUM_ROUNDS)]
+    PRIZES_VALUES = generate_prizes_values()
     PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PARTICIPANTS, NUM_ROUNDS)
     PARTICIPANTS_PRIORITIES = generate_priorities_list(PARTICIPANTS[1:], PRIZES, NUM_ROUNDS)  # for all participants except the player "You"
     QUESTIONS_ANSWERS = {"independence": "False", "value_table": "False", "self_rank_independence": "False", "competitors_rank_independence": "False"}
