@@ -3131,23 +3131,23 @@ function renderDaAlgoPage() {
                         <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />
                     </svg>
                 </button>
-                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline'}}>
-                    <div className="column" style={{flex: '1 2 auto'}}>
-                        <b style={{fontSize: "1.5rem"}}>
-                            Participant Rankings:
-                        </b>
-                    </div>
+                <div className="row" style={{justifyContent: 'space-between',flexWrap: 'nowrap',alignItems: 'baseline',flexDirection:tableTitlesDirection}}>
                     <div className="column" style={{flex: '1 2 auto'}}>
                         <b style={{fontSize: "1.5rem"}}>
                             Prize Priorities:
                         </b>
                     </div>
+                    <div className="column" style={{flex: '1 2 auto'}}>
+                        <b style={{fontSize: "1.5rem"}}>
+                            Participant Rankings:
+                        </b>
+                    </div>
                 </div>
-                <div id="" style={{display:'flex',justifyContent:'space-evenly',gap:'2rem',marginTop:'1rem',flexDirection : tableTitlesDirection}}>
-                    {/* products table */}
-                    <ProductsTable />
+                <div id="" style={{display:'flex',justifyContent:'space-evenly',gap:'2rem',marginTop:'1rem'}}>
                     {/* customers table */}
                     <CustomersTable />
+                    {/* products table */}
+                    <ProductsTable />
                 </div>
                 <hr/>
                 {/* middle row */}
@@ -3520,7 +3520,7 @@ function renderDaAlgoPage() {
                                 </p>
                                 <ol>
                                     <li>
-                                        In the first step, each prize is paired to their its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
+                                        In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
                                     </li>
                                     <li>
                                         <p>
@@ -3534,7 +3534,7 @@ function renderDaAlgoPage() {
                                                     <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
                                                 </li>
                                                 <li>
-                                                    <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
+                                                    <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants it <b>was not yet paired with</b> and <b>except for you.</b>
                                                 </li>
                                             </ul>
                                         </p>

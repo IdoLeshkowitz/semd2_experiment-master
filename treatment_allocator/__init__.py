@@ -13,8 +13,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'treatment_allocator'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    TRAJECTORIES_LINKS_DEV = {"trajectory_1": "http://localhost:8000/room/trajectory_1", "trajectory_9": "http://localhost:8000/room/trajectory_9",}
-    TRAJECTORIES_LINKS_PROD = {"trajectory_1": "https://semd.herokuapp.com/room/trajectory_1", "trajectory_9": "https://semd.herokuapp.com/room/trajectory_9",}
+    TRAJECTORIES_LINKS = {"trajectory_1": "trajectory_1", "trajectory_9": "trajectory_9"}
 
 
 class Subsession(BaseSubsession):
@@ -73,9 +72,11 @@ class Allocator(Page):
     def js_vars(player: Player):
         is_production = os.environ.get("OTREE_PRODUCTION") == "TRUE"
         if is_production:
-            return {"trajectory_link": C.TRAJECTORIES_LINKS_PROD[player.trajectory]}
+            base_url = os.environ.get("BASE_URL")
+            url = f"{base_url}/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
         else:
-            return {"trajectory_link": C.TRAJECTORIES_LINKS_PROD[player.trajectory]}
+            url =f"http://localhost:8000/room/{C.TRAJECTORIES_LINKS[player.trajectory]}"
+        return {"trajectory_link": url}
 
 
 page_sequence = [Allocator]
