@@ -21,6 +21,12 @@ function renderCognitiveAbilitiesForm() {
         }
         return {isValid: false, error: "Please enter a round number for " + fieldName};
     }
+    function isLessThan(str, max, fieldName) {
+        if ( isNumber(str).isValid && parseFloat(str) <= max) {
+            return {isValid: true, error: ""};
+        }
+        return {isValid: false, error: "Please enter a number less than " + max + " for " + fieldName};
+    }
     function isPositiveNumber(str,fieldName) {
         if(isNumber(str).isValid && parseFloat(str) >= 0){
             return {isValid: true, error: ""};
@@ -115,8 +121,8 @@ function renderCognitiveAbilitiesForm() {
                                 if (!result.isValid) {
                                     error = result.error;
                                 }
-                            }
-                            if (field.min && field.max) {
+                            }                           
+                            if (field.min !== undefined && field.max !== undefined) {
                                 const result = isNumberInRange(value, field.min, field.max, form[key].units);
                                 if (!result.isValid) {
                                     error = result.error;

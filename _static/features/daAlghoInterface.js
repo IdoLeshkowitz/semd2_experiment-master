@@ -1538,7 +1538,8 @@ function renderDaAlgoPage() {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Each unpaired prize is re-paired to its highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you.</b>
+                            Correct! Each unpaired prize is re-paired to its highest-priority participant, among the participants it was <b>not yet paired with</b> and <b>except for you.</b><br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
                     incorrectMsg:(
