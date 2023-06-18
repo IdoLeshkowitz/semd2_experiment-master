@@ -71,7 +71,7 @@ class Player(BasePlayer):
 class Allocator(Page):
     @staticmethod
     def js_vars(player: Player):
-        is_production = os.environ.get("OTREE_PRODUCTION") == True
+        is_production = os.environ.get("OTREE_PRODUCTION") == "TRUE"
         if is_production:
             return {"trajectory_link": C.TRAJECTORIES_LINKS_PROD[player.trajectory]}
         else:
