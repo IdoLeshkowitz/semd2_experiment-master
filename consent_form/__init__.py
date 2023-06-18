@@ -1,5 +1,5 @@
 from otree.api import *
-
+from datetime import datetime, timezone
 
 doc = """
 Your app description
@@ -21,20 +21,17 @@ class Group(BaseGroup):
 
 
 class Player(BasePlayer):
-    consent = models.BooleanField(
-        label = "Confirmation:",
-        choices = [
-            [True, "Yes, I agree to participate in the study"],
-            [False, "No, I do not agree to participate in the study"]
-        ]
-    )
-
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField(blank=True, initial="")
+    consent = models.BooleanField(label="Confirmation:", choices=[[True, "Yes, I agree to participate in the study"],
+        [False, "No, I do not agree to participate in the study"]])
 
 
 # PAGES
 class ConsentForm(Page):
     form_model = "player"
     form_fields = ["consent"]
+
     @staticmethod
     def app_after_this_page(player: Player, upcoming_apps):
         if player.consent == False:
@@ -43,9 +40,13 @@ class ConsentForm(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.consent = player.consent
+        player.end_time = str(datetime.now(timezone.utc))
 
 
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
 
 
-
-page_sequence = [ConsentForm]
+page_sequence = [PreProcess, ConsentForm]

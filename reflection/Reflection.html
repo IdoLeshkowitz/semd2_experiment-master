@@ -1,6 +1,6 @@
 {{ block scripts }}
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-<script src="{{ static 'global/reflection.js'}}"></script>
+<script src="{{ static 'features/reflection.js'}}"></script>
 {{ endblock}}
 
 {{ block title }}
@@ -147,20 +147,20 @@ btn.btn-default:hover {
     </div>
     
     <div class="slider-container">
-        <p>How well do you think you now understand How to <b>best choose</b> your own ranking</p>
+        <p>How well do you think you now understand how to <b>best choose</b> your own ranking</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
-            <input type="range" min="1" max="7" value="1" name="understand_choose_ranking" id="understand_choose_ranking">
+            <input type="range" min="1" max="7" value="1" name="understand_choose_rankings" id="understand_choose_rankings">
             <span> I understand very well</span>
         </div>
-        <span id="understand_choose_ranking_indicator"></span>
+        <span id="understand_choose_rankings_indicator"></span>
         {{ formfield_errors 'understand_choose_rankings' }}
         <p id="understand_choose_ranking_error"></p>
     </div>
     <hr/>
     
     <div class="slider-container">
-        <p>How well do you think you now understand The <b>key principle</b> of the allocation process</p>
+        <p>How well do you think you now understand the <b>key principle</b> of the allocation process</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
             <input type="range" min="1" max="7" value="1" name="understand_principle" id="understand_principle">
@@ -173,7 +173,7 @@ btn.btn-default:hover {
     <hr/>
     
     <div class="slider-container">
-        <p>How well do you think you now understand How the allocation process <b>works</b></p>
+        <p>How well do you think you now understand how the allocation process <b>works</b></p>
         <div class="slider-row">
             <span> I do not understand at all</span>
             <input type="range" min="1" max="7" value="1" name="understand_allocation" id="understand_allocation">

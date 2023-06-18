@@ -6,7 +6,6 @@
 .dButton {
     @extend .btn;
     text-align: center;
-    color: black;
     border: none;
     border-radius: .35rem;
     padding: .2rem .75rem;
@@ -17,7 +16,6 @@
 .dButtonTop {
     @extend .btn;
     text-align: center;
-    color: black;
     border-style: solid;
     border-color: transparent;
     border-radius: .35rem;
@@ -45,7 +43,27 @@
     padding: .375rem .75rem;
     font-size: 25px;
     line-height: .7;
+    aspect-ratio: 1/1;
+}
+.purple{
     background-color: #ae85ed;
+}
+.dark-purple{
+    color: white;
+    border-style: solid;
+    border-color: palevioletred;
+    background-color: blueviolet;
+}
+.red{
+    color: palevioletred;
+    border-style: solid;
+    border-color: palevioletred;
+    background-color: transparent;
+}
+.iButton-container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .iButton:hover {
     background-color: blueviolet;
@@ -74,12 +92,12 @@
     color: palevioletred;
     border-style: solid;
     border-color: palevioletred;
+    background-color: transparent;
     border-radius: .7rem;
     padding: .375rem .75rem;
     aspect-ratio: 1/1;
     font-size: 25px;
     line-height: 0.7;
-    background-color: transparent;
 }
 .pButton:hover {
     background-color: palevioletred;

@@ -4,6 +4,10 @@
     You are being redirected.
 {{ endblock }}
 {{ block scripts }}
-    <script src="{{ static 'global/allocator.js' }}"></script>
+    <script>
+        const link = js_vars.trajectory_link
+        console.log(link)
+        window.location.href = link
+    </script>
 {{ endblock }}
 

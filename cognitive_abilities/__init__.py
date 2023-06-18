@@ -1,5 +1,5 @@
 from otree.api import *
-
+from datetime import datetime, timezone
 
 doc = """
 Your app description
@@ -40,12 +40,24 @@ class Player(BasePlayer):
               "are men. What is the probability that a randomly drawn man is a member of the choir?",
         min=0
     )
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField(blank=True)
 
 
 # PAGES
-class MyPage(Page):
+class CognitiveAbilities(Page):
     form_model = "player"
     form_fields = ["bat_and_ball", "machines", "lily_pads", "choir"]
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.end_time = str(datetime.now(timezone.utc))
 
-page_sequence = [MyPage]
+
+class PreProcess(Page):
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
+
+
+page_sequence = [PreProcess,CognitiveAbilities]

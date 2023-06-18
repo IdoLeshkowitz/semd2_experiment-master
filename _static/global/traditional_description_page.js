@@ -5,6 +5,12 @@ function liveRecv(data) {
     $("#round-results").slideDown();
 }
 
+$("#proceed-step-1_a-btn").click(function () {
+    $(this).hide();
+    $("#step-1_a").slideDown();
+    button = document.getElementById('proceed-step-2-btn');
+    button.scrollIntoView(true);
+});
 $("#proceed-step-2-btn").click(function () {
     $(this).hide();
     $("#step-2").slideDown();
@@ -162,6 +168,7 @@ var prizesPriorities = js_vars.prizes_priorities;
 var otherPlayersRankings = js_vars.players_rankings;
 
 $("#step-2").hide();
+$("#step-1_a").hide();
 $("#step-3").hide();
 $("#step-4").hide();
 $("#step-5").hide();

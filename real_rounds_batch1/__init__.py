@@ -1,6 +1,7 @@
 from otree.api import *
 import time, random
 import numpy
+from datetime import datetime, timezone
 
 doc = """
 Your app description
@@ -152,7 +153,7 @@ def da(preferences):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'step_2_rounds'
+    NAME_IN_URL = 'real_rounds_batch1'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 20  # change to 20 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
@@ -180,14 +181,22 @@ class Player(BasePlayer):
     prizes_priorities = models.StringField(initial="")
     other_participants_rankings = models.StringField(initial="")
 
+    start_time = models.StringField(initial=str(datetime.now(timezone.utc)))
+    end_time = models.StringField(blank=True)
 
 
 def get_prizes_in_round(prizes_by_round_str, round_number):
     return eval(prizes_by_round_str)[round_number - 1]
+
+
 def get_prizes_priorities_in_round(prizes_priorities_by_round_str, round_number):
     return eval(prizes_priorities_by_round_str)[round_number - 1]
+
+
 def get_players_rankings_in_round(players_rankings_by_round_str, round_number):
     return eval(players_rankings_by_round_str)[round_number - 1]
+
+
 # PAGES
 class RoundPage(Page):
     form_model = "player"
@@ -196,11 +205,11 @@ class RoundPage(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
-            "prizes": C.PRIZES,
-            "prizes_values": get_prizes_in_round(player.prizes_values, player.round_number),
+            "prizes":            C.PRIZES,
+            "prizes_values":     get_prizes_in_round(player.prizes_values, player.round_number),
             "prizes_priorities": get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
-            "players": C.PLAYERS,
-            "players_rankings": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
+            "players":           C.PLAYERS,
+            "players_rankings":  get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
         }
 
     @staticmethod
@@ -210,7 +219,7 @@ class RoundPage(Page):
             "second_prize": get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[1],
             "third_prize":  get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[2],
             "fourth_prize": get_prizes_in_round(player.in_round(1).prizes_values, player.round_number)[3]
-            }
+        }
 
     @staticmethod
     def live_method(player: Player, data):
@@ -251,6 +260,10 @@ class RoundPage(Page):
         player.payoff += payoff
         response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
         return {0: response}
+
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.end_time = str(datetime.now(timezone.utc))
 
 
 ########################################################################################################################
@@ -322,18 +335,24 @@ def randomize_permutation(r, kind):
         perm.insert(you_pos, index_you)
 
     return perm
-def randomize_others_rankings(prize_values,r=0.5):
+
+
+def randomize_others_rankings(prize_values, r=0.5):
     """
     returns a list of the three rankings of the other participants, where the prize order affects the ranking distribution
     """
     return [[get_prizes_dict(prize_values)[i] for i in randomize_permutation(r, kind='ranking')] for _ in range(3)]
+
+
 def get_prizes_dict(prize_values):
     """
     Translates index 0 to the index of the highest-earning prize, index 1 to the second highest, and so on.
     """
     import numpy as np
-    index_list = (-1*np.array(prize_values)).argsort().tolist()
-    return {i:j for i,j in zip([0,1,2,3],index_list)}
+    index_list = (-1 * np.array(prize_values)).argsort().tolist()
+    return {i: j for i, j in zip([0, 1, 2, 3], index_list)}
+
+
 def randomize_prize_priorities(prize_values, r_highest=1.7, r_regular=0.999):
     """
     returns a list of 4 prize priorities, where the highest-prize priorities are randomized differently than the other prizes' priorities
@@ -350,14 +369,16 @@ def randomize_prize_priorities(prize_values, r_highest=1.7, r_regular=0.999):
         all_prize_priorities[index] = randomize_permutation(r_regular, kind='priorities')
     return all_prize_priorities
 
+
 class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
+        player.start_time = str(datetime.now(timezone.utc))
         if (player.round_number == 1):
             player.prizes_values = str([randomize_prize_values() for i in range(C.NUM_ROUNDS)])
-            player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values, i+1 )) for i in range(C.NUM_ROUNDS)])
-            player.other_participants_rankings = str([randomize_others_rankings(get_prizes_in_round(player.prizes_values, i+1 )) for i in range(C.NUM_ROUNDS)])
-        else :
+            player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values, i + 1)) for i in range(C.NUM_ROUNDS)])
+            player.other_participants_rankings = str([randomize_others_rankings(get_prizes_in_round(player.prizes_values, i + 1)) for i in range(C.NUM_ROUNDS)])
+        else:
             player.prizes_values = player.in_round(1).prizes_values
             player.prizes_priorities = player.in_round(1).prizes_priorities
             player.other_participants_rankings = player.in_round(1).other_participants_rankings

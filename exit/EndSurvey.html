@@ -11,13 +11,13 @@
         <p>
         Your total earnings are as follows:
             <ol>
-                <li>For completing the entire study, you earn <b>{{ 9 | cu }}</b>.</li>
+                <li>For completing the entire study, you earn <b>{{ total_payoff }}</b>.</li>
                 <li>The earnings you accumulated in game rounds are <b class="money-amount">{{ player.participant.payoff }}</b>.</li>
                 <li>{{ player.participant.understanding_bonus }} out of {{ player.participant.max_understanding_bonus }} questions ({{ understanding_bonus_ratio }}%) count for your Understanding Bonus. Hence, out of the full Understanding Bonus of {{ 4 | cu }}, you get <span class="money-amount" style="font-weight: bold;">{{ understanding_bonus_money | cu  }}</span>.</li>
             </ol>
         </p>
         <div style="display: flex; justify-content: center;">
-        <p>Well done! Your total earnings are <b class="money-amount">{{ total_payment }}</b>.</p><br/>
+        <p>Well done! Your total earnings are <b class="money-amount">{{ total_payment | cu }}</b>.</p><br/>
         </div>
         <p>To confirm that you completed the study and to receive your earnings, please enter your full name and email.</p>
 <!--        full name input-->
