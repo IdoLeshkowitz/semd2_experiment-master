@@ -51,9 +51,6 @@ function RenderRoundPage() {
             if (step?.type === 'rankingForm'){
                 return "Submit Ranking"
             } 
-            if (step === steps.at(-1)){
-                return "Next"
-            }
             return "Proceed"
         }
         function getButtonClassName(){
@@ -473,7 +470,7 @@ function renderAllocationResults(prizeName, prizeValue) {
                 <b>You get Prize {props.prizeName}</b>, and your total earnings increase by <b>{moneyString}</b>.
             </p>
             <div class="btn-container">
-                <button type="button" ref={buttonRef} className="btn btn-primary" onClick={()=>{buttonRef.current.display = "none"}}>Proceed</button>
+                <button type="button" ref={buttonRef} className="btn btn-primary" onClick={()=>{buttonRef.current.display = "none"}}>Next</button>
             </div>
         </>
         )
