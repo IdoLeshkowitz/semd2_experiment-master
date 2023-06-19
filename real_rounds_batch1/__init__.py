@@ -173,16 +173,18 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # Player's ranking variables
-    first_priority = make_priority_field("First:")
-    second_priority = make_priority_field("Second:")
-    third_priority = make_priority_field("Third:")
-    fourth_priority = make_priority_field("Fourth:")
+    first_priority = models.StringField(initial="", blank=True)
+    second_priority = models.StringField(initial="", blank=True)
+    third_priority = models.StringField(initial="", blank=True)
+    fourth_priority = models.StringField(initial="", blank=True)
     prizes_values = models.StringField(initial="")
     prizes_priorities = models.StringField(initial="")
     other_participants_rankings = models.StringField(initial="")
 
     start_time = models.StringField(initial=str(datetime.now(timezone.utc)))
     end_time = models.StringField(blank=True)
+
+    __runtime__active_step_id = models.StringField(blank=True, initial="")
 
 
 def get_prizes_in_round(prizes_by_round_str, round_number):
@@ -205,11 +207,12 @@ class RoundPage(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
-            "prizes":            C.PRIZES,
-            "prizes_values":     get_prizes_in_round(player.prizes_values, player.round_number),
-            "prizes_priorities": get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
-            "players":           C.PLAYERS,
-            "players_rankings":  get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
+            "prizes":                 C.PRIZES,
+            "prizesValues":           get_prizes_in_round(player.prizes_values, player.round_number),
+            "prizesPriorities":       get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
+            "players":                C.PLAYERS,
+            "participantsPriorities": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
+            "currency":               player.session.config["currency"],
         }
 
     @staticmethod

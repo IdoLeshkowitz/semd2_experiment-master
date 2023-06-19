@@ -1,5 +1,8 @@
-function renderIntroPage(){
-    const jsxCode =`
+let state ={};
+window.addEventListener('load', renderIntroPage)
+
+function renderIntroPage() {
+    const jsxCode = `
         function Stam(){
             return <div></div>
         }
@@ -246,7 +249,6 @@ function renderIntroPage(){
                 const latestStepRef = latestStep.ref.current
                 latestStepRef?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
             },[activeSteps])
-            console.log(ranking)
             return (
                 <CurrencyContext.Provider value={props.currency}>
                     <>
@@ -301,10 +303,15 @@ function renderIntroPage(){
                                         </>
                                     )
                                 }
+                                if (step.type === 'allocationResults'){
+                                    return <AllocationResults />
+                                }
                                 return null
                             })
                         }
-                        <section id="allocation-results" style={activeSteps.at(-1).type !== "allocationResults" ? {display:  "none"}:{}}></section>
+                        {   activeSteps.find((step)=>{return step.type === "allocationResults"}) === undefined &&
+                            <AllocationResults hidden={true} />
+                        }
                         { (activeSteps.at(-1).type === "instructions" || activeSteps.at(-1).type === "prizesTable" || activeSteps.at(-1).type === "prizePrioritiesTable" || activeSteps.at(-1).type === "allocationResults") &&  
                             <div className="btn-container">
                                 <button type="button" className="btn btn-primary" onClick={onNext}>{activeSteps.at(-1) === steps.at(-1) ? "Proceed to training rounds":"Proceed"}</button>
@@ -313,6 +320,13 @@ function renderIntroPage(){
                     </>
                 </CurrencyContext.Provider>
             )
+        }
+        function AllocationResults(props){
+            React.useEffect(() => {
+                renderAllocationResults()
+            })
+            const display = props.hidden ? "none" : ""
+            return <section id="allocation-results" style={{display,marginLeft : "2rem"}}></section>
         }
         function AllocationLoader(props){
             React.useEffect(() => {
@@ -532,45 +546,18 @@ function renderIntroPage(){
             )
         } 
     `
-    function getPropsFormJsVars(){
+
+    function getPropsFormJsVars() {
         console.log(js_vars)
         return {
             ...js_vars
         }
     }
 
-    renderReactComponent(jsxCode, 'react-root', 'IntroPage',JSON.stringify(getPropsFormJsVars()))
+    renderReactComponent(jsxCode, 'react-root', 'IntroPage', JSON.stringify(getPropsFormJsVars()))
 }
 
-
-
-window.addEventListener('load', renderIntroPage)
-// $("#submit-btn").click(function () {
-//     $("#step-11 .incorrect-msg").hide();
-//
-//     var humanPlayerRanking = [parseInt(forminputs.first_priority.value) - 1, parseInt(forminputs.second_priority.value) - 1, parseInt(forminputs.third_priority.value) - 1, parseInt(forminputs.fourth_priority.value) - 1]
-//
-//     var unique = humanPlayerRanking.filter((value, index, array) => array.indexOf(value) === index);
-//     if (unique.length < 4) {
-//         $("#step-11 .incorrect-msg").show();
-//         return;
-//     }
-//     /* disbale inout element */
-//     $("#id_player_bid_text").prop('disabled', true);
-//
-//     $(this).hide();
-//
-//     var playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
-//
-//     liveSend({
-//         "preferences": [playersRankings, prizesPriorities], "prizes": prizes, "values": prizesValues
-//     });
-//
-//     $("#step-12").slideDown();
-//     button = document.getElementById('proceed-step-13-btn');
-//     button.scrollIntoView(true);
-// });
-function renderAllocationResults(prizeName, prizeValue) {
+function renderAllocationResults(prizeName = state.prize, prizeValue = state.value) {
     const jsxCode = `
     function Stam(){
         return <div></div>  
@@ -617,7 +604,9 @@ function renderAllocationResults(prizeName, prizeValue) {
     const props = {prizeName, prizeValue, ...js_vars};
     renderReactComponent(jsxCode, "allocation-results", "AllocationResults", JSON.stringify(props))
 }
-function liveRecv(data){
-    console.log(data)
+
+function liveRecv(data) {
+    state.prize = data["prize"];
+    state.value = data["value"];
     renderAllocationResults(data["prize"], data["value"]);
 }
