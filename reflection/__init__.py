@@ -43,7 +43,7 @@ class Player(BasePlayer):
     #     choices=[1, 2, 3, 4, 5, 6, 7],
     #     widget=widgets.RadioSelect,
     # )
-    understand_choose_rankings = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, blank=True, )
+    understand_choose_rankings = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
     understand_principle = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
     understand_allocation = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
     how_easy_ranking = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
