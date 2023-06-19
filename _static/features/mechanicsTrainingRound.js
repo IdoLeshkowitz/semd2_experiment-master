@@ -142,6 +142,20 @@ function renderPage() {
                                                     setRanking(ranking);
                                                     step.buttonRef.current.disabled = false;
                                                 }}
+                                                onEnter={(ranking)=>{
+                                                    const expectedRanking = props.participantsPriorities["You"];
+                                                    const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
+                                                    debugger
+                                                    if (!isCorrect){
+                                                        setRanking(null);
+                                                        step.buttonRef.current.disabled = true;
+                                                        return
+                                                    }
+                                                    setRanking(ranking);
+                                                    step.inputRef.current.disabled = true;
+                                                    step.buttonRef.current.disabled = false;
+                                                    onClick();
+                                                }}
                                                 />
                                             { index === activeStepsIds.length-1 && 
                                                 <Button 
@@ -374,6 +388,7 @@ function renderPage() {
     }   
     function RankingForm(props){
             const [inputValue,setInputValue] = React.useState("");
+            const [upperCaseInputValue,setUpperCaseInputValue] = React.useState("");
             function removeEnDash(str) {
                 return str.replace(/–/g, '');
             }
@@ -408,6 +423,7 @@ function renderPage() {
             }
             function onInput(e){
                 const uppercasedCleanedInput = removeEnDash(e.target.value).toUpperCase();
+                setUpperCaseInputValue(uppercasedCleanedInput);
                 const isValid = validateInput(uppercasedCleanedInput);
                 if (isValid === false)return;
                 setInputValue(addEnDash(uppercasedCleanedInput));
@@ -420,6 +436,12 @@ function renderPage() {
                             className="form-control fw-bold fs-5 mt-2 mb-3 "
                             value={inputValue}
                             onInput={onInput}
+                            onKeyDown={(e)=>{
+                                if(e.key === "Enter"){
+                                    e.preventDefault();
+                                    props.onEnter(upperCaseInputValue.split(''));
+                                }
+                            }}
                             ref = {props.inputRef}
                     />
                 </div>

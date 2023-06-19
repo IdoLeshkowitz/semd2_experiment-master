@@ -61,6 +61,11 @@
                 third_priority_element.value = replaceCharWithNumericValue(uppercasedCleanedInput[2]);
                 fourth_priority_element.value = replaceCharWithNumericValue(uppercasedCleanedInput[3]);
             });
+              rankingInputElement.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                }
+              })
         };
     </script>
 </head>

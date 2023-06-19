@@ -390,7 +390,7 @@ function renderUiFromState(step) {
                                 <h4>Step 2: Submit Your Ranking</h4>
                                 <button className="button-2" id="GenBtn3" type="button" onClick={()=>{setRankingModal(true)}}>Click for a reminder on what this ranking means</button><br/>
                                 <p>Please rank the four prizes in an order of your choice.</p>
-                                <RankingForm refs={rankingFormRefs}/>
+                                <RankingForm refs={rankingFormRefs} onEnter={onClick}/>
                                 { shownSteps.at(-1).id === "ranking_form" &&
                                     <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
                                 }
@@ -498,6 +498,10 @@ function renderUiFromState(step) {
                 return undefined
             }
             function onInput(e){
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    props.onEnter();
+                }
                 const uppercasedCleanedInput = removeEnDash(e.target.value).toUpperCase();
                 const isValid = validateInput(uppercasedCleanedInput);
                 if (isValid === false)return;

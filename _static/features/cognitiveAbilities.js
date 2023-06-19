@@ -51,7 +51,6 @@ function renderCognitiveAbilitiesForm() {
             "machines":{
                 value: "",
                 error: "",
-                isRoundNumber: true,
                 isPositiveNumber: true,
                 label : <label>If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?</label>,
                 units : 'minutes'
@@ -59,7 +58,6 @@ function renderCognitiveAbilitiesForm() {
             "lily_pads":{
                 value: "",
                 error: "",
-                isRoundNumber: true,
                 isPositiveNumber: true,
                 label:<label>In a lake, there is a patch of lily pads.<br/>Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake?</label>,
                 units : 'days'
