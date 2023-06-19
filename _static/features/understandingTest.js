@@ -1,16 +1,17 @@
 const expectedResults = {
-    "first_situation_a": "Definitely False",
-    "first_situation_b": "Definitely False",
-    "first_situation_c": "Possibly True",
-    "first_situation_d": "Definitely False",
-    "second_situation_a": "Definitely False",
-    "second_situation_b": "Definitely False",
-    "second_situation_c": "Possibly True",
-    "second_situation_d": "Possibly True",
-    "third_situation_a": "Definitely False",
-    "third_situation_b": "Definitely False",
-    "third_situation_c": "Possibly True",
-    "third_situation_d": "Definitely False",
+    "first_situation_a": "False",
+    "first_situation_b": "False",
+    "first_situation_c": "True",
+    "first_situation_d": "False",
+    "second_situation_a": "False",
+    "second_situation_b": "False",
+    "second_situation_c": "True",
+    "second_situation_d": "True",
+    "maximize_earnings_a": "False",
+    "maximize_earnings_b": "True",
+    "maximize_earnings_c": "True",
+    "maximize_earnings_d": "False",
+    "maximize_earnings_e": "False",
 }
 const errorMessages = "Please select an answer";
 document.querySelector(".otree-btn-next").addEventListener("click", function (e) {
@@ -33,8 +34,12 @@ document.querySelector(".otree-btn-next").addEventListener("click", function (e)
             const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
             if (checkedElement.value.trim() === expectedResults[checkedElement.name]) {
                 // checked answer is incorrect
-                debugger
-                understanding_bonus_counter += 1;
+                const isMaximizeEarnings = checkedElement.name.startsWith("maximize_earnings")
+                if (isMaximizeEarnings) {
+                    understanding_bonus_counter += 2;
+                } else {
+                    understanding_bonus_counter += 1;
+                }
             }
         }
     })
@@ -61,10 +66,11 @@ function getAllRadioElementsGroups() {
     const second_situation_b_radios = document.querySelectorAll('[name = "second_situation_b"]')
     const second_situation_c_radios = document.querySelectorAll('[name = "second_situation_c"]')
     const second_situation_d_radios = document.querySelectorAll('[name = "second_situation_d"]')
-    const third_situation_a_radios = document.querySelectorAll('[name = "third_situation_a"]')
-    const third_situation_b_radios = document.querySelectorAll('[name = "third_situation_b"]')
-    const third_situation_c_radios = document.querySelectorAll('[name = "third_situation_c"]')
-    const third_situation_d_radios = document.querySelectorAll('[name = "third_situation_d"]')
+    const maximize_earnings_a_radios = document.querySelectorAll('[name = "maximize_earnings_a"]')
+    const maximize_earnings_b_radios = document.querySelectorAll('[name = "maximize_earnings_b"]')
+    const maximize_earnings_c_radios = document.querySelectorAll('[name = "maximize_earnings_c"]')
+    const maximize_earnings_d_radios = document.querySelectorAll('[name = "maximize_earnings_d"]')
+    const maximize_earnings_e_radios = document.querySelectorAll('[name = "maximize_earnings_e"]')
     return [
         first_situation_a_radios,
         first_situation_b_radios,
@@ -74,10 +80,11 @@ function getAllRadioElementsGroups() {
         second_situation_b_radios,
         second_situation_c_radios,
         second_situation_d_radios,
-        third_situation_a_radios,
-        third_situation_b_radios,
-        third_situation_c_radios,
-        third_situation_d_radios,
+        maximize_earnings_a_radios,
+        maximize_earnings_b_radios,
+        maximize_earnings_c_radios,
+        maximize_earnings_d_radios,
+        maximize_earnings_e_radios,
     ]
 }
 
@@ -90,10 +97,11 @@ function getAllErrors() {
     const second_situation_b_error = document.querySelector("#second_situation_b_error")
     const second_situation_c_error = document.querySelector("#second_situation_c_error")
     const second_situation_d_error = document.querySelector("#second_situation_d_error")
-    const third_situation_a_error = document.querySelector("#third_situation_a_error")
-    const third_situation_b_error = document.querySelector("#third_situation_b_error")
-    const third_situation_c_error = document.querySelector("#third_situation_c_error")
-    const third_situation_d_error = document.querySelector("#third_situation_d_error")
+    const maximize_earnings_a_error = document.querySelector("#maximize_earnings_a_error")
+    const maximize_earnings_b_error = document.querySelector("#maximize_earnings_b_error")
+    const maximize_earnings_c_error = document.querySelector("#maximize_earnings_c_error")
+    const maximize_earnings_d_error = document.querySelector("#maximize_earnings_d_error")
+    const maximize_earnings_e_error = document.querySelector("#maximize_earnings_e_error")
     return [
         first_situation_a_error,
         first_situation_b_error,
@@ -103,9 +111,10 @@ function getAllErrors() {
         second_situation_b_error,
         second_situation_c_error,
         second_situation_d_error,
-        third_situation_a_error,
-        third_situation_b_error,
-        third_situation_c_error,
-        third_situation_d_error,
+        maximize_earnings_a_error,
+        maximize_earnings_b_error,
+        maximize_earnings_c_error,
+        maximize_earnings_d_error,
+        maximize_earnings_e_error,
     ]
 }
