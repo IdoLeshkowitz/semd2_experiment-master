@@ -44,7 +44,7 @@ class Player(BasePlayer):
         label= "How many people who live in this household are 18 or older?", min=1, blank=True
     )
     birth_year = models.IntegerField(
-        label= "What is your year of birth, select a year between 1900 and 2005.", choices=range(1900, 2005), blank=True
+        label= "What is your year of birth, select a year between 1900 and 2005.", choices=range(1900, 2006), blank=True
     )
     gender = models.StringField(
         label="What is your gender?",
