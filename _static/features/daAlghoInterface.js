@@ -39,7 +39,7 @@ function renderDaAlgoPage() {
                                 Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher the priority of that participant at that prize.
                             </p>
                             <p>
-                             <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}>
+                             <Accordion title={<span><b>For example: ... </b>(click here to expand)</span>}>
                                 <p>
                                     The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority for getting that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority.
                                 </p>
@@ -59,7 +59,7 @@ function renderDaAlgoPage() {
                             <p>
                                 Each letter under a participant's initial indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
                             </p>
-                            <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}> 
+                            <Accordion title={<span><b>For example: ... </b>(click here to expand)</span>}> 
                                 <p>
                                     The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest).
                                 </p>
@@ -930,7 +930,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
-                                (Get it right on first try to increase your bonus; it will count as <b>5 question</b>.<br/>
+                                (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
                                 If you only get it right on the second try it will still count for your bonus; it will count as <b>2 questions</b>.)
                             </p>
                         </>
@@ -1064,7 +1064,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
-                                (Get it right on first try to increase your bonus; it will count as <b>5 question</b>.<br/>
+                                (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
                                 If you only get it right on the second try it will still count for your bonus; it will count as <b>2 questions</b>.)
                             </p>
                         </>
@@ -1198,7 +1198,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
-                                (Get it right on first try to increase your bonus; it will count as <b>5 question</b>.<br/>
+                                (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
                                 If you only get it right on the second try it will still count for your bonus; it will count as <b>2 questions</b>.)
                             </p>
                         </>
@@ -1339,7 +1339,7 @@ function renderDaAlgoPage() {
                                 Each letter under a participant' initial indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
                             </p>
                             <p>
-                             <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}>
+                             <Accordion title={<span><b>For example: ... </b>(click here to expand)</span>}>
                                 <p>
                                     The column under the letter <b>“R”</b> indicates the ranking submitted by the computerized participant Ruth. She ranked Prize A <b>(“A”)</b> first (highest), Prize C <b>(“C”)</b> second, Prize D <b>(“D”)</b> third, and Prize B <b>(“B”)</b> fourth (lowest).<br/>
                                 </p>
@@ -1360,7 +1360,7 @@ function renderDaAlgoPage() {
                                 On the upper right part of the dashboard below you see a condensed version of the <b>Prize Priorities</b> that you saw before.<br/>
                                 Each letter under a prize name indicates one of the four participants. The higher it is placed in the column, the higher that participant’s priority for getting that prize.
                             </p>
-                            <Accordion title={<span><b>For example:...</b>(click here to expand)</span>}> 
+                            <Accordion title={<span><b>For example: ... </b>(click here to expand)</span>}> 
                                 <p>
                                     The column under the letter <b>“A”</b> indicates the priorities of Prize A. Ruth <b>(“R”)</b> has the first (highest) priority for getting that prize, Shirley <b>(“S”)</b> has the second priority, Theresa <b>(“T”)</b> has the third priority, and you <b>(“Y”)</b> have the fourth (lowest) priority.
                                 </p>
@@ -1717,7 +1717,7 @@ function renderDaAlgoPage() {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants..<br/>
+                            Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2259,7 +2259,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
-                                (Get it right on first try to increase your bonus; it will count as <b>5 question</b>.<br/>
+                                (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
                                 If you only get it right on the second try it will still count for your bonus; it will count as <b>2 questions</b>.)
                             </p>
                         </>
@@ -2402,7 +2402,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
-                                (Get it right on first try to increase your bonus; it will count as <b>5 question</b>.<br/>
+                                (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
                                 If you only get it right on the second try it will still count for your bonus; it will count as <b>2 questions</b>.)
                             </p>
                         </>
@@ -2546,7 +2546,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
-                                (Get it right on first try to increase your bonus; it will count as <b>5 question</b>.<br/>
+                                (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
                                 If you only get it right on the second try it will still count for your bonus; it will count as <b>2 questions</b>.)
                             </p>
                         </>
@@ -2678,7 +2678,8 @@ function renderDaAlgoPage() {
         const [currentStepId,setCurrentStepId] = React.useState(props.currentStepId || steps[0].id)      
         const [selectedProduct,setSelectedProduct] = React.useState(null)
         const [matchingCounter,setMatchingCounter] = React.useState(props.matchingCounter)
-        const [readyToProceed,setReadyToProceed] = React.useState(false)
+        const currentStep = steps.find(step => step.id === currentStepId)
+        const [readyToProceed,setReadyToProceed] = React.useState(currentStep.type === "instructions")
         const [highlightedCustomer,setHighlightedCustomer] = React.useState(null)
         const [matchingMemo,setMatchingMemo] = React.useState(props.matchingMemo)
         function onMouseEnterCustomer(customer){
@@ -2761,6 +2762,12 @@ function renderDaAlgoPage() {
                 document.querySelector("form").submit()
                 return 
             }         
+            if (nextStep.type !== "matching"){
+                window.scrollTo(0,0)
+            }
+            if (nextStep.type === "instructions"){
+                setReadyToProceed(true)
+            }
             setCurrentStepId(nextStep.id)
         }
         React.useEffect(()=>{
@@ -2789,7 +2796,7 @@ function renderDaAlgoPage() {
         },[currentStepId])
         return (
                 <>
-                <button type="button" className="button-2" onClick={()=>setModals({allocation:true})}>Click for a reminder on the technical details of the allocation process</button>
+                <button type="button" className="button-2" onClick={()=>setModals({allocation:true})}>Click for a reminder on the technical details of the allocation process</button><br/>
                 {modals.allocation && <AllocationModal onClose={()=>setModals({allocation:false})} variant={props.variant} />}
                 <DashboardContext.Provider 
                 value={{
@@ -2822,7 +2829,7 @@ function renderDaAlgoPage() {
                     readyToProceed,
                 }}
                     >
-                    <Questions />
+                    <Questions/>
                     <Dashboard />
                 </DashboardContext.Provider>
                 </>
@@ -2831,11 +2838,13 @@ function renderDaAlgoPage() {
     function Questions(){
         const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter,setMatchingMemo,matchingMemo,setReadyToProceed,readyToProceed} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
+        const [didTouch,setDidTouch] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
         function onSubmit(){
             if (readyToProceed || currentStep.type === "instructions"){
                 setMessage(null)
                 setReadyToProceed(false)
+                setDidTouch(false)
                 onProceed()
                 return 
             }
@@ -3015,6 +3024,7 @@ function renderDaAlgoPage() {
                 })
             }
         }
+        const questionsSectionRef = React.useRef()
         React.useEffect(()=>{
             if (!readyToProceed) return ;
             const currentStepIndex = steps.findIndex(step => step.id === currentStepId)
@@ -3028,8 +3038,13 @@ function renderDaAlgoPage() {
                 step_id : nextStepId
             })
         },[readyToProceed])
+        function isButtonDisabled(){
+            if (readyToProceed) return false ;
+            if (currentStep.type === "matching" ) return false;
+            return !didTouch
+        }
         return (
-            <section>
+            <section ref={questionsSectionRef}>
             {currentStep.content}
             {
                 currentStep.type === "radio" &&
@@ -3038,7 +3053,7 @@ function renderDaAlgoPage() {
                         currentStep.options.map((option,index) => {
                             return (
                                 <div style={{display:'flex',gap:'0.5rem',alignItems:'baseline'}} key={index}>
-                                    <input type="radio" id={currentStepId+"_option_"+index} name={currentStepId} value={index} />
+                                    <input type="radio" id={currentStepId+"_option_"+index} name={currentStepId} value={index} onChange={()=>{setDidTouch(true)}} />
                                     <label htmlFor={currentStepId+"_option_"+index}>{option}</label>
                                 </div>
                             )
@@ -3050,7 +3065,7 @@ function renderDaAlgoPage() {
                 currentStep.type === "dropdown" &&
                     <div ref={currentStep.inputRef} style={{display:'flex',flexDirection:'column',gap:'0.5rem'}} id={currentStepId} key={currentStepId}>
                         <label htmlFor={currentStepId+'-dropdown'}>{currentStep.label}</label>
-                        <select className="custom-select" id={currentStepId+'-dropdown'}>
+                        <select className="custom-select" id={currentStepId+'-dropdown'} onChange={()=>{setDidTouch(true)}}>
                             <option value={-1} selected key={currentStepId+"-1"}></option>
                             {
                                 currentStep.options.map((option,index) => {
@@ -3070,7 +3085,7 @@ function renderDaAlgoPage() {
                             return (
                                 <div ref={currentStep.inputsRefs[index]} style={{display:'flex',flexDirection:'column',gap:'0.5rem'}}>
                                     <label htmlFor={currentStepId+'-dropdown'+index}>{label}</label>
-                                    <select className="custom-select" id={currentStepId+'-dropdown'+index}>
+                                    <select className="custom-select" id={currentStepId+'-dropdown'+index} onChange={()=>{setDidTouch(true)}}>
                                     <option value={-1} selected></option>
                                     {
                                         currentStep.options.map((option,index) => {
@@ -3088,7 +3103,7 @@ function renderDaAlgoPage() {
             }     
             {! readyToProceed && 
                 <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>
-                    <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}}>
+                    <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}} disabled={isButtonDisabled()}>
                         {currentStep.type === "instructions" ? "Proceed"  :  readyToProceed ? "Proceed" : "Submit"}
                     </button>
                 </div>
@@ -3125,7 +3140,7 @@ function renderDaAlgoPage() {
             }
             {readyToProceed && 
                 <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>
-                    <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}}>
+                    <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}} disabled={isButtonDisabled()}>
                         {currentStep.type === "instructions" ? "Proceed"  :  readyToProceed ? "Proceed" : "Submit"}
                     </button>
                 </div>
@@ -3165,7 +3180,7 @@ function renderDaAlgoPage() {
                     style={{ right: '.5rem', top: '.5rem' }}
                     onClick={props.onReset}
                  >
-                    reset
+                    reset&nbsp;
                     <svg className="bi bi-arrow-counterclockwise" fill="currentColor" height="16" viewBox="0 0 16 16" width="16" xmlns="http://www.w3.org/2000/svg">
                         <path d="M8 3a5 5 0 1 1-4.546 2.914.5.5 0 0 0-.908-.417A6 6 0 1 0 8 2v1z" fillRule="evenodd" />
                         <path d="M8 4.466V.534a.25.25 0 0 0-.41-.192L5.23 2.308a.25.25 0 0 0 0 .384l2.36 1.966A.25.25 0 0 0 8 4.466z" />

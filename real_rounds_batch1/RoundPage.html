@@ -9,10 +9,6 @@ Round {{ player.round_number }}/20
     <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
     <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 {{ endblock }}
-{{ block content }}
-    <div id="react-root"></div>
-{{ endblock }}
-
 {{ block scripts }}
     <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'util/getMoneyString.js'}}"></script>
@@ -23,3 +19,7 @@ Round {{ player.round_number }}/20
     <script src="{{ static 'util/renderReactComponent.js' }}"></script>
     <script src="{{ static 'features/realRound.js' }}"></script>
 {{ endblock }}
+{{ block content }}
+    <div id="react-root"></div>
+{{ endblock }}
+

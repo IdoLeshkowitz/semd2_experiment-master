@@ -34,12 +34,7 @@ document.querySelector(".otree-btn-next").addEventListener("click", function (e)
             const checkedElement = Array(...radioElementsGroup).find(radioElement => radioElement.checked)
             if (checkedElement.value.trim() === expectedResults[checkedElement.name]) {
                 // checked answer is incorrect
-                const isMaximizeEarnings = checkedElement.name.startsWith("maximize_earnings")
-                if (isMaximizeEarnings) {
-                    understanding_bonus_counter += 2;
-                } else {
-                    understanding_bonus_counter += 1;
-                }
+                understanding_bonus_counter += 2;
             }
         }
     })

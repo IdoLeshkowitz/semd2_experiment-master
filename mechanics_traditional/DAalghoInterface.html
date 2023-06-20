@@ -1,25 +1,21 @@
-{{ block scripts }}
-    <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
-    <script src="{{ static 'util/renderReactComponent.js' }}"></script>
-    <script src="{{ static 'features/daAlghoInterface.js' }}"></script>
-    <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-{{ endblock }}
-
-{{ block styles }}
-    <link href="{{ static 'global/globalstyle.css' }}" rel="stylesheet">
-    <link href="{{ static 'global/DAalghoInterface.css' }}" rel="stylesheet">
-{{ endblock }}
-
 {{ block title }}
-    {{ include "components/bonus_indicator.html" }}How the Allocation Process Works: Training Round {{player.round_number}}/{{ C.NUM_ROUNDS }}
+How the Allocation Process Works: Training Round {{player.round_number}}/{{ C.NUM_ROUNDS }}
 {{ endblock }}
-
+{{ block styles }}
+<link href="{{ static 'global/globalstyle.css' }}" rel="stylesheet">
+<link href="{{ static 'global/DAalghoInterface.css' }}" rel="stylesheet">
+{{ endblock }}
+{{ block scripts }}
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="{{ static 'util/renderReactComponent.js' }}"></script>
+<script src="{{ static 'features/daAlghoInterface.js' }}"></script>
+<script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+{{ endblock }}
 {{ block content }}
-    {% load index %}
-    <div id="react-root"/>
-    <p style="display: flex; justify-content: center">Allocation Dashboard</p>
+<div id="react-root"/>
+<p style="display: flex; justify-content: center">Allocation Dashboard</p>
 {{ endblock }}
 
 

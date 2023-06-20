@@ -15,8 +15,7 @@
 {{ endblock }}
 
 {{ block title }}
-    {{ include "components/bonus_indicator.html" }}
-    Training Round {{ player.round_number }}/2
+    Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}
 {{ endblock }}
 
 {{ block content }}

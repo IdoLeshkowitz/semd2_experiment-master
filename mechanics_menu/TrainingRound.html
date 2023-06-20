@@ -1,13 +1,10 @@
-{{ block title }}{{ include "components/bonus_indicator.html" }}How the Allocation Process Works: Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}{{ endblock }}
-
+{{ block title }}
+How the Allocation Process Works: Training Round {{ player.round_number }}/{{ C.NUM_ROUNDS }}
+{{ endblock }}
 {{ block styles}}
     <link href="{{ static 'global/styles.css' }}" rel="stylesheet">
-    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f5aad88875.js"></script> <!-- Font Awesome -->{{ endblock }}
-
-{{ block content }}
-<div id="react-root"></div>
+    <script crossorigin="anonymous" src="https://kit.fontawesome.com/f5aad88875.js"></script> <!-- Font Awesome -->
 {{ endblock }}
-
 {{ block scripts }}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.1.1/redux.min.js"></script>
 <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
@@ -17,4 +14,7 @@
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
 <script src="{{ static 'util/renderReactComponent.js'}}"></script>
 <script src="{{ static 'features/mechanicsTrainingRound.js' }}"></script>
+{{ endblock }}
+{{ block content }}
+<div id="react-root"></div>
 {{ endblock }}

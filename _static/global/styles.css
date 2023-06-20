@@ -1,6 +1,6 @@
 .explain {
     padding: 2rem 1rem 1rem;
-    margin: 1rem 2rem;
+    margin: 1rem 1rem 2rem 0rem;
     border-radius: 25px;
     background-color: #ABD9FF;
     font-style: italic;
@@ -96,6 +96,7 @@ table {
     user-select: none;
     -webkit-user-select: none;
     touch-action: manipulation;
+    margin-bottom: .5rem;
 }
 
 .indent {

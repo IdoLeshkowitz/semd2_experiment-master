@@ -31,7 +31,7 @@ class Player(BasePlayer):
                  "Ohio", "Oklahoma", "Oregon", "Pennsylvania", "Rhode Island", "South Carolina", "South Dakota",
                  "Tennessee",
                  "Texas", "Utah", "Vermont", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming",
-                 "Washington, D.C.", "Puerto rico"],
+                 "Washington, D.C.", "Puerto Rico"],
         blank=True
     )
     zip_code = models.IntegerField(
@@ -44,7 +44,7 @@ class Player(BasePlayer):
         label= "How many people who live in this household are 18 or older?", min=1, blank=True
     )
     birth_year = models.IntegerField(
-        label= "What is your year of birth, select a year between 1900 and 2005.", choices=range(1900, 2006), blank=True
+        label= "What is your year of birth?", choices=range(1900, 2006), blank=True
     )
     gender = models.StringField(
         label="What is your gender?",

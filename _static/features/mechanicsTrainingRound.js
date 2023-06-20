@@ -4,7 +4,6 @@ function renderPage() {
     function MechanicsTrainingRound(props){
         const [modals,setModals]= React.useState({prizes:false,ranking:false,study:false,priorities:false});
         const [ranking,setRanking] = React.useState(null);
-        const [allocationTimer,setAllocationTimer] = React.useState(null);
         const [activeStepsIds,setActiveStepsIds] = React.useState(props.activeSteps ?? [props.steps[0]]);
         const steps = [
             {
@@ -145,7 +144,6 @@ function renderPage() {
                                                 onEnter={(ranking)=>{
                                                     const expectedRanking = props.participantsPriorities["You"];
                                                     const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
-                                                    debugger
                                                     if (!isCorrect){
                                                         setRanking(null);
                                                         step.buttonRef.current.disabled = true;
@@ -203,31 +201,16 @@ function renderPage() {
         )
     }
     function AllocationResults(props){
-        const [showLoader,setShowLoader] = React.useState(true);
-        React.useEffect(()=>{
-            setTimeout(()=>{
-                setShowLoader(false);
-            },2000)
-        },[])
         return (
              <>
                 <h4>Step 3: Allocation Process</h4>
-                { showLoader &&
-                    <div id="load">
-                        <p>
-                            Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
-                        </p>
-                    </div>
-                }
-                { !showLoader &&
-                    <div id="round-results">
+                <div id="round-results">
                         <p>
                         You are going to perform the allocation process by yourself, according to what you learned.<br/>
                             Click on the button below to start.
                         </p>
                         <Button onClick={props.onClick} text="Proceed"/>
-                    </div>
-                }
+            </div>
             </>
         )
     }

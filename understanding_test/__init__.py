@@ -10,7 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'understanding_test'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    UNDERSTANDING_BONUS_LIMIT = 18
+    UNDERSTANDING_BONUS_LIMIT = 26
 
 
 class Subsession(BaseSubsession):

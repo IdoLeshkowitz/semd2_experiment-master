@@ -11,8 +11,8 @@ const steps = [
     {id: 'end', type: 'end'},
 ]
 const stepsDividedToRounds = [
-    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence',"end"],
-    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results',"end"],
+    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"],
+    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"],
 ]
 window.addEventListener("load", () => {
     renderUiFromState();
@@ -29,6 +29,7 @@ function renderUiFromState(step) {
             const [prizesModal, setPrizesModal] = React.useState(false);
             const [studyModal, setStudyModal] = React.useState(false);
             const [rankingModal, setRankingModal] = React.useState(false);
+            const [ranking, setRanking] = React.useState(null);
             const [shownSteps, setShownSteps] = React.useState([initialStep])
             const latestStep = shownSteps.at(-1);
             const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions");
@@ -390,9 +391,9 @@ function renderUiFromState(step) {
                                 <h4>Step 2: Submit Your Ranking</h4>
                                 <button className="button-2" id="GenBtn3" type="button" onClick={()=>{setRankingModal(true)}}>Click for a reminder on what this ranking means</button><br/>
                                 <p>Please rank the four prizes in an order of your choice.</p>
-                                <RankingForm refs={rankingFormRefs} onEnter={onClick}/>
+                                <RankingForm refs={rankingFormRefs} onEnter={onClick} setRanking={setRanking}/>
                                 { shownSteps.at(-1).id === "ranking_form" &&
-                                    <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
+                                    <Button className="btn btn-danger" onClick={onClick} text="Submit Ranking" disabled={!(ranking && ranking.length === 4)}/>
                                 }
                                 <div className="incorrect-msg hidden" ref={rankingFormRefs.error_message}>
                                     <p>You submitted an invalid ranking. Please resubmit.</p>
@@ -506,6 +507,7 @@ function renderUiFromState(step) {
                 const isValid = validateInput(uppercasedCleanedInput);
                 if (isValid === false)return;
                 setInputValue(addEnDash(uppercasedCleanedInput));
+                props.setRanking(uppercasedCleanedInput);
                 props.refs.first_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[0]);
                 props.refs.second_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[1]);
                 props.refs.third_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[2]);
@@ -527,7 +529,7 @@ function renderUiFromState(step) {
             const {onClick,text ,className} = props;
             return (
                 <div class="btn-container">
-                    <button className={"btn btn-primary "+className} onClick={onClick}>{text ?? "Proceed"}</button>
+                    <button className={"btn btn-primary "+className} onClick={onClick} disabled={props.disabled || false}>{text ?? "Proceed"}</button>
                 </div>
             )
         }
