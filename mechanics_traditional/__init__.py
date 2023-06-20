@@ -200,6 +200,7 @@ class TrainingRound(Page):
             else :
                 return 1
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 
 class DAalghoInterface(Page):
@@ -330,6 +331,7 @@ class DAalghoInterface(Page):
             else :
                 return 7
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 class MechanicsIntro(Page):
     @staticmethod

@@ -36,7 +36,7 @@ class PassVars(Page):
         player.participant.full_training = True
         player.full_training = player.participant.full_training
         player.participant.understanding_bonus = 0
-        player.participant.max_understanding_bonus = 59
+        player.participant.understanding_bonus_limit = 0
 
 
 page_sequence = [PassVars]

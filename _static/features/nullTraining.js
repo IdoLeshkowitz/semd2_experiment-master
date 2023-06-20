@@ -275,7 +275,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
-                                    If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
+                                    If I rank some prize very <b>low</b> and get it, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b> and get it, I may earn <b>more</b> than its money worth.<br/>
                                     (Get it right on first try to increase your bonus)
                                 </p>
                                 <p ref={questionsRefs.independence.input}>
@@ -357,7 +357,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.self_rank_independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
-                                    If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize might <b>increase</b>.<br/>
+                                    If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize (in the table above) might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize (in the table above) might <b>increase</b>.<br/>
                                     (Get it right on first try to increase your bonus)
                                 </p>
                                 <p ref={questionsRefs.self_rank_independence.input}>
@@ -727,7 +727,7 @@ function renderAllocationResults(prizeName, prizeValue) {
                     <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
                 }
                 { props.roundNumber !== 1 &&
-                   <span> Since this is a training round, it will count for your Understanding Bonus.</span>
+                   <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
                 }
             </p>
             <div className="btn-container">

@@ -9,10 +9,8 @@ Your app description
 class Subsession(BaseSubsession):
     pass
 
-
 class Group(BaseGroup):
     pass
-
 
 def get_customers_priorities_by_round(round):
     first_round_priorities = {
@@ -22,7 +20,7 @@ def get_customers_priorities_by_round(round):
         "D": ["You", "Theresa", "Shirley", "Ruth"]
     }
     second_round_priorities = {
-        "A": ["Theresa", "You", "Shirley", "Ruth"],
+        "A": ["Theresa", "You", "Ruth", "Shirley"],
         "B": ["Shirley", "Theresa", "You", "Ruth"],
         "C": ["Shirley", "You", "Ruth", "Theresa"],
         "D": ["Theresa", "Ruth", "You", "Shirley"]
@@ -206,6 +204,7 @@ class TrainingRound(Page):
             else :
                 return 1
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 
 class DAalghoInterface(Page):
@@ -336,6 +335,7 @@ class DAalghoInterface(Page):
             else :
                 return 7
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 class MechanicsIntro(Page):
     @staticmethod

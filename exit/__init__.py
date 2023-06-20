@@ -48,7 +48,7 @@ class EndSurvey(Page):
     @staticmethod
     def vars_for_template(player: Player):
         total_payoff = player.participant.payoff_plus_participation_fee()
-        understanding_bonus_ratio = get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.max_understanding_bonus)
+        understanding_bonus_ratio = get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.understanding_bonus_limit)
         understanding_bonus_money = get_understanding_bonus_money(understanding_bonus_ratio)
         total_payment = get_total_payment(understanding_bonus_money, total_payoff)
         return {
@@ -67,7 +67,7 @@ class EndSurvey(Page):
     def before_next_page(player: Player, timeout_happened):
         player.participant.full_name = player.full_name
         player.participant.email = player.email
-        player.total_payment = get_total_payment(get_understanding_bonus_money(get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.max_understanding_bonus)), player.participant.payoff_plus_participation_fee())
+        player.total_payment = get_total_payment(get_understanding_bonus_money(get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.understanding_bonus_limit)), player.participant.payoff_plus_participation_fee())
         player.end_time = str(datetime.now(timezone.utc))
 
 

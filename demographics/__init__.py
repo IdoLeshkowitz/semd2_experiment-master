@@ -75,6 +75,29 @@ class Player(BasePlayer):
         widget=widgets.RadioSelect,
         blank=True
     )
+    deferred_acceptance = models.StringField(
+        label="How would you describe your knowledge of the Deferred Acceptance (DA) matching mechanism, also known as the Gale-Shapley mechanism? Please mark all the boxes that apply:",
+        choices=[
+            "I have never heard of it",
+            "I heard of it but I don’t know/remember what it is",
+            "I only vaguely know what it intends to do",
+            "I know some details about the mechanism",
+            "I am pretty familiar with it and understand reasonably well its principles and/or how it works",
+            "I know it so well that I could easily explain its principles and/or how it works"
+        ],
+        widget=widgets.RadioSelect,
+        blank=True
+    )
+    have_participated = models.StringField(
+        label="Have you ever participated, or are you soon going to participate, in a real-life implementation of the Deferred Acceptance (or Gale-Shapley) mechanism?",
+        choices=[
+            "No",
+            "Yes, I have",
+            "Yes, I am going to"
+        ],
+        widget=widgets.RadioSelect,
+        blank=True
+    )
     marital_stat = models.StringField(
         label="What is your current marital status?",
         choices=["Married", "Widowed", "Separated", "Divorced", "Single", "Living with a significant other"],
@@ -83,7 +106,7 @@ class Player(BasePlayer):
     )
     employment = models.StringField(
         label="Which of the following best describes your main activity or your employment status?",
-        choices=["Working (other than your work at Prolific)", "Unemployed", "Retired", "Stay-at-home parent",
+        choices=["Working", "Unemployed", "Retired", "Stay-at-home parent",
                  "Student", "Other"],
         widget=widgets.RadioSelect,
         blank=True
@@ -134,7 +157,7 @@ class Player(BasePlayer):
 class Demographics(Page):
     form_model = "player"
     form_fields = ["state", "zip_code", "household_size", "household_over18", "birth_year", "gender", "race",
-                   "educ_lvl", "educ_prime", "marital_stat","employment", "social_views", "economic_views", "party",
+                   "educ_lvl", "educ_prime","deferred_acceptance","have_participated", "marital_stat","employment", "social_views", "economic_views", "party",
                    "election_2020", "income", "unclear"]
 
     @staticmethod

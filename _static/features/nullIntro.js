@@ -35,7 +35,7 @@ function renderIntroPage() {
                                 while taking into account the rankings of all participants.
                             </p>
                             <p>
-                                You will learn about the game and allocation process while playing a round of the game.
+                                You will now learn about the game and allocation process while playing a training round of the game.
                                 The text in blue bubbles, such as this text, provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
                             </p>
                         </div>
@@ -158,7 +158,7 @@ function renderIntroPage() {
                             </p>
                             <p>
                                 Please type your ranking of the four prizes in an order of your choice in the box below.<br/>
-                                For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D.”
+                                For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D,” and then click “Submit Ranking.”
                             </p>
                         </div>
                     </>

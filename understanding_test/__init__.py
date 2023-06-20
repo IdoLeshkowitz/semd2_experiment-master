@@ -110,6 +110,8 @@ class Understanding_test(Page):
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
+        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 class PreProcess(Page):
     @staticmethod
