@@ -35,7 +35,7 @@ function renderIntroPage() {
                                 while taking into account the rankings of all participants.
                             </p>
                             <p>
-                                You will learn about the game and allocation process while playing a round of the game.
+                                You will now learn about the game and allocation process while playing a training round of the game.
                                 The text in blue bubbles, such as this text, provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
                             </p>
                         </div>
@@ -158,7 +158,7 @@ function renderIntroPage() {
                             </p>
                             <p>
                                 Please type your ranking of the four prizes in an order of your choice in the box below.<br/>
-                                For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D.”
+                                For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D,” and then click “Submit Ranking.”
                             </p>
                         </div>
                     </>
@@ -326,7 +326,7 @@ function renderIntroPage() {
                 renderAllocationResults()
             })
             const display = props.hidden ? "none" : ""
-            return <section id="allocation-results" style={{display,marginLeft : "2rem"}}></section>
+            return <section id="allocation-results" style={{display}}></section>
         }
         function AllocationLoader(props){
             React.useEffect(() => {
@@ -584,18 +584,11 @@ function renderAllocationResults(prizeName = state.prize, prizeValue = state.val
     function AllocationResults(props){
     const moneyString = getMoneyString((props.prizeValue/100).toFixed(2), props.currency);
     const buttonRef = React.useRef(null);
-    console.log(props)
         return (
         <>
              <p>
                 <b>You get Prize {props.prizeName}</b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
-                { props.roundNumber === 1 &&
-                    <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
-                }
-                { props.roundNumber !== 1 &&
-                   <span> Since this is a training round, it will count for your Understanding Bonus.</span>
-                }
             </p>
         </>
         )

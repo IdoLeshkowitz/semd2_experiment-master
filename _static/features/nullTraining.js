@@ -11,8 +11,8 @@ const steps = [
     {id: 'end', type: 'end'},
 ]
 const stepsDividedToRounds = [
-    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence',"end"],
-    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results',"end"],
+    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"],
+    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"],
 ]
 window.addEventListener("load", () => {
     renderUiFromState();
@@ -29,6 +29,7 @@ function renderUiFromState(step) {
             const [prizesModal, setPrizesModal] = React.useState(false);
             const [studyModal, setStudyModal] = React.useState(false);
             const [rankingModal, setRankingModal] = React.useState(false);
+            const [ranking, setRanking] = React.useState(null);
             const [shownSteps, setShownSteps] = React.useState([initialStep])
             const latestStep = shownSteps.at(-1);
             const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions");
@@ -275,7 +276,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
-                                    If I rank some prize very <b>low</b>, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b>, I may earn <b>more</b> than its money worth.<br/>
+                                    If I rank some prize very <b>low</b> and get it, I may earn <b>less</b> than its money worth, shown in the table above. If I rank some prize very <b>high</b> and get it, I may earn <b>more</b> than its money worth.<br/>
                                     (Get it right on first try to increase your bonus)
                                 </p>
                                 <p ref={questionsRefs.independence.input}>
@@ -357,7 +358,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.self_rank_independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
                                 <p>
-                                    If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize might <b>increase</b>.<br/>
+                                    If I place a prize very <b>low</b> in my ranking, then my priority for getting that prize (in the table above) might <b>decrease</b>. If I place a prize very <b>high</b> in my ranking, then my priority for getting that prize (in the table above) might <b>increase</b>.<br/>
                                     (Get it right on first try to increase your bonus)
                                 </p>
                                 <p ref={questionsRefs.self_rank_independence.input}>
@@ -390,9 +391,9 @@ function renderUiFromState(step) {
                                 <h4>Step 2: Submit Your Ranking</h4>
                                 <button className="button-2" id="GenBtn3" type="button" onClick={()=>{setRankingModal(true)}}>Click for a reminder on what this ranking means</button><br/>
                                 <p>Please rank the four prizes in an order of your choice.</p>
-                                <RankingForm refs={rankingFormRefs} onEnter={onClick}/>
+                                <RankingForm refs={rankingFormRefs} onEnter={onClick} setRanking={setRanking}/>
                                 { shownSteps.at(-1).id === "ranking_form" &&
-                                    <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
+                                    <Button className="btn btn-danger" onClick={onClick} text="Submit Ranking" disabled={!(ranking && ranking.length === 4)}/>
                                 }
                                 <div className="incorrect-msg hidden" ref={rankingFormRefs.error_message}>
                                     <p>You submitted an invalid ranking. Please resubmit.</p>
@@ -417,7 +418,7 @@ function renderUiFromState(step) {
                                             </p>
                                         </div>
                                     }
-                                        <div  id="round-results" onClick={onClick}>
+                                        <div  id="round-results" onClick={onClick} style={{pointerEvents:'none'}}>
                                             <p>
                                                 Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
                                             </p>
@@ -506,6 +507,7 @@ function renderUiFromState(step) {
                 const isValid = validateInput(uppercasedCleanedInput);
                 if (isValid === false)return;
                 setInputValue(addEnDash(uppercasedCleanedInput));
+                props.setRanking(uppercasedCleanedInput);
                 props.refs.first_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[0]);
                 props.refs.second_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[1]);
                 props.refs.third_priority.current = replaceCharWithNumericValue(uppercasedCleanedInput[2]);
@@ -527,7 +529,7 @@ function renderUiFromState(step) {
             const {onClick,text ,className} = props;
             return (
                 <div class="btn-container">
-                    <button className={"btn btn-primary "+className} onClick={onClick}>{text ?? "Proceed"}</button>
+                    <button className={"btn btn-primary "+className} onClick={onClick} disabled={props.disabled || false}>{text ?? "Proceed"}</button>
                 </div>
             )
         }
@@ -727,10 +729,10 @@ function renderAllocationResults(prizeName, prizeValue) {
                     <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
                 }
                 { props.roundNumber !== 1 &&
-                   <span> Since this is a training round, it will count for your Understanding Bonus.</span>
+                   <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
                 }
             </p>
-            <div className="btn-container">
+            <div className="btn-container" style={{pointerEvents:'auto'}}>
                 <button class="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
             </div>
         </>

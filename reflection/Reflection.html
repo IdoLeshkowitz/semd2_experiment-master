@@ -4,7 +4,6 @@
 {{ endblock}}
 
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
 Final Questions (2/4)
 {{ endblock }}
 
@@ -30,6 +29,9 @@ Final Questions (2/4)
 
     -moz-border-radius: 5px;
     border-radius: 5px;
+    display: flex;
+    flex-direction: column;
+    gap: .4rem;
 }
 
 .btn.btn-default {
@@ -111,21 +113,16 @@ btn.btn-default:hover {
     <p>From this point on we no longer care about right or wrong answers, we are only interested in your <b>honest</b> reflections and opinions.</p>
     <p> Please answer the following questions about your experience playing the game. </p>
 
-{{ formfield 'typically_rank' label="We’ll start with a general question: <b>How did you typically rank the four prizes?</b> Please share with us your main considerations, even if you are not sure that you always thought about them all. "}}
+{{ formfield 'typically_rank' label="We’ll start with a general question: <b>How did you typically rank the four prizes</b> in the 20 real rounds? Please share with us your main considerations, even if you are not sure that you always thought about them all. "}}
 {{ formfield_errors 'typically_rank' }}
     <span id="typically_rank_error" class="text-danger"></span>
-    <hr/>
 {{ formfield 'did_change' label="Did you <b>change</b> the way you rank throughout the game? If so, in which way and at which point"}}
-
-{{ formfield 'is_high_to_low' label="Some participants of this study submit rankings that are not ordered from the highest-earning prize to the lowest-earning one. When forming your rankings during the game, did you typically rank the prizes <b>from the highest-earning prize to the lowest-earning one?</b>" }}
-{{ formfield_errors 'is_high_to_low' }}
-    <span id="is_high_to_low_error" class="text-danger"></span>
+    
     <hr/>
     <div>
         {{ formfield "is_explain_help" label="In your view, did the explanations given during the game <b>lead you to use a specific method</b> of ranking the four prizes?" }}
         {{ formfield_errors 'is_explain_help' }}
         <span id="is_explain_help_error" class="text-danger"></span>
-        <hr/>
     </div>
 
     <div>
@@ -133,7 +130,6 @@ btn.btn-default:hover {
             <b>If you answered “No” above:</b> Why do you think the explanations did not lead you to use a specific method of ranking the four prizes?
         </label>
         <textarea id="why_not" name="why_not" rows=3 style="width: 100%;border:1px solid lightgrey;"></textarea>
-        <hr/>
         {{ formfield_errors 'why_not' }}
     </div>
 
@@ -142,12 +138,11 @@ btn.btn-default:hover {
             <b>If you answered “Yes” above:</b> What was that specific ranking method?
         </label>
         <textarea id="why_yes" name="why_yes" rows=3 style="width: 100%;border:1px solid lightgrey;"></textarea>
-        <hr/>
         {{ formfield_errors 'why_yes' }}
     </div>
-    
+    <hr/>
     <div class="slider-container">
-        <p>How well do you think you now understand how to <b>best choose</b> your own ranking</p>
+        <p>How well do you think you now understand how to <b>best choose</b> your own ranking?</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
             <input type="range" min="1" max="7" value="1" name="understand_choose_rankings" id="understand_choose_rankings">
@@ -157,10 +152,9 @@ btn.btn-default:hover {
         {{ formfield_errors 'understand_choose_rankings' }}
         <p id="understand_choose_ranking_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
-        <p>How well do you think you now understand the <b>key principle</b> of the allocation process</p>
+        <p>How well do you think you now understand the <b>key principle</b> of the allocation process?</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
             <input type="range" min="1" max="7" value="1" name="understand_principle" id="understand_principle">
@@ -170,10 +164,9 @@ btn.btn-default:hover {
         {{ formfield_errors 'understand_principle' }}
         <p id="understand_principle_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
-        <p>How well do you think you now understand how the allocation process <b>works</b></p>
+        <p>How well do you think you now understand how the allocation process <b>works</b>?</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
             <input type="range" min="1" max="7" value="1" name="understand_allocation" id="understand_allocation">
@@ -183,7 +176,6 @@ btn.btn-default:hover {
         {{ formfield_errors 'understand_allocation' }}
         <p id="understand_allocation_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
         <p>How <b>easy</b> was it for you to come up with your ranking each round?</p>
@@ -197,62 +189,8 @@ btn.btn-default:hover {
         <p id="how_easy_ranking_error"></p>
     </div>
     <hr/>
-
-
-<p style="font-weight: bold"> If you want to <b>maximize your earnings</b> in a given round, with what percent chance (0-100) do you believe you should do each of the following?</p>
-    <div class="slider-container">
-        <p>Sometimes I might have to rank the prize that earns me the most in second place or lower.</p>
-        <div class="slider-row">
-            <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="maximize_choose_second" id="maximize_choose_second">
-            <span> 100%</span>
-        </div>
-        <span id="maximize_choose_second_indicator"></span>
-        {{ formfield_errors 'maximize_choose_second' }}
-        <p id="maximize_choose_second_error"></p>
-    </div>
-    <hr/>
     
-    <div class="slider-container">
-        <p>I should consider how much each prize earns me while choosing my own ranking.</p>
-        <div class="slider-row">
-            <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="maximize_consider_prizes" id="maximize_consider_prizes">
-            <span> 100%</span>
-        </div>
-        <span id="maximize_consider_prizes_indicator"></span>
-        {{ formfield_errors 'maximize_consider_prizes' }}
-        <p id="maximize_consider_prizes_error"></p>
-    </div>
-    <hr/>
-    
-    <div class="slider-container">
-        <p>I should consider the possible rankings of the other participants while choosing my own ranking.</p>
-        <div class="slider-row">
-            <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="maximize_consider_rankings_other" id="maximize_consider_rankings_other">
-            <span> 100%</span>
-        </div>
-        <span id="maximize_consider_rankings_other_indicator"></span>
-        {{ formfield_errors 'maximize_consider_rankings_other' }}
-        <p id="maximize_consider_rankings_other_error"></p>
-    </div>
-    <hr/>
-    
-    <div class="slider-container">
-        <p>I should consider the prize priorities while choosing my own rankings.</p>
-        <div class="slider-row">
-            <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="maximize_consider_prize_priorities" id="maximize_consider_prize_priorities">
-            <span> 100%</span>
-        </div>
-        <span id="maximize_consider_prize_priorities_indicator"></span>
-        {{ formfield_errors 'maximize_consider_prize_priorities' }}
-        <p id="maximize_consider_prize_priorities_error"></p>
-    </div>
-    <hr/>
-    
-    <p style="font-weight: bold"> With what percent chance do you believe the following statements are true?</p>
+    <p> With what percent chance do you believe the following statements are <b>always</b> true (regardless of the round’s details)?</p>
     <div class="slider-container">
         <p>The allocation process always ends with <b>each</b> participant getting a <b>different</b> prize, and <b>each</b> prize given to <b>some</b> participant.</p>
         <div class="slider-row">
@@ -264,10 +202,9 @@ btn.btn-default:hover {
         {{ formfield_errors 'chance_all_allocated' }}
         <p id="chance_all_allocated_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
-        <p>After the allocation process, there may be some participant and prize such that:</br> (a) The participant ranks the prize higher than the prize they actually receive.</br> (b) The participant has higher priority for getting the prize than the other.</p>
+        <p>After the allocation process, there may be some participant and prize such that:</br> (a) The participant ranks the prize higher than the prize they actually receive.</br> (b) The participant has a higher priority for getting the prize than the other participant who actually received the prize.</p>
         <div class="slider-row">
             <span> 0%</span>
             <input type="range" min="0" max="100" value="0" name="chance_Instability" id="chance_Instability">
@@ -277,7 +214,6 @@ btn.btn-default:hover {
         {{ formfield_errors 'chance_Instability' }}
         <p id="chance_Instability_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
         <p>After the allocation process, <b>any</b> way to reallocate the prizes will definitely make some participants <b>worse off</b> according to their ranking, relative to the prize they got.</p>
@@ -292,10 +228,10 @@ btn.btn-default:hover {
     </div>
     <hr/>
     
-<p class="QuestionHead" style="font-weight: bold"> To what extent do you agree with the following statements?</p>
+<p class="QuestionHead"> To what extent do you agree with the following statements?</p>
     
     <div class="slider-container">
-        <p>The allocation process is fair.</p>
+        <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is fair.</p>
         <div class="slider-row">
             <span>Completely disagree</span>
             <input type="range" min="1" max="7" value="1" name="agree_allocation_fare" id="agree_allocation_fare">
@@ -305,10 +241,9 @@ btn.btn-default:hover {
         {{ formfield_errors 'agree_allocation_fare' }}
         <p id="agree_allocation_fare_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
-        <p>The allocation process is overall a good way to allocate the prizes.</p>
+        <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is overall a good way to allocate the prizes.</p>
         <div class="slider-row">
             <span>Completely disagree</span>
             <input type="range" min="1" max="7" value="1" name="agree_allocation_good" id="agree_allocation_good">
@@ -318,8 +253,10 @@ btn.btn-default:hover {
         {{ formfield_errors 'agree_allocation_good' }}
         <p id="agree_allocation_good_error"></p>
     </div>
-    <hr/>
     
+    {{ formfield "why_choose" label="Why did you choose these answers?" }}
+    {{ formfield_errors 'why_choose' }}
+    <span id="why_choose" class="text-danger"></span>
     <div class="slider-container">
         <p>How <b>confident</b> are you in the <b>allocation process’s ability</b> to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants?</p>
         <div class="slider-row">
@@ -344,7 +281,6 @@ btn.btn-default:hover {
         {{ formfield_errors 'rely_in_real_life' }}
         <p id="rely_in_real_life_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
         <p>How <b>transparent is the allocation process</b>, meaning that you received a full explanation of how the allocation process really works, and no details were kept away from you?</p>
@@ -357,7 +293,6 @@ btn.btn-default:hover {
         {{ formfield_errors 'allocation_transparent' }}
         <p id="allocation_transparent_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
         <p>How <b>predictable</b> is the final allocation?</p>
@@ -370,7 +305,6 @@ btn.btn-default:hover {
         {{ formfield_errors 'allocation_predictable' }}
         <p id="allocation_predictable_error"></p>
     </div>
-    <hr/>
     
     <div class="slider-container">
         <p>To what extent do you think that <b>your submitted ranking matters</b> for the final allocation?</p>

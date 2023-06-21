@@ -1,9 +1,9 @@
 {{ block scripts }}
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+<script src="{{ static 'features/demographics.js'}}"></script>
 {{ endblock}}
 
 {{ block title }}
-{{ include "components/bonus_indicator.html" }}
     Final Questions (4/4)
 {{ endblock }}
 
@@ -24,6 +24,13 @@
     -moz-border-radius: 5px;
          border-radius: 5px;
 }
+.hidden {
+    display: none;
+}
+.text-danger {
+    color: red;
+}
+
 .btn.btn-default {
    text-align: center;
    vert-align: middle;
@@ -34,6 +41,9 @@
    font-size: 1rem;
    line-height: 1.5;
    background-color: cornflowerblue;
+}
+.btn-danger {
+    background-color: #d9534f !important;
 }
 btn.btn-default:hover {
     background-color: #2885ef;
@@ -46,10 +56,12 @@ btn.btn-default:hover {
     </p>
 
     {{ formfields }}
-
+    <p class="hidden text-danger" id="approve-submition">
+        You did not answer some of the questions on the page. Are you sure you want to proceed?
+    </p>
     <div style="text-align: center">
         <button class="btn btn-default" id="Next">
-                Next
+                Submit
         </button>
     </div>
 

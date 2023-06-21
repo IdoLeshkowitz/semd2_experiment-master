@@ -31,11 +31,17 @@ function renderCognitiveAbilitiesForm() {
         if(isNumber(str).isValid && parseFloat(str) >= 0){
             return {isValid: true, error: ""};
         }
+        if (fieldName === "choir"){
+            return {isValid: false, error: "Please enter a probability between 0 and 1 for probability"};
+        }
         return {isValid: false, error: "Please enter a positive number for " + fieldName.replaceAll("_"," ")};
     }
     function isNumberInRange(str, min, max, fieldName) {
         if ( isNumber(str).isValid && parseFloat(str) >= min && parseFloat(str) <= max) {
             return {isValid: true, error: ""};
+        }
+        if (fieldName === "choir"){
+            return {isValid: false, error: "Please enter a probability between 0 and 1 for probability"};
         }
         return {isValid: false, error: "Please enter a number between " + min + " and " + max + " for " + fieldName};
     }
@@ -45,31 +51,31 @@ function renderCognitiveAbilitiesForm() {
                 value: "",
                 error: "",
                 isPositiveNumber: true,
-                label : <label>A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball.<br/>How much does the ball cost?</label>,
+                isRoundNumber: true,
+                label : <label>A bat and a ball cost $1.10 in total. The bat costs $1.00 more than the ball.<br/>How much does the ball cost? Please enter an amount in cents:</label>,
                 units : 'cents'
             },
             "machines":{
                 value: "",
                 error: "",
                 isPositiveNumber: true,
-                label : <label>If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets?</label>,
+                label : <label>If it takes 5 machines 5 minutes to make 5 widgets, how long would it take 100 machines to make 100 widgets? Please enter a number of minutes:</label>,
                 units : 'minutes'
             },
             "lily_pads":{
                 value: "",
                 error: "",
                 isPositiveNumber: true,
-                label:<label>In a lake, there is a patch of lily pads.<br/>Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake?</label>,
+                label:<label>In a lake, there is a patch of lily pads.<br/>Every day, the patch doubles in size. If it takes 48 days for the patch to cover the entire lake, how long would it take for the patch to cover half of the lake? Please enter a number of days:</label>,
                 units : 'days'
             },
             "choir":{
                 value: "",
                 error: "",
                 isPositiveNumber: true,
-                label:<label>Out of 1,000 people in a small town 500 are members of a choir. Out of these 500 members in the choir 100 are men. <br/>Out of the 500 inhabitants that are not in the choir 300 are men. What is the probability that a randomly drawn man is a member of the choir?</label>,
-                units : '%',            
+                label:<label>Out of 1,000 people in a small town 500 are members of a choir. Out of these 500 members in the choir 100 are men. <br/>Out of the 500 inhabitants that are not in the choir 300 are men. What is the probability that a randomly drawn man is a member of the choir? Please enter a probability between 0 and 1:</label>,                            
                 min: 0,
-                max: 100,
+                max: 1,
             },
         })
         function onSubmit (){
@@ -109,7 +115,7 @@ function renderCognitiveAbilitiesForm() {
                             const field = form[fieldName];
                             let error = "";
                             if (field.isPositiveNumber) {
-                                const result = isPositiveNumber(value, form[key].units);
+                                const result = isPositiveNumber(value, form[key].units ?? key);
                                 if (!result.isValid) {
                                     error = result.error;
                                 }
@@ -121,7 +127,7 @@ function renderCognitiveAbilitiesForm() {
                                 }
                             }                           
                             if (field.min !== undefined && field.max !== undefined) {
-                                const result = isNumberInRange(value, field.min, field.max, form[key].units);
+                                const result = isNumberInRange(value, field.min, field.max, form[key].units ?? key);
                                 if (!result.isValid) {
                                     error = result.error;
                                 }

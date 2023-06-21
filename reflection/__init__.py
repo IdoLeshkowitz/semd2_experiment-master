@@ -27,27 +27,14 @@ class Player(BasePlayer):
 
     )
     did_change = models.LongStringField()
-    is_high_to_low = models.StringField(choices=["Yes", "No"], widget=widgets.RadioSelect, )
     is_explain_help = models.StringField(choices=["Yes", "No"], widget=widgets.RadioSelect, )
     why_not = models.LongStringField(blank=True)
     why_yes = models.LongStringField(blank=True)
-    # lead_explanation = models.IntegerField(
-    #     choices=[1, 2, 3, 4, 5, 6, 7],
-    #     widget=widgets.RadioSelect,
-    # )
-    # lead_principle = models.IntegerField(
-    #     choices=[1, 2, 3, 4, 5, 6, 7],
-    #     widget=widgets.RadioSelect,
-    # )
-    # lead_details = models.IntegerField(
-    #     choices=[1, 2, 3, 4, 5, 6, 7],
-    #     widget=widgets.RadioSelect,
-    # )
+    why_choose = models.LongStringField(blank=True)
     understand_choose_rankings = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
     understand_principle = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
     understand_allocation = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
     how_easy_ranking = models.IntegerField(choices=[1, 2, 3, 4, 5, 6, 7], widget=widgets.RadioSelect, )
-    maximize_choose_second = models.IntegerField(min=0, max=100, )
     maximize_consider_prizes = models.IntegerField(min=0, max=100, )
     maximize_consider_rankings_other = models.IntegerField(min=0, max=100, )
     maximize_consider_prize_priorities = models.IntegerField(min=0, max=100, )
@@ -68,11 +55,9 @@ class Player(BasePlayer):
 # PAGES
 class Reflection(Page):
     form_model = 'player'
-    form_fields = ["typically_rank", "did_change", "is_high_to_low", "is_explain_help", "why_not", "why_yes", "understand_choose_rankings",
-                   "understand_principle", "understand_allocation", "how_easy_ranking", "maximize_choose_second", "maximize_consider_prizes",
-                   "maximize_consider_rankings_other", "maximize_consider_prize_priorities", "chance_all_allocated", "chance_Instability", "chance_Pareto",
-                   "agree_allocation_fare", "agree_allocation_good", "trust_account_all_participants", "rely_in_real_life", "allocation_transparent",
-                   "allocation_predictable", "your_ranking_matters"]
+    form_fields = ["typically_rank", "did_change", "is_explain_help", "why_not", "why_yes", "understand_choose_rankings","why_choose",
+                   "understand_principle", "understand_allocation", "how_easy_ranking", "chance_all_allocated", "chance_Instability", "chance_Pareto",
+                   "agree_allocation_fare", "agree_allocation_good", "trust_account_all_participants", "rely_in_real_life", "allocation_transparent","allocation_predictable", "your_ranking_matters"]
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))

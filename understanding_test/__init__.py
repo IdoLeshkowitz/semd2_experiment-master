@@ -10,7 +10,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'understanding_test'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
-    UNDERSTANDING_BONUS_LIMIT = 12
+    UNDERSTANDING_BONUS_LIMIT = 26
 
 
 class Subsession(BaseSubsession):
@@ -24,63 +24,68 @@ class Group(BaseGroup):
 class Player(BasePlayer):
     first_situation_a = models.StringField(
         label="Prize A",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     first_situation_b = models.StringField(
         label="Prize B",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     first_situation_c = models.StringField(
         label="Prize C",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     first_situation_d = models.StringField(
         label="Prize D",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     second_situation_a = models.StringField(
         label="Prize A",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     second_situation_b = models.StringField(
         label="Prize B",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     second_situation_c = models.StringField(
         label="Prize C",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
     second_situation_d = models.StringField(
         label="Prize D",
-        choices=["Possibly True", " Definitely False"],
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
-    third_situation_a = models.StringField(
-        label="Prize A",
-        choices=["Possibly True", " Definitely False"],
+    maximize_earnings_a = models.StringField(
+        label="Sometimes I might have to rank the prize that earns me the most in second place or lower.",
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
-    third_situation_b = models.StringField(
-        label="Prize B",
-        choices=["Possibly True", " Definitely False"],
+    maximize_earnings_b = models.StringField(
+        label="I should consider only how much each prize earns me while choosing my own ranking.",
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
-    third_situation_c = models.StringField(
-        label="Prize C",
-        choices=["Possibly True", " Definitely False"],
+    maximize_earnings_c = models.StringField(
+        label="I should rank from the highest-earning to lowest-earning prize regardless of anything else.",
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
     )
-    third_situation_d = models.StringField(
-        label="Prize D",
-        choices=["Possibly True", " Definitely False"],
+    maximize_earnings_d = models.StringField(
+        label="I should consider the possible rankings of the other participants while choosing my own ranking.",
+        choices=["True", "False"],
         widget=widgets.RadioSelect,
+    )
+    maximize_earnings_e = models.StringField(
+    label="I should consider the prize priorities while choosing my own rankings.",
+    choices=["True", "False"],
+    widget=widgets.RadioSelect,
     )
     understanding_bonus_limit = models.IntegerField(initial=C.UNDERSTANDING_BONUS_LIMIT)
     understanding_bonus_from_round = models.IntegerField(initial=0)
@@ -94,7 +99,7 @@ class Understanding_test(Page):
     form_model = 'player'
     form_fields = ["first_situation_a", "first_situation_b", "first_situation_c", "first_situation_d",
                    "second_situation_a", "second_situation_b", "second_situation_c", "second_situation_d",
-                   "third_situation_a", "third_situation_b", "third_situation_c", "third_situation_d"]
+                   "maximize_earnings_a", "maximize_earnings_b", "maximize_earnings_c", "maximize_earnings_d","maximize_earnings_e"]
 
     @staticmethod
     def live_method(player: Player, data):
@@ -105,6 +110,8 @@ class Understanding_test(Page):
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
+        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 class PreProcess(Page):
     @staticmethod

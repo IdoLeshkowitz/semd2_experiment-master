@@ -167,7 +167,7 @@ PARTICIPANT_FIELDS = [
     "full_training",
     "consent",
     "understanding_bonus",
-    "max_understanding_bonus",
+    "understanding_bonus_limit",
     "full_name",
     "email"
                       ]

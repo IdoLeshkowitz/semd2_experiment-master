@@ -9,10 +9,8 @@ Your app description
 class Subsession(BaseSubsession):
     pass
 
-
 class Group(BaseGroup):
     pass
-
 
 def get_customers_priorities_by_round(round):
     first_round_priorities = {
@@ -22,7 +20,7 @@ def get_customers_priorities_by_round(round):
         "D": ["You", "Theresa", "Shirley", "Ruth"]
     }
     second_round_priorities = {
-        "A": ["Theresa", "You", "Shirley", "Ruth"],
+        "A": ["Theresa", "You", "Ruth", "Shirley"],
         "B": ["Shirley", "Theresa", "You", "Ruth"],
         "C": ["Shirley", "You", "Ruth", "Theresa"],
         "D": ["Theresa", "Ruth", "You", "Shirley"]
@@ -206,6 +204,7 @@ class TrainingRound(Page):
             else :
                 return 1
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 
 class DAalghoInterface(Page):
@@ -314,8 +313,8 @@ class DAalghoInterface(Page):
             pass
         elif data['information_type'] == "reset":
             player.clicks += '|reset'
-            player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NUMBERS}
-            player.participant.matching_memo = []
+            player.current_matching = str({prize: 'none' for prize in C.PRIZES})
+            player.matching_memo = str([])
         elif data["information_type"] == "matching_memo_update":
             new_memo = data["matching_memo"]
             player.matching_memo = str(new_memo)
@@ -336,6 +335,7 @@ class DAalghoInterface(Page):
             else :
                 return 7
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 class MechanicsIntro(Page):
     @staticmethod
