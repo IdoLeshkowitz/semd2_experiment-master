@@ -2702,7 +2702,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize A <b/>and<b> Prize B</b>
+                                    <b>Prize A </b>and<b> Prize B</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
