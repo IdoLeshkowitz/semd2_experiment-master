@@ -2550,17 +2550,18 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize C </b>and<b> Prize D</b>
+                                    <b>Prize A, Prize C </b>and<b> Prize D</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
+                        <span>A</span>,
                         <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 2,
                     correctMsg:(
                         <p>
                             Correct! Among the <b>Obtainable Prizes</b>, Prize D is the one you <b>ranked highest</b>. Hence you get this prize.
