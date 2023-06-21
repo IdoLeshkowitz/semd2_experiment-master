@@ -9,8 +9,10 @@ Your app description
 class Subsession(BaseSubsession):
     pass
 
+
 class Group(BaseGroup):
     pass
+
 
 def get_customers_priorities_by_round(round):
     first_round_priorities = {
@@ -60,7 +62,7 @@ def get_expected_prizes_ranking_by_round(round):
 
 
 def get_correct_answers_by_round(round):
-    CORRECT_ANSWERS_BY_ROUND = [[ 1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [3, 2, 4, 1, 3], [2, 4, 3, 1, 2], [4, 3, 1, 2, 1]]
+    CORRECT_ANSWERS_BY_ROUND = [[1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [3, 2, 4, 1, 3], [2, 4, 3, 1, 2], [4, 3, 1, 2, 1]]
     return CORRECT_ANSWERS_BY_ROUND[round - 1]
 
 
@@ -69,10 +71,10 @@ class C(BaseConstants):
     NAME_IN_URL = 'mechanics_menu'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 4
-    PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You","Unpaired"]
+    PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You", "Unpaired"]
     PRIZES = ["A", "B", "C", "D"]
     STEPS_IN_TRAINING_ROUND = ["intro", "prizes_table", "prizes_priorities", "ranking_form", "allocation_results"]
-    MAX_PRODUCTS_PER_CUSTOMER = {"Ruth": len(PRIZES), "Theresa": len(PRIZES), "Unpaired": len(PRIZES), "Shirley": len(PRIZES),"You":0}
+    MAX_PRODUCTS_PER_CUSTOMER = {"Ruth": len(PRIZES), "Theresa": len(PRIZES), "Unpaired": len(PRIZES), "Shirley": len(PRIZES), "You": 0}
 
 
 class Player(BasePlayer):
@@ -185,11 +187,13 @@ class TrainingRound(Page):
             "prizes":                 C.PRIZES,
             "participants":           C.PARTICIPANTS,
             "currentStep":            player.current_step_id,
+            "variant":                C.VARIANT
         }
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.clicks = ''
+
         def get_current_matching_by_variant(variant):
             if variant == "menu":
                 return str({prize_name: 'none' for prize_name in C.PRIZES})
@@ -198,11 +202,13 @@ class TrainingRound(Page):
 
         player.current_matching = get_current_matching_by_variant(C.VARIANT)
         player.matching_memo = str([])
+
         def get_understanding_bonus_limit_by_round(round_number):
-            if round ==1 :
+            if round == 1:
                 return 4
-            else :
+            else:
                 return 1
+
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
         player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
@@ -255,8 +261,10 @@ class DAalghoInterface(Page):
             question_id = data['question_id']
             understanding_bonus = data['understanding_bonus']
             player.understanding_bonus += understanding_bonus
+
             def create_question_submission_string(data):
                 return str(data)
+
             if question_id == "question_1":
                 player.incorrect_seq_question_1 += create_question_submission_string(data)
             elif question_id == "question_2":
@@ -296,12 +304,14 @@ class DAalghoInterface(Page):
                 1. participant_to_match
                 2. match_to_prize
             """
+
             def find_diff_in_matching(old_matching, new_matching):
                 old_matching = eval(old_matching)
                 for product in old_matching:
                     if old_matching[product] != new_matching[product]:
                         return [product, new_matching[product]]
                 return None
+
             if find_diff_in_matching(player.current_matching, data["current_matching"]) == None:
                 return
             [participant_to_match, match_to_prize] = find_diff_in_matching(player.current_matching, data["current_matching"])
@@ -329,13 +339,16 @@ class DAalghoInterface(Page):
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus
         player.end_time = str(datetime.now(timezone.utc))
+
         def get_understanding_bonus_limit_by_round(round):
             if round == 1:
                 return 21
-            else :
+            else:
                 return 7
+
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
         player.participant.understanding_bonus_limit += player.understanding_bonus_limit
+
 
 class MechanicsIntro(Page):
     @staticmethod
@@ -350,8 +363,7 @@ class MechanicsIntro(Page):
 
     @staticmethod
     def js_vars(player: Player):
-        return {
-            'variant': C.VARIANT
+        return {'variant': C.VARIANT
         }
 
 
@@ -359,11 +371,12 @@ class EndTraining(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == C.NUM_ROUNDS
+
+
 class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.start_time = str(datetime.now(timezone.utc))
 
 
-
-page_sequence = [PreProcess,MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]
+page_sequence = [PreProcess, MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]

@@ -187,6 +187,7 @@ class TrainingRound(Page):
             "prizes":                 C.PRIZES,
             "participants":           C.PARTICIPANTS,
             "currentStep":            player.current_step_id,
+            "variant":                C.VARIANT,
         }
 
     @staticmethod

@@ -300,6 +300,7 @@ function renderIntroPage(){
     function IntroPage(props){
         const steps =  getSteps(props.variant)
         const [activeSteps, setActiveSteps] = React.useState([steps[0]])
+        const [allocationModal, setAllocationModal] = React.useState(false)
         function onNext(){
             function isLastStep(){
                 return activeSteps.at(-1) === steps.at(-1)

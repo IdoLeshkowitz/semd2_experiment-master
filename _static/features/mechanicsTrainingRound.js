@@ -101,7 +101,10 @@ function renderPage() {
                     {modals.ranking && <RankingModal onClose={()=>{setModals({...modals,ranking:false})}}/>}
                     {modals.study && <StudyModal onClose={()=>{setModals({...modals,study:false})}}/>}
                     {modals.priorities && <PrioritiesModal onClose={()=>{setModals({...modals,priorities:false})}}/>}
-                    <button type="button" className="button-2" onClick={()=>{setModals({...modals,study:true})}}  style={{marginTop:'1rem',marginBottom:'1rem'}}>Click for a reminder on what the prizes mean</button>
+                    {modals.allocation && <AllocationModal onClose={()=>{setModals({...modals,allocation:false})}} variant = {props.variant}/>}
+                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,study:true})}}  style={{marginBottom:'1rem',display:"block"}}>Click for a general reminder on this study</button>
+                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,allocation:true})}}  style={{marginBottom:'1rem'}}>Click for a reminder on the technical details of the allocation process</button>
+                   
                     <div style={{display:'flex', gap:'1.5rem',flexDirection:'column'}}>
                         {
                             activeStepsIds.map((stepId,index)=>{
@@ -430,6 +433,149 @@ function renderPage() {
                 </div>
             )
         } 
+    function AllocationModal(props){
+        console.log(props)
+    return (
+        <div class="modal" id="GenModal" onClick={props.onClose} style={{display:'block'}}>
+            <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                <span class="close" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</span>
+                {
+                    props.variant === "traditional" && 
+                        <div>
+                            <p>
+                                <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
+                                Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
+                            </p><br/>
+                            <h5>Overview of allocation process</h5>
+                            <p>
+                                The allocation process will use all <b>participants’ rankings</b> and all prize priorities to determine the allocation of prizes to participants. <b>You will get the prize allocated to you.</b>
+                            </p><br/>
+                            <h5>Details of allocation process</h5>
+                            <p>
+                                The allocation process is a multi-step process , as follows:
+                            </p>
+                            <ol>
+                                <li>
+                                In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                                </li>
+                                <li>
+                                    <p>
+                                        In the next step, possible conflicts are detected and solved. If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                                    </p>
+                                    <p>
+                                        Each conflict is solved in two steps:
+                                         <ul>
+                                            <li>
+                                                <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                            </li>
+                                            <li>
+                                                <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                                        Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
+                                    </p>
+                                    <p>
+                                        A participant can get unpaired from a prize <b>even if they successfully got paired to that prize in a previous step.</b>
+                                    </p>
+                                </li>
+                            </ol>
+                            <p>
+                                When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
+                            </p>
+                            <p>
+                                Each prize is then <b>allocated</b> to the participant paired to it.
+                            </p>
+                        </div>
+                }
+                {
+                    props.variant === "menu" &&
+                        <div>
+                            <p>
+                                <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
+                                Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
+                            </p><br/>
+                            <h5>Overview of allocation process</h5>
+                            <p>
+                                The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you ranked highest out of these Obtainable Prizes.</b>
+                            </p><br/>
+                            <h5>Details of allocation process</h5>
+                            <p>
+                                The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking, as follows:</b>
+                            </p>
+                            <ol>
+                                <li>
+                                    In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
+                                </li>
+                                <li>
+                                    <p>
+                                         In the next step, possible conflicts are detected and solved.<br/>
+                                         If two (or more) prizes are paired to the same participant, this is a <b>conflict.</b>
+                                    </p>
+                                    <p>
+                                        Each conflict is solved in two steps:
+                                         <ul>
+                                            <li>
+                                                <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
+                                            </li>
+                                            <li>
+                                                <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants it <b>was not yet paired with</b> and <b>except for you.</b>
+                                            </li>
+                                        </ul>
+                                    </p>
+                                </li>
+                                <li>
+                                    <p>
+                                        Later steps continue in the same way, by detecting and solving new conflicts.
+                                        Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above.
+                                    </p>
+                                    <p>
+                                        A prize can get unpaired from a participant <b>even if it successfully got paired to that participant in a previous step.</b>
+                                    </p>
+                                    <p>
+                                        There is one <b>important thing to note about</b> the Re-pair step:<br/>
+                                        During the process, one prize will encounter a conflict with <b>every</b> participant, except for you, and will eventually get unpaired from all of them. That prize cannot be re-paired and will <b>remain unpaired</b> at the end of the process.
+                                    </p>        
+                                </li>
+                            </ol>
+                            <p>
+                                When there are no more conflicts and when one prize was unpaired from all participants (except for you), the process is over. The result is each prize, except for the unpaired one, being paired to a different participant (except for you).
+                            </p>
+                            <p>
+                                Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.
+                            </p>
+                            <br/><h6><b>Temporary allocation → Obtainable Prizes</b></h6>
+                            <p>
+                                    We will now tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
+                            </p>
+                            <p>
+                                In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b>
+                            </p>
+                            <p>
+                                You can obtain two kinds of prizes:
+                                <ol>
+                                    <li><b>Any prize that your priority of getting is higher</b> than that of the participant it is temporarily allocated to.</li>
+                                    <li><b>The prize that was left unpaired in the temporary allocation.</b></li>
+                                </ol>
+                                You cannot obtain any other prizes.
+                            </p>
+                            <br/><h6><b>Obtainable Prizes → The prize you get</b></h6>
+                            <p>
+                                We will now tell you how the prize you get is selected from among the Obtainable Prizes.
+                            </p>
+                            <p>
+                                At the end, among the Obtainable Prizes, you get the one that you ranked the <b>highest.</b>
+                            </p>
+                        </div>      
+                }
+            </div>
+        </div>
+    )
+}
     `
     renderReactComponent(jsxCode, "react-root", "MechanicsTrainingRound", JSON.stringify({...js_vars}))
 }
