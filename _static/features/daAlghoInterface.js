@@ -66,7 +66,7 @@ function renderDaAlgoPage() {
                                 <p>
                                     Notice that the ranking under “Y” (you) is exactly the ranking that you submitted in the previous screen!
                                 </p>
-                             </Accordion>
+                             </Accordion><br/>
                             <p>
                                 Notice: In real rounds of the game you do not see other participants’ rankings, but now, since you are in charge of the allocation process, you are able to see them.
                             </p>
@@ -89,7 +89,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                First, pair Ruth to her <b>highest-rank</b> prize . To do this:
+                                First, pair Ruth to her <b>highest-rank</b> prize. To do this:
                             </p>
                             <ol>
                                 <li>
@@ -192,7 +192,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 To solve a conflict, the first step is <b>Unpair</b>.<br/>
-                                According to this step, only one participant should remain paired to Prize A. <b>Which participant should remain paired to</b> Prize A?
+                                According to this step, only one participant should remain paired to Prize A. <b>Which participant should remain paired to Prize A?</b>
                             </p>
                             <p>
                                 Please select one of the answers below and then click Submit.<br/>
@@ -230,7 +230,7 @@ function renderDaAlgoPage() {
                     content : (
                         <>
                             <p>
-                                The second step in solving conflicts is Re-pair.<br/>
+                                The second step in solving conflicts is <b>Re-pair.</b><br/>
                                 After a participant gets unpaired, what new prize do they get paired to?
                             </p>
                             <p>
@@ -276,7 +276,7 @@ function renderDaAlgoPage() {
                                         <b>Unpair</b>: at the lower part of the dashboard, next to Prize A (“A”), click on <b>Shirley (“S”)</b>.
                                     </li>
                                     <li>
-                                        <p><b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Shirley’s (“S”) <b>second highest-rank prize</b> among all participants <b>except for you</b>.</p>
+                                        <p><b>Re-pair</b>: at the same lower part of the dashboard, click on “+” next to Shirley’s (“S”) <b>second highest-rank prize</b>.</p>
                                         <p>Hint: You can easily find which prize it is, using the Participant Rankings table: this is the prize right below the one that is currently colored purple under Shirley’s name (“S”)</p>
                                     </li>
                                 </ol>
@@ -354,7 +354,7 @@ function renderDaAlgoPage() {
                             </p>
                             <ul>
                                 <li>
-                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
                                 </li>
                                 <li>
                                     <p>
@@ -366,7 +366,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!&nbsp;</span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                             </p>
                             <p>
@@ -439,7 +439,7 @@ function renderDaAlgoPage() {
                             </p>
                             <ul>
                                 <li>
-                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
                                 </li>
                                 <li>
                                     <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
@@ -447,7 +447,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!</span>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!&nbsp;</span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                             </p>
                             <p>
@@ -518,7 +518,7 @@ function renderDaAlgoPage() {
                             </p>
                             <ul>
                                 <li>
-                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                    <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
                                 </li>
                                 <li>
                                     <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
@@ -526,7 +526,7 @@ function renderDaAlgoPage() {
                                 </li>
                             </ul>
                             <p>
-                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!</span>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!&nbsp;</span>
                                 If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                             </p>
                             <p>
@@ -598,7 +598,7 @@ function renderDaAlgoPage() {
                         </p>
                         <ul>
                             <li>
-                                <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that participant paired to it. <b>Unpair</b> the other prizes from that participant.
+                                <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
                             </li>
                             <li>
                                 <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
@@ -606,7 +606,7 @@ function renderDaAlgoPage() {
                             </li>
                         </ul>
                         <p>
-                            <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!</span>
+                            <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen!&nbsp;</span>
                             If new conflicts emerge after solving the current one, wait. You will solve them one-by-one on the next screens.
                         </p>
                         <p>
@@ -714,7 +714,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_a",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: (<span>Prize A : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize A : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -747,7 +747,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_b",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: (<span>Prize B : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize B : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -780,7 +780,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_c",
                     type: "dropdown",   
                     inputRef: React.createRef(null),
-                    label: (<span>Prize C : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize C : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -813,7 +813,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_d",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: (<span>Prize D : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize D : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now please verify you understand what participant each prize is allocated to.
@@ -904,6 +904,15 @@ function renderDaAlgoPage() {
                     ],
                     expectedAnswerIndex: 1,
                 },
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize B.</b>
+                        </p>   
+                    )
+                }
             ],
             round2:[
                 {
@@ -1038,6 +1047,15 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                 },  
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize A.</b>
+                        </p>   
+                    )
+                }
             ],
             round3:[
                 {
@@ -1172,6 +1190,15 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                 },  
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize B.</b>
+                        </p>   
+                    )
+                }
             ],
             round4:[
                 {
@@ -1306,6 +1333,15 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                 },  
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize A.</b>
+                        </p>   
+                    )
+                }
             ],
         },
         "menu":{
@@ -1336,7 +1372,7 @@ function renderDaAlgoPage() {
                                 On the upper left part of the dashboard below you see a condensed version of the <b>Participant Rankings</b>.
                             </p>
                             <p>
-                                Each letter under a participant' initial indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
+                                Each letter under a participant's initial indicates one of the four prizes. The higher it is placed in the column, the higher that prize was ranked by that participant.
                             </p>
                             <p>
                              <Accordion title={<span><b>For example: ... </b>(click here to expand)</span>}>
@@ -1476,7 +1512,7 @@ function renderDaAlgoPage() {
                     expectedAnswerIndex: 3,
                     options :[
                         <span>It is determined at random.</span>,
-                        <span>The prize that got paired to Ruth first .</span>,
+                        <span>The prize that got paired to Ruth first.</span>,
                         <span>The prize that Ruth has the highest priority of getting.</span>,
                         <span>The prize highest in Ruth’s ranking.</span>,
                     ],
@@ -1491,7 +1527,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p>
                                 To solve a conflict, the first step is <b>Unpair</b>.<br/>
-                                According to this step, only one prize should remain paired to Ruth. <b>Which prize should remain paired to</b> Ruth?
+                                According to this step, only one prize should remain paired to Ruth. <b>Which prize should remain paired to Ruth?</b>
                             </p>
                             <p>
                                 Please select one of the answers below and then click Submit.<br/>
@@ -2027,7 +2063,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_a",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: (<span>Prize A : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize A : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
@@ -2060,7 +2096,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_b",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: (<span>Prize B : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize B : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
@@ -2074,7 +2110,7 @@ function renderDaAlgoPage() {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Prize B is allocated to You.<br/>
+                            Correct! Prize B is temporarily allocated to Theresa, but your priority for getting that prize is <b>higher</b> than hers. Hence <b>you can obtain Prize B.</b><br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2093,7 +2129,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_c",
                     type: "dropdown",   
                     inputRef: React.createRef(null),
-                    label: (<span>Prize C : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize C : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
@@ -2126,7 +2162,7 @@ function renderDaAlgoPage() {
                     id: "question_allocation_d",
                     type: "dropdown",
                     inputRef: React.createRef(null),
-                    label: (<span>Prize D : <b>(Get it right on first try to increase your bonus)</b></span>),
+                    label: (<span>Prize D : (Get it right on first try to increase your bonus)</span>),
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
@@ -2140,7 +2176,7 @@ function renderDaAlgoPage() {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Prize D is allocated to Theresa.<br/>
+                            Correct! Prize D was left unpaired in the temporary allocation. Hence <b>you can obtain Prize D.</b><br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2166,7 +2202,7 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize B, and Prize D</b>
+                                    <b>Prize B </b>and<b> Prize D</b>
                                 </span>
                             </p>
                             <p>
@@ -2202,9 +2238,20 @@ function renderDaAlgoPage() {
                     type: "dropdown",
                     inputRef: React.createRef(),
                     content : (
-                        <p>
-                             Out of the <b>Obtainable Prizes</b> below, click on the prize <b>you (“Y”) ranked the highest.</b> This is the prize you get.
-                        </p>
+                        <>
+                            <p>
+                                Your <b>Obtainable Prizes</b> are:
+                            </p>
+                            <p style={{display:'flex',justifyContent:'center'}}>
+                                <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
+                                    <b>Prize B </b>and<b> Prize D</b>
+                                </span>
+                            </p>
+                            <p>
+                                 Out of these <b>Obtainable Prizes,</b> select the prize <b>you (“Y”) ranked the highest</b> from the list below. This is the prize you get.<br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
                     ),
                     correctMsg:(
                         <p>Correct!</p>
@@ -2354,7 +2401,7 @@ function renderDaAlgoPage() {
                                     <b>Prize C</b>
                                 </span>
                             </p>
-                            <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
+                            <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
@@ -2376,6 +2423,15 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                 },  
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize A.</b>
+                        </p>   
+                    )
+                }
             ],
             round3:[
                 {
@@ -2494,10 +2550,10 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize A, and Prize B</b>
+                                    <b>Prize A </b>and<b> Prize B</b>
                                 </span>
                             </p>
-                            <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
+                            <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
@@ -2520,6 +2576,15 @@ function renderDaAlgoPage() {
                         <p>Incorrect answer. Please try again.</p>
                     ),
                 },  
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize B.</b>
+                        </p>   
+                    )
+                }
             ],
             round4:[
                 {
@@ -2637,10 +2702,10 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize A, and Prize B</b>
+                                    <b>Prize A <b/>and<b> Prize B</b>
                                 </span>
                             </p>
-                            <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes.</p>
+                            <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
@@ -2664,6 +2729,15 @@ function renderDaAlgoPage() {
                     ),
                     dashboardDisabled: true,
                 },
+                {
+                    id :"allocation_results",
+                    type : "instructions",
+                    content : (
+                        <p>
+                            The allocation process is over.<b> You get Prize A.</b>
+                        </p>   
+                    )
+                }
             ],
         }
     }
@@ -2723,6 +2797,7 @@ function renderDaAlgoPage() {
                 },{}))
             }
             setSelectedProduct(null)
+            liveSend({information_type : "reset"})  
         }
         function onMatching(matchedProduct, matchedToCustomer){
             const productWasMatched = currentMatching[matchedProduct] !== "none"
@@ -3547,7 +3622,7 @@ function renderDaAlgoPage() {
                                     <li>
                                         <p>
                                             Later steps continue in the same way, by detecting and solving new conflicts.<br/>
-                                            Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same Unpair and Re-pair steps from above. 
+                                            Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
                                         </p>
                                         <p>
                                             A participant can get unpaired from a prize <b>even if they successfully got paired to that prize in a previous step.</b>
@@ -3571,7 +3646,7 @@ function renderDaAlgoPage() {
                                 </p><br/>
                                 <h5>Overview of allocation process</h5>
                                 <p>
-                                    The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you rank highest out of these Obtainable Prizes.</b>
+                                    The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you ranked highest out of these Obtainable Prizes.</b>
                                 </p><br/>
                                 <h5>Details of allocation process</h5>
                                 <p>
@@ -3601,7 +3676,7 @@ function renderDaAlgoPage() {
                                     <li>
                                         <p>
                                             Later steps continue in the same way, by detecting and solving new conflicts.
-                                            Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b> The conflict is solved using the same Unpair and Re-pair steps from above.
+                                            Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above.
                                         </p>
                                         <p>
                                             A prize can get unpaired from a participant <b>even if it successfully got paired to that participant in a previous step.</b>

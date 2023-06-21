@@ -114,7 +114,7 @@ function RenderRoundPage() {
                             }                   
                             if (step.type === 'allocationResults'){
                                 return (
-                                    <section id="allocation-results" onClick={onNext}>
+                                    <section id="allocation-results" onClick={onNext} style={{pointerEvents:'none'}}>
                                         <p>
                                             Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
                                         </p>
@@ -469,7 +469,7 @@ function renderAllocationResults(prizeName, prizeValue) {
              <p>
                 <b>You get Prize {props.prizeName}</b>, and your total earnings increase by <b>{moneyString}</b>.
             </p>
-            <div class="btn-container">
+            <div class="btn-container" style={{pointerEvents:'auto'}}>
                 <button type="button" ref={buttonRef} className="btn btn-primary" onClick={()=>{buttonRef.current.display = "none"}}>Next</button>
             </div>
         </>

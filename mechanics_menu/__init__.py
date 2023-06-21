@@ -313,8 +313,8 @@ class DAalghoInterface(Page):
             pass
         elif data['information_type'] == "reset":
             player.clicks += '|reset'
-            player.participant.current_matching = {participant_name: 'none' for participant_name in C.PARTICIPANTS_NUMBERS}
-            player.participant.matching_memo = []
+            player.current_matching = str({prize: 'none' for prize in C.PRIZES})
+            player.matching_memo = str([])
         elif data["information_type"] == "matching_memo_update":
             new_memo = data["matching_memo"]
             player.matching_memo = str(new_memo)

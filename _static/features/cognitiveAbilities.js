@@ -31,11 +31,17 @@ function renderCognitiveAbilitiesForm() {
         if(isNumber(str).isValid && parseFloat(str) >= 0){
             return {isValid: true, error: ""};
         }
+        if (fieldName === "choir"){
+            return {isValid: false, error: "Please enter a probability between 0 and 1 for probability"};
+        }
         return {isValid: false, error: "Please enter a positive number for " + fieldName.replaceAll("_"," ")};
     }
     function isNumberInRange(str, min, max, fieldName) {
         if ( isNumber(str).isValid && parseFloat(str) >= min && parseFloat(str) <= max) {
             return {isValid: true, error: ""};
+        }
+        if (fieldName === "choir"){
+            return {isValid: false, error: "Please enter a probability between 0 and 1 for probability"};
         }
         return {isValid: false, error: "Please enter a number between " + min + " and " + max + " for " + fieldName};
     }

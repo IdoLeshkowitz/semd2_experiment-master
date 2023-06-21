@@ -418,7 +418,7 @@ function renderUiFromState(step) {
                                             </p>
                                         </div>
                                     }
-                                        <div  id="round-results" onClick={onClick}>
+                                        <div  id="round-results" onClick={onClick} style={{pointerEvents:'none'}}>
                                             <p>
                                                 Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
                                             </p>
@@ -732,7 +732,7 @@ function renderAllocationResults(prizeName, prizeValue) {
                    <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
                 }
             </p>
-            <div className="btn-container">
+            <div className="btn-container" style={{pointerEvents:'auto'}}>
                 <button class="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
             </div>
         </>

@@ -56,10 +56,8 @@ class Player(BasePlayer):
 class Reflection(Page):
     form_model = 'player'
     form_fields = ["typically_rank", "did_change", "is_explain_help", "why_not", "why_yes", "understand_choose_rankings","why_choose",
-                   "understand_principle", "understand_allocation", "how_easy_ranking", "maximize_consider_prizes",
-                   "maximize_consider_rankings_other", "maximize_consider_prize_priorities", "chance_all_allocated", "chance_Instability", "chance_Pareto",
-                   "agree_allocation_fare", "agree_allocation_good", "trust_account_all_participants", "rely_in_real_life", "allocation_transparent",
-                   "allocation_predictable", "your_ranking_matters"]
+                   "understand_principle", "understand_allocation", "how_easy_ranking", "chance_all_allocated", "chance_Instability", "chance_Pareto",
+                   "agree_allocation_fare", "agree_allocation_good", "trust_account_all_participants", "rely_in_real_life", "allocation_transparent","allocation_predictable", "your_ranking_matters"]
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))

@@ -30,10 +30,10 @@ function renderIntroPage(){
             {
               content : (
                     <section>
-                        <h5>Overview of allocation process</h5>
+                        <h4>Overview of allocation process</h4>
                             <div class="explain">
                                 <p>
-                                    The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you rank highest out of these Obtainable Prizes.</b> 
+                                    The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you ranked highest out of these Obtainable Prizes.</b> 
                                 </p>
                             </div>
                     </section>
@@ -43,7 +43,7 @@ function renderIntroPage(){
             {
                 content : (
                  <section>
-                    <h5>Details of allocation process</h5>
+                    <h4>Details of allocation process</h4>
                     <div class="explain">
                         <p>
                            The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking,</b> as follows:
@@ -89,7 +89,7 @@ function renderIntroPage(){
                            <p>
                                <p>
                                     Later steps continue in the same way, by detecting and solving new conflicts.
-                                    Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b> The conflict is solved using the same Unpair and Re-pair steps from above.
+                                    Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above.
                                 </p>
                                 <p>
                                     A prize can get unpaired from a participant <b>even if it successfully got paired to that participant in a previous step.</b>
@@ -122,7 +122,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <h6><b>Temporary allocation → Obtainable Prizes</b></h6>
+                        <h5><b>Temporary allocation → Obtainable Prizes</b></h5>
                         <div className="explain">
                             <p>
                                 We will now tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
@@ -146,7 +146,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <h6><b>Obtainable Prizes → The prize you get</b></h6>
+                        <h5><b>Obtainable Prizes → The prize you get</b></h5>
                             <div class="explain">
                                 <p>
                                     We will now tell you how the prize you get is selected from among the Obtainable Prizes. 
@@ -201,7 +201,7 @@ function renderIntroPage(){
             {
               content : (
                     <section>
-                        <h5>Overview of allocation process</h5>
+                        <h4>Overview of allocation process</h4>
                             <div class="explain">
                                 <p>
                                     The allocation process will use all <b>participants’ rankings</b> and all prize priorities to determine the allocation of prizes to participants. <b>You will get the prize allocated to you.</b> 
@@ -214,7 +214,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <h5>Details of allocation process</h5>
+                        <h4>Details of allocation process</h4>
                         <div class="explain">
                             <p>
                                 The allocation process is a multi-step process, as follows:
@@ -255,7 +255,7 @@ function renderIntroPage(){
                          <div class="explain">
                            <p>
                                 Later steps continue in the same way, by detecting and solving new conflicts.<br/>
-                                Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same Unpair and Re-pair steps from above. 
+                                Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
                             </p>
                             <p>
                                 A participant can get unpaired from a prize <b>even if they successfully got paired to that prize in a previous step.</b>
