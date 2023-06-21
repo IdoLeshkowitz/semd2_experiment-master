@@ -150,6 +150,7 @@ function renderCognitiveAbilitiesForm() {
                                         <input
                                             style={{width:'3rem',lineHeight:'2rem'}}
                                             name={key}
+                                            id={key}
                                             type="text"
                                             value={form[key].value}
                                             onChange={handleChange}

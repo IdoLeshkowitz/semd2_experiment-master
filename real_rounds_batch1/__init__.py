@@ -213,6 +213,7 @@ class RoundPage(Page):
             "players":                C.PLAYERS,
             "participantsPriorities": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
             "currency":               player.session.config["currency"],
+            "variant":                player.participant.runtime__variant,
         }
 
     @staticmethod

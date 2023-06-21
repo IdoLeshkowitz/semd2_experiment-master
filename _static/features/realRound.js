@@ -62,7 +62,8 @@ function RenderRoundPage() {
         }
         return (
             <CurrencyContext.Provider value={props.currency}>
-                    <button class="button-2" type="button" onClick={()=>{setActiveModal("study")}}>Click for a general reminder on this study</button><br/>
+                    <button className="button-2" type="button" onClick={()=>{setActiveModal("study")}}>Click for a general reminder on this study</button><br/>
+                    <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "menuAllocation":"traditionalAllocation")}}>Click for a reminder on the technical details of the allocation process</button><br/>
                     {
                         activeModal &&
                         <Modal onClose={() => setActiveModal(null)}>
@@ -84,7 +85,7 @@ function RenderRoundPage() {
                                 return (
                                     <section ref={step.ref}>
                                         {step.content}
-                                        <button class="button-2" type="button" onClick={()=>{setActiveModal("ranking")}}>Click here for a reminder on what this ranking means</button><br/>
+                                        <button className="button-2" type="button" onClick={()=>{setActiveModal("ranking")}}>Click here for a reminder on what this ranking means</button><br/>
                                         <RankingForm
                                             disabled = {activeSteps.at(-1).type !== 'rankingForm'}
                                             onNext={onNext}
@@ -99,7 +100,7 @@ function RenderRoundPage() {
                                     <section ref={step.ref}>
                                         {step.content}
                                         <PrizesTable prizesValues={props.prizesValues}/><br/>
-                                        <button class="button-2" type="button" onClick={()=>{setActiveModal("prizes")}}>Click here for a reminder on what the prizes mean</button><br/>
+                                        <button className="button-2" type="button" onClick={()=>{setActiveModal("prizes")}}>Click here for a reminder on what the prizes mean</button><br/>
                                     </section>
                                 )
                             }
@@ -108,7 +109,7 @@ function RenderRoundPage() {
                                     <section ref={step.ref}>
                                         {step.content}
                                         <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/><br/>
-                                        <button class="button-2" type="button" onClick={()=>{setActiveModal("prizesPriorities")}}>Click here for a reminder on what the priorities mean</button><br/>
+                                        <button className="button-2" type="button" onClick={()=>{setActiveModal("prizesPriorities")}}>Click here for a reminder on what the priorities mean</button><br/>
                                     </section>
                                 )
                             }                   
@@ -116,7 +117,7 @@ function RenderRoundPage() {
                                 return (
                                     <section id="allocation-results" onClick={onNext} style={{pointerEvents:'none'}}>
                                         <p>
-                                            Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+                                            Allocation process working… <i className="fa-regular fa-hourglass-half fa-spin"></i>
                                         </p>
                                     </section>
                                 )
@@ -298,7 +299,7 @@ function RenderRoundPage() {
                 "type" :"instructions",
                 "content" : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p><b>This is a real round!</b> <br/>
                             Your total earnings will increase according to the prize you will get at the end of the round.</p>
                         </div>
@@ -334,7 +335,7 @@ function RenderRoundPage() {
                 "content" : (
                     <>
                         <h4>Step 2: Submit Your Ranking</h4>
-                        <p class="ms-1">
+                        <p className="ms-1">
                             Please rank the four prizes in an order of your choice.
                         </p>
                     </>
@@ -349,9 +350,9 @@ function RenderRoundPage() {
     }
     function Modal(props){
         return (
-            <div class="modal" style={{display:'flex'}} onClick={props.onClose} >
-                <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>
-                    <i class="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
+            <div className="modal" style={{display:'flex'}} onClick={props.onClose} >
+                <div className="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                    <i className="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
                     {props.children}
                 </div>
             </div>
@@ -359,64 +360,195 @@ function RenderRoundPage() {
     }
     function getModalsContent (){
         return {
-        "ranking":(
-            <>
-                <p>In Step 2, you are asked to <b>rank the four prizes</b> in an order of your choice.</p>
-                <p>The computerized participants simultaneously submit their own rankings. They <b>do not know</b> your own ranking.</p>
-                <p>Their rankings are aimed at getting them their high-earning prizes. Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
-            </>
-        ),
-        "prizes":(
-            <>
-                <p>
-                    In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>. In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings if <b>you get it</b>.
-                </p>
-                <p>
-                    Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn you a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
-                </p>
-                <p>
-                    The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
-                </p>
-            </>
-        ),
-        "prizesPriorities":(
-            <>
-                <p>
-                    All four participants have some <b>priority</b> for getting each of the four prizes.
-                    These priorities can affect the allocation of prizes.
-                </p>
-                <p>
-                    The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
-                </p>
-                <p>
-                    Each column shows the priorities of all participants at some prize, written from highest to lowest.
-                    For example, the column under <b>Prize A</b> shows its priorities.
-                    Prize A has Ruth in the 1st priority (the highest),
-                    Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
-                    So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
-                <p>
-                    The prize priorities can be different in different rounds of the game,
-                    and they were <b>determined beforehand</b>. <br/>
-                    You and the other participants <b>cannot affect the prize priorities</b>.
-                </p>
-            </>
-        ),
-        "study":(
-            <>
-                <p>
-                    In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.<br/>
-                    Each prize is worth money, but might be worth a different amount of money for each participant.
-                </p>
-                <p>
-                    You and the computerized participants will each rank the four prizes in any order you wish.<br/>
-                    Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
-                </p>
-                <p>
-                    The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
-                </p>
-            </>
-        )
-    }
+            "ranking":(
+                <>
+                    <p>In Step 2, you are asked to <b>rank the four prizes</b> in an order of your choice.</p>
+                    <p>The computerized participants simultaneously submit their own rankings. They <b>do not know</b> your own ranking.</p>
+                    <p>Their rankings are aimed at getting them their high-earning prizes. Your own ranking <b>cannot affect the computerized participants’ rankings</b>.</p>
+                </>
+            ),
+            "prizes":(
+                <>
+                    <p>
+                        In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>. In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings if <b>you get it</b>.
+                    </p>
+                    <p>
+                        Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn you a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
+                    </p>
+                    <p>
+                        The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
+                    </p>
+                </>
+            ),
+            "prizesPriorities":(
+                <>
+                    <p>
+                        All four participants have some <b>priority</b> for getting each of the four prizes.
+                        These priorities can affect the allocation of prizes.
+                    </p>
+                    <p>
+                        The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+                    </p>
+                    <p>
+                        Each column shows the priorities of all participants at some prize, written from highest to lowest.
+                        For example, the column under <b>Prize A</b> shows its priorities.
+                        Prize A has Ruth in the 1st priority (the highest),
+                        Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
+                        So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+                    <p>
+                        The prize priorities can be different in different rounds of the game,
+                        and they were <b>determined beforehand</b>. <br/>
+                        You and the other participants <b>cannot affect the prize priorities</b>.
+                    </p>
+                </>
+            ),
+            "study":(
+                <>
+                    <p>
+                        In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.<br/>
+                        Each prize is worth money, but might be worth a different amount of money for each participant.
+                    </p>
+                    <p>
+                        You and the computerized participants will each rank the four prizes in any order you wish.<br/>
+                        Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
+                    </p>
+                    <p>
+                        The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
+                    </p>
+                </>
+            ),
+            "traditionalAllocation":(
+                <div>
+                    <p>
+                        <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
+                        Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
+                    </p><br/>
+                    <h5>Overview of allocation process</h5>
+                    <p>
+                        The allocation process will use all <b>participants’ rankings</b> and all prize priorities to determine the allocation of prizes to participants. <b>You will get the prize allocated to you.</b>
+                    </p><br/>
+                    <h5>Details of allocation process</h5>
+                    <p>
+                        The allocation process is a multi-step process , as follows:
+                    </p>
+                    <ol>
+                        <li>
+                        In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                        </li>
+                        <li>
+                            <p>
+                                In the next step, possible conflicts are detected and solved. If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                            </p>
+                            <p>
+                                Each conflict is solved in two steps:
+                                 <ul>
+                                    <li>
+                                        <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                    </li>
+                                    <li>
+                                        <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                    </li>
+                                </ul>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                                Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
+                            </p>
+                            <p>
+                                A participant can get unpaired from a prize <b>even if they successfully got paired to that prize in a previous step.</b>
+                            </p>
+                        </li>
+                    </ol>
+                    <p>
+                        When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
+                    </p>
+                    <p>
+                        Each prize is then <b>allocated</b> to the participant paired to it.
+                    </p>
+                </div>
+            ),
+            "menuAllocation":(
+                <div>
+                    <p>
+                        <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
+                        Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
+                    </p><br/>
+                    <h5>Overview of allocation process</h5>
+                    <p>
+                        The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you ranked highest out of these Obtainable Prizes.</b>
+                    </p><br/>
+                    <h5>Details of allocation process</h5>
+                    <p>
+                        The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking, as follows:</b>
+                    </p>
+                    <ol>
+                        <li>
+                            In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
+                        </li>
+                        <li>
+                            <p>
+                                 In the next step, possible conflicts are detected and solved.<br/>
+                                 If two (or more) prizes are paired to the same participant, this is a <b>conflict.</b>
+                            </p>
+                            <p>
+                                Each conflict is solved in two steps:
+                                 <ul>
+                                    <li>
+                                        <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
+                                    </li>
+                                    <li>
+                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants it <b>was not yet paired with</b> and <b>except for you.</b>
+                                    </li>
+                                </ul>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Later steps continue in the same way, by detecting and solving new conflicts.
+                                Like before, if two (or more) prizes are paired to the same participant, this is a <b>conflict.</b> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above.
+                            </p>
+                            <p>
+                                A prize can get unpaired from a participant <b>even if it successfully got paired to that participant in a previous step.</b>
+                            </p>
+                            <p>
+                                There is one <b>important thing to note about</b> the Re-pair step:<br/>
+                                During the process, one prize will encounter a conflict with <b>every</b> participant, except for you, and will eventually get unpaired from all of them. That prize cannot be re-paired and will <b>remain unpaired</b> at the end of the process.
+                            </p>        
+                        </li>
+                    </ol>
+                    <p>
+                        When there are no more conflicts and when one prize was unpaired from all participants (except for you), the process is over. The result is each prize, except for the unpaired one, being paired to a different participant (except for you).
+                    </p>
+                    <p>
+                        Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.
+                    </p>
+                    <br/><h6><b>Temporary allocation → Obtainable Prizes</b></h6>
+                    <p>
+                            We will now tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
+                    </p>
+                    <p>
+                        In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b>
+                    </p>
+                    <p>
+                        You can obtain two kinds of prizes:
+                        <ol>
+                            <li><b>Any prize that your priority of getting is higher</b> than that of the participant it is temporarily allocated to.</li>
+                            <li><b>The prize that was left unpaired in the temporary allocation.</b></li>
+                        </ol>
+                        You cannot obtain any other prizes.
+                    </p>
+                    <br/><h6><b>Obtainable Prizes → The prize you get</b></h6>
+                    <p>
+                        We will now tell you how the prize you get is selected from among the Obtainable Prizes.
+                    </p>
+                    <p>
+                        At the end, among the Obtainable Prizes, you get the one that you ranked the <b>highest.</b>
+                    </p>
+                </div> 
+            ),
+        }
     }
     `
     function getPropsFormJsVars() {
@@ -469,7 +601,7 @@ function renderAllocationResults(prizeName, prizeValue) {
              <p>
                 <b>You get Prize {props.prizeName}</b>, and your total earnings increase by <b>{moneyString}</b>.
             </p>
-            <div class="btn-container" style={{pointerEvents:'auto'}}>
+            <div className="btn-container" style={{pointerEvents:'auto'}}>
                 <button type="button" ref={buttonRef} className="btn btn-primary" onClick={()=>{buttonRef.current.display = "none"}}>Next</button>
             </div>
         </>

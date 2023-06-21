@@ -169,7 +169,8 @@ PARTICIPANT_FIELDS = [
     "understanding_bonus",
     "understanding_bonus_limit",
     "full_name",
-    "email"
+    "email",
+    "runtime__variant",
                       ]
 SESSION_FIELDS = []
 
