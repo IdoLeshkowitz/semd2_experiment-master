@@ -2522,7 +2522,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [1,0,0,0],
+                    expectedAnswersIndex: [0,1,0,0],
                     correctMsg:(
                         <p>
                             Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
@@ -2550,14 +2550,14 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize B</b>,<b> Prize C </b>and<b> Prize D</b>
+                                    <b>Prize A</b>,<b> Prize C </b>and<b> Prize D</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
-                        <span>B</span>,
+                        <span>A</span>,
                         <span>C</span>,
                         <span>D</span>,
                     ],
@@ -2703,18 +2703,18 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize A, </b><b>Prize C </b>and<b> Prize B</b>
+                                    <b>Prize B, </b><b>Prize C </b>and<b> Prize D</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
-                        <span>A</span>,
                         <span>B</span>,
                         <span>C</span>,
+                        <span>D</span>,
                     ],
-                    expectedAnswerIndex: 2,
+                    expectedAnswerIndex: 1,
                     correctMsg:(
                         <p>
                             Correct! Among the <b>Obtainable Prizes</b>, Prize C is the one you <b>ranked highest</b>. Hence you get this prize.
