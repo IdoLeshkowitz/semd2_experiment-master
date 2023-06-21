@@ -20,22 +20,22 @@ def get_customers_priorities_by_round(round):
         "D": ["You", "Theresa", "Shirley", "Ruth"]
     }
     second_round_priorities = {
-        "A": ["Theresa", "You", "Ruth", "Shirley"],
+        "A": ["Shirley", "You", "Ruth", "Theresa"],
         "B": ["Shirley", "Theresa", "You", "Ruth"],
-        "C": ["Shirley", "You", "Ruth", "Theresa"],
+        "C": ["Theresa", "You", "Ruth", "Shirley"],
         "D": ["Theresa", "Ruth", "You", "Shirley"]
     }
     third_round_priorities = {
-        "A": ["Ruth", "Shirley", "Theresa", "You"],
-        "B": ["Ruth", "You", "Shirley", "Theresa"],
-        "C": ["Theresa", "You", "Shirley", "Ruth"],
-        "D": ["Theresa", "Shirley", "Ruth", "You"]
+        "A": ["You", "Theresa", "Shirley", "Ruth"],
+        "B": ["Ruth", "You", "Theresa", "Shirley"],
+        "C": ["Shirley", "Ruth", "Theresa", "You"],
+        "D": ["Ruth", "You", "Shirley", "Theresa"]
     }
     fourth_round_priorities = {
-        "A": ["Ruth", "You", "Shirley", "Theresa"],
-        "B": ["Shirley", "You", "Theresa", "Ruth"],
+        "A": ["Ruth", "Shirley", "Theresa", "You"],
+        "B": ["Ruth", "Shirley", "Theresa", "You"],
         "C": ["Ruth", "You", "Theresa", "Shirley"],
-        "D": ["Shirley", "Theresa", "You", "Ruth"]
+        "D": ["Shirley", "You", "Ruth", "Theresa"]
     }
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
@@ -43,18 +43,18 @@ def get_customers_priorities_by_round(round):
 
 def get_products_priorities_by_round(round):
     first_round_priorities = {"Ruth": ["A", "C", "D", "B"], "Shirley": ["A", "C", "D", "B"], "Theresa": ["B", "A", "D", "C"], "You": ["C", "A", "B", "D"]}
-    second_round_priorities = {"Ruth": ["D", "C", "B", "A"], "Shirley": ["B", "C", "A", "D"], "Theresa": ["B", "A", "D", "C"], "You": ["D", "A", "C", "B"]}
-    third_round_priorities = {"Ruth": ["D", "A", "B", "C"], "Shirley": ["C", "B", "A", "D"], "Theresa": ["C", "D", "A", "B"], "You": ["D", "C", "B", "A"]}
-    fourth_round_priorities = {"Ruth": ["C", "A", "B", "D"], "Shirley": ["A", "D", "C", "B"], "Theresa": ["A", "D", "B", "C"], "You": ["C", "D", "A", "B"]}
+    second_round_priorities = {"Ruth": ["D", "A", "B", "C"], "Shirley": ["B", "A", "C", "D"], "Theresa": ["B", "C", "D", "A"], "You": ["D", "C", "B", "A"]}
+    third_round_priorities = {"Ruth": ["A", "B", "D", "C"], "Shirley": ["B", "A", "D", "C"], "Theresa": ["D", "B", "A", "C"], "You": ["D", "B", "C", "A"]}
+    fourth_round_priorities = {"Ruth": ["D", "A", "C", "B"], "Shirley": ["C", "A", "B", "D"], "Theresa": ["A", "C", "B", "D"], "You": ["A", "C", "B", "D"]}
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
 
 
 def get_expected_prizes_ranking_by_round(round):
     first_round_ranking = ["C", "A", "B", "D"]
-    second_round_ranking = ["D", "A", "C", "B"]
-    third_round_ranking = ["D", "C", "B", "A"]
-    fourth_round_ranking = ["C", "D", "A", "B"]
+    second_round_ranking = ["D", "C", "B", "A"]
+    third_round_ranking = ["D", "B", "C", "A"]
+    fourth_round_ranking = ["A", "C", "B", "D"]
     rankings = [first_round_ranking, second_round_ranking, third_round_ranking, fourth_round_ranking]
     return rankings[round - 1]
 

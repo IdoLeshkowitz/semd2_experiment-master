@@ -970,7 +970,7 @@ function renderDaAlgoPage() {
                             We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "A", "You": "C"},
+                    expectedMatching:   {'Ruth': "D", "Shirley": "B", "Theresa": "C", "You": "A"},
                 },
                 {
                     id: "allocated_all",
@@ -1005,7 +1005,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [2,1,3,0],
+                    expectedAnswersIndex: [3,1,2,0],
                     correctMsg:(
                         <p>Correct!</p>
                     ),
@@ -1033,7 +1033,7 @@ function renderDaAlgoPage() {
                         <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 2,
+                    expectedAnswerIndex: 0,
                     correctMsg:(
                         <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
                     ),
@@ -1113,7 +1113,7 @@ function renderDaAlgoPage() {
                             We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "C", "You": "B"},
+                    expectedMatching:   {'Ruth': "B", "Shirley": "C", "Theresa": "A", "You": "D"},
                 },
                 {
                     id: "allocated_all",
@@ -1148,7 +1148,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [1,3,2,0],
+                    expectedAnswersIndex: [2,0,1,3],
                     correctMsg:(
                         <p>Correct!</p>
                     ),
@@ -1176,7 +1176,7 @@ function renderDaAlgoPage() {
                         <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 3,
                     correctMsg:(
                         <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
                     ),
@@ -1195,7 +1195,7 @@ function renderDaAlgoPage() {
                     type : "instructions",
                     content : (
                         <p>
-                            The allocation process is over.<b> You get Prize B.</b>
+                            The allocation process is over.<b> You get Prize D.</b>
                         </p>   
                     )
                 }
@@ -1256,7 +1256,7 @@ function renderDaAlgoPage() {
                             We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {'Ruth': "C", "Shirley": "D", "Theresa": "B", "You": "A"},
+                    expectedMatching:   {'Ruth': "D", "Shirley": "A", "Theresa": "B", "You": "C"},
                 },
                 {
                     id: "allocated_all",
@@ -1291,7 +1291,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [3,2,0,1],
+                    expectedAnswersIndex: [1,2,3,0],
                     correctMsg:(
                         <p>Correct!</p>
                     ),
@@ -1319,7 +1319,7 @@ function renderDaAlgoPage() {
                         <span>C</span>,
                         <span>D</span>,
                     ],
-                    expectedAnswerIndex: 0,
+                    expectedAnswerIndex: 2,
                     correctMsg:(
                         <p>Correct! At the end of the process, each participant gets the prize they were allocated with.</p>
                     ),
@@ -1338,7 +1338,7 @@ function renderDaAlgoPage() {
                     type : "instructions",
                     content : (
                         <p>
-                            The allocation process is over.<b> You get Prize A.</b>
+                            The allocation process is over.<b> You get Prize C.</b>
                         </p>   
                     )
                 }
@@ -2337,7 +2337,7 @@ function renderDaAlgoPage() {
                             We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {"A":"Theresa","B":"Shirley","C":"Unpaired","D":"Ruth"},
+                    expectedMatching:   {"A":"Unpaired","B":"Shirley","C":"Theresa","D":"Ruth"},
                 },
                 {
                     id: "allocated_all",
@@ -2370,7 +2370,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [1,1,0,1],
+                    expectedAnswersIndex: [0,1,1,1],
                     correctMsg:(
                         <p>
                             Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
@@ -2398,24 +2398,24 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize C</b>
+                                    <b>Prize A</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
-                        <span>C</span>,
+                        <span>A</span>,
                     ],
                     expectedAnswerIndex: 0,
                     correctMsg:(
                         <p>
-                            Correct! Among the <b>Obtainable Prizes</b>, Prize C is the one you <b>ranked highest</b>. Hence you get this prize.
+                            Correct! Among the <b>Obtainable Prizes</b>, Prize A is the one you <b>ranked highest</b>. Hence you get this prize.
                         </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Among the <b>Obtainable Prizes</b>, Prize C is the one you <b>ranked highest</b>. Hence you get this prize.<br/>
+                            Correct! Among the <b>Obtainable Prizes</b>, Prize A is the one you <b>ranked highest</b>. Hence you get this prize.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2489,7 +2489,7 @@ function renderDaAlgoPage() {
                             We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {"A":"Unpaired","B":"Shirley","C":"Theresa","D":"Ruth"},
+                    expectedMatching:   {"A":"Theresa","B":"Ruth","C":"Unpaired","D":"Shirley"},
                 },
                 {
                     id: "allocated_all",
@@ -2522,7 +2522,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [0,0,1,1],
+                    expectedAnswersIndex: [0,1,0,0],
                     correctMsg:(
                         <p>
                             Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
@@ -2550,25 +2550,25 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize A </b>and<b> Prize B</b>
+                                    <b>Prize C </b>and<b> Prize D</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
-                        <span>A</span>,
-                        <span>B</span>,
+                        <span>C</span>,
+                        <span>D</span>,
                     ],
                     expectedAnswerIndex: 1,
                     correctMsg:(
                         <p>
-                            Correct! Among the <b>Obtainable Prizes</b>, Prize B is the one you <b>ranked highest</b>. Hence you get this prize.
+                            Correct! Among the <b>Obtainable Prizes</b>, Prize D is the one you <b>ranked highest</b>. Hence you get this prize.
                         </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Among the <b>Obtainable Prizes</b>, Prize B is the one you <b>ranked highest</b>. Hence you get this prize.<br/>
+                            Correct! Among the <b>Obtainable Prizes</b>, Prize D is the one you <b>ranked highest</b>. Hence you get this prize.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2581,7 +2581,7 @@ function renderDaAlgoPage() {
                     type : "instructions",
                     content : (
                         <p>
-                            The allocation process is over.<b> You get Prize B.</b>
+                            The allocation process is over.<b> You get Prize D.</b>
                         </p>   
                     )
                 }
@@ -2642,7 +2642,7 @@ function renderDaAlgoPage() {
                             We set the dashboard correctly for you this time. Please make sure you understand your mistake.
                         </p>
                     ),
-                    expectedMatching:   {"A":"Shirley","B":"Unpaired","C":"Ruth","D":"Theresa"},
+                    expectedMatching:   {"A":"Shirley","B":"Unpaired","C":"Theresa","D":"Ruth"},
                 },
                 {
                     id: "allocated_all",
@@ -2674,7 +2674,7 @@ function renderDaAlgoPage() {
                         <span>Prize C</span>,
                         <span>Prize D</span>,
                     ],
-                    expectedAnswersIndex: [0,0,1,1],
+                    expectedAnswersIndex: [1,0,0,0],
                     correctMsg:(
                         <p>
                             Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
@@ -2702,25 +2702,26 @@ function renderDaAlgoPage() {
                             </p>
                             <p style={{display:'flex',justifyContent:'center'}}>
                                 <span style={{color: "#0b1ae3",fontWeight: "bold",border:'2px solid black',padding:'1rem 3rem'}}>  
-                                    <b>Prize A </b>and<b> Prize B</b>
+                                    <b>Prize A, </b><b>Prize C </b>and<b> Prize B</b>
                                 </span>
                             </p>
                             <p>Finally, select <b>the prize that you get</b> out of the Obtainable Prizes from the list below.</p>
                         </>
                     ),
                     options:[
-                        <span>A</span>,
-                        <span>B</span>,
+                        <span>Prize A</span>,
+                        <span>Prize B</span>,
+                        <span>Prize C</span>,
                     ],
-                    expectedAnswerIndex: 0,
+                    expectedAnswerIndex: 2,
                     correctMsg:(
                         <p>
-                            Correct! Among the <b>Obtainable Prizes</b>, Prize A is the one you <b>ranked highest</b>. Hence you get this prize.
+                            Correct! Among the <b>Obtainable Prizes</b>, Prize C is the one you <b>ranked highest</b>. Hence you get this prize.
                         </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Among the <b>Obtainable Prizes</b>, Prize A is the one you <b>ranked highest</b>. Hence you get this prize.<br/>
+                            Correct! Among the <b>Obtainable Prizes</b>, Prize C is the one you <b>ranked highest</b>. Hence you get this prize.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2734,7 +2735,7 @@ function renderDaAlgoPage() {
                     type : "instructions",
                     content : (
                         <p>
-                            The allocation process is over.<b> You get Prize A.</b>
+                            The allocation process is over.<b> You get Prize C.</b>
                         </p>   
                     )
                 }
