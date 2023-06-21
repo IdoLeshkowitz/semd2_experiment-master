@@ -238,6 +238,10 @@ function RenderRoundPage() {
     }
     function RankingForm(props){
         const [inputValue,setInputValue] = React.useState("");
+        const firstPriorityRef = React.useRef(null);
+        const secondPriorityRef = React.useRef(null);
+        const thirdPriorityRef = React.useRef(null);
+        const fourthPriorityRef = React.useRef(null);
         function removeEnDash(str) {
             return str.replace(/–/g, '');
         }
@@ -273,6 +277,10 @@ function RenderRoundPage() {
             if (isValid === false) return;
             setInputValue(addEnDash(uppercasedCleanedInput));
             props.setRanking([uppercasedCleanedInput[0],uppercasedCleanedInput[1],uppercasedCleanedInput[2],uppercasedCleanedInput[3]]);
+            firstPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[0]);
+            secondPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[1]);
+            thirdPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[2]);
+            fourthPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[3]);
         }
         return (
             <div style={{display: "flex", justifyContent: "center"}}>
@@ -290,6 +298,10 @@ function RenderRoundPage() {
                     }}
                     onInput={onInput}
                    />
+                   <input type="hidden" name="first_priority" id="first_priority" ref={firstPriorityRef} required/>
+                    <input type="hidden" name="second_priority" id="second_priority" ref={secondPriorityRef} required/>
+                    <input type="hidden" name="third_priority" id="third_priority" ref={thirdPriorityRef} required/>
+                    <input type="hidden" name="fourth_priority" id="fourth_priority" ref={fourthPriorityRef} required/>                   
         </div>
         )
     }
