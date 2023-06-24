@@ -35,7 +35,7 @@ class Player(BasePlayer):
         blank=True
     )
     zip_code = models.IntegerField(
-        label= "What is your zip code? (5 digits)?", min=10000, max=99999, blank=True
+        label= "What is your zip code? (5 digits)?", min=10000, max=999999, blank=True
     )
     household_size = models.IntegerField(
         label= "Including you, how many people live in your household?", min=1, blank=True
