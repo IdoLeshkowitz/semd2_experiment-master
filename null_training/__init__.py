@@ -280,8 +280,10 @@ class NullTraining(Page):
         if data["information_type"] == "set_mistakes_counter":
             player.mistakes_counter = data["mistakes_counter"]
 
+    @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
+        print(f"player.understanding_bonus_limit: {player.understanding_bonus_limit}")
         player.participant.understanding_bonus_limit += player.understanding_bonus_limit
         player.prizes_values += str(C.PRIZES_VALUES[player.round_number - 1])
         player.prizes_priorities += str(C.PRIZES_PRIORITIES[player.round_number - 1])

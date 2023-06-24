@@ -3,10 +3,14 @@ function RenderRoundPage() {
     const CurrencyContext = React.createContext(null);
     const steps = getSteps()
     const modalsContent = getModalsContent()
+    function getActiveSteps(activeStepIndex){
+        if (!activeStepIndex) return [steps[0]]
+        return steps.slice(0, activeStepIndex + 1)
+    }
     function RoundPage(props){
-        const [ranking, setRanking] = React.useState(props.prizes.map(() => undefined))
+        const [ranking, setRanking] = React.useState(props.initialRanking)
         const [activeModal,setActiveModal] = React.useState(null)
-        const [activeSteps, setActiveSteps] = React.useState([steps[0]])
+        const [activeSteps, setActiveSteps] = React.useState(getActiveSteps(props.activeStepIndex))
         React.useEffect(() => {
             if (activeSteps.length === 1)return ;
             /* Scroll to the latest step */
@@ -24,14 +28,21 @@ function RenderRoundPage() {
                 const otherPlayersRankings = props.participantsPriorities
                 const playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
                 liveSend({
+                    "information_type": "set_ranking",
                      "preferences": [playersRankings, props.prizesPriorities], "prizes": props.prizes, "values": props.prizesValues
                 });
             }
         },[activeSteps])
+        React.useEffect(() => {
+            liveSend({
+            "information_type": "set_active_step_id",
+            "active_step_index": activeSteps.length - 1,
+            })
+        },[activeSteps])
         function readyToProceed(){
             const step = activeSteps.at(-1)
             if (step.type === 'rankingForm'){
-                return ranking.every(ranking => ranking !== undefined)
+                return ranking.every(ranking => !!ranking)
             }
             return true
         }
@@ -87,6 +98,7 @@ function RenderRoundPage() {
                                         {step.content}
                                         <button className="button-2" type="button" onClick={()=>{setActiveModal("ranking")}}>Click here for a reminder on what this ranking means</button><br/>
                                         <RankingForm
+                                            initialRanking = {ranking}
                                             disabled = {activeSteps.at(-1).type !== 'rankingForm'}
                                             onNext={onNext}
                                             setRanking={setRanking}
@@ -237,7 +249,7 @@ function RenderRoundPage() {
         )    
     }
     function RankingForm(props){
-        const [inputValue,setInputValue] = React.useState("");
+        const [inputValue,setInputValue] = React.useState(addEnDash(props?.initialRanking?.join('')?.toUpperCase() ?? ''));
         const firstPriorityRef = React.useRef(null);
         const secondPriorityRef = React.useRef(null);
         const thirdPriorityRef = React.useRef(null);
@@ -298,7 +310,7 @@ function RenderRoundPage() {
                     }}
                     onInput={onInput}
                    />
-                   <input type="hidden" name="first_priority" id="first_priority" ref={firstPriorityRef} required/>
+                    <input type="hidden" name="first_priority" id="first_priority" ref={firstPriorityRef} required/>
                     <input type="hidden" name="second_priority" id="second_priority" ref={secondPriorityRef} required/>
                     <input type="hidden" name="third_priority" id="third_priority" ref={thirdPriorityRef} required/>
                     <input type="hidden" name="fourth_priority" id="fourth_priority" ref={fourthPriorityRef} required/>                   
@@ -563,21 +575,21 @@ function RenderRoundPage() {
         }
     }
     `
+
     function getPropsFormJsVars() {
-        console.log(js_vars)
-        function getRanking(){
-            const firstPriority = js_vars.firstPriority || undefined;
-            const secondPriority = js_vars.secondPriority || undefined;
-            const thirdPriority = js_vars.thirdPriority || undefined;
-            const fourthPriority = js_vars.fourthPriority || undefined;
-            if (firstPriority === undefined || secondPriority === undefined || thirdPriority === undefined || fourthPriority === undefined){
-                return undefined;
-            }
+        function getRanking() {
+            const firstPriority = js_vars.firstPriority || null;
+            const secondPriority = js_vars.secondPriority || null;
+            const thirdPriority = js_vars.thirdPriority || null;
+            const fourthPriority = js_vars.fourthPriority || null;
+            return [firstPriority, secondPriority, thirdPriority, fourthPriority]
         }
         return {
+            "initialRanking": getRanking(),
             ...js_vars
         }
     }
+
     renderReactComponent(jsxCode, 'react-root', 'RoundPage', JSON.stringify(getPropsFormJsVars()))
 }
 
@@ -627,6 +639,7 @@ function renderAllocationResults(prizeName, prizeValue) {
 function liveRecv(data) {
     renderAllocationResults(data["prize"], data["value"]);
 }
+
 window.addEventListener('load', RenderRoundPage)
 
 

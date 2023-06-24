@@ -184,7 +184,7 @@ class Player(BasePlayer):
     start_time = models.StringField(initial=str(datetime.now(timezone.utc)))
     end_time = models.StringField(blank=True)
 
-    __runtime__active_step_id = models.StringField(blank=True, initial="")
+    active_step_index = models.IntegerField(blank=True, initial=0)
 
 
 def get_prizes_in_round(prizes_by_round_str, round_number):
@@ -214,6 +214,11 @@ class RoundPage(Page):
             "participantsPriorities": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
             "currency":               player.session.config["currency"],
             "variant":                player.participant.runtime__variant,
+            "firstPriority":          C.PRIZES[int(player.first_priority)] if player.first_priority else "",
+            "secondPriority":         C.PRIZES[int(player.second_priority)] if player.second_priority else "",
+            "thirdPriority":          C.PRIZES[int(player.third_priority)] if player.third_priority else "",
+            "fourthPriority":         C.PRIZES[int(player.fourth_priority)] if player.fourth_priority else "",
+            "activeStepIndex":        player.active_step_index,
         }
 
     @staticmethod
@@ -227,43 +232,51 @@ class RoundPage(Page):
 
     @staticmethod
     def live_method(player: Player, data):
-        """
-        Recieves a data stracture from the client side, calls the
-        Differed-Acceptance algorithm and sends the client side the
-        player's matched prize and its value
-
-        Parameters
-        ----------
-        player: Player
-            Otree's object representing the current player.
-        data: dictionary
-            A data set with all the information needed from the client side
-            for the matching algorithm.
-        Returns
-        -------
-        dictionary
-            A data set with the player's matched prize and its value.
-        """
-        # Sleep for 2 seconds to give the feeling the allocation process
-        # takes more time than it really is (which practically 0 in our case).
-        time.sleep(2)
-        # TODO: Back when this was implemented, all the rounds data was determined
-        #       in the frontend side (preferences of competitors and prizes, prizes values, etc.).
-        #       Now, everything is implemented in the backend side. So, while everything still
-        #       works fine, we should consider refactoring all the source code to avoid redundant
-        #       transfer of data.
-        preferences = data["preferences"]
-        prizes = data["prizes"]
-        values = data["values"]
-
-        matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
-        user_prize = matching[0][0]
-        # since prize values are in cents, we divide by 100 to get dollars
-        payoff = values[user_prize]
-        # add it to the user's payoff
-        player.payoff += payoff
-        response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
-        return {0: response}
+        print(data)
+        if data["information_type"] == "set_active_step_id":
+            step_index = data["active_step_index"]
+            player.active_step_index = step_index
+        elif data["information_type"] == "set_ranking":
+            """
+            Recieves a data stracture from the client side, calls the
+            Differed-Acceptance algorithm and sends the client side the
+            player's matched prize and its value
+    
+            Parameters
+            ----------
+            player: Player
+                Otree's object representing the current player.
+            data: dictionary
+                A data set with all the information needed from the client side
+                for the matching algorithm.
+            Returns
+            -------
+            dictionary
+                A data set with the player's matched prize and its value.
+            """
+            # Sleep for 2 seconds to give the feeling the allocation process
+            # takes more time than it really is (which practically 0 in our case).
+            time.sleep(2)
+            # TODO: Back when this was implemented, all the rounds data was determined
+            #       in the frontend side (preferences of competitors and prizes, prizes values, etc.).
+            #       Now, everything is implemented in the backend side. So, while everything still
+            #       works fine, we should consider refactoring all the source code to avoid redundant
+            #       transfer of data.
+            preferences = data["preferences"]
+            prizes = data["prizes"]
+            values = data["values"]
+            player.first_priority = str(preferences[0][0][0])
+            player.second_priority = str(preferences[0][0][1])
+            player.third_priority = str(preferences[0][0][2])
+            player.fourth_priority = str(preferences[0][0][3])
+            matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
+            user_prize = matching[0][0]
+            # since prize values are in cents, we divide by 100 to get dollars
+            payoff = values[user_prize]
+            # add it to the user's payoff
+            player.payoff += payoff
+            response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
+            return {0: response}
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

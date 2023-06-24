@@ -13,7 +13,7 @@
             <ol>
                 <li>For completing the entire study, you earn <b>{{ 16 | cu }}</b>.</li>
                 <li>The earnings you accumulated in game rounds are <b class="money-amount">{{ player.participant.payoff }}</b>.</li>
-                <li>{{ player.participant.understanding_bonus }} out of 73 questions ({{ understanding_bonus_ratio }}%) count for your Understanding Bonus. Hence, out of the full Understanding Bonus of {{ 4 | cu }}, you get <span class="money-amount" style="font-weight: bold;">{{ understanding_bonus_money | cu  }}</span>.</li>
+                <li>{{ player.participant.understanding_bonus }} out of {{ player.participant.understanding_bonus_limit }} questions ({{ understanding_bonus_ratio }}%) count for your Understanding Bonus. Hence, out of the full Understanding Bonus of {{ 4 | cu }}, you get <span class="money-amount" style="font-weight: bold;">{{ understanding_bonus_money | cu  }}</span>.</li>
             </ol>
         </p>
         <div style="display: flex; justify-content: center;">

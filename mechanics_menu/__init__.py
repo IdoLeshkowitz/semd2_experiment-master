@@ -134,40 +134,6 @@ def GetParticpantNumber(char):
         return 4
 
 
-class DAalghoIntro(Page):
-    form_model = 'player'
-    form_fields = ['SchoolsNumber', 'StudentsNumber', ]
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):  # EXPLANATION:
-        player.time_stamps = 'L:'  # Setting the field so that it is not empty.
-        player.clicks = '||'  # Setting the field so that it is not empty.
-        player.participant.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
-        # the priorities of each participant .
-        player.participant.participants_priorities = str(get_products_priorities_by_round(player.round_number))
-        # set expected ranking
-        player.participant.expected_ranking = get_expected_prizes_ranking_by_round(player.round_number)
-
-
-class DAalghoIntro2(Page):
-    form_model = 'player'
-
-    @staticmethod
-    def get_form_fields(player):
-        max_list = ['MaxStudentsA', 'MaxStudentsB', 'MaxStudentsC', 'MaxStudentsD', 'MaxStudentsE']
-        n = player.number_of_Schools
-        return max_list[0:n]
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):  # EXPLANATION:
-        # the priorities of each prize .
-        player.participant.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
-        # the priorities of each participant .
-        player.paticipant.participants_priorities = str(get_products_priorities_by_round(player.round_number))
-        # set expected ranking
-        player.paticipant.expected_ranking = get_expected_prizes_ranking_by_round(player.round_number)
-
-
 class TrainingRound(Page):
     form_model = "player"
 
@@ -189,28 +155,6 @@ class TrainingRound(Page):
             "currentStep":            player.current_step_id,
             "variant":                C.VARIANT
         }
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        player.clicks = ''
-
-        def get_current_matching_by_variant(variant):
-            if variant == "menu":
-                return str({prize_name: 'none' for prize_name in C.PRIZES})
-            if variant == "traditional":
-                return str({participant_name: 'none' for participant_name in C.PRIZES})
-
-        player.current_matching = get_current_matching_by_variant(C.VARIANT)
-        player.matching_memo = str([])
-
-        def get_understanding_bonus_limit_by_round(round_number):
-            if round == 1:
-                return 4
-            else:
-                return 1
-
-        player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
-        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
 
 class DAalghoInterface(Page):
@@ -356,15 +300,8 @@ class MechanicsIntro(Page):
         return player.round_number == 1
 
     @staticmethod
-    def before_next_page(player: Player, timeout_happened):
-        player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
-        player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
-        player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
-
-    @staticmethod
     def js_vars(player: Player):
-        return {'variant': C.VARIANT
-        }
+        return {'variant': C.VARIANT}
 
 
 class EndTraining(Page):
@@ -377,6 +314,28 @@ class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.start_time = str(datetime.now(timezone.utc))
+        player.clicks = ''
+
+        def get_current_matching_by_variant(variant):
+            if variant == "menu":
+                return str({prize_name: 'none' for prize_name in C.PRIZES})
+            if variant == "traditional":
+                return str({participant_name: 'none' for participant_name in C.PRIZES})
+
+        player.current_matching = get_current_matching_by_variant(C.VARIANT)
+        player.matching_memo = str([])
+
+        def get_understanding_bonus_limit_by_round(round_number):
+            if round == 1:
+                return 4
+            else:
+                return 1
+
+        player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
+        player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
+        player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
+        player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
 
 
 page_sequence = [PreProcess, MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]

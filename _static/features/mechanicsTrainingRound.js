@@ -373,65 +373,77 @@ function renderPage() {
             )
     }   
     function RankingForm(props){
-            const [inputValue,setInputValue] = React.useState("");
-            const [upperCaseInputValue,setUpperCaseInputValue] = React.useState("");
-            function removeEnDash(str) {
-                return str.replace(/–/g, '');
-            }
-            function addEnDash(str) {
-                /* add en dash between each character */
-                return str.split('').join('–');
-            }
-            function validateInput(str) {
-                /*
-                validate that input is max 4 characters long
-                 */
-                const isLengthValid = str.length <= 4;
-                if (!isLengthValid) return false;
-                /*
-                validate that characters are either A | B | C | D . Non case sensitive.
-                */
-                const containsOnlyValidChars = /^[a-dA-D]*$/.test(str);
-                if (!containsOnlyValidChars) return false;
-                /*
-                validate that each character is unique
-                 */
-                const containsOnlyUniqueChars = str.length === new Set(str).size;
-                if (!containsOnlyUniqueChars) return false;
-                return true;
-            }
-            function replaceCharWithNumericValue(str) {
-                if (str === 'A') return 1;
-                if (str === 'B') return 2;
-                if (str === 'C') return 3;
-                if (str === 'D') return 4;
-                return undefined
-            }
-            function onInput(e){
-                const uppercasedCleanedInput = removeEnDash(e.target.value).toUpperCase();
-                setUpperCaseInputValue(uppercasedCleanedInput);
-                const isValid = validateInput(uppercasedCleanedInput);
-                if (isValid === false)return;
-                setInputValue(addEnDash(uppercasedCleanedInput));
-                props.onInput(uppercasedCleanedInput.split(''));
-            }
-            return (
-                <div style={{display: "flex", justifyContent: "center"}}>
-                    <input  type="text"
-                            style={{flexBasis: '10rem',textAlign: 'center'}}
-                            className="form-control fw-bold fs-5 mt-2 mb-3 "
-                            value={inputValue}
-                            onInput={onInput}
-                            onKeyDown={(e)=>{
-                                if(e.key === "Enter"){
-                                    e.preventDefault();
-                                    props.onEnter(upperCaseInputValue.split(''));
-                                }
-                            }}
-                            ref = {props.inputRef}
-                    />
-                </div>
-            )
+        const [inputValue,setInputValue] = React.useState("");
+        const [upperCaseInputValue,setUpperCaseInputValue] = React.useState("");
+        const firstPriorityRef = React.useRef(null);
+        const secondPriorityRef = React.useRef(null);
+        const thirdPriorityRef = React.useRef(null);
+        const fourthPriorityRef = React.useRef(null);
+        function removeEnDash(str) {
+            return str.replace(/–/g, '');
+        }
+        function addEnDash(str) {
+            /* add en dash between each character */
+            return str.split('').join('–');
+        }
+        function validateInput(str) {
+            /*
+            validate that input is max 4 characters long
+             */
+            const isLengthValid = str.length <= 4;
+            if (!isLengthValid) return false;
+            /*
+            validate that characters are either A | B | C | D . Non case sensitive.
+            */
+            const containsOnlyValidChars = /^[a-dA-D]*$/.test(str);
+            if (!containsOnlyValidChars) return false;
+            /*
+            validate that each character is unique
+             */
+            const containsOnlyUniqueChars = str.length === new Set(str).size;
+            if (!containsOnlyUniqueChars) return false;
+            return true;
+        }
+        function replaceCharWithNumericValue(str) {
+            if (str === 'A') return 1;
+            if (str === 'B') return 2;
+            if (str === 'C') return 3;
+            if (str === 'D') return 4;
+            return undefined
+        }
+        function onInput(e){
+            const uppercasedCleanedInput = removeEnDash(e.target.value).toUpperCase();
+            setUpperCaseInputValue(uppercasedCleanedInput);
+            const isValid = validateInput(uppercasedCleanedInput);
+            if (isValid === false)return;
+            setInputValue(addEnDash(uppercasedCleanedInput));
+            props.onInput(uppercasedCleanedInput.split(''));
+            firstPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[0]);
+            secondPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[1]);
+            thirdPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[2]);
+            fourthPriorityRef.current.value = replaceCharWithNumericValue(uppercasedCleanedInput[3]);
+        }
+        return (
+            <div style={{display: "flex", justifyContent: "center"}}>
+                <input  type="text"
+                        style={{flexBasis: '10rem',textAlign: 'center'}}
+                        className="form-control fw-bold fs-5 mt-2 mb-3 "
+                        value={inputValue}
+                        onInput={onInput}
+                        onKeyDown={(e)=>{
+                            if(e.key === "Enter"){
+                                e.preventDefault();
+                                props.onEnter(upperCaseInputValue.split(''));
+                            }
+                        }}
+                        ref = {props.inputRef}
+                />
+                <input type="hidden" name="first_priority" id="first_priority" ref={firstPriorityRef} required/>
+                <input type="hidden" name="second_priority" id="second_priority" ref={secondPriorityRef} required/>
+                <input type="hidden" name="third_priority" id="third_priority" ref={thirdPriorityRef} required/>
+                <input type="hidden" name="fourth_priority" id="fourth_priority" ref={fourthPriorityRef} required/>
+            </div>
+        )
         } 
     function AllocationModal(props){
         console.log(props)
