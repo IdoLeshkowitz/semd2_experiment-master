@@ -308,3 +308,4 @@ class PreProcess(Page):
 
 
 page_sequence = [PreProcess,MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]
+1

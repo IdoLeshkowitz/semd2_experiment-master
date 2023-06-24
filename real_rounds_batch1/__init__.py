@@ -185,6 +185,7 @@ class Player(BasePlayer):
     end_time = models.StringField(blank=True)
 
     active_step_index = models.IntegerField(blank=True, initial=0)
+    payoff_added = models.BooleanField(initial=False)
 
 
 def get_prizes_in_round(prizes_by_round_str, round_number):
@@ -273,8 +274,11 @@ class RoundPage(Page):
             user_prize = matching[0][0]
             # since prize values are in cents, we divide by 100 to get dollars
             payoff = values[user_prize]
-            # add it to the user's payoff
-            player.payoff += payoff
+            print(player.payoff_added)
+            if not player.payoff_added:
+                # add it to the user's payoff
+                player.payoff += payoff
+                player.payoff_added = True
             response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
             return {0: response}
 
