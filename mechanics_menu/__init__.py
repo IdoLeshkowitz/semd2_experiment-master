@@ -324,15 +324,6 @@ class PreProcess(Page):
 
         player.current_matching = get_current_matching_by_variant(C.VARIANT)
         player.matching_memo = str([])
-
-        def get_understanding_bonus_limit_by_round(round_number):
-            if round == 1:
-                return 4
-            else:
-                return 1
-
-        player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
-        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
         player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
         player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
         player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
