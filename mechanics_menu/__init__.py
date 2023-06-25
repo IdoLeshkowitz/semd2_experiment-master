@@ -113,14 +113,21 @@ class Player(BasePlayer):
     current_step_id = models.LongStringField(blank=True, initial="")
     understanding_bonus = models.IntegerField(initial=0, blank=True)
     understanding_bonus_limit = models.IntegerField(initial="", blank=True)
-    start_time = models.StringField(initial=datetime.now(timezone.utc))
-    end_time = models.StringField(blank=True)
     matching_memo = models.LongStringField(initial=str([]), blank=True)
     current_matching = models.LongStringField(initial="", blank=True)
     prizes_priorities = models.LongStringField(initial="", blank=True)
     participants_priorities = models.LongStringField(initial="", blank=True)
     matching_counter = models.IntegerField(initial=0, blank=True)
     expected_ranking = models.StringField(initial="", blank=True)
+
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField(blank=True)
+    intro_start_time = models.StringField(blank=True)
+    intro_end_time = models.StringField(blank=True)
+    training_start_time = models.StringField(blank=True)
+    training_end_time = models.StringField(blank=True)
+    algo_start_time = models.StringField(blank=True)
+    algo_end_time = models.StringField(blank=True)
 
 
 def GetParticpantNumber(char):
@@ -156,6 +163,10 @@ class TrainingRound(Page):
             "variant":                C.VARIANT
         }
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.training_end_time = str(datetime.now(timezone.utc))
+        player.algo_start_time = str(datetime.now(timezone.utc))
 
 class DAalghoInterface(Page):
     form_model = "player"
@@ -283,6 +294,7 @@ class DAalghoInterface(Page):
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus
         player.end_time = str(datetime.now(timezone.utc))
+        player.algo_end_time = str(datetime.now(timezone.utc))
 
         def get_understanding_bonus_limit_by_round(round):
             if round == 1:
@@ -303,6 +315,11 @@ class MechanicsIntro(Page):
     def js_vars(player: Player):
         return {'variant': C.VARIANT}
 
+    @staticmethod
+    def before_next_page(player: Player, timeout_happened):
+        player.intro_end_time = str(datetime.now(timezone.utc))
+        player.training_start_time = str(datetime.now(timezone.utc))
+
 
 class EndTraining(Page):
     @staticmethod
@@ -314,6 +331,7 @@ class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.start_time = str(datetime.now(timezone.utc))
+        player.intro_start_time = str(datetime.now(timezone.utc))
         player.clicks = ''
 
         def get_current_matching_by_variant(variant):
