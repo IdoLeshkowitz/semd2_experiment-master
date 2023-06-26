@@ -17,7 +17,7 @@ class C(BaseConstants):
 
 
 class Subsession(BaseSubsession):
-    pass
+    trajectories_distribution = models.StringField(blank=True, initial="")
 
 
 def creating_session(subsession: Subsession):
@@ -35,7 +35,8 @@ def creating_session(subsession: Subsession):
     int
         an integer representing the chosen trajectory for the current player.
     """
-    trajectories_distribution = generate_item_distribution(["trajectory_1", "trajectory_9"], [25, 75], 10)
+    trajectories_distribution = generate_item_distribution(["trajectory_1", "trajectory_9"], [50, 50], 10)
+    subsession.trajectories_distribution = str(trajectories_distribution)
     iterator = itertools.cycle(trajectories_distribution)
     for player in subsession.get_players():
         player.trajectory = next(iterator)
