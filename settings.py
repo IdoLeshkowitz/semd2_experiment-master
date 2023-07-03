@@ -1,10 +1,15 @@
 from os import environ
+
+from otree.project_template.settings import SESSION_CONFIG_DEFAULTS
+SESSION_CONFIG_DEFAULTS = dict(
+    real_world_currency_per_point=1.00, participation_fee=1.5, doc="",currency="GBP",DEBUG=True
+)
 SESSION_CONFIGS=[
     {
         'name' : 'MECH_TRAD_LT',
         'display_name' : 'Mechanics Traditional Long Training',
         'num_demo_participants' : 1,
-        'participation_fee': 16,
+        'participation_fee': SESSION_CONFIG_DEFAULTS['participation_fee'],
         'app_sequence' : ["trajectory1", "consent_form", "null_intro", "null_training","mechanics_traditional", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
@@ -53,7 +58,7 @@ SESSION_CONFIGS=[
         'name':"MECH_MENU_LT",
         'display_name':"Mechanics Menu Long Training",
         'num_demo_participants':1,
-        'participation_fee': 16,
+        'participation_fee': SESSION_CONFIG_DEFAULTS['participation_fee'],
         'app_sequence':["trajectory9", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
@@ -158,9 +163,7 @@ ROOMS =[
 # the session config can be accessed from methods in your apps as self.session.config,
 # e.g. self.session.config['participation_fee']
 
-SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=16.00, doc="",currency="USD",DEBUG=True
-)
+
 
 PARTICIPANT_FIELDS = [
     "trajectory_num",
@@ -179,7 +182,7 @@ SESSION_FIELDS = []
 LANGUAGE_CODE = 'en'
 
 # e.g. EUR, GBP, CNY, JPY
-REAL_WORLD_CURRENCY_CODE = 'USD'
+REAL_WORLD_CURRENCY_CODE = "GBP"
 USE_POINTS = False
 
 ADMIN_USERNAME = 'admin'
