@@ -744,7 +744,7 @@ function renderAllocationResults(prizeName, prizeValue) {
                             </p>
                             <ul>
                                 <li>
-                                    We appreciate your participation and effort. You can quit the study now, <b>without advancing to the next screen</b>, and paste the completion code <b>CCOOFBC0</b> in Prolific.<br/>
+                                    We appreciate your participation and effort. You can quit the study now, <b>without advancing to the next screen</b>, and update the completion code to <b>CCOOFBC0</b> in Prolific.<br/>
                                     If you do so, we will provide you with a <b>partial payment of $2</b> for your effort so far 
                                 </li>
                                 <li>
