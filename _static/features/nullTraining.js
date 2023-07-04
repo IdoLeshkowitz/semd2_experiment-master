@@ -29,6 +29,7 @@ function renderUiFromState(step) {
             const [prizesModal, setPrizesModal] = React.useState(false);
             const [studyModal, setStudyModal] = React.useState(false);
             const [rankingModal, setRankingModal] = React.useState(false);
+            const [prizesPrioritiesModal, setPrizesPrioritiesModal] = React.useState(false);
             const [ranking, setRanking] = React.useState(null);
             const [shownSteps, setShownSteps] = React.useState([initialStep])
             const latestStep = shownSteps.at(-1);
@@ -226,6 +227,7 @@ function renderUiFromState(step) {
                     <div>
                         {rankingModal && <RankingModal onClose={()=>{setRankingModal(false)}}/>}
                         {studyModal && <StudyModal onClose={()=>{setStudyModal(false)}}/>}
+                        { prizesPrioritiesModal && <PrizesPrioritiesModal onClose={()=>{setPrizesPrioritiesModal(false)}}/>}
                         { shownSteps.some(step => step.id === "intro") &&
                             <>
                                  <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button> 
@@ -348,6 +350,9 @@ function renderUiFromState(step) {
                                 <p>
                                     <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
                                 </p>
+                                <p>
+                                    <button className="button-2" type="button" onClick={()=>{setPrizesPrioritiesModal(true)}}>Click here for a reminder on what the priorities mean</button><br/>
+                                </p>    
                                 {
                                     shownSteps.at(-1).id === "prize_priorities" &&
                                         <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
@@ -543,6 +548,33 @@ function renderUiFromState(step) {
                             <p>The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.</p>
                         </div>
                     </div>
+            )
+        }
+        function PrizesPrioritiesModal(props){
+            return (
+                <div class="modal" style={{display:"flex"}} onClick={props.onClose}>
+                    <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                        <i class="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
+                        <p>
+                            All four participants have some <b>priority</b> for getting each of the four prizes.
+                            These priorities can affect the allocation of prizes.
+                        </p>
+                        <p>
+                            The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+                        </p>
+                        <p>
+                            Each column shows the priorities of all participants at some prize, written from highest to lowest.
+                            For example, the column under <b>Prize A</b> shows its priorities.
+                            Prize A has Ruth in the 1st priority (the highest),
+                            Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
+                            So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+                        <p>
+                            The prize priorities can be different in different rounds of the game,
+                            and they were <b>determined beforehand</b>. <br/>
+                            You and the other participants <b>cannot affect the prize priorities</b>.
+                        </p>
+                    </div>
+                </div>
             )
         }
         function RankingModal(props){
