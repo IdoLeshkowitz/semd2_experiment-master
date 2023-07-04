@@ -31,7 +31,7 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return [{"A": 0.37, "B": 0.57, "C": 0.12, "D": 0.6},{"A": 0.28, "B": 0.56, "C": 0.05, "D": 0.42}]
+    return [{"A": 0.37, "B": 0.57, "C": 0.12, "D": 0.6}, {"A": 0.28, "B": 0.56, "C": 0.05, "D": 0.42}]
 
 
 def generate_priorities(first_group, second_group):
@@ -292,6 +292,7 @@ class NullTraining(Page):
             player.understanding_bonus_from_round += C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
         player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
+
 
 class PreProcess(Page):
     @staticmethod

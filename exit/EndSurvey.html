@@ -11,7 +11,7 @@
         <p>
         Your total earnings are as follows:
             <ol>
-                <li>You began this study with <b>{{ 1 | cu }}</b>.</li>
+                <li>You began this study with <b>{{ 2.5 | cu }}</b>.</li>
                 <li>The earnings you accumulated in game rounds are <b class="money-amount">{{ player.participant.payoff }}</b>.</li>
                 <li>{{ player.participant.understanding_bonus }} out of {{ player.participant.understanding_bonus_limit }} questions ({{ understanding_bonus_ratio }}%) count for your Understanding Bonus. Hence, out of the full Understanding Bonus of {{ 4 | cu }}, you get <span class="money-amount" style="font-weight: bold;">{{ understanding_bonus_money | cu  }}</span>.</li>
             </ol>

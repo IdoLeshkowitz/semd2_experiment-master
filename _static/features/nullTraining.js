@@ -722,16 +722,46 @@ function renderAllocationResults(prizeName, prizeValue) {
     const buttonRef = React.useRef(null);
         return (
         <>
-             <p>
+             <div>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
                 { props.roundNumber === 1 &&
                     <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
                 }
                 { props.roundNumber !== 1 &&
+                    <>
                    <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
+                   {
+                       props.roundNumber === 2 && 
+                       <div style={{color: "#0b1ae3"}}>
+                            <br/>
+                            <p>
+                                <b>- This is a point of no return -</b><br/>   
+                                On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete a lot of tasks that depend on your understanding of these explanations.
+                            </p>    
+                            <p>
+                                If you feel that you currently lack sufficient time or mental resources for additional highly demanding 50 minutes, no worries!
+                            </p>
+                            <ul>
+                                <li>
+                                    We appreciate your participation and effort. You can quit the study now, <b>without advancing to the next screen</b>, and paste the completion code <b>CCOOFBC0</b> in Prolific.<br/>
+                                    If you do so, we will provide you with a <b>partial payment of $2</b> for your effort so far 
+                                </li>
+                                <li>
+                                    This is a one-time offer. If you advance to the next screen and at some point quit the study, we will <b>not</b> be able to provide a partial payment.
+                                </li>
+                            </ul>  
+                            <p>
+                                If you are up to the challenge (and we certainly hope you are!), please note:
+                            </p>
+                            <p>
+                                <b>It is crucial for our purposes that you complete the study if you advance beyond this point</b>. Making some mistakes in understanding questions along the way will be perfectly normal—please stay with us. Our main objective is that at any given point, you try your best at understanding the game and at playing it.
+                            </p>
+                       </div>
+                   }
+                   </>
                 }
-            </p>
+            </div>
             <div className="btn-container" style={{pointerEvents:'auto'}}>
                 <button class="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
             </div>
