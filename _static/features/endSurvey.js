@@ -5,6 +5,7 @@ function renderTotalPayment(props) {
     }
     function TotalPayment(props){
         const {totalPayment} = props
+        console.log(totalPayment)
         if (totalPayment < 10){
             const moneyString = getMoneyString(10,props.currency)
             return <p>Well done! Since your total earnings fall below the minimum of {moneyString}, we just increased them to <b>{moneyString}</b>.</p>
