@@ -77,7 +77,7 @@ function validateUnderstandChooseRankings() {
      */
     const inputElement = document.querySelector('[name="understand_choose_ranking"]')
     const errorElement = document.getElementById('understand_choose_ranking_error')
-    console.log(inputElement.value)
+
     if (inputElement.value.trim() === "") {
         /* if no answer is provided */
         errorElement.innerHTML = errorMessages["missing"]

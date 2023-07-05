@@ -8,11 +8,12 @@ const steps = [
     {id: 'ranking_form', type: 'rankingForm'},
     {id: 'allocation_results', type: 'allocationResults'},
     {id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 1},
+    {id: 'exit_point', type: 'instructions'},
     {id: 'end', type: 'end'},
 ]
 const stepsDividedToRounds = [
     ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"],
-    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"],
+    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results',"exit_point", "end"],
 ]
 window.addEventListener("load", () => {
     renderUiFromState();
@@ -33,7 +34,7 @@ function renderUiFromState(step) {
             const [ranking, setRanking] = React.useState(null);
             const [shownSteps, setShownSteps] = React.useState([initialStep])
             const latestStep = shownSteps.at(-1);
-            const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions");
+            const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions" || latestStep.type === "end" || latestStep.type === "allocationResults");
             const sectionsRefs = {
                 "intro": React.useRef(null),
                 "prize_table": React.useRef(null),
@@ -44,6 +45,7 @@ function renderUiFromState(step) {
                 "ranking_form": React.useRef(null),
                 "allocation_results": React.useRef(null),
                 "competitors_rank_independence": React.useRef(null),
+                "exit_point": React.useRef(null),
             }
             const questionsRefs = {
                 independence: {
@@ -90,7 +92,7 @@ function renderUiFromState(step) {
                 const latestStep = shownSteps.at(-1);
                 const latestStepRef = sectionsRefs[latestStep.id];
                 if (latestStepRef.current === null) return ;
-                latestStepRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+                latestStepRef.current?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
             },[shownSteps])
             React.useEffect(()=>{
                 const currentStepId = shownSteps.at(-1).id;
@@ -204,7 +206,7 @@ function renderUiFromState(step) {
             function onNext(){
                 const currentStep = shownSteps.at(-1);
                 const stepIndex = stepsInRound.findIndex((possibleStep) => possibleStep === currentStep.id);
-                const stepToBeStarted = steps.find((step) => step.id === stepsInRound[stepIndex + 1])
+                const stepToBeStarted = steps.find((step) => step.id === stepsInRound[stepIndex + 1]);
                 if (stepToBeStarted.type === "radio") {
                     setReadyToProceed(false)
                 }
@@ -244,15 +246,15 @@ function renderUiFromState(step) {
                                     {
                                         roundNumber === 1 && <p>Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!</p>
                                     }
-                                    {
-                                        shownSteps.at(-1).id === "intro" && 
-                                            <Button 
-                                                onClick={onClick} 
-                                                text="Proceed"
-                                                className="btn-primary"
-                                            />
-                                    }
                                 </section>
+                                {
+                                    shownSteps.at(-1).id === "intro" && 
+                                        <Button 
+                                            onClick={onClick} 
+                                            text="Proceed"
+                                            className="btn-primary"
+                                        />
+                                }
                            </> 
                         }
                         { shownSteps.some(step => step.id === "prize_table") &&
@@ -462,6 +464,41 @@ function renderUiFromState(step) {
                                 }
                            </section> 
                         }
+                        { shownSteps.some(step=>step.id === "exit_point") &&
+                            <section ref={sectionsRefs.exit_point} >
+                                <div
+                                    className="explain" 
+                                    style={{fontStyle:"italic",fontWeight:'lighter'}}
+                                >
+                                    <p>
+                                        <b className="mb-3 d-flex justify-content-center">- This is a point of no return -</b>   
+                                        On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete a lot of tasks that depend on your understanding of these explanations.
+                                    </p>    
+                                    <p>
+                                        If you feel that you currently lack sufficient time or mental resources for additional highly demanding 50 minutes, no worries!
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            We appreciate your participation and effort. You can quit the study and the zoom session now, <b>without advancing to the next screen</b>, and update the completion code to <b>CCOOFBC0</b> in Prolific.
+                                            If you do so, we will provide you with a <b>partial payment of {getMoneyString(2,currency)}</b> for your effort so far 
+                                        </li>
+                                        <li>
+                                            This is a one-time offer. If you advance to the next screen and at some point quit the study, we will <b>not</b> be able to provide a partial payment.
+                                        </li>
+                                    </ul>  
+                                    <p>
+                                        If you are up to the challenge (and we certainly hope you are!), please note:
+                                    </p>
+                                    <p>
+                                        <b>It is crucial for our purposes that you complete the study if you advance beyond this point</b>. Making some mistakes in understanding questions along the way will be perfectly normal—please stay with us. Our main objective is that at any given point, you try your best at understanding the game and at playing it.
+                                    </p>
+                                </div>
+                                {
+                                    shownSteps.at(-1).id === "exit_point" &&
+                                    <Button className="btn-primary" onClick={onClick} text="Proceed"/>   
+                                }
+                            </section>
+                        }
                     </div>
                 </CurrencyContext.Provider>
             )
@@ -564,10 +601,7 @@ function renderUiFromState(step) {
                         </p>
                         <p>
                             Each column shows the priorities of all participants at some prize, written from highest to lowest.
-                            For example, the column under <b>Prize A</b> shows its priorities.
-                            Prize A has Ruth in the 1st priority (the highest),
-                            Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
-                            So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+                        </p>
                         <p>
                             The prize priorities can be different in different rounds of the game,
                             and they were <b>determined beforehand</b>. <br/>
@@ -723,6 +757,11 @@ function renderUiFromState(step) {
     const initialStep = steps.find((step) => step.id === initialStepId);
     const props = {initialStep, stepsInRound: stepsIdsInRound, roundNumber, ...js_vars};
     renderReactComponent(jsxCode, "content", "NullTrainingPage", JSON.stringify(props))
+    if (js_vars.allocatedPrize){
+        const allocatedPrizeValue = js_vars.prizesValues[js_vars.allocatedPrize];
+        renderAllocationResults(js_vars.allocatedPrize, allocatedPrizeValue);
+    }
+
 }
 
 function renderAllocationResults(prizeName, prizeValue) {
@@ -754,7 +793,7 @@ function renderAllocationResults(prizeName, prizeValue) {
     const buttonRef = React.useRef(null);
         return (
         <>
-             <div>
+             <p>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
                 { props.roundNumber === 1 &&
@@ -763,37 +802,9 @@ function renderAllocationResults(prizeName, prizeValue) {
                 { props.roundNumber !== 1 &&
                     <>
                    <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
-                   {
-                       props.roundNumber === 2 && 
-                       <div style={{color: "#0b1ae3"}}>
-                            <br/>
-                            <p>
-                                <b>- This is a point of no return -</b><br/>   
-                                On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete a lot of tasks that depend on your understanding of these explanations.
-                            </p>    
-                            <p>
-                                If you feel that you currently lack sufficient time or mental resources for additional highly demanding 50 minutes, no worries!
-                            </p>
-                            <ul>
-                                <li>
-                                    We appreciate your participation and effort. You can quit the study now, <b>without advancing to the next screen</b>, and update the completion code to <b>CCOOFBC0</b> in Prolific.<br/>
-                                    If you do so, we will provide you with a <b>partial payment of $2</b> for your effort so far 
-                                </li>
-                                <li>
-                                    This is a one-time offer. If you advance to the next screen and at some point quit the study, we will <b>not</b> be able to provide a partial payment.
-                                </li>
-                            </ul>  
-                            <p>
-                                If you are up to the challenge (and we certainly hope you are!), please note:
-                            </p>
-                            <p>
-                                <b>It is crucial for our purposes that you complete the study if you advance beyond this point</b>. Making some mistakes in understanding questions along the way will be perfectly normal—please stay with us. Our main objective is that at any given point, you try your best at understanding the game and at playing it.
-                            </p>
-                       </div>
-                   }
                    </>
                 }
-            </div>
+            </p>
             <div className="btn-container" style={{pointerEvents:'auto'}}>
                 <button class="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
             </div>

@@ -271,11 +271,7 @@ function renderPage() {
                     <p>
                     The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
                     </p>
-                    <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.
-                    For example, the column under <b>Prize A</b> shows its priorities.
-                    Prize A has Ruth in the 1st priority (the highest),
-                    Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
-                    So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.</p>
+                    <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.</p>
                     <p>The prize priorities can be different in different rounds of the game,
                     and they were <b>determined beforehand</b>. <br/>
                     You and the other participants <b>cannot affect the prize priorities</b>.</p>
@@ -446,7 +442,6 @@ function renderPage() {
         )
         } 
     function AllocationModal(props){
-        console.log(props)
     return (
         <div class="modal" id="GenModal" onClick={props.onClose} style={{display:'block'}}>
             <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>

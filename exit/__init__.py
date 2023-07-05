@@ -60,6 +60,13 @@ class EndSurvey(Page):
     def is_displayed(player: Player):
         return player.participant.consent == True
 
+
+    @staticmethod
+    def js_vars(player: Player):
+        return {
+            "totalPayment": player.total_payment,
+            "currency":               player.session.config["currency"],
+        }
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.total_payment = get_total_payment(get_understanding_bonus_money(get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.understanding_bonus_limit)), player.participant.payoff_plus_participation_fee())

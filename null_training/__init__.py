@@ -231,6 +231,7 @@ class NullTraining(Page):
             "currentStepId":          player.current_step_id,
             "nextStepId":             player.next_step_id,
             "mistakesCounter":        player.mistakes_counter,
+            "allocatedPrize":         player.field_maybe_none("allocated_prize"),
         }
 
     @staticmethod
