@@ -479,7 +479,7 @@ function renderUiFromState(step) {
                                     </p>
                                     <ul>
                                         <li>
-                                            We appreciate your participation and effort. You can quit the study and the zoom session now, <b>without advancing to the next screen</b>, and update the completion code to <b>CCOOFBC0</b> in Prolific.
+                                            You can quit the study and the zoom session now, <b>without advancing to the next screen</b>, and send us a message in Prolific to inform us about this.
                                             If you do so, we will provide you with a <b>partial payment of {getMoneyString(2,currency)}</b> for your effort so far 
                                         </li>
                                         <li>
