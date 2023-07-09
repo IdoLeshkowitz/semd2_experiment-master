@@ -470,3 +470,4 @@ class EndTraining(Page):
 
 
 page_sequence = [ExplanationPage, TrainingRound, EndTraining]
+
