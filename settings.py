@@ -24,7 +24,7 @@ SESSION_CONFIGS=[
         "display_name":"Null Long Training",
         "num_demo_participants":1,
         "participation_fee":SESSION_CONFIG_DEFAULTS['participation_fee'],
-        "app_sequence":["trajectory17", "consent_form", "null" ,"real_rounds_batch1","understanding_test" ,"reflection","cognitive_abilities", "demographics", "exit"]
+        "app_sequence":["trajectory17", "consent_form", "null_intro", "null_training", "null", "real_rounds_batch1", "understanding_test", "reflection", "cognitive_abilities", "demographics", "exit"]
     },
     {
         "name":"TREATMENT_ALLOCATOR",
