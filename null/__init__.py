@@ -130,6 +130,7 @@ def da(preferences):
 
 
 class C(BaseConstants):
+    variant = "null"
     NAME_IN_URL = 'null'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
@@ -163,10 +164,10 @@ class Player(BasePlayer):
     participants_priorities = models.LongStringField(initial="", blank=True)
 
     # Fields for saving each question's incorrect submitted answers
-    independence_actions = models.LongStringField(blank=True, initial="")
-    value_table_actions = models.LongStringField(initial="", blank=True)
-    self_rank_independence_actions = models.LongStringField(initial="", blank=True)
-    competitors_rank_independence_actions = models.LongStringField(initial="", blank=True)
+    # independence_actions = models.LongStringField(blank=True, initial="")
+    # value_table_actions = models.LongStringField(initial="", blank=True)
+    # self_rank_independence_actions = models.LongStringField(initial="", blank=True)
+    # competitors_rank_independence_actions = models.LongStringField(initial="", blank=True)
 
     current_step_id = models.StringField(initial="", blank=True)
     next_step_id = models.StringField(initial="", blank=True)
@@ -195,6 +196,7 @@ class NullIntro(Page):
             "prizes_priorities":       generate_prizes_priorities(),
             "participants_priorities": generate_participants_priorities(),
             "currency":                player.session.config["currency"],
+            "variant":                 C.variant
         }
     def before_next_page(player: Player, timeout_happened):
         player.participants_priorities = str(generate_participants_priorities())
@@ -248,11 +250,7 @@ class NullTraining(Page):
     @staticmethod
     def get_form_fields(player: Player):
         priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
-        questions_actions = ["independence_actions", "value_table_actions", "self_rank_independence_actions", "competitors_rank_independence_actions"]
-        if player.round_number == 1:
-            return questions_actions + priorities
-        elif player.round_number == 2:
-            return questions_actions
+        return priorities
 
     @staticmethod
     def js_vars(player: Player):
@@ -263,12 +261,13 @@ class NullTraining(Page):
             "participantsPriorities": generate_participants_priorities(),
             "prizesValues":           generate_prizes_values(),
             "roundNumber":            player.round_number,
-            "roundNumber":            player.round_number,
             "currentStepId":          player.current_step_id,
             "nextStepId":             player.next_step_id,
             "mistakesCounter":        player.mistakes_counter,
             "currency":               player.session.config["currency"],
             "allocatedPrize":         player.field_maybe_none("allocated_prize"),
+            "variant":                C.variant,
+            "appName":                "null"
         }
 
     @staticmethod

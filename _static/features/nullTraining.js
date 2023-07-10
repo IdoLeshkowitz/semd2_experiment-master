@@ -11,10 +11,21 @@ const steps = [
     {id: 'exit_point', type: 'instructions'},
     {id: 'end', type: 'end'},
 ]
-const stepsDividedToRounds = [
-    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"],
-    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results',"exit_point", "end"],
-]
+const getSteps = (variant, appName, roundNumber) => {
+    if (appName === "null_training") {
+        if (roundNumber === 1) {
+            return ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"]
+        } else {
+            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "exit_point", "end"]
+        }
+    }
+    if (variant === "null" && appName === "null") {
+        if (appName === "null") {
+            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
+        }
+    }
+    return []
+}
 window.addEventListener("load", () => {
     renderUiFromState();
 })
@@ -751,14 +762,12 @@ function renderUiFromState(step) {
         }
     }
 
-    const roundNumber = js_vars.roundNumber;
-    const stepsIdsInRound = stepsDividedToRounds[roundNumber - 1];
+    const stepsIdsInRound = getSteps(js_vars.variant,js_vars.appName,js_vars.roundNumber);
     const initialStepId = getInitialStepId(js_vars.currentStepId, js_vars.nextStepId);
     const initialStep = steps.find((step) => step.id === initialStepId);
-    const props = {initialStep, stepsInRound: stepsIdsInRound, roundNumber, ...js_vars};
-    console.log(js_vars)
+    const props = {initialStep, stepsInRound: stepsIdsInRound, ...js_vars};
     renderReactComponent(jsxCode, "content", "NullTrainingPage", JSON.stringify(props))
-    if (js_vars.allocatedPrize){
+    if (js_vars.allocatedPrize) {
         const allocatedPrizeValue = js_vars.prizesValues[js_vars.allocatedPrize];
         renderAllocationResults(js_vars.allocatedPrize, allocatedPrizeValue);
     }
