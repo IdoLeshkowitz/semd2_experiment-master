@@ -130,7 +130,7 @@ def da(preferences):
 
 
 class C(BaseConstants):
-    NAME_IN_URL = 'null_t'
+    NAME_IN_URL = 'null'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]

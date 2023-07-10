@@ -13,48 +13,6 @@ SESSION_CONFIGS=[
         'app_sequence' : ["trajectory1", "consent_form", "null_intro", "null_training","mechanics_traditional", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
-        'name' : 'MECH_TRAD_ST',
-        'display_name' : 'Mechanics Traditional Short Training',
-        'num_demo_participants' : 1,
-        'app_sequence' : ["trajectory2", "consent_form", "null_intro", "null_training","mechanics_traditional", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name' : 'MECH_TRAD_PROP_TRAD_LT',
-        'display_name' : 'Mechanics Traditional Properties Traditional Long Training',
-        'num_demo_participants' : 1,
-        'app_sequence' : ["trajectory3", "consent_form", "null_intro", "null_training","mechanics_traditional", "real_rounds_batch1","properties_traditional", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name' : 'MECH_TRAD_PROP_TRAD_ST',
-        'display_name' : 'Mechanics Traditional Properties Traditional Short Training',
-        'num_demo_participants' : 1,
-        'app_sequence' : ["trajectory4", "consent_form", "null_intro", "null_training","mechanics_traditional", "real_rounds_batch1","properties_traditional", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name' : 'PROP_TRAD_LT',
-        'display_name' : 'Properties Traditional Long Training',
-        'num_demo_participants' : 1,
-        'app_sequence' : ["trajectory5", "consent_form", "null_intro", "null_training","properties_traditional", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name' : 'PROP_TRAD_ST',
-        'display_name' : 'Properties Traditional Short Training',
-        'num_demo_participants' : 1,
-        'app_sequence' : ["trajectory6", "consent_form", "null_intro", "null_training","properties_traditional", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"PROP_TRAD_MECH_TRAD_LT",
-        'display_name':"Properties Traditional Mechanics Traditional Long Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory7", "consent_form", "null_intro", "null_training","properties_traditional", "real_rounds_batch1","mechanics_traditional", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"PROP_TRAD_MECH_TRAD_ST",
-        'display_name':"Properties Traditional Mechanics Traditional Short Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory8", "consent_form", "null_intro", "null_training","properties_traditional", "real_rounds_batch1","mechanics_traditional", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
         'name':"MECH_MENU_LT",
         'display_name':"Mechanics Menu Long Training",
         'num_demo_participants':1,
@@ -62,70 +20,11 @@ SESSION_CONFIGS=[
         'app_sequence':["trajectory9", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
-        'name':"MECH_MENU_ST",
-        'display_name':"Mechanics Menu Short Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory10", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"MECH_MENU_PROP_MENU_LT",
-        'display_name':"Mechanics Menu Properties Menu Long Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory11", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","properties_menu", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"MECH_MENU_PROP_MENU_ST",
-        'display_name':"Mechanics Menu Properties Menu Short Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory12", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","properties_menu", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"PROP_MENU_LT",
-        'display_name':"Properties Menu Long Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory13", "consent_form", "null_intro", "null_training","properties_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"PROP_MENU_ST",
-        'display_name':"Properties Menu Short Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory14", "consent_form", "null_intro", "null_training","properties_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"PROP_MENU_MECH_MENU_LT",
-        'display_name':"Properties Menu Mechanics Menu Long Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory15", "consent_form", "null_intro", "null_training","properties_menu", "real_rounds_batch1","mechanics_menu", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"PROP_MENU_MECH_MENU_ST",
-        'display_name':"Properties Menu Mechanics Menu Short Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory16", "consent_form", "null_intro", "null_training", "properties_menu", "real_rounds_batch1","mechanics_menu", "step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
         "name":"NULL_LT",
         "display_name":"Null Long Training",
         "num_demo_participants":1,
-        "app_sequence":["trajectory17", "consent_form", "null_intro", "null_training","step_1_null_training_rounds","real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit"]
-    },
-    {
-        "name":"NULL_ST",
-        "display_name":"Null Short Training",
-        "num_demo_participants":1,
-        "app_sequence":["trajectory18", "consent_form", "null_intro", "null_training","step_1_null_training_rounds","real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit"]
-    },
-    {
-        'name':"NULL_NULL_LT",
-        'display_name':"Null Null Long Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory19", "consent_form", "null_intro", "null_training","step_1_null_training_rounds","real_rounds_batch1","step_3_null_description","step_3_null_training_rounds","step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
-    },
-    {
-        'name':"NULL_NULL_ST",
-        'display_name':"Null Null Short Training",
-        'num_demo_participants':1,
-        'app_sequence':["trajectory20", "consent_form", "null_intro", "null_training","step_1_null_training_rounds","real_rounds_batch1","step_3_null_description","step_3_null_training_rounds","step_3_rounds","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
+        "participation_fee":SESSION_CONFIG_DEFAULTS['participation_fee'],
+        "app_sequence":["trajectory17", "consent_form", "null" ,"real_rounds_batch1","understanding_test" ,"reflection","cognitive_abilities", "demographics", "exit"]
     },
     {
         "name":"TREATMENT_ALLOCATOR",

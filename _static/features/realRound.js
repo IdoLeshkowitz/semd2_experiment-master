@@ -74,7 +74,12 @@ function RenderRoundPage() {
         return (
             <CurrencyContext.Provider value={props.currency}>
                     <button className="button-2" type="button" onClick={()=>{setActiveModal("study")}}>Click for a general reminder on this study</button><br/>
-                    <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "menuAllocation":"traditionalAllocation")}}>Click for a reminder on the technical details of the allocation process</button><br/>
+                    {
+                        props.variant !== "null"  &&
+                            <>  
+                                <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "menuAllocation":"traditionalAllocation")}}>Click for a reminder on the technical details of the allocation process</button><br/>
+                            </>
+                    }
                     {
                         activeModal &&
                         <Modal onClose={() => setActiveModal(null)}>
@@ -638,5 +643,3 @@ function liveRecv(data) {
 }
 
 window.addEventListener('load', RenderRoundPage)
-
-

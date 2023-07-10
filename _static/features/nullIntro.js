@@ -264,7 +264,7 @@ function renderIntroPage() {
                                     return (
                                         <section ref={step.ref}>
                                             {step.content}
-                                            <RankingForm onNext={onNext} setRanking={setRanking} participantsRankings={props.players_rankings} prizesPriorities={js_vars.prizes_priorities} prizes={props.prizes} prizesValues={props.prizes_values} />
+                                            <RankingForm onNext={onNext} setRanking={setRanking} participantsRankings={props.participants_priorities} prizesPriorities={js_vars.prizes_priorities} prizes={props.prizes} prizesValues={props.prizes_values} participants={props.participants} />
                                         </section>
                                     )
                                 }
@@ -294,7 +294,7 @@ function renderIntroPage() {
                                         <>
                                         <section ref={step.ref}>
                                             {step.content}
-                                            <PrizesPrioritiesTable prizesPriorities={props.prizes_priorities}/>
+                                            <PrizesPrioritiesTable prizesPriorities={props.prizes_priorities} participants={props.participants}/>
                                             <br/>
                                         </section>
                                         </>
@@ -380,9 +380,7 @@ function renderIntroPage() {
                 return description;
             }  
             const {prizesPriorities} = props;
-            const prizes = ["A","B","C","D"];
-            const participantsNames=["You","Ruth","Shirley","Theresa"]
-            const numberOfRows = 4;
+            const prizes = Object.keys(prizesPriorities)
             return (
                  <table id="priorities-table">
                     <thead>
@@ -393,31 +391,29 @@ function renderIntroPage() {
                     </thead>
                     <tbody>
                         { 
-                            Array(numberOfRows).fill(0).map((_,rowIndex)=>{
+                            props.participants.map((_,rowIndex)=>{
                                 return (
                                     <tr key={rowIndex}> 
                                         {/* description cell */}
-                                        <td>{getRowDescription(rowIndex,numberOfRows)}</td>
+                                        <td>{getRowDescription(rowIndex,4)}</td>
                                         {/* priorities cells */}
                                         {prizes.map((prize,columnIndex)=>{
                                             return (
-                                                <td key={columnIndex}>{participantsNames[prizesPriorities[columnIndex][rowIndex]]}</td>
+                                                <td key={columnIndex}>{prizesPriorities[prize][rowIndex]}</td>
                                             )
                                         })}
                                     </tr>
                                 )
                             })
                         }
-                    </tbody>
+                    </tbody> 
                 </table>
             )
         }
         function PrizesTable(props){
             const prizesNames = ["A","B","C","D"];
             const currency = React.useContext(CurrencyContext);
-            const prizesValues = props.prizesValues.map((prizeValue) => {
-                return  (parseInt(prizeValue) /100).toFixed(2)
-             })
+            const prizesValues = Object.values(props.prizesValues)
             return ( 
                 <table id="prize-table">
                     <thead>
@@ -503,10 +499,19 @@ function renderIntroPage() {
                 inputRef.current.disabled = true;
                 props.onNext()
                 const humanPlayerRanking = convertInputToRanking(inputValue);
-                const otherPlayersRankings = props.participantsRankings
+                const otherPlayersRankings = Object.keys(props.participantsRankings).map(participant =>{
+                    return props.participantsRankings[participant].map((ranking) => {
+                    return replaceCharWithNumericValue(ranking)-1; 
+                    });
+                });
                 const playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
+                const prizesPriorities = props.prizes.map((prize) => {
+                    return props.prizesPriorities[prize].map((priority) => {
+                        return props.participants.indexOf(priority);
+                    });
+                }); 
                 liveSend({
-                     "preferences": [playersRankings, props.prizesPriorities], "prizes": props.prizes, "values": props.prizesValues
+                     "preferences": [playersRankings,prizesPriorities], "prizes": props.prizes, "values": props.prizesValues
                 });
             }
             return (
@@ -578,7 +583,7 @@ function renderAllocationResults(prizeName = state.prize, prizeValue = state.val
             }
     }
     function AllocationResults(props){
-    const moneyString = getMoneyString((props.prizeValue/100).toFixed(2), props.currency);
+    const moneyString = getMoneyString((props.prizeValue)?.toFixed(2), props.currency);
     const buttonRef = React.useRef(null);
         return (
         <>

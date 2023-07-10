@@ -756,6 +756,7 @@ function renderUiFromState(step) {
     const initialStepId = getInitialStepId(js_vars.currentStepId, js_vars.nextStepId);
     const initialStep = steps.find((step) => step.id === initialStepId);
     const props = {initialStep, stepsInRound: stepsIdsInRound, roundNumber, ...js_vars};
+    console.log(js_vars)
     renderReactComponent(jsxCode, "content", "NullTrainingPage", JSON.stringify(props))
     if (js_vars.allocatedPrize){
         const allocatedPrizeValue = js_vars.prizesValues[js_vars.allocatedPrize];

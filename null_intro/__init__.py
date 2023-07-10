@@ -27,15 +27,19 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return [37, 7, 25, 57]
+    return {"A":0.37,"B":0.07,"C":0.25,"D":0.57}
 
 
 def generate_prizes_priorities():
-    return [[1, 2, 0, 3], [2, 0, 3, 1], [3, 2, 0, 1], [0, 3, 1, 2]]
+    #0 - Y
+    #1 - R
+    #2 - S
+    #3 - T
+    return {"A":["Ruth","Shirley","You","Theresa"],"B":["Shirley","You","Theresa","Ruth"],"C":["Theresa","Shirley","You","Ruth"],"D":["You","Theresa","Ruth","Shirley"]}
 
 
-def generate_players_rankings():
-    return [[1, 0, 2, 3], [2, 1, 3, 0], [0, 1, 2, 3]]
+def generate_participants_priorities():
+    return {"Ruth":["B","A","C","D"],"Shirley":["C","B","D","A"],"Theresa":["A","B","C","D"]}
 
 
 def make_priority_field(label):
@@ -133,7 +137,7 @@ class C(BaseConstants):
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values()
     PRIZES_PRIORITIES = generate_prizes_priorities()
-    PARTICIPANTS_PRIORITIES = generate_players_rankings()
+    PARTICIPANTS_PRIORITIES = generate_participants_priorities()
 
 
 class Subsession(BaseSubsession):
@@ -172,25 +176,20 @@ class NullIntro(Page):
 
     @staticmethod
     def js_vars(player: Player):
-        return dict(prizes=C.PRIZES, prizes_values=C.PRIZES_VALUES, prizes_priorities=C.PRIZES_PRIORITIES, players=C.PARTICIPANTS, players_rankings=C.PARTICIPANTS_PRIORITIES, currency=player.session.config["currency"], )
+        return {
+            "prizes": C.PRIZES,
+            "participants": C.PARTICIPANTS,
+            "prizes_values": C.PRIZES_VALUES,
+            "prizes_priorities": C.PRIZES_PRIORITIES,
+            "participants_priorities": C.PARTICIPANTS_PRIORITIES,
+            "currency": player.session.config["currency"],
+        }
 
     def before_next_page(player: Player, timeout_happened):
-        print("here")
-        player.participants_priorities = str([{C.PARTICIPANTS[1:][index]: [convert_prize_index_to_name(prize) for prize in participant_priorities]} for
-                                              index, participant_priorities in enumerate(C.PARTICIPANTS_PRIORITIES)])
-        player.prizes_priorities = str([{C.PRIZES[index]: [convert_participant_index_to_name(participant) for participant in prize_priorities]} for
-                                        index, prize_priorities in enumerate(C.PRIZES_PRIORITIES)])
-        player.prizes_values = str({prize: round(C.PRIZES_VALUES[index] / 100, 2) for index, prize in enumerate(C.PRIZES)})
+        player.participants_priorities = str(generate_participants_priorities())
+        player.prizes_priorities = str(generate_prizes_priorities())
+        player.prizes_values = str(generate_prizes_values())
         player.end_time = str(datetime.now(timezone.utc))
-
-    @staticmethod
-    def vars_for_template(player: Player):
-        return {
-            "prize_value_1": C.PRIZES_VALUES[0] / 100,
-            "prize_value_2": C.PRIZES_VALUES[1] / 100,
-            "prize_value_3": C.PRIZES_VALUES[2] / 100,
-            "prize_value_4": C.PRIZES_VALUES[3] / 100
-        }
 
     @staticmethod
     def live_method(player: Player, data):
@@ -212,17 +211,9 @@ class NullIntro(Page):
                dictionary
                    A data set with the player's matched prize and its value.
                """
-        # Sleep for 2 seconds to give the feeling the allocation process
-        # takes more time than it really is (which practically 0 in our case).
         time.sleep(2)
-        # TODO: Back when this was implemented, all the rounds data was determined
-        #       in the frontend side (preferences of competitors and prizes, prizes values, etc.).
-        #       Now, everything is implemented in the backend side. So, while everything still
-        #       works fine, we should consider refactoring all the source code to avoid redundant
-        #       transfer of data.
         preferences = data["preferences"]
         user_ranking = data["preferences"][0][0]
-        print(user_ranking[3])
         player.first_priority = C.PRIZES[user_ranking[0]]
         player.second_priority = C.PRIZES[user_ranking[1]]
         player.third_priority = C.PRIZES[user_ranking[2]]
@@ -232,10 +223,14 @@ class NullIntro(Page):
         matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
         user_prize = matching[0][0]
         player.allocated_prize = C.PRIZES[user_prize]
-        # since prize is in cents convert to dollars
-        payoff = round(values[user_prize] / 100, 2)
-        response = dict(prize=prizes[user_prize], value=values[user_prize], payoff=payoff)
-        return {0: response}
+        prizes_values = generate_prizes_values()
+        user_prize_value = prizes_values[player.allocated_prize]
+        return {
+            player.id_in_group:{
+                "prize": player.allocated_prize,
+                "value": user_prize_value,
+            }
+        }
 
 
 def convert_priorities_dict_to_list(priorities_dict):
