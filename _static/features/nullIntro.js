@@ -6,11 +6,18 @@ function renderIntroPage() {
         function Stam(){
             return <div></div>
         }
-        const steps = [
+        const getSteps = (variant,appName) => [
             {
                 type: 'instructions',
                 content: (
                     <section>
+                        <div>
+                            { variant === 'null' && appName === "null" &&
+                                <p>
+                                    We will now remind you of the general details of the game and allocation process. This page includes the <b>exact same text</b> you read at the beginning of the study. Please read it again to make sure you understand.
+                                </p> 
+                            }
+                        </div>
                         <div class="explain">
                             <p>
                                 In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.
@@ -225,8 +232,11 @@ function renderIntroPage() {
                 ref: React.createRef()
             }
         ]
-        const CurrencyContext = React.createContext(null);
+        const CurrencyContext = React.createContext(null);       
         function IntroPage(props){
+            const steps = React.useMemo(() => {
+                return getSteps(props.variant, props.appName)
+            }, [props.variant, props.appName])
             const [ranking, setRanking] = React.useState([])
             const [activeSteps, setActiveSteps] = React.useState([steps[0]])
             function onNext(){

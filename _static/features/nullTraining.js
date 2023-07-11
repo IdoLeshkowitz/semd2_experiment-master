@@ -243,7 +243,12 @@ function renderUiFromState(step) {
                         { prizesPrioritiesModal && <PrizesPrioritiesModal onClose={()=>{setPrizesPrioritiesModal(false)}}/>}
                         { shownSteps.some(step => step.id === "intro") &&
                             <>
-                                 <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button> 
+                                 <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button>
+                                 { props.variant === "null" && props.appName === "null" &&
+                                     <p>
+                                     Note: This training round includes the exact questions that you already answered before. Nevertheless, please read them and answer carefully again to make sure you understand.
+                                     </p>
+                                 } 
                                  <section ref={sectionsRefs.intro} className="explain">
                                     <p>
                                         This is a training round.<br/>
@@ -806,13 +811,10 @@ function renderAllocationResults(prizeName, prizeValue) {
              <p>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
-                { props.roundNumber === 1 &&
+                { (props.roundNumber === 1 && props.variant !== "null") ?
                     <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
-                }
-                { props.roundNumber !== 1 &&
-                    <>
-                   <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
-                   </>
+                    :
+                    <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
                 }
             </p>
             <div className="btn-container" style={{pointerEvents:'auto'}}>

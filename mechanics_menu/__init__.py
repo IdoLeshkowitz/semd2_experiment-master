@@ -168,6 +168,7 @@ class TrainingRound(Page):
         player.training_end_time = str(datetime.now(timezone.utc))
         player.algo_start_time = str(datetime.now(timezone.utc))
 
+
 class DAalghoInterface(Page):
     form_model = "player"
 

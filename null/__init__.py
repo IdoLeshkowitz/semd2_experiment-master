@@ -1,4 +1,3 @@
-
 from datetime import datetime, timezone
 
 from otree.api import *
@@ -10,7 +9,7 @@ Your app description
 """
 
 
-def generate_prizes_values():
+def generate_prizes_values(round_number):
     """
     Returns a randomly generated list of the values (in pennies)
     of the prizes for round i.
@@ -28,19 +27,25 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return {"A":0.37,"B":0.07,"C":0.25,"D":0.57}
+    return {"A": 0.37, "B": 0.07, "C": 0.25, "D": 0.57}
 
 
-def generate_prizes_priorities():
-    #0 - Y
-    #1 - R
-    #2 - S
-    #3 - T
-    return {"A":["Ruth","Shirley","You","Theresa"],"B":["Shirley","You","Theresa","Ruth"],"C":["Theresa","Shirley","You","Ruth"],"D":["You","Theresa","Ruth","Shirley"]}
+def generate_prizes_priorities(roundNumber):
+    # 0 - Y
+    # 1 - R
+    # 2 - S
+    # 3 - T
+    return {
+        "A": ["Ruth", "Shirley", "You", "Theresa"],
+        "B": ["Shirley", "You", "Theresa", "Ruth"],
+        "C": ["Theresa", "Shirley", "You", "Ruth"],
+        "D": ["You", "Theresa", "Ruth", "Shirley"]
+    }
 
 
-def generate_participants_priorities():
-    return {"Ruth":["B","A","C","D"],"Shirley":["C","B","D","A"],"Theresa":["A","B","C","D"]}
+def generate_participants_priorities(roundNumber):
+    return {"Ruth": ["B", "A", "C", "D"], "Shirley": ["C", "B", "D", "A"], "Theresa": ["A", "B", "C", "D"]}
+
 
 def make_priority_field(label):
     return models.IntegerField(choices=[[1, "A"], [2, "B"], [3, "C"], [4, "D"]], label=label)
@@ -133,10 +138,10 @@ class C(BaseConstants):
     variant = "null"
     NAME_IN_URL = 'null'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 2
+    NUM_ROUNDS = 4
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
-    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [0, 0]
+    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [1, 1, 1, 1]
 
 
 class Subsession(BaseSubsession):
@@ -149,19 +154,30 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     # Player's ranking variables
-    first_priority = models.StringField(blank=True)
-    second_priority = models.StringField(blank=True)
-    third_priority = models.StringField(blank=True)
-    fourth_priority = models.StringField(blank=True)
-    allocated_prize = models.StringField(blank=True)
-    start_time = models.StringField(initial=datetime.now(timezone.utc))
-    end_time = models.StringField(blank=True)
-    understanding_bonus_from_round = models.IntegerField(initial=0)
+    first_priority_intro = models.StringField(blank=True)
+    second_priority_intro = models.StringField(blank=True)
+    third_priority_intro = models.StringField(blank=True)
+    fourth_priority_intro = models.StringField(blank=True)
+    first_priority_training = models.StringField(blank=True)
+    second_priority_training = models.StringField(blank=True)
+    third_priority_training = models.StringField(blank=True)
+    fourth_priority_training = models.StringField(blank=True)
+    allocated_prize_intro = models.StringField(blank=True, initial="")
+    allocated_prize_training = models.StringField(blank=True, initial="")
 
+    start_time_intro = models.StringField(initial=datetime.now(timezone.utc))
+    end_time_intro = models.StringField(blank=True)
+    start_time_training = models.StringField(initial=datetime.now(timezone.utc))
+    end_time_training = models.StringField(blank=True)
+    understanding_bonus_from_round = models.IntegerField(initial=0)
     understanding_bonus_limit = models.IntegerField(initial="")
-    prizes_values = models.LongStringField(initial="", blank=True)
-    prizes_priorities = models.LongStringField(initial="", blank=True)
-    participants_priorities = models.LongStringField(initial="", blank=True)
+
+    prizes_values_intro = models.LongStringField(initial="", blank=True)
+    prizes_priorities_intro = models.LongStringField(initial="", blank=True)
+    participants_priorities_intro = models.LongStringField(initial="", blank=True)
+    prizes_values_training = models.LongStringField(initial="", blank=True)
+    prizes_priorities_training = models.LongStringField(initial="", blank=True)
+    participants_priorities_training = models.LongStringField(initial="", blank=True)
 
     # Fields for saving each question's incorrect submitted answers
     # independence_actions = models.LongStringField(blank=True, initial="")
@@ -185,24 +201,31 @@ def convert_prize_index_to_name(index):
 # PAGES
 class NullIntro(Page):
     form_model = "player"
-    form_fields = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
+    form_fields = ["first_priority_intro", "second_priority_intro", "third_priority_intro", "fourth_priority_intro"]
+
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == 1
 
     @staticmethod
     def js_vars(player: Player):
         return {
             "prizes":                  C.PRIZES,
             "participants":            C.PARTICIPANTS,
-            "prizes_values":           generate_prizes_values(),
-            "prizes_priorities":       generate_prizes_priorities(),
-            "participants_priorities": generate_participants_priorities(),
+            "prizes_values":           generate_prizes_values(player.round_number),
+            "prizes_priorities":       generate_prizes_priorities(player.round_number),
+            "participants_priorities": generate_participants_priorities(player.round_number),
             "currency":                player.session.config["currency"],
-            "variant":                 C.variant
+            "variant":                 C.variant,
+            "appName":                 "null"
         }
+
     def before_next_page(player: Player, timeout_happened):
-        player.participants_priorities = str(generate_participants_priorities())
-        player.prizes_priorities = str(generate_prizes_priorities())
-        player.prizes_values = str(generate_prizes_values())
-        player.end_time = str(datetime.now(timezone.utc))
+        player.participants_priorities_intro = str(generate_participants_priorities(player.round_number))
+        player.prizes_priorities_intro = str(generate_prizes_priorities(player.round_number))
+        player.prizes_values_intro = str(generate_prizes_values(player.round_number))
+        player.end_time_intro = str(datetime.now(timezone.utc))
+        player.start_time_training = str(datetime.now(timezone.utc))
 
     @staticmethod
     def live_method(player: Player, data):
@@ -210,20 +233,16 @@ class NullIntro(Page):
         time.sleep(2)
         preferences = data["preferences"]
         user_ranking = data["preferences"][0][0]
-        player.first_priority = C.PRIZES[user_ranking[0]]
-        player.second_priority = C.PRIZES[user_ranking[1]]
-        player.third_priority = C.PRIZES[user_ranking[2]]
-        player.fourth_priority = C.PRIZES[user_ranking[3]]
-        prizes = data["prizes"]
-        values = data["values"]
+        player.first_priority_intro = C.PRIZES[user_ranking[0]]
+        player.second_priority_intro = C.PRIZES[user_ranking[1]]
+        player.third_priority_intro = C.PRIZES[user_ranking[2]]
+        player.fourth_priority_intro = C.PRIZES[user_ranking[3]]
         matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
         user_prize = matching[0][0]
-        player.allocated_prize = C.PRIZES[user_prize]
-        prizes_values = generate_prizes_values()
-        user_prize_value = prizes_values[player.allocated_prize]
-        return {
-            player.id_in_group: {"prize": player.allocated_prize, "value": user_prize_value}
-        }
+        player.allocated_prize_intro = C.PRIZES[user_prize]
+        prizes_values = generate_prizes_values(player.round_number)
+        user_prize_value = prizes_values[player.allocated_prize_intro]
+        return {player.id_in_group: {"prize": player.allocated_prize_intro, "value": user_prize_value}}
 
 
 def convert_priorities_dict_to_list(priorities_dict):
@@ -242,30 +261,31 @@ def convert_participants_names_to_indexes(participants_priorities, participants_
 class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        player.start_time = str(datetime.now(timezone.utc))
+        player.start_time_intro = str(datetime.now(timezone.utc))
+
 
 class NullTraining(Page):
     form_model = "player"
 
-    @staticmethod
-    def get_form_fields(player: Player):
-        priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority"]
-        return priorities
+    # @staticmethod
+    # def get_form_fields(player: Player):
+    #     priorities = ["first_priority_training", "second_priority_training", "third_priority_training", "fourth_priority_training"]
+    #     return priorities
 
     @staticmethod
     def js_vars(player: Player):
         return {
             "prizes":                 C.PRIZES,
             "participants":           C.PARTICIPANTS,
-            "prizesPriorities":       generate_prizes_priorities(),
-            "participantsPriorities": generate_participants_priorities(),
-            "prizesValues":           generate_prizes_values(),
+            "prizesPriorities":       generate_prizes_priorities(player.round_number),
+            "participantsPriorities": generate_participants_priorities(player.round_number),
+            "prizesValues":           generate_prizes_values(player.round_number),
             "roundNumber":            player.round_number,
             "currentStepId":          player.current_step_id,
             "nextStepId":             player.next_step_id,
             "mistakesCounter":        player.mistakes_counter,
             "currency":               player.session.config["currency"],
-            "allocatedPrize":         player.field_maybe_none("allocated_prize"),
+            "allocatedPrize":         player.allocated_prize_training,
             "variant":                C.variant,
             "appName":                "null"
         }
@@ -286,16 +306,16 @@ class NullTraining(Page):
             matching = da(preferences)  # Calling the Differed-Acceptance algorithm.
             user_prize_index = matching[0][0]
             user_prize_name = C.PRIZES[user_prize_index]
-            prizes_values = generate_prizes_values()
+            prizes_values = generate_prizes_values(player.round_number)
             user_prize_value = prizes_values[user_prize_name]
             response = {"prize_name": user_prize_name, "prize_value": user_prize_value, "information_type": "allocation_results"}
             # save the player's ranking
-            player.first_priority = str(C.PRIZES.index(participants_priorities["You"][0]) + 1)
-            player.second_priority = str(C.PRIZES.index(participants_priorities["You"][1]) + 1)
-            player.third_priority = str(C.PRIZES.index(participants_priorities["You"][2]) + 1)
-            player.fourth_priority = str(C.PRIZES.index(participants_priorities["You"][3]) + 1)
+            player.first_priority_training = str(C.PRIZES.index(participants_priorities["You"][0]) + 1)
+            player.second_priority_training = str(C.PRIZES.index(participants_priorities["You"][1]) + 1)
+            player.third_priority_training = str(C.PRIZES.index(participants_priorities["You"][2]) + 1)
+            player.fourth_priority_training = str(C.PRIZES.index(participants_priorities["You"][3]) + 1)
             # save the allocated prize
-            player.allocated_prize = user_prize_name
+            player.allocated_prize_training = user_prize_name
             time.sleep(2)
             return {player.id_in_group: response}
         if data["information_type"] == "question_submission":
@@ -320,17 +340,17 @@ class NullTraining(Page):
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        prizes_values = generate_prizes_values()
-        prizes_priorities = generate_prizes_priorities()
-        participants_priorities = generate_participants_priorities()
+        prizes_values = generate_prizes_values(player.round_number)
+        prizes_priorities = generate_prizes_priorities(player.round_number)
+        participants_priorities = generate_participants_priorities(player.round_number)
         player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
         player.participant.understanding_bonus_limit += player.understanding_bonus_limit
-        player.prizes_values = str(prizes_values)
-        player.prizes_priorities = str(prizes_priorities)
-        player.participants_priorities = str(participants_priorities)
-        if player.round_number > 1:
-            player.understanding_bonus_from_round += C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
+        player.prizes_values_training = str(prizes_values)
+        player.prizes_priorities_training = str(prizes_priorities)
+        player.participants_priorities_training = str(participants_priorities)
+        player.understanding_bonus_from_round += C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
         player.participant.understanding_bonus += player.understanding_bonus_from_round
-        player.end_time = str(datetime.now(timezone.utc))
+        player.end_time_training = str(datetime.now(timezone.utc))
 
-page_sequence = [PreProcess, NullIntro,NullTraining]
+
+page_sequence = [PreProcess, NullIntro, NullTraining]
