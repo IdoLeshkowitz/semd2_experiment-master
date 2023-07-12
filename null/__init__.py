@@ -61,7 +61,7 @@ def generate_prizes_priorities(roundNumber, pageName):
         3: {
             "A": ["Shirley", "Ruth", "You", "Theresa"],
             "B": ["Theresa", "You", "Ruth", "Shirley"],
-            "C": ["Ruth", "Therea", "Shirley", "You"],
+            "C": ["Ruth", "Theresa", "Shirley", "You"],
             "D": ["Shirley", "Ruth", "Theresa", "You"]
         },
         4: {
