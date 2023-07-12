@@ -25,7 +25,7 @@ const getSteps = (variant, appName, roundNumber) => {
             if (roundNumber === 1) {
                 return ['repeatedStep', 'intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"]
             }
-            return ['repeatedStep', 'intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
+            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
         }
     }
     return []
