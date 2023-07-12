@@ -2,7 +2,7 @@ window.addEventListener('DOMContentLoaded', (event) => {
     renderDaAlgoPage()
 });
 
-function renderDaAlgoPage() {
+function renderDaAlgoPage(props = js_vars) {
     const jsxCode = `
     function Stam(){
         return <div></div>
@@ -2799,7 +2799,7 @@ function renderDaAlgoPage() {
                 },{}))
             }
             setSelectedProduct(null)
-            liveSend({information_type : "reset"})  
+            liveFliSend({information_type : "reset"})  
         }
         function onMatching(matchedProduct, matchedToCustomer){
             const productWasMatched = currentMatching[matchedProduct] !== "none"
@@ -2859,12 +2859,7 @@ function renderDaAlgoPage() {
             matching_memo : matchingMemo
             })
         },[matchingMemo])
-        React.useEffect(()=>{
-            liveSend({
-            information_type : "matching_counter_update",
-            matching_counter : matchingCounter
-            })
-        },[matchingCounter])
+        
         React.useEffect(()=>{
             liveSend({
             information_type : "step_update",
@@ -2917,6 +2912,20 @@ function renderDaAlgoPage() {
         const [message,setMessage] = React.useState(null)
         const [didTouch,setDidTouch] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
+        function incrementMatchingCounter(){
+            setMatchingCounter(matchingCounter + 1)
+            liveSend({
+                information_type : "matching_counter_update",
+                matching_counter : matchingCounter + 1
+            })
+        }
+        function resetMatchingCounter(){
+            setMatchingCounter(0)
+            liveSend({
+                information_type : "matching_counter_update",
+                matching_counter : 0
+            })
+        }
         function onSubmit(){
             if (readyToProceed || currentStep.type === "instructions"){
                 setMessage(null)
@@ -2946,7 +2955,7 @@ function renderDaAlgoPage() {
                     })
                 }
                 else{
-                    setMatchingCounter(matchingCounter + 1)
+                    incrementMatchingCounter()
                     currentMatchingCounter = matchingCounter
                     setMessage("incorrectMsg")
                 }
@@ -3004,13 +3013,13 @@ function renderDaAlgoPage() {
                             })
                         }
                         setMatchingMemo([...matchingMemo,...getMatchedProducts(expectedMatching)])
-                        setMatchingCounter(0)
+                        resetMatchingCounter()
                         setMessage("incorrectSkipMsg")
                         setCurrentMatching(expectedMatching)
                         setReadyToProceed(true)
                     }
                     else{
-                        setMatchingCounter(matchingCounter + 1)
+                        incrementMatchingCounter()
                         setMessage("incorrectMsg")
                     }
                 }
@@ -3043,7 +3052,7 @@ function renderDaAlgoPage() {
                     currentStep.inputRef.current.querySelector("select").disabled = true
                 }
                 else{
-                    setMatchingCounter(matchingCounter + 1)
+                    incrementMatchingCounter()
                     currentMatchingCounter = matchingCounter.current
                     setMessage("incorrectMsg")
                 }
@@ -3085,7 +3094,7 @@ function renderDaAlgoPage() {
                     })
                 }
                 else{
-                    setMatchingCounter(matchingCounter + 1)
+                    incrementMatchingCounter()
                     currentMatchingCounter = matchingCounter.current
                     setMessage("incorrectMsg")
                 }
@@ -3725,7 +3734,12 @@ function renderDaAlgoPage() {
     }
     `
 
-    function getPropsFromJsVars(js_vars) {
+
+
+    renderReactComponent(jsxCode, "react-root", "DaAlgoInterface", JSON.stringify(getPropsFromJsVars(js_vars)))
+
+}
+function getPropsFromJsVars(js_vars) {
         function parseDictToObject(str) {
             const validJsonStr = str.replace(/'/g, '"');
             const obj = JSON.parse(validJsonStr);
@@ -3772,8 +3786,10 @@ function renderDaAlgoPage() {
             matchingMemo: parseArray(js_vars.matchingMemo),
         }
     }
-
-    renderReactComponent(jsxCode, "react-root", "DaAlgoInterface", JSON.stringify(getPropsFromJsVars(js_vars)))
+function liveRecv(data){
+    const props = getPropsFromJsVars(js_vars)
+    // return renderDaAlgoPage()
 }
+
 
 

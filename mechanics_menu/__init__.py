@@ -287,6 +287,7 @@ class DAalghoInterface(Page):
         elif data["information_type"] == "matching_counter_update":
             new_counter = data["matching_counter"]
             player.matching_counter = new_counter
+            return {player.id_in_group: {"matching_counter": new_counter}}
         elif data["information_type"] == "step_update":
             step_id = data["step_id"]
             player.current_step_id = step_id

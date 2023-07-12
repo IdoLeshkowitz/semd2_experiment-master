@@ -1,4 +1,5 @@
 const steps = [
+    {id: "repeatedStep", type: "instructions"},
     {id: "intro", type: "instructions", expectedAnswerIndex: 0},
     {id: "prize_table", type: "instructions"},
     {id: "independence", type: "radio", expectedAnswerIndex: 1},
@@ -19,9 +20,12 @@ const getSteps = (variant, appName, roundNumber) => {
             return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "exit_point", "end"]
         }
     }
-    if (variant === "null" && appName === "null") {
+    if (variant === "null") {
         if (appName === "null") {
-            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
+            if (roundNumber === 1) {
+                return ['repeatedStep', 'intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"]
+            }
+            return ['repeatedStep', 'intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
         }
     }
     return []
@@ -48,6 +52,7 @@ function renderUiFromState(step) {
             const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions" || latestStep.type === "end" || latestStep.type === "allocationResults");
             const sectionsRefs = {
                 "intro": React.useRef(null),
+                "repeatedStep": React.useRef(null),
                 "prize_table": React.useRef(null),
                 "independence": React.useRef(null),
                 "value_table": React.useRef(null),
@@ -241,14 +246,26 @@ function renderUiFromState(step) {
                         {rankingModal && <RankingModal onClose={()=>{setRankingModal(false)}}/>}
                         {studyModal && <StudyModal onClose={()=>{setStudyModal(false)}}/>}
                         { prizesPrioritiesModal && <PrizesPrioritiesModal onClose={()=>{setPrizesPrioritiesModal(false)}}/>}
+                        <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button>
+                        { shownSteps.some(step => step.id === "repeatedStep") &&
+                            <>
+                                <section ref={sectionsRefs.repeatedStep} className="explain">
+                                    <p>
+                                        Note: This training round includes the exact questions that you already answered before. Nevertheless, please read them and answer carefully again to make sure you understand.
+                                    </p>
+                                </section>
+                                {
+                                        shownSteps.at(-1).id === "repeatedStep" && 
+                                            <Button 
+                                                onClick={onClick} 
+                                                text="Proceed"
+                                                className="btn-primary"
+                                            />
+                                }
+                            </>
+                        }
                         { shownSteps.some(step => step.id === "intro") &&
                             <>
-                                 <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button>
-                                 { props.variant === "null" && props.appName === "null" &&
-                                     <p>
-                                     Note: This training round includes the exact questions that you already answered before. Nevertheless, please read them and answer carefully again to make sure you understand.
-                                     </p>
-                                 } 
                                  <section ref={sectionsRefs.intro} className="explain">
                                     <p>
                                         This is a training round.<br/>
@@ -811,7 +828,7 @@ function renderAllocationResults(prizeName, prizeValue) {
              <p>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
-                { (props.roundNumber === 1 && props.variant !== "null") ?
+                { (props.roundNumber === 1) ?
                     <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
                     :
                     <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
