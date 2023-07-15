@@ -28,6 +28,7 @@ const getSteps = (variant, appName, roundNumber) => {
             return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
         }
     }
+    if (variant )
     return []
 }
 window.addEventListener("load", () => {

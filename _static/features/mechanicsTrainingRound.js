@@ -1,66 +1,327 @@
 function renderPage() {
     const jsxCode = `
     const CurrencyContext = React.createContext(null);
+    const SendNextStepIdContext = React.createContext(null);
+    const MistakesCounterContext = React.createContext(null);
+    const OnProceedContext = React.createContext(null);
     function MechanicsTrainingRound(props){
         const [modals,setModals]= React.useState({prizes:false,ranking:false,study:false,priorities:false});
         const [ranking,setRanking] = React.useState(null);
-        const [activeStepsIds,setActiveStepsIds] = React.useState(props.activeSteps ?? [props.steps[0]]);
-        const steps = [
-            {
-                id:"intro",
-                type : "information",
-                content :(
-                        <div class="explain">
-                            <p>
-                            This is a training round.<br/>
-                            Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
-                            </p>
-                            <p>
-                            Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
-                            </p>
-                        </div> 
-                ),
-                sectionRef : React.createRef(null),
-            },
-            {
-              id:"prizes_table",
-              type:"information",
-              content:(
-                <>
-                    <h4>Step 1: Round Information</h4>
-                    <p>In this round, the <b>prizes</b> are:</p>
-                    <EmptyPrizesTable prizes={props.prizes}/>
-                    <button type="button" className="button-2" onClick={()=>{setModals({...modals,prizes:true})}}  style={{marginTop:'1rem',marginBottom:'1rem'}}>Click for a reminder on what the prizes mean</button>
-                </>    
-              ),
-              sectionRef:React.createRef(null),
-            },
-            {
-                id:"prizes-priorities",
-                type:"information",
-                sectionRef:React.createRef(null),
-                content:(
+        const [activeStepsIds,setActiveStepsIds] = React.useState(props.activeStepId ? [props.activeStepId] : [props.steps[0]]);
+        const mechanicsSteps = [
+                {
+                    id:"intro",
+                    type : "information",
+                    content :(
+                            <div class="explain">
+                                <p>
+                                This is a training round.<br/>
+                                Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+                                </p>
+                                <p>
+                                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                </p>
+                            </div> 
+                    ),
+                    sectionRef : React.createRef(null),
+                },
+                {
+                  id:"prizes_table",
+                  type:"information",
+                  content:(
                     <>
-                        <p>The <b>prize priorities</b> for you and for the other participants are:</p>
-                        <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
-                        <button type="button" className="button-2" type="button" onClick={()=>setModals({...modals,priorities:true})}>Click for a reminder on what the priorities mean</button>
-                    </>
-                )
-            },
-            {
-                id:"ranking_form",
-                type:"rankingForm",
-                sectionRef:React.createRef(null),
-                inputRef:React.createRef(null),
-                buttonRef:React.createRef(null),
-            },
-            {
-                id:"allocation_results",
-                type:"allocationResults",
-                sectionRef:React.createRef(null),
-            },
-        ]
-        function onClick(){
+                        <h4>Step 1: Round Information</h4>
+                        <p>In this round, the <b>prizes</b> are:</p>
+                        <EmptyPrizesTable prizes={props.prizes}/>
+                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,prizes:true})}}  style={{marginTop:'1rem',marginBottom:'1rem'}}>Click for a reminder on what the prizes mean</button>
+                    </>    
+                  ),
+                  sectionRef:React.createRef(null),
+                },
+                {
+                    id:"prizes-priorities",
+                    type:"information",
+                    sectionRef:React.createRef(null),
+                    content:(
+                        <>
+                            <p>The <b>prize priorities</b> for you and for the other participants are:</p>
+                            <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
+                            <button type="button" className="button-2" type="button" onClick={()=>setModals({...modals,priorities:true})}>Click for a reminder on what the priorities mean</button>
+                        </>
+                    )
+                },
+                {
+                    id:"ranking_form",
+                    type:"rankingForm",
+                    sectionRef:React.createRef(null),
+                    inputRef:React.createRef(null),
+                    buttonRef:React.createRef(null),
+                },
+                {
+                    id:"allocation_results",
+                    type:"allocationResults",
+                    sectionRef:React.createRef(null),
+                },
+            ]
+        const propertiesSteps = (variant,roundNumber) =>{ 
+            const output = [
+                {
+                    id:"intro",
+                    type : "information",
+                    content :(
+                            <div class="explain">
+                                <p>
+                                This is a training round.<br/>
+                                Everything is <b>the same</b> as in the real rounds you will play later on, except that you will <b>not</b> earn the money worth of the prize you will get. Instead, we will ask you questions which can count for your <b>Understanding Bonus</b> at the end of the study.
+                                </p>
+                                <p>
+                                Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                </p>
+                            </div> 
+                    ),
+                    sectionRef : React.createRef(null),
+                },
+                {
+                  id:"prizes_table",
+                  type:"information",
+                  content:(
+                    <>
+                        <h4>Step 1: Round Information</h4>
+                        <p>In this round, the <b>prizes</b> are:</p>
+                        <EmptyPrizesTable prizes={props.prizes}/>
+                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,prizes:true})}}  style={{marginTop:'1rem',marginBottom:'1rem'}}>Click for a reminder on what the prizes mean</button>
+                    </>    
+                  ),
+                  sectionRef:React.createRef(null),
+                },
+                {
+                    id:"prizes-priorities",
+                    type:"information",
+                    sectionRef:React.createRef(null),
+                    content:(
+                        <>
+                            <p>The <b>prize priorities</b> for you and for the other participants are:</p>
+                            <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
+                            <button type="button" className="button-2" type="button" onClick={()=>setModals({...modals,priorities:true})}>Click for a reminder on what the priorities mean</button>
+                        </>
+                    )
+                },
+                {
+                    id:"ranking_form",
+                    type:"rankingForm",
+                    sectionRef:React.createRef(null),
+                    inputRef:React.createRef(null),
+                    buttonRef:React.createRef(null),
+                },
+                {
+                    id:"allocation_results",
+                    type:"allocationResults",
+                    sectionRef:React.createRef(null),
+                },
+            ]
+                if(variant === "menu"){
+                    output.push(
+                        {
+                            id: "questions_intro",
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome. 
+                                        Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                    </p>
+                                    <p>
+                                        Please determine whether the following statements are true or false:
+                                    </p>
+                                </div>
+                            ),
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                        },
+                        {
+                            type : "component",
+                            id : "general_property",
+                            content : (
+                                <>
+                                    <div className="question">
+                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
+                                        The computer determines the Obtainable Prizes, which <b>I cannot affect with my own ranking.</b> I always get the Obtainable Prize that is placed highest in the ranking I submitted.<br/> 
+                                        (Get it right on first try to increase your bonus)
+                                    </div>
+                                    <Question 
+                                        type ="dropdown"
+                                        id="general_property"
+                                        options = {["True","False"]}
+                                        expectedAnswerIndex = {1}
+                                        incorrectMsg = {
+                                            <div className="incorrect-msg">
+                                                Incorrect answer. Please try again.
+                                            </div> 
+                                        }
+                                        correctMsg = {
+                                            <div className="correct-msg">
+                                                Correct! In the allocation process, the computer determines some group of Obtainable Prizes that you might receive, using <b>only the other participants’ rankings and the prize priorities.</b> Then, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes, you get the one that you ranked highest.
+                                            </div>
+                                        }
+                                        correctFirstMsg= {
+                                            <div className="correct-msg">
+                                                Correct! In the allocation process, the computer determines some group of Obtainable Prizes that you might receive, using <b>only the other participants’ rankings and the prize priorities.</b> Then, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes, you get the one that you ranked highest.<br/>
+                                                Good job on the first try! This will count for your Understanding Bonus.
+                                            </div>
+                                        }  
+                                    />
+                                </>
+                           ),
+                            sectionRef : React.createRef(null), 
+                            options : ["True","False"],
+                            expectedAnswerIndex : 0,
+                            incorrectMsg : (
+                                <div className="incorrect-msg">
+                                    Incorrect answer. Please try again.
+                                </div>
+                            ),
+                            correctMsg : (
+                                <div className="correct-msg">
+                                    Correct! In the allocation process, the computer determines some group of Obtainable Prizes that you might receive, using <b>only the other participants’ rankings and the prize priorities.</b> Then, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes, you get the one that you ranked highest.
+                                </div>
+                            ),
+                            correctFirstMsg : (
+                                <div className="correct-msg">
+                                    Correct! In the allocation process, the computer determines some group of Obtainable Prizes that you might receive, using <b>only the other participants’ rankings and the prize priorities.</b> Then, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes, you get the one that you ranked highest.<br/>
+                                    Good job on the first try! This will count for your Understanding Bonus.
+                                </div>
+                            ),                        
+                        },
+                        {
+                            id: "mechanism_misconception_1",
+                            type : "component",
+                            content : (
+                                <>
+                                    <div className="question">
+                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
+                                        Submitting some ranking <b>cannot</b> ensure that I will get the <b>highest-rank</b> prize in that ranking, but it <b>does</b> ensure that I will <b>not</b> get the <b>lowest-rank</b> prize in that ranking.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                    </div>
+                                    <Question
+                                        type ="dropdown"
+                                        id="mechanism_misconception_1"
+                                        options = {["True","False"]}
+                                        expectedAnswerIndex = {1}
+                                        incorrectMsg = {
+                                            <div className="incorrect-msg">
+                                                Incorrect answer. Please try again.
+                                            </div>
+                                        }
+                                        correctMsg = {
+                                            <div className="correct-msg">
+                                                Correct! The allocation process only ensures that <b>out of the Obtainable Prizes</b> (which you cannot affect with your own ranking), you get the one that you ranked highest. On some occasions, the <b>prize you ranked lowest may be the only Obtainable Prize</b> and hence you would get it.
+                                            </div>
+                                        }
+                                        correctFirstMsg= {
+                                            <div className="correct-msg">
+                                                Correct! The allocation process only ensures that <b>out of the Obtainable Prizes</b> (which you cannot affect with your own ranking), you get the one that you ranked highest. On some occasions, the <b>prize you ranked lowest may be the only Obtainable Prize</b> and hence you would get it.<br/>
+                                                Good job on the first try! This will count for your Understanding Bonus.
+                                            </div>
+                                        }
+                                        />
+                                </>
+                            ),
+                            sectionRef : React.createRef(null),
+                        },
+                        {
+                            id: "mechanism_misconception_2",
+                            type : "component",
+                            content : (
+                                <>
+                                    <div className="question">
+                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
+                                        Imagine I have a low priority for getting Prize A, which is the prize I want the most, but I have a high priority for getting Prize B, which I want the second most. Then, submitting a ranking that places Prize A first and Prize B second may lead to missing out on both prizes A and B, while submitting a different ranking could have gotten me Prize B. <br/>
+                                        (Get it right on first try to increase your bonus)
+                                    </div>
+                                    <Question
+                                        type ="dropdown"
+                                        id="mechanism_misconception_2"
+                                        options = {["True","False"]}
+                                        expectedAnswerIndex = {1}
+                                        incorrectMsg = {
+                                            <div className="incorrect-msg">
+                                                Incorrect answer. Please try again.
+                                            </div>
+                                        }
+                                        correctMsg = {
+                                            <div className="correct-msg">
+                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes, and cannot get you neither of these prizes. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b>
+                                            </div>
+                                        }
+                                        correctFirstMsg= {
+                                            <div className="correct-msg">
+                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes, and cannot get you neither of these prizes. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b><br/>
+                                                Good job on the first try! This will count for your Understanding Bonus.
+                                            </div>
+                                        }
+                                        />
+                                </>
+                            ),
+                            sectionRef : React.createRef(null)
+                        },
+                        {
+                            id : "different_rank_outcome",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            Please answer the following question:          
+                                        </p>
+                                        <p>
+                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                            Which of the following might be true? (select one answer)<br/>
+                                            (Hint: think about what the set of Obtainable Prizes could possibly be.)<br/>
+                                            (Get it right on first try to increase your bonus)<br/>
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="different_rank_outcome"
+                                            options = {[
+                                                <span>It is certain that every possible ranking I could have submitted would have gotten me Prize A.</span>,
+                                                <span>There might be some alternative ranking I could have submitted that would have gotten me Prize B.</span>,
+                                                <span>There might be some alternative ranking I could have submitted that would have gotten me Prize C.</span>,
+                                                <span>There might be some alternative ranking I could have submitted that would have gotten me Prize D.</span>,
+                                            ]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    Correct! You always get your highest-ranked Obtainable Prize, in this case, Prize A. If your Obtainable Prizes included Prize C and/or Prize B, which you ranked higher than Prize A, you would have gotten one of them instead. Thus, the Obtainable Prizes can only include Prize A, and possibly Prize D, but <b>do not</b> include Prize C nor Prize B. Your ranking does not affect your Obtainable Prizes, so submitting a different ranking could have only gotten you Prize A or Prize D.
+                                                </div> 
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    Correct! You always get your highest-ranked Obtainable Prize, in this case, Prize A. If your Obtainable Prizes included Prize C and/or Prize B, which you ranked higher than Prize A, you would have gotten one of them instead. Thus, the Obtainable Prizes can only include Prize A, and possibly Prize D, but <b>do not</b> include Prize C nor Prize B. Your ranking does not affect your Obtainable Prizes, so submitting a different ranking could have only gotten you Prize A or Prize D.<br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        }
+                    )
+                }
+            return output;
+        }
+        const steps = props.treatment === "mechanics" ? mechanicsSteps : propertiesSteps(props.variant,props.roundNumber);
+        if (props.didComplete){
+            onProceed();
+        }
+        function onProceed(){
+            const currentStepId = activeStepsIds.at(-1);
+            const currentStep = steps.find(step=>step.id===currentStepId);
             function isLastStep(activeStepsIds,steps){
                 const activeStepId = activeStepsIds.at(-1);
                 const nextStepIndex = steps.findIndex(step=>step.id===activeStepId)+1;
@@ -86,105 +347,132 @@ function renderPage() {
             /* update active steps */
             const nextStepId = getNextStepId(activeStepsIds,steps);
             setActiveStepsIds([...activeStepsIds,nextStepId]);
+            liveSend({
+                "action" : "setActiveStepId",
+                "stepId" : nextStepId,
+            })
+        }
+        function sendNextStepId(){
+            const currentStepId = activeStepsIds.at(-1);
+            const currentStepIndex = steps.findIndex(step=>step.id===currentStepId);
+            const nextStepIndex = currentStepIndex+1;
+            const nextStepId = steps[nextStepIndex]?.id;
+            if (!nextStepId) {
+                return liveSend({
+                    "action" : "setCompleted",
+                })
+            } 
+            liveSend({
+                "action" : "setActiveStepId",
+                "stepId" : nextStepId,
+            })
         }
         React.useEffect(()=>{
             /* scroll the latest step into view in any step except the first */
             if (activeStepsIds.length === 1)return ;
             const latestStepId = activeStepsIds.at(-1);
             const latestStep = steps.find(step=>step.id===latestStepId);
-            latestStep.sectionRef.current?.scrollIntoView({behavior:"smooth"});
+            latestStep.sectionRef?.current?.scrollIntoView({behavior:"smooth"});
         },[activeStepsIds]) 
         return (
-            <CurrencyContext.Provider>
-                <>
-                    {modals.prizes && <PrizesModal onClose={()=>{setModals({...modals,prizes:false})}}/>}
-                    {modals.ranking && <RankingModal onClose={()=>{setModals({...modals,ranking:false})}}/>}
-                    {modals.study && <StudyModal onClose={()=>{setModals({...modals,study:false})}}/>}
-                    {modals.priorities && <PrioritiesModal onClose={()=>{setModals({...modals,priorities:false})}}/>}
-                    {modals.allocation && <AllocationModal onClose={()=>{setModals({...modals,allocation:false})}} variant = {props.variant}/>}
-                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,study:true})}}  style={{marginBottom:'1rem',display:"block"}}>Click for a general reminder on this study</button>
-                        <button type="button" className="button-2" onClick={()=>{setModals({...modals,allocation:true})}}  style={{marginBottom:'1rem'}}>Click for a reminder on the technical details of the allocation process</button>
-                   
-                    <div style={{display:'flex', gap:'1.5rem',flexDirection:'column'}}>
-                        {
-                            activeStepsIds.map((stepId,index)=>{
-                                const step = steps.find(step=>step.id===stepId);
-                                if (step.type === "information"){
-                                    return (
-                                        <section ref={step.sectionRef}>
-                                            {step.content}
-                                            {index === activeStepsIds.length-1 && <Button onClick={onClick} text="Proceed" buttonRef={step.buttonRef}/>}
-                                        </section>
-                                    )
-                                }
-                                if (step.type === "rankingForm"){
-                                    const expectedRanking = props.participantsPriorities["You"];
-                                    return (
-                                        <section ref={step.sectionRef}>
-                                            <h4>Step 2: Submit Your Ranking</h4>
-                                            <button
-                                             className="button-2"
-                                             onClick={()=>{setModals({...modals,ranking:true})}}
-                                             type="button"
-                                                >
-                                                Click for a reminder on what this ranking means
-                                            </button>
-                                            <p class="ms-1">Please rank the four prizes <b>in the fixed, specific order {expectedRanking.join("–")}</b>.</p>
-                                            <RankingForm 
-                                                participantsPriorities={props.participantsPriorities}
-                                                inputRef={step.inputRef}
-                                                onInput={(ranking)=>{
-                                                    const expectedRanking = props.participantsPriorities["You"];
-                                                    const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
-                                                    if (!isCorrect){
-                                                        setRanking(null);
-                                                        step.buttonRef.current.disabled = true;
-                                                        return 
+            <OnProceedContext.Provider value={onProceed}>
+                <SendNextStepIdContext.Provider value={sendNextStepId}>
+                    <MistakesCounterContext.Provider value={props.mistakesCounter ?? null}>
+                        <>
+                            {modals.prizes && <PrizesModal onClose={()=>{setModals({...modals,prizes:false})}}/>}
+                            {modals.ranking && <RankingModal onClose={()=>{setModals({...modals,ranking:false})}}/>}
+                            {modals.study && <StudyModal onClose={()=>{setModals({...modals,study:false})}}/>}
+                            {modals.priorities && <PrioritiesModal onClose={()=>{setModals({...modals,priorities:false})}}/>}
+                            {modals.allocation && <AllocationModal onClose={()=>{setModals({...modals,allocation:false})}} variant = {props.variant}/>}
+                                <button type="button" className="button-2" onClick={()=>{setModals({...modals,study:true})}}  style={{marginBottom:'1rem',display:"block"}}>Click for a general reminder on this study</button>
+                                <button type="button" className="button-2" onClick={()=>{setModals({...modals,allocation:true})}}  style={{marginBottom:'1rem'}}>Click for a reminder on the technical details of the allocation process</button>
+                           
+                            <div style={{display:'flex', gap:'1.5rem',flexDirection:'column'}}>
+                                {
+                                    activeStepsIds.map((stepId,index)=>{
+                                        const step = steps.find(step=>step.id===stepId);
+                                        if (step.type === "component"){
+                                            return <section ref={step.sectionRef}>{step.content}</section>
+                                        }
+                                        if (step.type === "information"){
+                                            return (
+                                                <section ref={step.sectionRef}>
+                                                    {step.content}
+                                                    {index === activeStepsIds.length-1 && <Button onClick={onProceed} text="Proceed" buttonRef={step.buttonRef}/>}
+                                                </section>
+                                            )
+                                        }
+                                        if (step.type === "rankingForm"){
+                                            const expectedRanking = props.participantsPriorities["You"];
+                                            return (
+                                                <section ref={step.sectionRef}>
+                                                    <h4>Step 2: Submit Your Ranking</h4>
+                                                    <button
+                                                     className="button-2"
+                                                     onClick={()=>{setModals({...modals,ranking:true})}}
+                                                     type="button"
+                                                        >
+                                                        Click for a reminder on what this ranking means
+                                                    </button>
+                                                    <p class="ms-1">Please rank the four prizes <b>in the fixed, specific order {expectedRanking.join("–")}</b>.</p>
+                                                    <RankingForm 
+                                                        participantsPriorities={props.participantsPriorities}
+                                                        inputRef={step.inputRef}
+                                                        onInput={(ranking)=>{
+                                                            const expectedRanking = props.participantsPriorities["You"];
+                                                            const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
+                                                            if (!isCorrect){
+                                                                setRanking(null);
+                                                                step.buttonRef.current.disabled = true;
+                                                                return 
+                                                            }
+                                                            setRanking(ranking);
+                                                            step.buttonRef.current.disabled = false;
+                                                        }}
+                                                        onEnter={(ranking)=>{
+                                                            const expectedRanking = props.participantsPriorities["You"];
+                                                            const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
+                                                            if (!isCorrect){
+                                                                setRanking(null);
+                                                                step.buttonRef.current.disabled = true;
+                                                                return
+                                                            }
+                                                            setRanking(ranking);
+                                                            step.inputRef.current.disabled = true;
+                                                            step.buttonRef.current.disabled = false;
+                                                            onProceed();
+                                                        }}
+                                                        />
+                                                    { index === activeStepsIds.length-1 && 
+                                                        <Button 
+                                                            onClick={()=>{
+                                                                step.inputRef.current.disabled = true;
+                                                                onProceed();
+                                                            }}
+                                                            className="btn btn-danger"
+                                                            buttonRef={step.buttonRef}
+                                                            text="Submit Ranking"
+                                                            disabled={!ranking}
+                                                            />
                                                     }
-                                                    setRanking(ranking);
-                                                    step.buttonRef.current.disabled = false;
-                                                }}
-                                                onEnter={(ranking)=>{
-                                                    const expectedRanking = props.participantsPriorities["You"];
-                                                    const isCorrect = expectedRanking.every((prize,index)=>prize===ranking[index]);
-                                                    if (!isCorrect){
-                                                        setRanking(null);
-                                                        step.buttonRef.current.disabled = true;
-                                                        return
-                                                    }
-                                                    setRanking(ranking);
-                                                    step.inputRef.current.disabled = true;
-                                                    step.buttonRef.current.disabled = false;
-                                                    onClick();
-                                                }}
-                                                />
-                                            { index === activeStepsIds.length-1 && 
-                                                <Button 
-                                                    onClick={()=>{
-                                                        step.inputRef.current.disabled = true;
-                                                        onClick();
-                                                    }}
-                                                    className="btn btn-danger"
-                                                    buttonRef={step.buttonRef}
-                                                    text="Submit Ranking"
-                                                    disabled={!ranking}
-                                                    />
-                                            }
-                                        </section>
-                                    )
+                                                </section>
+                                            )
+                                        }
+                                        if (step.type === "allocationResults"){
+                                            return (
+                                                <section ref={step.sectionRef}>
+                                                    <AllocationResults onClick={onProceed} treatment={props.treatment} allocatedPrize={props.allocatedPrize}/>
+                                                    {index === activeStepsIds.length-1 && <Button onClick={onProceed} text="Proceed" buttonRef={step.buttonRef}/>}
+                                                </section>
+                                            )
+                                        }
+                                    })
                                 }
-                                if (step.type === "allocationResults"){
-                                    return (
-                                        <section ref={step.sectionRef}>
-                                            <AllocationResults onClick={onClick}/>
-                                        </section>
-                                    )
-                                }
-                            })
-                        }
-                    </div>
-                </>
-            </CurrencyContext.Provider>
+                            </div>
+                        </>
+                    </MistakesCounterContext.Provider>
+                </SendNextStepIdContext.Provider>
+            </OnProceedContext.Provider>
         )
     }
     function Button(props){
@@ -208,12 +496,17 @@ function renderPage() {
              <>
                 <h4>Step 3: Allocation Process</h4>
                 <div id="round-results">
-                        <p>
+                { props.treatment === "mechanics" ? 
+                    <p>
                         You are going to perform the allocation process by yourself, according to what you learned.<br/>
-                            Click on the button below to start.
-                        </p>
-                        <Button onClick={props.onClick} text="Proceed"/>
-            </div>
+                        Click on the button below to start.
+                    </p>
+                    : 
+                    <p>
+                        <b>You get prize {props.allocatedPrize}</b>
+                    </p>
+                }
+                </div>
             </>
         )
     }
@@ -583,6 +876,152 @@ function renderPage() {
         </div>
     )
 }
+    function Question(props){
+        const [message, setMessage] = React.useState(null)
+        const [readyToProceed, setReadyToProceed] = React.useState(false)
+        const [hideSubmitButton, setHideSubmitButton] = React.useState(false)
+        const mistakesCounter = React.useRef(React.useContext(MistakesCounterContext) ?? 0);
+        const sendNextStepId = React.useContext(SendNextStepIdContext);
+        const onProceed = React.useContext(OnProceedContext);
+        const inputRef = React.useRef(null);
+        function incrementMistakesCounter(){
+            liveSend({
+                "action" : "addMistake"
+            })
+            mistakesCounter.current += 1;
+        }
+        function resetMistakesCounter(){
+            liveSend({
+                "action" : "resetMistakes"
+            })
+            mistakesCounter.current = 0;
+        }
+        function onSubmit(){
+            if (readyToProceed){
+                onProceed();
+                setHideSubmitButton(true);
+                return;
+            }
+            const selectedOption = (() => {
+                if (props.type === "radio"){
+                    return parseInt(inputRef.current.querySelector('input[type="radio"]:checked').value)
+                }
+                if (props.type === "dropdown"){
+                    return parseInt(inputRef.current.querySelector('select').value)
+                }
+            })()
+            const expectedAnswerIndex = props.expectedAnswerIndex;
+            const isCorrect = selectedOption === expectedAnswerIndex;
+            const isFirstAttempt = mistakesCounter.current === 0;
+            if (isCorrect){
+                if (isFirstAttempt){
+                    liveSend({
+                        "action": "addUnderstandingBonus",
+                        "bonus" : 1, 
+                    })
+                    setMessage("correctFirstMsg")
+                }
+                else {
+                    setMessage("correctMsg")
+                }
+                sendNextStepId();
+                setReadyToProceed(true);
+                inputRef.current.querySelectorAll('input,select').forEach((el) => {
+                    el.disabled = true;
+                })
+                resetMistakesCounter();
+            }
+            else {
+                incrementMistakesCounter();
+                setMessage("incorrectMsg")
+            }
+            liveSend({
+                "action": "submit_question",
+                "question_id": props.id,
+                "expected_answer" : expectedAnswerIndex,
+                "selected_answer" : selectedOption,
+                "is_correct" : isCorrect,
+                "understanding_bonus" : isFirstAttempt && isCorrect ? 1 : 0,
+                "mistakes_counter": mistakesCounter.current,
+                "time_stamp": new Date().toUTCString(),
+            })
+        }
+        return (
+            <>
+                { props.type === "dropdown" &&
+                     <div ref={inputRef} style={{display:'flex',flexDirection:'column',gap:'0.5rem'}}>
+                        <label htmlFor={props.stepId+'-dropdown'}>{props.label}</label>
+                        <select className="custom-select" id={props.stepId+'-dropdown'}>
+                            <option value={-1} selected key={-1}></option>
+                            {
+                                props.options.map((option,index) => {
+                                    return (
+                                        <option value={index} key={index}>{option}</option>
+                                    )
+                                })
+                            }
+                        </select>
+                    </div>
+                }
+                {
+                    props.type === "radio" && 
+                        <div ref={inputRef} style={{display:'flex',flexDirection:'column',gap:'0.5rem'}}>
+                            <label>{props.label}</label>
+                            {
+                                props.options.map((option,index) => {
+                                    return (
+                                        <div className="form-check" key={index}>
+                                            <input className="form-check-input" type="radio" name={props.stepId+'-radio'} id={props.stepId+'-radio-'+index} value={index}/>
+                                            <label className="form-check-label" htmlFor={props.stepId+'-radio-'+index}>
+                                                {option}
+                                            </label>
+                                        </div>
+                                    )
+                                })
+                            }
+                        </div>
+                }
+                { !readyToProceed && 
+                    <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>
+                        <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}}>
+                            Submit
+                        </button>
+                    </div>
+                }     
+                {
+                    message && message === "incorrectMsg" && 
+                        <div class="incorrect-msg">
+                            {props.incorrectMsg}
+                        </div>
+                }
+                {
+                    message && message === "correctMsg" &&
+                        <div class="correct-msg">
+                            {props.correctMsg}
+                        </div>       
+                }
+                {
+                    message && message === "correctFirstMsg" &&
+                        <div class="correct-msg">
+                            {props.correctFirstMsg}
+                        </div>
+                }
+                {
+                    message && message === "correctSecondMsg" &&
+                        <div class="correct-msg">
+                            {props.correctSecondMsg}
+                        </div>
+                }
+                { readyToProceed && !hideSubmitButton &&
+                    <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>
+                        <button type="button" className="btn btn-primary" onClick={onSubmit} style={{marginTop: '0.5rem'}}>
+                            Proceed
+                        </button>
+                    </div>
+                }      
+            </> 
+        )
+    }
     `
     renderReactComponent(jsxCode, "react-root", "MechanicsTrainingRound", JSON.stringify({...js_vars}))
 }

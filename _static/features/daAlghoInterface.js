@@ -3733,9 +3733,6 @@ function renderDaAlgoPage(props = js_vars) {
         )
     }
     `
-
-
-
     renderReactComponent(jsxCode, "react-root", "DaAlgoInterface", JSON.stringify(getPropsFromJsVars(js_vars)))
 
 }

@@ -1,6 +1,6 @@
 function renderIntroPage(){
     const jsxCode =`
-    const steps = {
+    const mechaninsSteps = {
         "menu":[
             {
                 content : (
@@ -294,11 +294,91 @@ function renderIntroPage(){
             }
         ]
     }
-    function getSteps(variant){
-        return variant === 'menu' ? steps.menu : steps.traditional
+    const propertiesSteps =  {
+        "menu": [
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                             <p>
+                                We will now tell you a general important principle behind the allocation process.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                                Imagine the computer determined some prize priorities and rankings of the other, computerized participants. <br/>
+                                In the allocation process, the computer will use these prize priorities and other participants’ rankings
+                                to determine some group of <b>Obtainable Prizes</b> that you might receive.
+                                <ul>
+                                    <li>These Obtainable Prizes might include some or all of the prizes. There will always be at least one Obtainable Prize. </li>
+                                    <li>Importantly, <b>you cannot affect the Obtainable Prizes with your own ranking</b>.
+                                        They are only determined using the other participants' rankings and the prize priorities.</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                                Then:
+                                <ul>
+                                    <li>You always get the Obtainable Prize that is ranked highest in the ranking you submitted.</li>
+                                    <li>In other words, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes,
+                                        you get the one that you ranked highest.</li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                             <p>
+                                For example, imagine that your Obtainable Prizes are B and D. If you submit the ranking A–B–C–D (from most to least preferred),
+                                you will get Prize B, which is the one you ranked highest among the Obtainable Prizes.
+                                No ranking you could possibly submit would get you Prize A or Prize C, since the Obtainable Prizes are B and D.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                             <p>
+                                On the next screens you will play training rounds of the game to master your understanding of this principle.
+                                Click the button below to proceed to these rounds.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()                     
+            }
+        ]
+    }
+    function getSteps(variant,treatment){
+        if (treatment === "properties") return propertiesSteps[variant]
+        if (treatment === "mechanics") return mechaninsSteps[variant]
     }
     function IntroPage(props){
-        const steps =  getSteps(props.variant)
+        const steps =  getSteps(props.variant,props.treatment)
         const [activeSteps, setActiveSteps] = React.useState([steps[0]])
         const [allocationModal, setAllocationModal] = React.useState(false)
         function onNext(){

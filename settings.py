@@ -20,6 +20,14 @@ SESSION_CONFIGS=[
         'app_sequence':["trajectory9", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
+        'name':                  'MENU_MECH_LT',
+        'display_name':          'Properties Menu Long Training',
+        'num_demo_participants': 1,
+        'participation_fee':     SESSION_CONFIG_DEFAULTS['participation_fee'],
+        'app_sequence':          ["trajectory1", "consent_form", "null_intro", "null_training", "properties_menu", "real_rounds_batch1",
+                                  "understanding_test", "reflection", "cognitive_abilities", "demographics", "exit"]
+    },
+    {
         "name":"NULL_LT",
         "display_name":"Null Long Training",
         "num_demo_participants":1,

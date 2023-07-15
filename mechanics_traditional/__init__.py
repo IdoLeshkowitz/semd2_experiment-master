@@ -68,6 +68,7 @@ def get_correct_answers_by_round(round):
 
 class C(BaseConstants):
     VARIANT = "traditional"
+    TREATMENT = "mechanics"
     NAME_IN_URL = 'mechanics_traditional'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 4
@@ -159,6 +160,7 @@ class TrainingRound(Page):
             "participants":           C.PARTICIPANTS,
             "currentStep":            player.current_step_id,
             "variant":                C.VARIANT,
+            "treatment":              C.TREATMENT,
         }
 
     @staticmethod
@@ -301,6 +303,9 @@ class MechanicsIntro(Page):
     def is_displayed(player: Player):
         return player.round_number == 1
 
+    @staticmethod
+    def js_vars(player: Player):
+        return {"treatment":C.TREATMENT,"variant":C.VARIANT}
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.intro_end_time = str(datetime.now(timezone.utc))
