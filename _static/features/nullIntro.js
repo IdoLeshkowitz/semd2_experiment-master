@@ -231,7 +231,7 @@ function renderIntroPage() {
                     type: 'instructions',
                     content :(
                         <section>
-                            <div class="explain">
+                            <div class="explain" style={{"fontStyle": "italic"}}>
                                <p>
                                    We will now remind you of the general details of the game and allocation process. This page includes the <b>exact same text</b> you read at the beginning of the study. Please read it again to make sure you understand.
                                </p> 

@@ -63,7 +63,61 @@ function renderPage() {
                     sectionRef:React.createRef(null),
                 },
             ]
-        const propertiesSteps = (variant,roundNumber) =>{ 
+        const propertiesSteps = (variant,roundNumber) =>{
+            function rankingChangeFeedback(variant,feedbackNumber,x,y){
+                if (feedbackNumber === 1){
+                    if (variant === "menu"){
+                        return(
+                            <span>
+                               Correct! Given that you originally ranked Prize {x} above Prize {y} but got Prize {y}, Prize {x} is not an Obtainable Prize. Hence, <b>no ranking</b> could possibly get you Prize {x}.
+                            </span>
+                        )
+                    }
+                }
+                if (feedbackNumber === 2){
+                    if (variant === "menu"){
+                        return (
+                            <span>
+                                Correct! Given that you originally ranked Prize {y} above Prize {x} but got Prize {y}, Prize {x} <b>could</b> be an Obtainable Prize. Hence, an alternative ranking could possibly get you Prize {x}.
+                            </span>
+                        )
+                    }
+                }
+                if (feedbackNumber === 3){
+                    if (variant === "menu"){
+                        return (
+                            <span>
+                                Correct! Given that you originally got Prize {y}, Prize {y} is an Obtainable Prize. Since you still rank Prize {y} above Prize {x}, you <b>cannot</b> possibly get Prize {x}.
+                            </span>
+                        )
+                    }
+                }
+                if (feedbackNumber === 4){
+                    if (variant === "menu"){
+                        return (
+                            <span>
+                                Correct! Given that you originally ranked Prize {y} last and got it, it is the only Obtainable Prize. Hence every possible alternative ranking would only get you Prize {y}.
+                            </span>
+                        )
+                    }
+                }
+                if (feedbackNumber === 5){
+                    return (
+                        <span>
+                            Correct! The ranking that you originally submitted gets you Prize {y}.
+                        </span>
+                    )
+                }
+                if (feedbackNumber === 6){
+                    if (variant === "menu"){
+                        return (
+                            <span>
+                                Correct! Given that you originally ranked Prize {y} first and got it, Prize {y} is an Obtainable Prize. Hence an alternative ranking that ranks Prize {y} lower could still possibly get you Prize {y}, but it may also get you a different, higher-ranked, prize if that prize is also an Obtainable Prize.
+                            </span>
+                        )
+                    }
+                }
+            }
             const output = [
                 {
                     id:"intro",
@@ -119,7 +173,8 @@ function renderPage() {
                     sectionRef:React.createRef(null),
                 },
             ]
-                if(variant === "menu"){
+            if (variant === "menu") {
+                if (roundNumber === 1){
                     output.push(
                         {
                             id: "questions_intro",
@@ -311,6 +366,1271 @@ function renderPage() {
                         }
                     )
                 }
+                if (roundNumber === 2){
+                    output.push(
+                        {
+                            id: "questions_intro",
+                            type : "information",
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                    </p>
+                                    <p>
+                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                    </p>
+                                    <p>
+                                        Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                    </p>    
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "ranking_change_1",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_1"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                {rankingChangeFeedback(variant,1,"A","B")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,1,"A","B")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                            />
+                                    </div>
+                                </>
+                            ),               
+                        },
+                        {
+                            id : "ranking_change_2",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_2"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"D","B")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"D","B")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        },
+                        {
+                            id : "ranking_change_3",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_3"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,3,"C","B")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,3,"C","B")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />  
+                                    </div>
+                                </>
+                            ),        
+                        },
+                        {
+                            id : "ranking_change_4",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_4"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,1,"A","B")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,1,"A","B")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),                      
+                        },
+                        {
+                            id : "ranking_change_5",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_5"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"C","B")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"C","B")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        },
+                        {
+                            id: "brute_force_info",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <div className="explain">
+                                    <p>
+                                        Imagine you are able to try submitting many different possible rankings, while the prize priorities and other participants’ rankings remain the same.
+                                    </p>
+                                    <p>
+                                        Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
+                                        After each such submission, you write down the prize that this submission gets you.<br/>
+                                        You end up with a log including some of the Prizes A, B, C and D.
+                                    </p> 
+                                    <p>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
+                                    </p>
+                                    <p>
+                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                    </p>
+                                    <p>
+                                        Choose the correct answer below:
+                                    </p>
+                                </div>
+                            ),
+                        },
+                        {
+                            id : "brute_force_a",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_a"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {2}
+                                    label = "Prize A (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"A","B")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"A","B")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_b",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_b"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {0}
+                                    label = "Prize B (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,5,null,"B")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,5,null,"B")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_c",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_c"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {1}
+                                    label = "Prize C (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }   
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"C","B")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"C","B")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_d",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_d"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {1}
+                                    label = "Prize D (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }   
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"D","B")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"D","B")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),      
+                        }
+                    )
+                }
+                if (roundNumber === 3){
+                    output.push(
+                        {
+                            id: "questions_intro",
+                            type : "information",
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                    </p>
+                                    <p>
+                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                    </p>
+                                    <p>
+                                        Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                    </p>    
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "ranking_change_1",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_1"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                {rankingChangeFeedback(variant,4,null,"A")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                            />
+                                    </div>
+                                </>
+                            ),               
+                        },
+                        {
+                            id : "ranking_change_2",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_2"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        },
+                        {
+                            id : "ranking_change_3",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_3"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />  
+                                    </div>
+                                </>
+                            ),        
+                        },
+                        {
+                            id : "ranking_change_4",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_4"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),                      
+                        },
+                        {
+                            id : "ranking_change_5",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_5"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,4,null,"A")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        },
+                        {
+                            id: "brute_force_info",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <div className="explain">
+                                    <p>
+                                        Imagine you are able to try submitting many different possible rankings, while the prize priorities and other participants’ rankings remain the same.
+                                    </p>
+                                    <p>
+                                        Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
+                                        After each such submission, you write down the prize that this submission gets you.<br/>
+                                        You end up with a log including some of the Prizes A, B, C and D.
+                                    </p> 
+                                    <p>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
+                                    </p>
+                                    <p>
+                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                    </p>
+                                    <p>
+                                        Choose the correct answer below:
+                                    </p>
+                                </div>
+                            ),
+                        },
+                        {
+                            id : "brute_force_a",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_a"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {0}
+                                    label = "Prize A (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,5,null,"A")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,5,null,"A")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_b",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_b"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {2}
+                                    label = "Prize B (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"C","A")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"C","A")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_c",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_c"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {2}
+                                    label = "Prize C (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }   
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"C","A")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"C","A")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_d",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_d"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {2}
+                                    label = "Prize D (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }   
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"D","A")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,1,"D","A")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),      
+                        }
+                    )
+                }
+                if (roundNumber === 4){
+                    output.push(
+                        {
+                            id: "questions_intro",
+                            type : "information",
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                    </p>
+                                    <p>
+                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                    </p>
+                                    <p>
+                                        Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                    </p>    
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "ranking_change_1",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_1"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                {rankingChangeFeedback(variant,2,"A","D")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"A","D")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                            />
+                                    </div>
+                                </>
+                            ),               
+                        },
+                        {
+                            id : "ranking_change_2",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_2"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,6,null,"D")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,6,null,"D")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        },
+                        {
+                            id : "ranking_change_3",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                            (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_3"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {1}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,3,"C","D")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,3,"C","D")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />  
+                                    </div>
+                                </>
+                            ),        
+                        },
+                        {
+                            id : "ranking_change_4",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_4"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"A","D")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"A","D")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),                      
+                        },
+                        {
+                            id : "ranking_change_5",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <>
+                                    <div className="question">
+                                        <p>
+                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        (Get it right on first try to increase your bonus)
+                                        </p>
+                                        <Question
+                                            type ="radio"
+                                            id="ranking_change_5"
+                                            options = {["True","False"]}
+                                            expectedAnswerIndex = {0}
+                                            incorrectMsg = {
+                                                <div className="incorrect-msg">
+                                                    Incorrect answer. Please try again.
+                                                </div>
+                                            }
+                                            correctMsg = {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"C","D")}
+                                                </div>
+                                            }
+                                            correctFirstMsg= {
+                                                <div className="correct-msg">
+                                                    {rankingChangeFeedback(variant,2,"C","D")}
+                                                    <br/>
+                                                    Good job on the first try! This will count for your Understanding Bonus.
+                                                </div>
+                                            }
+                                        />
+                                    </div>
+                                </>
+                            ),
+                        },
+                        {
+                            id: "brute_force_info",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <div className="explain">
+                                    <p>
+                                        Imagine you are able to try submitting many different possible rankings, while the prize priorities and other participants’ rankings remain the same.
+                                    </p>
+                                    <p>
+                                        Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
+                                        After each such submission, you write down the prize that this submission gets you.<br/>
+                                        You end up with a log including some of the Prizes A, B, C and D.
+                                    </p> 
+                                    <p>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
+                                    </p>
+                                    <p>
+                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                    </p>
+                                    <p>
+                                        Choose the correct answer below:
+                                    </p>
+                                </div>
+                            ),
+                        },
+                        {
+                            id : "brute_force_a",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_a"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {1}
+                                    label = "Prize A (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"A","B")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"A","B")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_b",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_b"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {1}
+                                    label = "Prize B (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"B","D")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"B","D")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_c",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_c"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {1}
+                                    label = "Prize C (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }   
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"C","D")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,2,"C","D")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),
+                        },
+                        {
+                            id : "brute_force_d",
+                            type : "component",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <Question
+                                    type ="radio"
+                                    id="brute_force_d"
+                                    options = {["Definitely included","Possibly included","Definitely not included"]}
+                                    expectedAnswerIndex = {0}
+                                    label = "Prize D (Get it right on first try to increase your bonus)"
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }   
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,5,null,"D")}
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            {rankingChangeFeedback(variant,5,null,"D")}
+                                            <br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                />
+                            ),      
+                        }
+                    )
+                }
+            }
+            if (variant === "traditional"){
+                output.push(
+                    {
+                        id: "questions_intro",
+                        content : (
+                            <div class="explain">
+                                <p>
+                                    In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome. 
+                                    Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                </p>
+                                <p>
+                                    Please determine whether the following statements are true or false:
+                                </p>
+                            </div>
+                        ),
+                        type : "information",
+                        sectionRef : React.createRef(null),
+                     },
+                    {
+                        type : "component",
+                        id : "general_property",
+                        content : (
+                            <>
+                                <div className="question">
+                                   Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
+                                   Submitting a ranking that follows some order of prizes always gets me a prize <b>at least as high according to that order</b> compared to the prize I would have gotten if I had submitted any different, alternative ranking.<br/>
+                                   (Get it right on first try to increase your bonus)
+                                </div>
+                                <Question 
+                                    type ="radio"
+                                    id="general_property"
+                                    options = {["True","False"]}
+                                    expectedAnswerIndex = {0}
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div> 
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            Correct! The prize you get if you submit any different, alternative ranking can only be <b>the same</b> as the prize you get when submitting a ranking that follows that order, or some prize that is ranked <b>lower according to that order</b>.
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            Correct! The prize you get if you submit any different, alternative ranking can only be <b>the same</b> as the prize you get when submitting a ranking that follows that order, or some prize that is ranked <b>lower according to that order</b>.<br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    } 
+                                />
+                            </>
+                       ),
+                    },
+                    {
+                        id: "mechanism_misconception_1",
+                        type : "component",
+                        content : (
+                            <>
+                                <div className="question">
+                                    Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
+                                    Submitting some ranking <b>cannot</b> ensure that I will get the <b>highest-rank</b> prize in that ranking, but it <b>does</b> ensure that I will <b>not</b> get the <b>lowest-rank</b> prize in that ranking.<br/>
+                                    (Get it right on first try to increase your bonus)
+                                </div>
+                                <Question
+                                    type ="radio"
+                                    id="mechanism_misconception_1"
+                                    options = {["True","False"]}
+                                    expectedAnswerIndex = {1}
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            Correct! The allocation process only ensures you a prize <b>at least as highly ranked in your submitted ranking</b> compared to the prize you would get if you submitted some different, alternative ranking. On some occasions, <b>the prize you get may be the one you ranked lowest.</b>
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            Correct! The allocation process only ensures you a prize <b>at least as highly ranked in your submitted ranking</b> compared to the prize you would get if you submitted some different, alternative ranking. On some occasions, <b>the prize you get may be the one you ranked lowest.</b><br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                    />
+                            </>
+                        ),
+                        sectionRef : React.createRef(null),
+                    },
+                    {
+                        id: "mechanism_misconception_2",
+                        type : "component",
+                        content : (
+                            <>
+                                <div className="question">
+                                    Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
+                                    Imagine I have a low priority for getting Prize A, which is the prize I want the most, but I have a high priority for getting Prize B, which I want the second most. Then, submitting a ranking that places Prize A first and Prize B second may lead to missing out on both prizes A and B, while submitting a different ranking could have gotten me Prize B. <br/>
+                                    (Get it right on first try to increase your bonus)
+                                </div>
+                                <Question
+                                    type ="radio"
+                                    id="mechanism_misconception_2"
+                                    options = {["True","False"]}
+                                    expectedAnswerIndex = {1}
+                                    incorrectMsg = {
+                                        <div className="incorrect-msg">
+                                            Incorrect answer. Please try again.
+                                        </div>
+                                    }
+                                    correctMsg = {
+                                        <div className="correct-msg">
+                                            Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. Remember that submitting different, alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b>
+                                        </div>
+                                    }
+                                    correctFirstMsg= {
+                                        <div className="correct-msg">
+                                            Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. Remember that submitting different, alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b><br/>
+                                            Good job on the first try! This will count for your Understanding Bonus.
+                                        </div>
+                                    }
+                                    />
+                            </>
+                        ),
+                        sectionRef : React.createRef(null)
+                    },
+                    {
+                        id : "different_rank_outcome",
+                        type : "component",
+                        sectionRef : React.createRef(null),
+                        
+                        content : (
+                            <>
+                                <div className="question">
+                                    <p>
+                                        Please answer the following question:          
+                                    </p>
+                                    <p>
+                                        Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                        Which of the following might be true? (select one answer)<br/>
+                                        (Hint: think about what the set of Obtainable Prizes could possibly be.)<br/>
+                                        (Get it right on first try to increase your bonus)<br/>
+                                    </p>
+                                    <Question
+                                        type ="radio"
+                                        id="different_rank_outcome"
+                                        options = {[
+                                            <span>It is certain that every possible ranking I could have submitted would have gotten me Prize A.</span>,
+                                            <span>There might be some alternative ranking I could have submitted that would have gotten me Prize B.</span>,
+                                            <span>There might be some alternative ranking I could have submitted that would have gotten me Prize C.</span>,
+                                            <span>There might be some alternative ranking I could have submitted that would have gotten me Prize D.</span>,
+                                        ]}
+                                        expectedAnswerIndex = {3}
+                                        incorrectMsg = {
+                                            <div className="incorrect-msg">
+                                                Incorrect answer. Please try again.
+                                            </div>
+                                        }
+                                        correctMsg = {
+                                            <div className="correct-msg">
+                                                Correct! Submitting a ranking that does not follow the order of the list C–B–A–D could have only gotten you the <b>same prize</b> as when submitting the ranking C–B–A–D, that is, Prize A, or some prize <b>lower</b> on that list—Prize D. In other words, no alternative, different ranking could have gotten you Prize C or Prize B.
+                                            </div> 
+                                        }
+                                        correctFirstMsg= {
+                                            <div className="correct-msg">
+                                                Correct! Submitting a ranking that does not follow the order of the list C–B–A–D could have only gotten you the <b>same prize</b> as when submitting the ranking C–B–A–D, that is, Prize A, or some prize <b>lower</b> on that list—Prize D. In other words, no alternative, different ranking could have gotten you Prize C or Prize B.<br/>
+                                                Good job on the first try! This will count for your Understanding Bonus.
+                                            </div>
+                                        }
+                                    />
+                                </div>
+                            </>
+                        ),
+                    }
+                )
+            }
             return output;
         }
         const steps = props.treatment === "mechanics" ? mechanicsSteps : propertiesSteps(props.variant,props.roundNumber);
@@ -372,6 +1692,7 @@ function renderPage() {
             const latestStep = steps.find(step=>step.id===latestStepId);
             latestStep.sectionRef?.current?.scrollIntoView({behavior:"smooth"});
         },[activeStepsIds]) 
+        console.log(activeStepsIds)
         return (
             <OnProceedContext.Provider value={onProceed}>
                 <SendNextStepIdContext.Provider value={sendNextStepId}>
@@ -1013,22 +2334,24 @@ function renderPage() {
                     </div>
                 }
                 {
-                    props.type === "radio" && 
-                        <div ref={inputRef} style={{display:'flex',flexDirection:'column',marginTop: "0.5rem"}}>
-                            <label>{props.label}</label>
-                            {
-                                props.options.map((option,index) => {
-                                    return (
-                                        <div className="form-check" key={index}>
-                                            <input className="form-check-input" type="radio" name={props.id+'-radio'} id={props.id+'-radio-'+index} value={index}/>
-                                            <label className="form-check-label" htmlFor={props.id+'-radio-'+index}>
-                                                {option}
-                                            </label>
-                                        </div>
-                                    )
-                                })
-                            }
-                        </div>
+                    props.type === "radio" &&
+                        <> 
+                            {props.label && <label>{props.label}</label>}
+                            <div ref={inputRef} style={{display:'flex',flexDirection:'column',marginTop: "0.5rem"}}>
+                                {
+                                    props.options.map((option,index) => {
+                                        return (
+                                            <div className="form-check" key={index}>
+                                                <input className="form-check-input" type="radio" name={props.id+'-radio'} id={props.id+'-radio-'+index} value={index}/>
+                                                <label className="form-check-label" htmlFor={props.id+'-radio-'+index}>
+                                                    {option}
+                                                </label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
+                        </>
                 }
                 { !readyToProceed && 
                     <div style={{display:"flex",justifyContent:'center',marginTop:'1rem'}}>

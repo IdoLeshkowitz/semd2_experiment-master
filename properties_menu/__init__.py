@@ -77,7 +77,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'properties_menu'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 4
-    UNDERSTANDING_BONUS_LIMIT = 4
+    UNDERSTANDING_BONUS_LIMIT = [4,9,9,9]
     PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You", "Unpaired"]
     PRIZES = ["A", "B", "C", "D"]
     STEPS_IN_TRAINING_ROUND = ["intro", "prizes_table", "prizes_priorities", "ranking_form", "allocation_results"]
@@ -91,6 +91,16 @@ class Player(BasePlayer):
     incorrect_seq_mechanism_misconception_1 = models.LongStringField(initial="", blank=True)
     incorrect_seq_mechanism_misconception_2 = models.LongStringField(initial="", blank=True)
     incorrect_seq_different_rank_outcome = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_1 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_2 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_3 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_4 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_5 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_a = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_b = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_c = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_d = models.LongStringField(initial="", blank=True)
+
     # Player's ranking variables
     first_priority = models.StringField(blank=True)
     second_priority = models.StringField(blank=True)
@@ -184,6 +194,24 @@ class TrainingRound(Page):
                 player.incorrect_seq_mechanism_misconception_2 += str(data)
             elif question_id == "different_rank_outcome":
                 player.incorrect_seq_different_rank_outcome += str(data)
+            elif question_id == "ranking_change_1":
+                player.incorrect_seq_ranking_change_1 += str(data)
+            elif question_id == "ranking_change_2":
+                player.incorrect_seq_ranking_change_2 += str(data)
+            elif question_id == "ranking_change_3":
+                player.incorrect_seq_ranking_change_3 += str(data)
+            elif question_id == "ranking_change_4":
+                player.incorrect_seq_ranking_change_4 += str(data)
+            elif question_id == "ranking_change_5":
+                player.incorrect_seq_ranking_change_5 += str(data)
+            elif question_id == "brute_force_a":
+                player.incorrect_seq_brute_force_a += str(data)
+            elif question_id == "brute_force_b":
+                player.incorrect_seq_brute_force_b += str(data)
+            elif question_id == "brute_force_c":
+                player.incorrect_seq_brute_force_c += str(data)
+            elif question_id == "brute_force_d":
+                player.incorrect_seq_brute_force_d += str(data)
 
 
 class Intro(Page):
@@ -226,7 +254,7 @@ class PreProcess(Page):
         player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
         player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
         player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
-        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT
+        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT[player.round_number - 1]
 
 
 page_sequence = [PreProcess, Intro, TrainingRound, EndTraining]

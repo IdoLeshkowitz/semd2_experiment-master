@@ -28,6 +28,13 @@ SESSION_CONFIGS=[
                                   "understanding_test", "reflection", "cognitive_abilities", "demographics", "exit"]
     },
     {
+        'name':                  'PROP_TRAD_LT',
+        'display_name':          'Properties Traditional Long Training',
+        'num_demo_participants': 1,
+        'participation_fee':     SESSION_CONFIG_DEFAULTS['participation_fee'],
+        'app_sequence':          ["trajectory5", "consent_form", "null_intro", "null_training", "properties_traditional", "real_rounds_batch1","understanding_test", "reflection", "cognitive_abilities", "demographics", "exit"]
+    },
+    {
         "name":"NULL_LT",
         "display_name":"Null Long Training",
         "num_demo_participants":1,
@@ -38,29 +45,15 @@ SESSION_CONFIGS=[
         "name":"TREATMENT_ALLOCATOR",
         "display_name":"Treatment Allocator",
         'num_demo_participants':1,
-        "app_sequence":["treatment_allocator"]
+        "app_sequence":["treatment_allocator"],
     }
 ]
 ROOMS =[
     {"name": "trajectory_1", "display_name": "MECH_TRAD_LT"},
-    {"name": "trajectory_3", "display_name": "MECH_TRAD_PROP_TRAD_LT"},
-    {"name": "trajectory_4", "display_name": "MECH_TRAD_PROP_TRAD_ST"},
-    {"name": "trajectory_5", "display_name": "PROP_TRAD_LT"},
-    {"name": "trajectory_6", "display_name": "PROP_TRAD_ST"},
-    {"name": "trajectory_7", "display_name": "PROP_TRAD_MECH_TRAD_LT"},
-    {"name": "trajectory_8", "display_name": "PROP_TRAD_MECH_TRAD_ST"},
     {"name": "trajectory_9", "display_name": "MECH_MENU_LT"},
-    {"name": "trajectory_10", "display_name": "MECH_MENU_ST"},
-    {"name": "trajectory_11", "display_name": "MECH_MENU_PROP_MENU_LT"},
-    {"name": "trajectory_12", "display_name": "MECH_MENU_PROP_MENU_ST"},
+    {"name": "trajectory_5", "display_name": "PROP_TRAD_LT"},
     {"name": "trajectory_13", "display_name": "PROP_MENU_LT"},
-    {"name": "trajectory_14", "display_name": "PROP_MENU_ST"},
-    {"name": "trajectory_15", "display_name": "PROP_MENU_MECH_MENU_LT"},
-    {"name": "trajectory_16", "display_name": "PROP_MENU_MECH_MENU_ST"},
     {"name": "trajectory_17", "display_name": "NULL_LT"},
-    {"name": "trajectory_18", "display_name": "NULL_ST"},
-    {"name": "trajectory_19", "display_name": "NULL_NULL_LT"},
-    {"name": "trajectory_20", "display_name": "NULL_NULL_ST"},
     {"name": "treatment_allocator", "display_name": "TREATMENT_ALLOCATOR"}
 ]
 

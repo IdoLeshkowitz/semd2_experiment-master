@@ -373,6 +373,69 @@ function renderIntroPage(){
                 ),
                 ref: React.createRef()                     
             }
+        ],
+        "traditional":[
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                                We will now tell you a general important principle behind the allocation process.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                                <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to make better decisions in rounds of this study.
+                            </p>
+                            <p>
+                                Imagine some ordered list of prizes written from top to bottom, to which we will later refer as “the list”.<br/>
+                                Consider two possible scenarios: 
+                                <ol>
+                                    <li>Submitting a ranking that follows the order of prizes in the list.</li>
+                                    <li>Submitting any different, alternative ranking.</li>
+                                </ol>
+                                Imagine the computer determined some prize priorities and rankings of the other, computerized participants. These are the same in the two scenarios. 
+                            </p>    
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()              
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                                Then:
+                                <ul>
+                                    <li>The prize you get in scenario (1) is always <b>at least as high on the list</b> as the prize you get in scenario (2).</li>
+                                    <li>In other words, the prize you get in scenario (2) can either be <b>the same</b> as in scenario (1), or some prize <b>lower on the list.</b></li>
+                                </ul>
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                            For example, imagine that in scenario (1) you submitted the ranking A–B–C–D and ended up getting Prize C. Submitting any other, alternative ranking in scenario (2) could have only gotten you Prize C or Prize D. No other, alternative ranking in scenario (2) could have gotten you Prize A or Prize B.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
         ]
     }
     function getSteps(variant,treatment){

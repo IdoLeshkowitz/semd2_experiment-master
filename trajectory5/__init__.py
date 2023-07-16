@@ -12,7 +12,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
 
-    trajectory_num = 5  # Menu, Mech-Prop, single
+    trajectory_num = 5
 
 
 class Subsession(BaseSubsession):
@@ -35,6 +35,10 @@ class PassVars(Page):
         player.participant.trajectory_num = C.trajectory_num
         player.participant.full_training = True
         player.full_training = player.participant.full_training
+        player.participant.understanding_bonus = 0
+        player.participant.understanding_bonus_limit = 0
+        player.participant.runtime__variant = "traditional"
+        player.participant.runtime__treatment = "properties"
 
 
 page_sequence = [PassVars]
