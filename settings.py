@@ -20,11 +20,11 @@ SESSION_CONFIGS=[
         'app_sequence':["trajectory9", "consent_form", "null_intro", "null_training","mechanics_menu", "real_rounds_batch1","understanding_test","reflection","cognitive_abilities", "demographics", "exit" ]
     },
     {
-        'name':                  'MENU_MECH_LT',
+        'name':                  'PROP_MENU_LT',
         'display_name':          'Properties Menu Long Training',
         'num_demo_participants': 1,
         'participation_fee':     SESSION_CONFIG_DEFAULTS['participation_fee'],
-        'app_sequence':          ["trajectory1", "consent_form", "null_intro", "null_training", "properties_menu", "real_rounds_batch1",
+        'app_sequence':          ["trajectory13", "consent_form", "null_intro", "null_training", "properties_menu", "real_rounds_batch1",
                                   "understanding_test", "reflection", "cognitive_abilities", "demographics", "exit"]
     },
     {
@@ -43,7 +43,6 @@ SESSION_CONFIGS=[
 ]
 ROOMS =[
     {"name": "trajectory_1", "display_name": "MECH_TRAD_LT"},
-    {"name": "trajectory_2", "display_name": "MECH_TRAD_ST"},
     {"name": "trajectory_3", "display_name": "MECH_TRAD_PROP_TRAD_LT"},
     {"name": "trajectory_4", "display_name": "MECH_TRAD_PROP_TRAD_ST"},
     {"name": "trajectory_5", "display_name": "PROP_TRAD_LT"},
@@ -81,6 +80,7 @@ PARTICIPANT_FIELDS = [
     "full_name",
     "email",
     "runtime__variant",
+    "runtime__treatment"
                       ]
 SESSION_FIELDS = []
 

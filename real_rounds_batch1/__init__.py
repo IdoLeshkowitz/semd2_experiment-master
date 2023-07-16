@@ -215,6 +215,7 @@ class RoundPage(Page):
             "participantsPriorities": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
             "currency":               player.session.config["currency"],
             "variant":                player.participant.runtime__variant,
+            "treatment":              player.participant.runtime__treatment,
             "firstPriority":          C.PRIZES[int(player.first_priority)] if player.first_priority else "",
             "secondPriority":         C.PRIZES[int(player.second_priority)] if player.second_priority else "",
             "thirdPriority":          C.PRIZES[int(player.third_priority)] if player.third_priority else "",

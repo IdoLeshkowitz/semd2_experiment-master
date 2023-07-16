@@ -8,6 +8,7 @@ function RenderRoundPage() {
         return steps.slice(0, activeStepIndex + 1)
     }
     function RoundPage(props){
+        console.log(props)
         const [ranking, setRanking] = React.useState(props.initialRanking)
         const [activeModal,setActiveModal] = React.useState(null)
         const [activeSteps, setActiveSteps] = React.useState(getActiveSteps(props.activeStepIndex))
@@ -75,9 +76,15 @@ function RenderRoundPage() {
             <CurrencyContext.Provider value={props.currency}>
                     <button className="button-2" type="button" onClick={()=>{setActiveModal("study")}}>Click for a general reminder on this study</button><br/>
                     {
-                        props.variant !== "null"  &&
+                        props.treatment === "mechanics"  &&
                             <>  
-                                <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "menuAllocation":"traditionalAllocation")}}>Click for a reminder on the technical details of the allocation process</button><br/>
+                                <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "mechanicsMenuAllocation":"mechanicsTraditionalAllocation")}}>Click for a reminder on the technical details of the allocation process</button><br/>
+                            </>
+                    }
+                    {
+                        props.treatment === "properties" && 
+                            <>
+                                <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "propertiesMenuAllocation":"propertiesTraditionalAllocation")}}>Click here for a reminder on the Key Principle of the allocation process</button><br/>
                             </>
                     }
                     {
@@ -443,7 +450,7 @@ function RenderRoundPage() {
                     </p>
                 </>
             ),
-            "traditionalAllocation":(
+            "mechanicsTraditionalAllocation":(
                 <div>
                     <p>
                         <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
@@ -495,7 +502,7 @@ function RenderRoundPage() {
                     </p>
                 </div>
             ),
-            "menuAllocation":(
+            "mechanicsMenuAllocation":(
                 <div>
                     <p>
                         <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
@@ -574,6 +581,35 @@ function RenderRoundPage() {
                     </p>
                 </div> 
             ),
+            "propertiesMenuAllocation":(
+                <div>
+                    <p>
+                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to make better decisions in rounds of this study.
+                    </p>
+                    <p>
+                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants. <br/>
+                        In the allocation process, the computer will use these prize priorities and other participants’ rankings
+                        to determine some group of <b>Obtainable Prizes</b> that you might receive.
+                        <ul>
+                            <li>These Obtainable Prizes might include some or all of the prizes. There will always be at least one Obtainable Prize. </li>
+                            <li>Importantly, <b>you cannot affect the Obtainable Prizes with your own ranking</b>.
+                                They are only determined using the other participants' rankings and the prize priorities.</li>
+                        </ul>
+                    </p>
+                     <p>
+                        Then:
+                        <ul>
+                            <li>You always get the Obtainable Prize that is ranked highest in the ranking you submitted.</li>
+                            <li>In other words, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes,
+                                you get the one that you ranked highest.</li>
+                        </ul>
+                    </p>
+                     <p>
+                        For example, imagine that your Obtainable Prizes are B and D. If you submit the ranking A–B–C–D, you will get Prize B, which is the one you ranked highest among the Obtainable Prizes.
+                        No ranking you could possibly submit would get you Prize A or Prize C, since the Obtainable Prizes are B and D.
+                    </p>
+                </div>
+            )
         }
     }
     `

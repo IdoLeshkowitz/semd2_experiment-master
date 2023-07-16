@@ -38,6 +38,7 @@ class PassVars(Page):
         player.participant.understanding_bonus = 0
         player.participant.understanding_bonus_limit =0
         player.participant.runtime__variant = "menu"
+        player.participant.runtime__treatment = "mechanics"
 
 
 page_sequence = [PassVars]

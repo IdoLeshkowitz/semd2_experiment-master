@@ -313,6 +313,9 @@ function renderIntroPage(){
                     <section>
                         <div className="explain">
                             <p>
+                                <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to make better decisions in rounds of this study.
+                            </p>
+                            <p>
                                 Imagine the computer determined some prize priorities and rankings of the other, computerized participants. <br/>
                                 In the allocation process, the computer will use these prize priorities and other participants’ rankings
                                 to determine some group of <b>Obtainable Prizes</b> that you might receive.
@@ -349,8 +352,7 @@ function renderIntroPage(){
                     <section>
                         <div className="explain">
                              <p>
-                                For example, imagine that your Obtainable Prizes are B and D. If you submit the ranking A–B–C–D (from most to least preferred),
-                                you will get Prize B, which is the one you ranked highest among the Obtainable Prizes.
+                                For example, imagine that your Obtainable Prizes are B and D. If you submit the ranking A–B–C–D, you will get Prize B, which is the one you ranked highest among the Obtainable Prizes.
                                 No ranking you could possibly submit would get you Prize A or Prize C, since the Obtainable Prizes are B and D.
                             </p>
                         </div>

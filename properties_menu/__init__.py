@@ -151,11 +151,14 @@ class TrainingRound(Page):
             "activeStepId":           player.current_step_id,
             "didComplete":            player.did_complete,
             "roundNumber":            player.round_number,
+            "treatment":              C.TREATMENT,
         }
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.training_end_time = str(datetime.now(timezone.utc))
+        player.participant.understanding_bonus += player.understanding_bonus
+        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
 
     @staticmethod
     def live_method(player: Player, data):
