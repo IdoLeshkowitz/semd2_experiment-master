@@ -28,7 +28,7 @@ class Player(BasePlayer):
     full_training = models.BooleanField()
 
 
-# PAGES
+
 class PassVars(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
