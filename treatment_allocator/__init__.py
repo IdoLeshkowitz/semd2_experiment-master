@@ -35,7 +35,7 @@ def creating_session(subsession: Subsession):
     int
         an integer representing the chosen trajectory for the current player.
     """
-    trajectories_distribution = generate_item_distribution(["trajectory_1", "trajectory_9","trajectory_5","trajectory_13","trajectory_17"], [20,20,20,20,20], 10)
+    trajectories_distribution = generate_item_distribution(["trajectory_1", "trajectory_9"], [50,50], 10)
     subsession.trajectories_distribution = str(trajectories_distribution)
     iterator = itertools.cycle(trajectories_distribution)
     for player in subsession.get_players():
