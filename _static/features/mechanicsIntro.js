@@ -429,13 +429,25 @@ function renderIntroPage(){
                     <section>
                         <div className="explain">
                             <p>
-                            For example, imagine that in scenario (1) you submitted the ranking A–B–C–D and ended up getting Prize C. Submitting any other, alternative ranking in scenario (2) could have only gotten you Prize C or Prize D. No other, alternative ranking in scenario (2) could have gotten you Prize A or Prize B.
+                                For example, imagine that in scenario (1) you submitted the ranking A–B–C–D and ended up getting Prize C. Submitting any other, alternative ranking in scenario (2) could have only gotten you Prize C or Prize D. No other, alternative ranking in scenario (2) could have gotten you Prize A or Prize B.
                             </p>
                         </div>
                     </section>
                 ),
                 ref: React.createRef()
             },
+            {
+                content : (
+                    <section id="step-6">
+                        <div class="explain">
+                            <p>
+                                On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            }
         ]
     }
     function getSteps(variant,treatment){
@@ -444,6 +456,7 @@ function renderIntroPage(){
     }
     function IntroPage(props){
         const steps =  getSteps(props.variant,props.treatment)
+        console.log(steps)
         const [activeSteps, setActiveSteps] = React.useState([steps[0]])
         const [allocationModal, setAllocationModal] = React.useState(false)
         function onNext(){
