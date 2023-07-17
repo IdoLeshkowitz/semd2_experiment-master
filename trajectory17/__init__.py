@@ -38,5 +38,6 @@ class PassVars(Page):
         player.participant.understanding_bonus_limit = 0
         player.participant.understanding_bonus = 0
         player.participant.runtime__variant = "null"
+        player.participant.runtime__treatment = "null"
 
 page_sequence = [PassVars]
