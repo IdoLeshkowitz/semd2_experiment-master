@@ -77,7 +77,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'properties_traditional'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 4
-    UNDERSTANDING_BONUS_LIMIT = 4
+    UNDERSTANDING_BONUS_LIMIT = [4, 9, 9, 9]
     PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You", "Unpaired"]
     PRIZES = ["A", "B", "C", "D"]
     STEPS_IN_TRAINING_ROUND = ["intro", "prizes_table", "prizes_priorities", "ranking_form", "allocation_results"]
@@ -226,7 +226,7 @@ class PreProcess(Page):
         player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
         player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
         player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
-        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT
+        player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT[player.round_number - 1]
 
 
 page_sequence = [PreProcess, Intro, TrainingRound, EndTraining]
