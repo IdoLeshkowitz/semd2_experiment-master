@@ -5,12 +5,11 @@ function renderTotalPayment(props) {
     }
     function TotalPayment(props){
         const {totalPayment} = props
-        console.log(totalPayment)
-        if (totalPayment < 10){
-            const moneyString = getMoneyString(10,props.currency)
-            return <p>Well done! Since your total earnings fall below the minimum of {moneyString}, we just increased them to <b>{moneyString}</b>.</p>
+        if (totalPayment < 12){
+            const moneyString = getMoneyString(12,props.currency)
+            return <p style={{textAlign:'center'}}>Well done! Since your total earnings fall below the minimum of {moneyString}, we just increased them to <b>{moneyString}</b>.<br/>Hence, you will be paid {moneyString} for this study on Prolific, and you will not get a further bonus.</p>
         } else {
-            return <p>Well done! Your total earnings are <b>{getMoneyString(totalPayment,props.currency)}</b></p>
+            return <p style={{textAlign:'center'}}>Well done! Your total earnings are <b>{getMoneyString(totalPayment,props.currency)}</b><br/>Hence, you will be paid {getMoneyString(12,props.currency)} for this study on Prolific, plus {getMoneyString(totalPayment - 12,props.currency)} as a bonus.</p>
         }
         return null
     }

@@ -63,7 +63,7 @@ function renderPage() {
                     sectionRef:React.createRef(null),
                 },
             ]
-        const propertiesSteps = (variant,roundNumber) =>{
+        const propertiesSteps = (variant,roundNumber) => {
             function rankingChangeFeedback(variant,feedbackNumber,x,y){
                 if (feedbackNumber === 1){
                     if (variant === "menu"){
@@ -386,21 +386,31 @@ function renderPage() {
                         {
                             id: "questions_intro",
                             type : "information",
+                            sectionRef : React.createRef(null),
                             content : (
                                 <div class="explain">
                                     <p>
                                         In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "submitted_ranking_reminder",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content :(
+                                <>
                                     <p>
-                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                        Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                         Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
                                     </p>    
-                                </div>
-                            ),      
+                                </>
+                            )
                         },
                         {
                             id : "ranking_change_1",
@@ -610,7 +620,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p>
                                     <p>
-                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                        (Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -749,21 +759,31 @@ function renderPage() {
                         {
                             id: "questions_intro",
                             type : "information",
+                            sectionRef : React.createRef(null),
                             content : (
                                 <div class="explain">
                                     <p>
                                         In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "submitted_ranking_reminder",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content :(
+                                <>
                                     <p>
-                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                        Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                         Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
                                     </p>    
-                                </div>
-                            ),      
+                                </>
+                            )
                         },
                         {
                             id : "ranking_change_1",
@@ -973,7 +993,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p>
                                     <p>
-                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                        (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -1112,21 +1132,31 @@ function renderPage() {
                         {
                             id: "questions_intro",
                             type : "information",
+                            sectionRef : React.createRef(null),
                             content : (
                                 <div class="explain">
                                     <p>
                                         In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "submitted_ranking_reminder",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content :(
+                                <>
                                     <p>
-                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                        Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                         Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
                                     </p>    
-                                </div>
-                            ),      
+                                </>
+                            )
                         },
                         {
                             id : "ranking_change_1",
@@ -1336,7 +1366,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p>
                                     <p>
-                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                        (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.)
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -1652,21 +1682,31 @@ function renderPage() {
                         {
                             id: "questions_intro",
                             type : "information",
+                            sectionRef : React.createRef(null),
                             content : (
                                 <div class="explain">
                                     <p>
                                         In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
+                                </div>
+                            ),      
+                        },
+                        {
+                            id : "submitted_ranking_reminder",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content :(
+                                <>
                                     <p>
-                                        Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                        Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                         Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
                                     </p>    
-                                </div>
-                            ),      
+                                </>
+                            )
                         },
                         {
                             id : "ranking_change_1",
@@ -1876,7 +1916,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p>
                                     <p>
-                                        (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                        (Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -2013,23 +2053,33 @@ function renderPage() {
                 if (roundNumber === 3){
                 output.push(
                     {
-                        id: "questions_intro",
+                            id: "questions_intro",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                    </p>
+                                </div>
+                            ),      
+                        },
+                    {
+                        id : "submitted_ranking_reminder",
                         type : "information",
-                        content : (
-                            <div class="explain">
+                        sectionRef : React.createRef(null),
+                        content :(
+                            <>
                                 <p>
-                                    In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
-                                    Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
-                                </p>
-                                <p>
-                                    Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                    Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.
                                 </p>
                                 <p>
                                     Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                     Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
                                 </p>    
-                            </div>
-                        ),      
+                            </>
+                        )
                     },
                     {
                         id : "ranking_change_1",
@@ -2239,7 +2289,7 @@ function renderPage() {
                                     Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p>
                                 <p>
-                                    (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                    (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)
                                 </p>
                                 <p>
                                     Choose the correct answer below:
@@ -2376,23 +2426,33 @@ function renderPage() {
                 if (roundNumber === 4){
                 output.push(
                     {
-                        id: "questions_intro",
+                            id: "questions_intro",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
+                                    </p>
+                                </div>
+                            ),      
+                        },
+                    {
+                        id : "submitted_ranking_reminder",
                         type : "information",
-                        content : (
-                            <div class="explain">
+                        sectionRef : React.createRef(null),
+                        content :(
+                            <>
                                 <p>
-                                    In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
-                                    Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
-                                </p>
-                                <p>
-                                    Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].
+                                    Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.
                                 </p>
                                 <p>
                                     Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                     Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
                                 </p>    
-                            </div>
-                        ),      
+                            </>
+                        )
                     },
                     {
                         id : "ranking_change_1",
@@ -2602,7 +2662,7 @@ function renderPage() {
                                     Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p>
                                 <p>
-                                    (Remember: You submitted the ranking [A–B–D–C / D–B–C–A / D–B–C–A], and ended up getting Prize [B / A / D].)
+                                    (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.)
                                 </p>
                                 <p>
                                     Choose the correct answer below:
@@ -2798,7 +2858,6 @@ function renderPage() {
             const latestStep = steps.find(step=>step.id===latestStepId);
             latestStep.sectionRef?.current?.scrollIntoView({behavior:"smooth"});
         },[activeStepsIds]) 
-        console.log(activeStepsIds)
         return (
             <OnProceedContext.Provider value={onProceed}>
                 <SendNextStepIdContext.Provider value={sendNextStepId}>

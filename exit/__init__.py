@@ -9,6 +9,7 @@ class C(BaseConstants):
     NAME_IN_URL = 'Exit'
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 1
+    MINIMUM_PAYMENT = 12
 
 
 class Subsession(BaseSubsession):
@@ -21,6 +22,7 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     total_payment = models.FloatField(initial=0)
+    total_payment_corrected = models.FloatField(initial=0)
     start_time = models.StringField(initial=datetime.now(timezone.utc))
     end_time = models.StringField(blank=True, initial="")
 
@@ -79,6 +81,10 @@ class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.total_payment = get_total_payment(get_understanding_bonus_money(get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.understanding_bonus_limit)), player.participant.payoff_plus_participation_fee())
+        if (player.total_payment < C.MINIMUM_PAYMENT):
+            player.total_payment_corrected = C.MINIMUM_PAYMENT
+        else:
+            player.total_payment_corrected = player.total_payment
         player.start_time = str(datetime.now(timezone.utc))
 
 
