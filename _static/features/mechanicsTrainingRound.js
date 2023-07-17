@@ -1641,7 +1641,6 @@ function renderPage() {
                                         <p>
                                             Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
                                             Which of the following might be true? (select one answer)<br/>
-                                            (Hint: think about what the set of Obtainable Prizes could possibly be.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
                                         </p>
                                         <Question
