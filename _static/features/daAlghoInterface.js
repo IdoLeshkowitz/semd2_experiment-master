@@ -688,12 +688,12 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     correctMsg:(
                         <p>
-                            Correct! Each participant <b>gets the prize they were allocated with</b> at the end of the allocation process.
+                            Correct! Each participant <b>gets the prize they were paired with</b> at the end of the allocation process.
                         </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! Each participant <b>gets the prize they were allocated with</b> at the end of the allocation process.<br/>
+                            Correct! Each participant <b>gets the prize they were paired with</b> at the end of the allocation process.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -704,11 +704,45 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     options :[
                         <span>I can get any of the four prizes with equal chances.</span>,
-                        <span>I will get the prize allocated to me at the end of the allocation process.</span>,
                         <span>I can get any prize I was paired with at some point in the allocation process, but I cannot know which one.</span>,
                         <span>I will get one of the prizes I was paired with at some point in the allocation process, chosen at random.</span>,
+                        <span>I will get the prize allocated to me at the end of the allocation process.</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 3,
+                },
+                {
+                    id: "question_9",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <p>
+                            <b>Which of the following is true?</b><br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The allocation process depends on all prize priorities and on each participant’s ranking.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The allocation process depends on all prize priorities and on each participant’s ranking.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>Only the other participants’ rankings are used to determine the allocation of prizes.</span>,
+                        <span>Only my own ranking is used to determine the allocation of prizes.</span>,
+                        <span>Only the prize priorities are used to determine the allocation of prizes.</span>,
+                        <span>The prize priorities and participants’ rankings are used to determine the allocation of prizes.</span>,
+                    ],
+                    expectedAnswerIndex: 3,
                 },
                 {
                     id: "question_allocation_a",
@@ -843,7 +877,7 @@ function renderDaAlgoPage(props = js_vars) {
                     expectedAnswerIndex: 2,
                 },
                 {
-                    id: "question_9",
+                    id: "question_10",
                     inputRef: React.createRef(),
                     type: "radio",
                     content : (
@@ -868,11 +902,11 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     options :[
                         <span>I will get the prize I ranked the lowest.</span>,
-                        <span>I will get the last prize I was paired with during the allocation process.</span>,
                         <span>If another participant does not want the prize allocated to them, then I may be able to switch prizes with them.</span>,
+                        <span>I will get the last prize I was paired with during the allocation process.</span>,
                         <span>I might end up not getting any prize.</span>,
                     ],
-                    expectedAnswerIndex: 1,
+                    expectedAnswerIndex: 2,
                 },
                 {
                     id: "allocated_prize",
@@ -2060,6 +2094,40 @@ function renderDaAlgoPage(props = js_vars) {
                     expectedAnswerIndex: 3,
                 },
                 {
+                    id: "question_9",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <p>
+                            <b>Which of the following is true?</b><br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are obtainable.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are obtainable.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>Only the rankings of all participants except for me are used to determine the Obtainable Prizes.</span>,
+                        <span>My own ranking can affect which prizes are Obtainable.</span>,
+                        <span>Only the prize priorities are used to determine the Obtainable Prizes.</span>,
+                        <span>The prize priorities and the rankings of all participants except for me are used to determine the Obtainable Prizes.</span>,
+                    ],
+                    expectedAnswerIndex: 3,        
+                },
+                {
                     id: "question_allocation_a",
                     type: "dropdown",
                     inputRef: React.createRef(null),
@@ -2192,7 +2260,7 @@ function renderDaAlgoPage(props = js_vars) {
                     expectedAnswerIndex: 0,
                 },
                 {
-                    id: "question_9",
+                    id: "question_10",
                     inputRef: React.createRef(),
                     type: "radio",
                     content : (
@@ -2248,7 +2316,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 </span>
                             </p>
                             <p>
-                                 Out of these <b>Obtainable Prizes,</b> select the prize <b>you (“Y”) ranked the highest</b> from the list below. This is the prize you get.<br/>
+                                Now, your ranking is used to determine which of the Obtainable Prizes you actually get. Out of these <b>Obtainable Prizes,</b> select the prize <b>you (“Y”) ranked the highest</b> from the list below. This is the prize you get.<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
                         </>
@@ -3368,9 +3436,15 @@ function renderDaAlgoPage(props = js_vars) {
                                     const matchable = isMatchable()
                                     return matchable
                                 }
+                                function getCustomerString(customer){
+                                    if (customer === "Unpaired"){
+                                        return "U.P"
+                                    }
+                                    return customer.charAt(0)
+                                }
                                 return(
                                     <>
-                                        <span className={isMatchable() === false && 'text-faded'}>{customer.charAt(0)}</span>
+                                        <span className={isMatchable() === false && 'text-faded'}>{getCustomerString(customer)}</span>
                                         <div
                                             onMouseEnter={()=>{
                                                 if (!isMatchable()) return;
@@ -3430,7 +3504,7 @@ function renderDaAlgoPage(props = js_vars) {
                     <span><b>Y&nbsp;</b>= You</span>
                     {
                         variant === "menu" &&
-                            <span><b>U&nbsp;</b>= Unpaired</span>
+                            <span><b>U.P&nbsp;</b>= Unpaired</span>
                     }
                 </div>
              </div>

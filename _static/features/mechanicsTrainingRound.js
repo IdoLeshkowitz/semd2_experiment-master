@@ -1050,12 +1050,12 @@ function renderPage() {
                                     }
                                     correctMsg = {
                                         <div className="correct-msg">
-                                            {rankingChangeFeedback(variant,1,"C","A")}
+                                            {rankingChangeFeedback(variant,1,"B","A")}
                                         </div>
                                     }
                                     correctFirstMsg= {
                                         <div className="correct-msg">
-                                            {rankingChangeFeedback(variant,1,"C","A")}
+                                            {rankingChangeFeedback(variant,1,"B","A")}
                                             <br/>
                                             Good job on the first try! This will count for your Understanding Bonus.
                                         </div>
@@ -2345,12 +2345,12 @@ function renderPage() {
                                 }
                                 correctMsg = {
                                     <div className="correct-msg">
-                                        {rankingChangeFeedback(variant,1,"C","A")}
+                                        {rankingChangeFeedback(variant,1,"B","A")}
                                     </div>
                                 }
                                 correctFirstMsg= {
                                     <div className="correct-msg">
-                                        {rankingChangeFeedback(variant,1,"C","A")}
+                                        {rankingChangeFeedback(variant,1,"B","A")}
                                         <br/>
                                         Good job on the first try! This will count for your Understanding Bonus.
                                     </div>
