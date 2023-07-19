@@ -509,7 +509,7 @@ function renderUiFromState(step) {
                                         On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete a lot of tasks that depend on your understanding of these explanations.
                                     </p>    
                                     <p>
-                                        If you feel that you currently lack sufficient time or mental resources for additional highly demanding 50 minutes, no worries!
+                                        If you feel that you currently lack sufficient time or mental resources for additional highly demanding 60 minutes, no worries!
                                     </p>
                                     <ul>
                                         <li>
