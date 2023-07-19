@@ -34,8 +34,8 @@ class Player(BasePlayer):
                  "Washington, D.C.", "Puerto Rico"],
         blank=True
     )
-    zip_code = models.IntegerField(
-        label= "What is your zip code? (5 digits)?", min=10000, max=999999, blank=True
+    zip_code = models.StringField(
+        label= "What is your zip code? (5 digits)?", blank=True, max_length=6, min_length=5
     )
     household_size = models.IntegerField(
         label= "Including you, how many people live in your household?", min=1, blank=True

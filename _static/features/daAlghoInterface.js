@@ -22,7 +22,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 Remember: each step or question during the process will count for your Understanding Bonus only if you get it correctly on your first attempt. Think about your answers carefully!
                             </p>
                             <p>
-                                We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants.
+                                We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants, using the prize priorities and participants’ rankings.
                             </p>
                         </>
                     )
@@ -100,14 +100,17 @@ function renderDaAlgoPage(props = js_vars) {
                                 </li>
                             </ol>
                             <p>
-                            Hint: the prize that is highest in Ruth’s ranking is indicated by the letter just under “R” in the Participant Rankings table.
+                                Hint: the prize that is highest in Ruth’s ranking is indicated by the letter just under “R” in the Participant Rankings table.
                             </p>
                             <p>
-                            After pairing, “A” and “R” will be colored purple in the two tables, to indicate that they are paired.
+                                After pairing, “A” and “R” will be colored purple in the two tables, to indicate that they are paired.
+                            </p>
+                            <p style={{color: "#0b1ae3"}}>
+                                Only pair <b>Ruth (“R”) !</b> You will pair the other participants in the next step.
                             </p>
                             <p>
-                            Click Submit when done.<br/>
-                            (Get it right on first try to increase your bonus)
+                                Click Submit when done.<br/>
+                                (Get it right on first try to increase your bonus)
                             </p>
                         </>
                     ),
@@ -316,8 +319,8 @@ function renderDaAlgoPage(props = js_vars) {
                     inputRef: React.createRef(null),
                     content:(
                         <p>
-                        <b>Is the process over?</b><br/>
-                        (Get it right on first try to increase your bonus) 
+                            Is the process determining the allocation of prizes to participants over?<br/>
+                            (Get it right on first try to increase your bonus) 
                         </p>
                     ),
                     incorrectMsg:(
@@ -403,7 +406,10 @@ function renderDaAlgoPage(props = js_vars) {
                     type: "radio",
                     expectedAnswerIndex: 0,
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                       <p>
+                            Is the process determining the allocation of prizes to participants over?<br/>
+                            (Get it right on first try to increase your bonus)
+                       </p>
                     ),
                     correctMsg:(
                         <p>
@@ -483,7 +489,10 @@ function renderDaAlgoPage(props = js_vars) {
                     inputRef: React.createRef(null),
                     type: "radio",
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p>
+                            Is the process determining the allocation of prizes to participants over?<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                         <p>
@@ -563,7 +572,10 @@ function renderDaAlgoPage(props = js_vars) {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p>
+                            Is the process determining the allocation of prizes to participants over?<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                           <p>
@@ -643,7 +655,10 @@ function renderDaAlgoPage(props = js_vars) {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p>
+                            Is the process determining the allocation of prizes to participants over?<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                         <p>Correct! There are no more conflicts.</p>
@@ -1392,7 +1407,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 Remember: each step or question during the process will count for your Understanding Bonus only if you get it correctly on your first attempt. Think about your answers carefully!
                             </p>
                             <p>
-                                First, we will guide you how to use the <b>Allocation Dashboard</b> below to find the temporary allocation of prizes to all participants except for you.
+                                First, we will guide you how to use the <b>Allocation Dashboard</b> below to find the temporary allocation of prizes to all participants except for you, using the prize priorities and the rankings of all participants except for you.
                             </p>
                         </>
                     )
@@ -1469,6 +1484,9 @@ function renderDaAlgoPage(props = js_vars) {
                             </p>
                             <p>
                                 After pairing, “R” and “A” will be colored purple in the two tables, to indicate that they are paired.
+                            </p>
+                            <p style={{color: "#0b1ae3"}}>
+                                Only pair <b>Prize A (“A”)!</b> You will pair the other prizes in the next step.
                             </p>
                             <p>
                                 Click Submit when done.<br/>
@@ -1691,7 +1709,8 @@ function renderDaAlgoPage(props = js_vars) {
                     inputRef: React.createRef(null),
                     content:(
                         <p>
-                            <b>Is the process over?</b><br/>
+                            Is the process determining the temporary allocation over?<br/> 
+                            (Remember: this process is only a first step, after which your Obtainable Prizes are determined, and then the prize you get is determined.)<br/>
                             (Get it right on first try to increase your bonus)
                         </p>
                     ),
@@ -1778,7 +1797,11 @@ function renderDaAlgoPage(props = js_vars) {
                     type: "radio",
                     expectedAnswerIndex: 0,
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p>
+                            Is the process determining the temporary allocation over?<br/> 
+                            (Remember: this process is only a first step, after which your Obtainable Prizes are determined, and then the prize you get is determined.)<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                         <p>
@@ -1861,7 +1884,11 @@ function renderDaAlgoPage(props = js_vars) {
                     inputRef: React.createRef(null),
                     type: "radio",
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p>
+                            Is the process determining the temporary allocation over?<br/> 
+                            (Remember: this process is only a first step, after which your Obtainable Prizes are determined, and then the prize you get is determined.)<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                         <p>
@@ -1944,7 +1971,11 @@ function renderDaAlgoPage(props = js_vars) {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p>
+                            Is the process determining the temporary allocation over?<br/> 
+                            (Remember: this process is only a first step, after which your Obtainable Prizes are determined, and then the prize you get is determined.)<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                           <p>
@@ -2024,7 +2055,11 @@ function renderDaAlgoPage(props = js_vars) {
                     type: "radio",
                     inputRef: React.createRef(null),
                     content : (
-                        <p><b>Is the process over?</b><br/>(Get it right on first try to increase your bonus)</p>
+                        <p> 
+                            Is the process determining the temporary allocation over?<br/> 
+                            (Remember: this process is only a first step, after which your Obtainable Prizes are determined, and then the prize you get is determined.)<br/>
+                            (Get it right on first try to increase your bonus)
+                        </p>
                     ),
                     correctMsg:(
                         <p>Correct! The process is only over when there are no more conflicts and when one prize was unpaired from all participants.</p>
@@ -2105,12 +2140,12 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     correctMsg:(
                         <p>
-                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are obtainable.
+                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are Obtainable.
                         </p>
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are obtainable.<br/>
+                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are Obtainable.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -3438,7 +3473,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 }
                                 function getCustomerString(customer){
                                     if (customer === "Unpaired"){
-                                        return "U.P"
+                                        return "U.P."
                                     }
                                     return customer.charAt(0)
                                 }
@@ -3504,7 +3539,7 @@ function renderDaAlgoPage(props = js_vars) {
                     <span><b>Y&nbsp;</b>= You</span>
                     {
                         variant === "menu" &&
-                            <span><b>U.P&nbsp;</b>= Unpaired</span>
+                            <span><b>U.P.&nbsp;</b>= Unpaired</span>
                     }
                 </div>
              </div>
