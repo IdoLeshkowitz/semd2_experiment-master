@@ -611,11 +611,9 @@ function renderPage() {
                                     <p>
                                         Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
                                         After each such submission, you write down the prize that this submission gets you.<br/>
-                                        You end up with a log including some of the Prizes A, B, C and D.
-                                    </p> 
-                                    <p>
+                                        You end up with a log of some, but possibly not all, of the prizes.<br/>
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
-                                    </p>
+                                    </p> 
                                     <p>
                                         (Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)
                                     </p>
@@ -984,7 +982,8 @@ function renderPage() {
                                     <p>
                                         Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
                                         After each such submission, you write down the prize that this submission gets you.<br/>
-                                        You end up with a log including some of the Prizes A, B, C and D.
+                                        You end up with a log of some, but possibly not all, of the prizes.<br/>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
@@ -1357,7 +1356,8 @@ function renderPage() {
                                     <p>
                                         Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
                                         After each such submission, you write down the prize that this submission gets you.<br/>
-                                        You end up with a log including some of the Prizes A, B, C and D.
+                                        You end up with a log of some, but possibly not all, of the prizes.<br/>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
@@ -1904,7 +1904,8 @@ function renderPage() {
                                     <p>
                                         Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
                                         After each such submission, you write down the prize that this submission gets you.<br/>
-                                        You end up with a log including some of the Prizes A, B, C and D.
+                                        You end up with a log of some, but possibly not all, of the prizes.<br/>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
@@ -2276,8 +2277,9 @@ function renderPage() {
                                 </p>
                                 <p>
                                     Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
-                                    After each such submission, you write down the prize that this submission gets you.<br/>
-                                    You end up with a log including some of the Prizes A, B, C and D.
+                                        After each such submission, you write down the prize that this submission gets you.<br/>
+                                        You end up with a log of some, but possibly not all, of the prizes.<br/>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p> 
                                 <p>
                                     Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
@@ -2649,8 +2651,9 @@ function renderPage() {
                                 </p>
                                 <p>
                                     Imagine that you try out and submit <b>every</b> possible ranking.<br/> 
-                                    After each such submission, you write down the prize that this submission gets you.<br/>
-                                    You end up with a log including some of the Prizes A, B, C and D.
+                                        After each such submission, you write down the prize that this submission gets you.<br/>
+                                        You end up with a log of some, but possibly not all, of the prizes.<br/>
+                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p> 
                                 <p>
                                     Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
