@@ -33,7 +33,11 @@ function renderIntroPage(){
                         <h4>Overview of allocation process</h4>
                             <div class="explain">
                                 <p>
-                                    The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you ranked highest out of these Obtainable Prizes.</b> 
+                                    The prize you get is determined in two main steps:
+                                    <ol>
+                                        <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
+                                        <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
+                                    </ol> 
                                 </p>
                             </div>
                     </section>
@@ -43,16 +47,45 @@ function renderIntroPage(){
             {
                 content : (
                  <section>
-                    <h4>Details of allocation process</h4>
                     <div class="explain">
-                        <p>
-                           The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking,</b> as follows:
-                                <p>
-                                    In the first step, each prize is paired to their <b>highest</b>-priority participant, among all participants <b>except for you.</b>
-                                </p>
+                        <p style={{color : "#0b1ae3"}}>
+                           The important principle: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
                         </p>
                     </div>
                 </section>   
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div class="explain">
+                            The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
+                            <img src="https://drive.google.com/uc?export=download&id=1espDo1YsV4LlO9KbEvJtwxa_piBKDBY_" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
+                        </div>
+                    </section>
+                ),
+                ref : React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <h4>Details of allocation process</h4>
+                        <h5><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h5>
+                        <div class="explain">
+                            The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows:
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div class="explain">
+                            In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>          
+                        </div>
+                    </section>
                 ),
                 ref: React.createRef()
             },
@@ -125,7 +158,7 @@ function renderIntroPage(){
                         <h5><b>Temporary allocation → Obtainable Prizes</b></h5>
                         <div className="explain">
                             <p>
-                                We will now tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
+                                Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
                             </p>
                             <p>
                                 In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b>
@@ -149,10 +182,12 @@ function renderIntroPage(){
                         <h5><b>Obtainable Prizes → The prize you get</b></h5>
                             <div class="explain">
                                 <p>
-                                    We will now tell you how the prize you get is selected from among the Obtainable Prizes. 
+                                    Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
+                                    In fact, this is the <b>only</b> time the allocation process uses your ranking. 
                                 </p>    
                                 <p>
-                                    At the end, among the Obtainable Prizes, <b>you get the one that you ranked the highest.</b>
+                                    From among the Obtainable Prizes, <b>you get the one that you ranked the highest.</b> 
+                                    In other words, the computer will look through your ranking from top to bottom, and you will get the first prize that is Obtainable.
                                 </p>
                             </div>
                     </section>
@@ -203,9 +238,8 @@ function renderIntroPage(){
                     <section>
                         <h4>Overview of allocation process</h4>
                             <div class="explain">
-                                <p>
-                                    The allocation process will use all <b>participants’ rankings</b> and all prize priorities to determine the allocation of prizes to participants. <b>You will get the prize allocated to you.</b> 
-                                </p>
+                                The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
+                                <img src="https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
                             </div>
                     </section>
                 ),
