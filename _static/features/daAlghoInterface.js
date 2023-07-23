@@ -106,7 +106,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 After pairing, “A” and “R” will be colored purple in the two tables, to indicate that they are paired.
                             </p>
                             <p style={{color: "#0b1ae3"}}>
-                                Only pair <b>Ruth (“R”) !</b> You will pair the other participants in the next step.
+                                Only pair <b>Ruth (“R”)!</b> You will pair the other participants in the next step.
                             </p>
                             <p>
                                 Click Submit when done.<br/>

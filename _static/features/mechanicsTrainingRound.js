@@ -3372,7 +3372,33 @@ function renderPage() {
                         <span class="close" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</span>
                         {
                             props.variant === "traditional" && 
-                                <>TODO</>
+                                <section>
+                                    <p>
+                                        We will now tell you a general important principle of how your own ranking affects the allocation process.
+                                    </p> 
+                                    <p>
+                                        <b>This principle is important to learn</b>: You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                                    </p>
+                                    <p>
+                                        The prize you get is determined using an <b>allocation process</b> that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>
+                                        The following image illustrates this:
+                                    </p>
+                                    <img src="https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
+                                    <p>
+                                        Now, imagine that the computer already determined some prize priorities and rankings of the other, computerized participants. The only component left undecided is your own ranking.<br/>
+                                        Now, as you decide which ranking to submit, imagine there is some specific ranking that you are considering submitting.
+                                        Let’s call it “the considered ranking”.<br/>
+                                    </p>
+                                     <p style={{color: "#0b1ae3"}}>
+                                        The important principle: The prize you get if you submit the considered ranking is the highest possible that you could get according to the considered ranking.
+                                    </p>
+                                    <p>
+                                        In other words, if you submit any alternative ranking, different from the considered ranking, you will either get <b>the same</b> prize you get when submitting the considered ranking, or some prize <b>lower on the considered ranking.</b>
+                                    </p>
+                                    <p>
+                                        For example, imagine that you submitted the ranking A–B–C–D and ended up getting Prize C. This means that Prize C is the highest possible that you could get on the considered ranking A–B–C–D. Submitting any other, alternative ranking different from A–B–C–D could have only gotten you the same prize, Prize C, or possibly a lower-ranked prize on the considered ranking, Prize D. No other alternative ranking could have gotten you Prize A or Prize B.
+                                    </p>
+                                </section>
                         }
                         {
                             props.variant === "menu" &&

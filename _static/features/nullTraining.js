@@ -252,7 +252,7 @@ function renderUiFromState(step) {
                             <>
                                 <section ref={sectionsRefs.repeatedStep} className="explain">
                                     <p>
-                                        Note: This training round includes the exact questions that you already answered before. Nevertheless, please read them and answer carefully again to make sure you understand.
+                                        Note: This training round includes the exact questions that you already answered before. Nevertheless, please read them and answer again to make sure you understand.
                                     </p>
                                 </section>
                                 {
