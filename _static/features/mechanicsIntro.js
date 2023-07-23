@@ -316,14 +316,11 @@ function renderIntroPage(){
                                 <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
                             </p>
                             <p>
-                                Imagine the computer determined some prize priorities and rankings of the other, computerized participants. <br/>
-                                In the allocation process, the computer will use these prize priorities and other participants’ rankings
-                                to determine some group of <b>Obtainable Prizes</b> that you might receive.
-                                <ul>
-                                    <li>These Obtainable Prizes might include some or all of the prizes. There will always be at least one Obtainable Prize. </li>
-                                    <li>Importantly, <b>you cannot affect the Obtainable Prizes with your own ranking</b>.
-                                        They are only determined using the other participants' rankings and the prize priorities.</li>
-                                </ul>
+                                The prize you get is determined in two main steps:
+                                <ol>    
+                                    <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
+                                    <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
+                                </ol>
                             </p>
                         </div>
                     </section>
@@ -334,13 +331,21 @@ function renderIntroPage(){
                 content : (
                     <section>
                         <div className="explain">
+                            <p style={{color: "#0b1ae3"}}>
+                                <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest</b>.
+                            </p>
+                       </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
                             <p>
-                                Then:
-                                <ul>
-                                    <li>You always get the Obtainable Prize that is ranked highest in the ranking you submitted.</li>
-                                    <li>In other words, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes,
-                                        you get the one that you ranked highest.</li>
-                                </ul>
+                                The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
+                                <img src="https://drive.google.com/uc?export=download&id=1espDo1YsV4LlO9KbEvJtwxa_piBKDBY_" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>  
                             </p>
                         </div>
                     </section>
@@ -352,9 +357,8 @@ function renderIntroPage(){
                     <section>
                         <div className="explain">
                              <p>
-                                For example, imagine that your Obtainable Prizes are B and D. If you submit the ranking A–B–C–D, you will get Prize B, which is the one you ranked highest among the Obtainable Prizes.
-                                No ranking you could possibly submit would get you Prize A or Prize C, since the Obtainable Prizes are B and D.
-                            </p>
+                                For example, imagine that your Obtainable Prizes are C and D. If you submit the ranking A–B–C–D, you will get Prize C, which is the one you ranked highest among the Obtainable Prizes. No ranking you could possibly submit would get you Prize A or Prize B, since the Obtainable Prizes are C and D, and since your own ranking cannot influence the Obtainable Prizes.
+                             </p>
                         </div>
                     </section>
                 ),
