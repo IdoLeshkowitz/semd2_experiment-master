@@ -200,6 +200,7 @@ function renderPage() {
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                     <p>
+                                        In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
                                         Please determine whether the following statements are true or false:
                                     </p>
                                 </div>
@@ -213,8 +214,7 @@ function renderPage() {
                             content : (
                                 <>
                                     <div className="question">
-                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
-                                        The computer determines the Obtainable Prizes, which <b>I cannot affect with my own ranking.</b> I always get the Obtainable Prize that is placed highest in the ranking I submitted.<br/> 
+                                        The allocation process first determines the Obtainable Prizes, which I <b>cannot affect with my own ranking</b>. Then, I always get the Obtainable Prize that is <b>placed highest in the ranking I submitted</b>.<br/> 
                                         (Get it right on first try to increase your bonus)
                                     </div>
                                     <Question 
@@ -265,7 +265,6 @@ function renderPage() {
                             content : (
                                 <>
                                     <div className="question">
-                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
                                         Submitting some ranking <b>cannot</b> ensure that I will get the <b>highest-rank</b> prize in that ranking, but it <b>does</b> ensure that I will <b>not</b> get the <b>lowest-rank</b> prize in that ranking.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </div>
@@ -301,7 +300,6 @@ function renderPage() {
                             content : (
                                 <>
                                     <div className="question">
-                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
                                         Imagine I have a low priority for getting Prize A, which is the prize I want the most, but I have a high priority for getting Prize B, which I want the second most. Then, submitting a ranking that places Prize A first and Prize B second may lead to missing out on both prizes A and B, while submitting a different ranking could have gotten me Prize B. <br/>
                                         (Get it right on first try to increase your bonus)
                                     </div>
@@ -335,7 +333,6 @@ function renderPage() {
                             id : "different_rank_outcome",
                             type : "component",
                             sectionRef : React.createRef(null),
-                            
                             content : (
                                 <>
                                     <div className="question">
@@ -343,7 +340,7 @@ function renderPage() {
                                             Please answer the following question:          
                                         </p>
                                         <p>
-                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
                                             Which of the following might be true? (select one answer)<br/>
                                             (Hint: think about what the set of Obtainable Prizes could possibly be.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
@@ -1513,6 +1510,7 @@ function renderPage() {
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                     <p>
+                                        In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
                                         Please determine whether the following statements are true or false:
                                     </p>
                                 </div>
@@ -1526,8 +1524,7 @@ function renderPage() {
                             content : (
                                 <>
                                     <div className="question">
-                                       Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
-                                       Submitting a ranking that follows some order of prizes always gets me a prize <b>at least as high according to that order</b> compared to the prize I would have gotten if I had submitted any different, alternative ranking.<br/>
+                                       Submitting any ranking of prizes that I consider always gets me a prize <b>at least as high according to that ranking</b> compared to the prize I would have gotten if I had submitted any different, alternative ranking.<br/>
                                        (Get it right on first try to increase your bonus)
                                     </div>
                                     <Question 
@@ -1561,7 +1558,6 @@ function renderPage() {
                             content : (
                                 <>
                                     <div className="question">
-                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
                                         Submitting some ranking <b>cannot</b> ensure that I will get the <b>highest-rank</b> prize in that ranking, but it <b>does</b> ensure that I will <b>not</b> get the <b>lowest-rank</b> prize in that ranking.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </div>
@@ -1597,7 +1593,6 @@ function renderPage() {
                             content : (
                                 <>
                                     <div className="question">
-                                        Imagine the computer determined some prize priorities and rankings of the other, computerized participants.<br/>
                                         Imagine I have a low priority for getting Prize A, which is the prize I want the most, but I have a high priority for getting Prize B, which I want the second most. Then, submitting a ranking that places Prize A first and Prize B second may lead to missing out on both prizes A and B, while submitting a different ranking could have gotten me Prize B. <br/>
                                         (Get it right on first try to increase your bonus)
                                     </div>
@@ -1631,7 +1626,6 @@ function renderPage() {
                             id : "different_rank_outcome",
                             type : "component",
                             sectionRef : React.createRef(null),
-                            
                             content : (
                                 <>
                                     <div className="question">
@@ -1639,8 +1633,9 @@ function renderPage() {
                                             Please answer the following question:          
                                         </p>
                                         <p>
-                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
+                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
                                             Which of the following might be true? (select one answer)<br/>
+                                            (Hint: think about a considered ranking and alternative rankings.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
                                         </p>
                                         <Question
