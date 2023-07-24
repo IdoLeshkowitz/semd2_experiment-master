@@ -501,7 +501,6 @@ function renderIntroPage(){
     }
     function IntroPage(props){
         const steps =  getSteps(props.variant,props.treatment)
-        console.log(steps)
         const [activeSteps, setActiveSteps] = React.useState([steps[0]])
         const [allocationModal, setAllocationModal] = React.useState(false)
         function onNext(){
@@ -521,6 +520,17 @@ function renderIntroPage(){
             const latestStepRef = latestStep.ref.current
             latestStepRef?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
         },[activeSteps])
+        React.useEffect(() => {
+            const urls = [
+                "https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy",
+                "https://drive.google.com/uc?export=download&id=1espDo1YsV4LlO9KbEvJtwxa_piBKDBY_"
+            ]
+            const images = urls.map(url => {
+                const img = new Image()
+                img.src = url
+                return img
+            })
+        },[])
         return (
             <>
             {

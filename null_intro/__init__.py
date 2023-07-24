@@ -27,7 +27,7 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return {"A":0.37,"B":0.07,"C":0.25,"D":0.57}
+    return {"A":0.37,"B":0.07,"C":0.57,"D":0.25}
 
 
 def generate_prizes_priorities():
@@ -39,7 +39,7 @@ def generate_prizes_priorities():
 
 
 def generate_participants_priorities():
-    return {"Ruth":["B","A","C","D"],"Shirley":["C","B","D","A"],"Theresa":["A","B","C","D"]}
+    return {"Ruth":["D","A","C","B"],"Shirley":["D","C","A","B"],"Theresa":["C","B","A","D"]}
 
 
 def make_priority_field(label):

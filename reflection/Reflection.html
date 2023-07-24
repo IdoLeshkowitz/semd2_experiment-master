@@ -113,7 +113,7 @@ btn.btn-default:hover {
     <p>From this point on we no longer care about right or wrong answers, we are only interested in your <b>honest</b> reflections and opinions.</p>
     <p> Please answer the following questions about your experience playing the game. </p>
 
-{{ formfield 'typically_rank' label="We’ll start with a general question: <b>How did you typically rank the four prizes</b> in the 20 real rounds? Please share with us your main considerations, even if you are not sure that you always thought about them all. "}}
+{{ formfield 'typically_rank' label="We’ll start with a general question: <b>How did you typically rank the four prizes</b> in the 10 real rounds? Please share with us your main considerations, even if you are not sure that you always thought about them all. "}}
 {{ formfield_errors 'typically_rank' }}
     <span id="typically_rank_error" class="text-danger"></span>
 {{ formfield 'did_change' label="Did you <b>change</b> the way you rank throughout the game? If so, in which way and at which point"}}
@@ -176,21 +176,12 @@ btn.btn-default:hover {
         {{ formfield_errors 'understand_allocation' }}
         <p id="understand_allocation_error"></p>
     </div>
-    
-    <div class="slider-container">
-        <p>How <b>easy</b> was it for you to come up with your ranking each round?</p>
-        <div class="slider-row">
-            <span> Very difficult</span>
-            <input type="range" min="1" max="7" value="1" name="how_easy_ranking" id="how_easy_ranking">
-            <span> Very easy</span>
-        </div>
-        <span id="how_easy_ranking_indicator"></span>
-        {{ formfield_errors 'how_easy_ranking' }}
-        <p id="how_easy_ranking_error"></p>
-    </div>
     <hr/>
-    <p>Imagine that the allocation process was used to give prizes to real people in a real-world setting. In particular, suppose that each participant is separately awarded prizes in the same way you were awarded prizes.</p>
-    <p> With what percent chance do you believe the following statements are <b>always</b> true (regardless of the round’s details)?</p>
+    <p>
+        Imagine that the allocation process was used to give prizes to real people in a real-world setting. In particular, suppose that each participant is separately awarded prizes in the same way you were awarded prizes.<br/>
+        In particular, suppose that each participant is separately awarded prizes in the same way you were awarded prizes.
+    </p>
+    <p> With what percent chance do you believe the following statement is <b>always</b> true (regardless of the round’s details)?</p>
     <div class="slider-container">
         <p>The allocation process always ends with <b>each</b> participant getting a <b>different</b> prize, and <b>each</b> prize given to <b>some</b> participant.</p>
         <div class="slider-row">
@@ -202,19 +193,6 @@ btn.btn-default:hover {
         {{ formfield_errors 'chance_all_allocated' }}
         <p id="chance_all_allocated_error"></p>
     </div>
-    
-    <div class="slider-container">
-        <p>After the allocation process, there may be some participant and prize such that:</br> (a) The participant ranks the prize higher than the prize they actually receive.</br> (b) The participant has a higher priority for getting the prize than the other participant who actually received the prize.</p>
-        <div class="slider-row">
-            <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="chance_Instability" id="chance_Instability">
-            <span> 100%</span>
-        </div>
-        <span id="chance_Instability_indicator"></span>
-        {{ formfield_errors 'chance_Instability' }}
-        <p id="chance_Instability_error"></p>
-    </div>
-    
     <div class="slider-container">
         <p>After the allocation process, <b>any</b> way to reallocate the prizes will definitely make some participants <b>worse off</b> according to their ranking, relative to the prize they got.</p>
         <div class="slider-row">
@@ -231,7 +209,7 @@ btn.btn-default:hover {
 <p class="QuestionHead"> To what extent do you agree with the following statements?</p>
     
     <div class="slider-container">
-        <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is fair.</p>
+        <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>fair.</b></p>
         <div class="slider-row">
             <span>Completely disagree</span>
             <input type="range" min="1" max="7" value="1" name="agree_allocation_fare" id="agree_allocation_fare">
@@ -243,7 +221,7 @@ btn.btn-default:hover {
     </div>
     
     <div class="slider-container">
-        <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is overall a good way to allocate the prizes.</p>
+        <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>an overall good way</b> to allocate the prizes.</p>
         <div class="slider-row">
             <span>Completely disagree</span>
             <input type="range" min="1" max="7" value="1" name="agree_allocation_good" id="agree_allocation_good">
@@ -257,18 +235,6 @@ btn.btn-default:hover {
     {{ formfield "why_choose" label="Why did you choose these answers?" }}
     {{ formfield_errors 'why_choose' }}
     <span id="why_choose" class="text-danger"></span>
-    <div class="slider-container">
-        <p>How <b>confident</b> are you in the <b>allocation process’s ability</b> to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants?</p>
-        <div class="slider-row">
-            <span>Not confident at all</span>
-            <input type="range" min="1" max="7" value="1" name="trust_account_all_participants" id="trust_account_all_participants">
-            <span>Completely confident</span>
-        </div>
-        <span id="trust_account_all_participants_indicator"></span>
-        {{ formfield_errors 'trust_account_all_participants' }}
-        <p id="trust_account_all_participants_error"></p>
-    </div>
-    <hr/>
     
     <div class="slider-container">
         <p>How much would you be willing to <b>rely on the allocation process</b> in an important situation in real life (for example, assignment of students to public schools)?</p>

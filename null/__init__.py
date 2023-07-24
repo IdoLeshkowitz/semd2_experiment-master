@@ -23,14 +23,14 @@ def generate_prizes_values(round_number, pageName):
         a list of the prizes values
     """
     if pageName == "intro":
-        return {"A": 0.37, "B": 0.07, "C": 0.25, "D": 0.57}
+        return {"A": 0.37, "B": 0.07, "C": 0.57, "D": 0.25}
     # TODO: This function needs to be randomized.
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
     all_rounds = {
         1: {"A": 0.37, "B": 0.07, "C": 0.25, "D": 0.57},
-        2: {"A": 0.37, "B": 0.07, "C": 0.25, "D": 0.57},
+        2: {"A": 0.15, "B": 0.58, "C": 0.08, "D": 0.43},
         3: {"A": 0.32, "B": 0.06, "C": 0.39, "D": 0.58},
         4: {"A": 0.56, "B": 0.20, "C": 0.06, "D": 0.41},
     }
@@ -50,13 +50,13 @@ def generate_prizes_priorities(roundNumber, pageName):
             "A": ["You", "Shirley", "Theresa", "Ruth"],
             "B": ["Theresa", "You", "Shirley", "Ruth"],
             "C": ["Shirley", "Ruth", "Theresa", "You"],
-            "D": ["You", "Ruth", "Theresa", "Shirley"]
+            "D": ["Ruth", "You", "Theresa", "Shirley"]
         },
         2: {
             "A": ["You", "Shirley", "Theresa", "Ruth"],
-            "B": ["Theresa", "You", "Shirley", "Ruth"],
+            "B": ["You", "Theresa", "Shirley", "Ruth"],
             "C": ["Shirley", "Ruth", "Theresa", "You"],
-            "D": ["You", "Ruth", "Theresa", "Shirley"]
+            "D": ["Theresa", "Ruth", "You", "Shirley"]
         },
         3: {
             "A": ["Shirley", "Ruth", "You", "Theresa"],
@@ -76,7 +76,7 @@ def generate_prizes_priorities(roundNumber, pageName):
 
 def generate_participants_priorities(roundNumber, pageName):
     if pageName == "intro":
-        return {"Ruth": ["B", "A", "C", "D"], "Shirley": ["C", "B", "D", "A"], "Theresa": ["A", "B", "C", "D"]}
+        return {"Ruth": ["D", "A", "C", "B"], "Shirley": ["D", "C", "A", "B"], "Theresa": ["C", "B", "A", "D"]}
     all_rounds = {
         1: {"Ruth": ["D", "A", "C", "B"], "Shirley": ["D", "C", "A", "B"], "Theresa": ["A", "B", "C", "D"]},
         2: {"Ruth": ["D", "A", "C", "B"], "Shirley": ["D", "C", "A", "B"], "Theresa": ["A", "B", "C", "D"]},

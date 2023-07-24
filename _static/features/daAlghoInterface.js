@@ -16,16 +16,65 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <>
                             <p>
-                            The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer.
+                                The training round is not yet over. To complete it, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
                                 Remember: each step or question during the process will count for your Understanding Bonus only if you get it correctly on your first attempt. Think about your answers carefully!
                             </p>
+                        </>
+                    )
+                },
+                {
+                    id:"question_11",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <>
+                            <p>
+                                Let’s begin with a question about the <b>big picture.</b>
+                            </p>
+                            <p>
+                            Please determine whether the following statement is true or false:<br/>
+                            The allocation process determines the prize I get based on the prize priorities, my own ranking, and the other, computerized participants’ rankings.<br/> 
+                            (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! The allocation process uses all these three components to determine the prize you get.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                            Correct! The allocation process uses all these three components to determine the prize you get.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>True</span>,
+                        <span>False</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "instructions_-1",
+                    type: 'instructions',
+                    content :(
+                        <>
                             <p>
                                 We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants, using the prize priorities and participants’ rankings.
                             </p>
+                            <p>
+                                Now, you will perform all the steps determining the allocation and finally the prize you get.
+                            </p>
                         </>
-                    )
+                    )   
                 },
                 {
                     id: "instructions_2",
@@ -755,7 +804,7 @@ function renderDaAlgoPage(props = js_vars) {
                         <span>Only the other participants’ rankings are used to determine the allocation of prizes.</span>,
                         <span>Only my own ranking is used to determine the allocation of prizes.</span>,
                         <span>Only the prize priorities are used to determine the allocation of prizes.</span>,
-                        <span>The prize priorities and participants’ rankings are used to determine the allocation of prizes.</span>,
+                        <span>The prize priorities and all participants’ rankings are used to determine the allocation of prizes.</span>,
                     ],
                     expectedAnswerIndex: 3,
                 },
@@ -973,7 +1022,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 In this training round, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
-                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                                Each step or question will count for your Understanding Bonus, so think about your answers carefully!
                             </p>
                         </>
                     ),
@@ -985,6 +1034,9 @@ function renderDaAlgoPage(props = js_vars) {
                         <>
                             <p>
                                 Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p style={{color : "#0b1ae3"}}>
+                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -1116,7 +1168,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 In this training round, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
-                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                                Each step or question will count for your Understanding Bonus, so think about your answers carefully!
                             </p>
                         </>
                     ),
@@ -1128,6 +1180,9 @@ function renderDaAlgoPage(props = js_vars) {
                         <>
                             <p>
                                 Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p style={{color : "#0b1ae3"}}>
+                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -1259,7 +1314,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 In this training round, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
-                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                                Each step or question will count for your Understanding Bonus, so think about your answers carefully!
                             </p>
                         </>
                     ),
@@ -1271,6 +1326,9 @@ function renderDaAlgoPage(props = js_vars) {
                         <>
                             <p>
                                 Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p style={{color : "#0b1ae3"}}>
+                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -1406,11 +1464,60 @@ function renderDaAlgoPage(props = js_vars) {
                             <p>
                                 Remember: each step or question during the process will count for your Understanding Bonus only if you get it correctly on your first attempt. Think about your answers carefully!
                             </p>
+                        </>
+                    )
+                },
+                {
+                    id: "question_11",
+                    type: "radio",
+                    inputRef: React.createRef(null),
+                    content : (
+                        <>
+                            <p>
+                                Let’s begin with a question about the <b>big picture.</b>
+                            </p>
+                            <p>
+                                Please determine whether the following statement is true or false:<br/>
+                                The allocation process first determines the Obtainable Prizes, which I <b>cannot affect with my own ranking.</b> Then, I always get the Obtainable Prize that is <b>placed highest in the ranking I submitted.</b><br/>
+                                (Get it right on first try to increase your bonus)
+                            </p>
+                        </>
+                    ),
+                    correctMsg:(
+                        <p>
+                            Correct! In the allocation process, the group of Obtainable Prizes that you might receive is determined using only the other participants’ rankings and the prize priorities. Then, from among the Obtainable Prizes, you get the one that you ranked highest.
+                        </p>
+                    ),
+                    correctFirstMsg:(
+                        <p>
+                           Correct! In the allocation process, the group of Obtainable Prizes that you might receive is determined using only the other participants’ rankings and the prize priorities. Then, from among the Obtainable Prizes, you get the one that you ranked highest.<br/>
+                            Good job on the first try! This will count for your Understanding Bonus.
+                        </p>
+                    ),
+                    incorrectMsg:(
+                        <p>
+                            Incorrect answer. Please try again.
+                        </p>
+                    ),
+                    options :[
+                        <span>True</span>,
+                        <span>False</span>,
+                    ],
+                    expectedAnswerIndex: 0,
+                },
+                {
+                    id: "instructions_-1",
+                    type: "instructions",
+                    content : (
+                        <>
+                            <p>
+                                Now, you will perform all the steps determining the temporary allocation, the Obtainable Prizes, and finally the prize you get.
+                            </p>
                             <p>
                                 First, we will guide you how to use the <b>Allocation Dashboard</b> below to find the temporary allocation of prizes to all participants except for you, using the prize priorities and the rankings of all participants except for you.
                             </p>
                         </>
-                    )
+                    ),
                 },
                 {
                     id: "instructions_2",
@@ -2170,6 +2277,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <p>
                             Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
+                            Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>   
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                         </p>
                     ),
@@ -2203,6 +2311,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
+                            Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                         </p>
                     ),
@@ -2236,6 +2345,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
+                            Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                         </p>    
                     ),
@@ -2269,6 +2379,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <p>
                             Now use this rule to determine your Obtainable Prizes.<br/>
+                            Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
                             Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                         </p>
                     ),
@@ -2352,6 +2463,7 @@ function renderDaAlgoPage(props = js_vars) {
                             </p>
                             <p>
                                 Now, your ranking is used to determine which of the Obtainable Prizes you actually get. Out of these <b>Obtainable Prizes,</b> select the prize <b>you (“Y”) ranked the highest</b> from the list below. This is the prize you get.<br/>
+                                Note: Now is the first (and only) time that your own ranking matters! (that is, the “Y” column in the Participant Rankings table).<br/>
                                 (Get it right on first try to increase your bonus)
                             </p>
                         </>
@@ -2394,7 +2506,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 In this training round, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
-                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                                Each step or question will count for your Understanding Bonus, so think about your answers carefully!
                             </p>
                         </>
                     ),
@@ -2406,6 +2518,9 @@ function renderDaAlgoPage(props = js_vars) {
                         <>
                             <p>
                                 First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p style={{color : "#0b1ae3"}}>
+                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2546,7 +2661,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 In this training round, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
-                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                                Each step or question will count for your Understanding Bonus, so think about your answers carefully!
                             </p>
                         </>
                     ),
@@ -2558,6 +2673,9 @@ function renderDaAlgoPage(props = js_vars) {
                         <>
                             <p>
                                 First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p style={{color : "#0b1ae3"}}>
+                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2700,7 +2818,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 In this training round, you will perform the allocation process by yourself, instead of the computer.
                             </p>
                             <p>
-                                Each step or question will count for your Understanding Bonus only if you get it correctly on your first attempt (and sometimes on your second attempt if the instructions say so). Think about your answers carefully!
+                                Each step or question will count for your Understanding Bonus, so think about your answers carefully!
                             </p>
                         </>
                     ),
@@ -2712,6 +2830,9 @@ function renderDaAlgoPage(props = js_vars) {
                         <>
                             <p>
                                 First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
+                            </p>
+                            <p style={{color : "#0b1ae3"}}>
+                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>

@@ -91,6 +91,7 @@ class Player(BasePlayer):
     incorrect_seq_question_8 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_9 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_10 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_11 = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_a = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_b = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_c = models.LongStringField(initial="", blank=True)
@@ -238,6 +239,8 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_question_9 += create_question_submission_string(data)
             elif question_id == "question_10":
                 player.incorrect_seq_question_10 += create_question_submission_string(data)
+            elif question_id == "question_11":
+                player.incorrect_seq_question_11 += create_question_submission_string(data)
             elif question_id == "question_allocation_a":
                 player.incorrect_seq_allocation_a += create_question_submission_string(data)
             elif question_id == "question_allocation_b":
@@ -293,7 +296,7 @@ class DAalghoInterface(Page):
         player.algo_end_time = str(datetime.now(timezone.utc))
         def get_understanding_bonus_limit_by_round(round):
             if round == 1:
-                return 22
+                return 23
             else :
                 return 7
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
