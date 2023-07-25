@@ -64,129 +64,7 @@ Final Questions (1/4)
     margin-bottom: 1rem;
 }
 </style>
-	<div class="instructions">
-		<p> You completed all rounds of the game. We will now ask you some final questions about the game and about yourself and some general questions. This will take about 15 more minutes. Please answer thoughtfully.</br>
-            </br> First, <b>imagine</b> that you have participated in a round with the following scenario</p>
-		<table class="T_understand">
-			<caption style="color: #000">The prizes in this imaginary round were:</caption>
-			<tr>
-				<th><b>Prize</b></th>
-				<th><b>A</b></th>
-				<th><b>B</b></th>
-				<th><b>C</b></th>
-				<th><b>D</b></th>
-			</tr>
-			<tr>
-				<td>Money worth</td>
-				<td class="money-amount">{{ 0.38 | cu }}</td>
-				<td class="money-amount">{{ 0.59 | cu }}</td>
-				<td class="money-amount">{{ 0.18 | cu }}</td>
-				<td class="money-amount">{{ 0.05 | cu }}</td>
-			</tr>
-		</table>
-        </br>
-        <table class="T_understand" style="caption-side: top">
-			<caption style="color: #000">The prize priorities in this imaginary round were:</caption>
-			<tr>
-				<th><b>Prize</b></th>
-				<th><b>A</b></th>
-				<th><b>B</b></th>
-				<th><b>C</b></th>
-				<th><b>D</b></th>
-			</tr>
-			<tr>
-				<td>1st priority (highest)</td>
-				<td>Ruth</td>
-				<td>Shirley</td>
-				<td>You</td>
-				<td>Shirley</td>
-			</tr>
-			<tr>
-				<td>2nd priority</td>
-				<td>Shirley</td>
-				<td>You</td>
-				<td>Shirley</td>
-				<td>Theresa</td>
-			</tr>
-			<tr>
-				<td>3rd priority</td>
-				<td>You</td>
-				<td>Theresa</td>
-				<td>Theresa</td>
-				<td>Ruth</td>
-			</tr>
-			<tr>
-				<td>4th priority (lowest)</td>
-				<td>Theresa</td>
-				<td>Ruth</td>
-				<td>Ruth</td>
-				<td>You</td>
-			</tr>
-		</table>
-        </br>
-        <p>
-			Finally, imagine that you have submitted the ranking <b>B–A–C–D</b>, and got <b>Prize C.</b>
-		</p>
-		<p>
-			Please answer the following questions. <br/>
-			(Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
-		</p>
-        <p>If I had instead submitted <b>A–B–C–D</b> then it is possible that I would have gotten…</p>
-
-        {{ formfield 'first_situation_a' }}
-		{{ formfield_errors 'first_situation_a' }}
-		<span id="first_situation_a_error" class="text-danger"></span>
-        {{ formfield 'first_situation_b' }}
-		{{ formfield_errors 'first_situation_b' }}
-		<span id="first_situation_b_error" class="text-danger"></span>
-		{{ formfield 'first_situation_c' }}
-		{{ formfield_errors 'first_situation_c' }}
-		<span id="first_situation_c_error" class="text-danger"></span>
-		{{ formfield 'first_situation_d' }}
-		{{ formfield_errors 'first_situation_d' }}
-		<span id="first_situation_d_error" class="text-danger"></span>
-        
-        		<p>If I had instead submitted <b>D–A–B–C</b>, then it is possible that I would have gotten…</p>
-		{{ formfield 'second_situation_a' }}
-		{{ formfield_errors 'second_situation_a' }}
-		<span id="second_situation_a_error" class="text-danger"></span>
-		{{ formfield 'second_situation_b' }}
-		{{ formfield_errors 'second_situation_b' }}
-		<span id="second_situation_b_error" class="text-danger"></span>
-		{{ formfield 'second_situation_c' }}
-		{{ formfield_errors 'second_situation_c' }}
-		<span id="second_situation_c_error" class="text-danger"></span>
-		{{ formfield 'second_situation_d' }}
-		{{ formfield_errors 'second_situation_d' }}
-		<span id="second_situation_d_error" class="text-danger"></span>
-		<br/>
-		<p>
-			Now, please answer these additional questions:<br/>
-			(Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
-		</p>
-		<p>
-			If I want to <b>maximize my earnings</b> in a given round, then…
-		</p>
-		{{ formfield 'maximize_earnings_a' }}
-		{{ formfield_errors 'maximize_earnings_a' }}
-		<span id="maximize_earnings_a_error" class="text-danger"></span>
-		{{ formfield 'maximize_earnings_b' }}
-		{{ formfield_errors 'maximize_earnings_b' }}
-		<span id="maximize_earnings_b_error" class="text-danger"></span>
-		{{ formfield 'maximize_earnings_c' }}
-		{{ formfield_errors 'maximize_earnings_c' }}
-		<span id="maximize_earnings_c_error" class="text-danger"></span>
-		{{ formfield 'maximize_earnings_d' }}
-		{{ formfield_errors 'maximize_earnings_d' }}
-		<span id="maximize_earnings_d_error" class="text-danger"></span>
-		{{ formfield 'maximize_earnings_e' }}
-		{{ formfield_errors 'maximize_earnings_e' }}
-		<span id="maximize_earnings_e_error" class="text-danger"></span>
-    </div>
-<div style="text-align: center">
-<!--	{{ next_button }}-->
-	<button class="otree-btn-next btn btn-primary" id="test">Next</button>
-</div>
+	<div id="react-root"></div>
 
 <script>
 for (let ele of document.getElementsByTagName('textarea')) {
@@ -199,6 +77,12 @@ for (let ele of document.getElementsByTagName('textarea')) {
 {{ endblock }}
 
 {{ block scripts }}
+<script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.1.1/redux.min.js"></script>
+<script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+<script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+<script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+<script src="{{ static 'util/getMoneyString.js'}}"></script>
 <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
-<script src="{{ static 'features/understandingTest.js'}}"></script>
+<script src="{{ static 'util/renderReactComponent.js'}}"></script>
+<script src="{{ static 'features/understandingTest.js' }}"></script>
 {{ endblock}}

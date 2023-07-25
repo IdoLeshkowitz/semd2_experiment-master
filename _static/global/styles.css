@@ -151,3 +151,17 @@ table {
   align-self: start;
     min-width: 7rem;
 }
+
+.radio-group div{
+    display: flex;
+    gap: .3rem;
+    align-items: center;
+}
+
+.radio-group{
+    margin-bottom: 1rem;
+}
+
+.error{
+    color: red;
+}
