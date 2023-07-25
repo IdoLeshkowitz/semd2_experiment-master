@@ -11,11 +11,12 @@ const steps = [
     {id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 1},
     {id: 'exit_point', type: 'instructions'},
     {id: 'end', type: 'end'},
+    {id: 'how_many_prizes', type: 'dropdown', expectedAnswerIndex: 0, options:[1,2,3,4,5,6,7,8,9,10]},
 ]
 const getSteps = (variant, appName, roundNumber) => {
     if (appName === "null_training") {
         if (roundNumber === 1) {
-            return ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"]
+            return ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'how_many_prizes', 'competitors_rank_independence', "end"]
         } else {
             return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "exit_point", "end"]
         }
@@ -23,7 +24,7 @@ const getSteps = (variant, appName, roundNumber) => {
     if (variant === "null") {
         if (appName === "null") {
             if (roundNumber === 1) {
-                return ['repeatedStep', 'intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"]
+                return ['repeatedStep', 'intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'how_many_prizes', 'competitors_rank_independence', "end"]
             }
             return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
         }
@@ -63,6 +64,7 @@ function renderUiFromState(step) {
                 "allocation_results": React.useRef(null),
                 "competitors_rank_independence": React.useRef(null),
                 "exit_point": React.useRef(null),
+                "how_many_prizes": React.useRef(null),
             }
             const questionsRefs = {
                 independence: {
@@ -93,6 +95,13 @@ function renderUiFromState(step) {
                     correct: React.useRef(null),
                     correctFirstAttempt: React.useRef(null),
                 },
+                how_many_prizes: {
+                    input: React.useRef(null),
+                    value: React.useRef(null),
+                    incorrect: React.useRef(null),
+                    correct: React.useRef(null),
+                    correctFirstAttempt: React.useRef(null),
+                }
             }
             const rankingFormRefs = {
                 "first_priority": React.useRef(null),
@@ -195,6 +204,51 @@ function renderUiFromState(step) {
                         ...questionInformation
                     })
                 }
+                if (currentStep.type === "dropdown") {
+                    const questionInformation = {
+                        is_correct: false,
+                        attempt_number: mistakesCounter,
+                        understanding_bonus: 0,
+                        answer: null,
+                        question_id: currentStep.id,
+                        expected_answer: null,
+                        time : new Date().toUTCString()
+                    }
+                    const correctAnswer = currentStep.expectedAnswerIndex;
+                    const userAnswer = questionsRefs[currentStep.id]?.value?.current;
+                    const isCorrect = correctAnswer === parseInt(userAnswer);
+                    questionInformation.expected_answer = correctAnswer;
+                    questionInformation.answer = userAnswer;
+                    questionInformation.is_correct = isCorrect;
+                    if (isCorrect) {
+                        if (mistakesCounter === 0) {
+                            const correctFirstAttempt = questionsRefs[currentStep.id].correctFirstAttempt.current;
+                            correctFirstAttempt?.classList.remove("hidden");
+                            questionInformation.understanding_bonus = 1;
+                        }
+                        else {
+                            const correct = questionsRefs[currentStep.id].correct.current;
+                            correct?.classList.remove("hidden");
+                        }
+                        const parentElement = questionsRefs[currentStep.id].input.current;
+                        const inputs = parentElement?.querySelectorAll("input");
+                        inputs?.forEach((input) => {
+                            input.disabled = true;
+                        })
+                        setReadyToProceed(true);
+                        setMistakesCounter(0);
+                    }
+                    else {
+                        setMistakesCounter(mistakesCounter + 1);
+                        const incorrect = questionsRefs[currentStep.id].incorrect.current;
+                        debugger
+                        incorrect?.classList.remove("hidden");
+                    }
+                    liveSend({
+                        "information_type" :"question_submission",
+                        ...questionInformation
+                    })
+                }
                 if (currentStep.type === "rankingForm") {
                     const firstPriority = props.prizes[rankingFormRefs.first_priority.current - 1];
                     const secondPriority = props.prizes[rankingFormRefs.second_priority.current - 1];
@@ -225,6 +279,9 @@ function renderUiFromState(step) {
                 const stepIndex = stepsInRound.findIndex((possibleStep) => possibleStep === currentStep.id);
                 const stepToBeStarted = steps.find((step) => step.id === stepsInRound[stepIndex + 1]);
                 if (stepToBeStarted.type === "radio") {
+                    setReadyToProceed(false)
+                }
+                if (stepToBeStarted.type === "dropdown") {
                     setReadyToProceed(false)
                 }
                 if (stepToBeStarted.type === "instructions") {
@@ -466,6 +523,39 @@ function renderUiFromState(step) {
                                         </div> 
                             </section>
                         }
+                        { shownSteps.some(step=>step.id === "how_many_prizes") &&
+                            <section ref={sectionsRefs.how_many_prizes}>
+                                <p>Please answer the following question:</p>
+                                <p>
+                                    How many prizes can you get at most at the end of the allocation process? The correct answer is that you <b>always</b> get one prize, no more and no less, so you should enter the number one.<br/> 
+                                    (Get it right on first try to increase your bonus)<br/>
+                                    Answer:&nbsp;
+                                    <select ref={questionsRefs.how_many_prizes.input} onChange={(e)=>{questionsRefs.how_many_prizes.value.current = e.target.value}} className="custom-select">
+                                        <option value={-1} selected disabled>---</option>
+                                        {
+                                            [1,2,3,4,5,6,7,8,9,10].map((number,index) => {
+                                                return (
+                                                    <option value={index}>{number}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </p>
+                                <div class="incorrect-msg hidden" ref={questionsRefs.how_many_prizes.incorrect}>
+                                    <p>Incorrect answer. Please try again.</p>
+                                </div>
+                                <div class="correct-msg hidden" ref={questionsRefs.how_many_prizes.correct}>
+                                    <p>Correct! Your own ranking cannot affect the other participants' rankings.</p>
+                                </div>
+                                <div class="correct-first-msg hidden" ref={questionsRefs.how_many_prizes.correctFirstAttempt}>
+                                    <p>Correct! Your own ranking cannot affect the other participants' rankings.<br/>
+                                    Good job on the first try! This will count for your Understanding Bonus.</p>
+                                </div>
+                                { shownSteps.at(-1).id === "how_many_prizes" &&
+                                    <Button className="btn-primary" onClick={onClick} text="Submit"/>
+                                }
+                            </section>
+                        }
                         { shownSteps.some(step=>step.id === "competitors_rank_independence") &&
                             <section ref={sectionsRefs.competitors_rank_independence}>
                                 <p>Please determine whether the following statement is true or false:</p>
@@ -506,15 +596,14 @@ function renderUiFromState(step) {
                                 >
                                     <p>
                                         <b className="mb-3 d-flex justify-content-center">- This is a point of no return -</b>   
-                                        On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete a lot of tasks that depend on your understanding of these explanations.
+                                        On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete many tasks that depend on your understanding of these explanations.
                                     </p>    
                                     <p>
-                                        If you feel that you currently lack sufficient time or mental resources for additional highly demanding 60 minutes, no worries!
+                                        If you feel that you currently lack sufficient time or mental resources for additional highly demanding 50-60 minutes, no worries!
                                     </p>
                                     <ul>
                                         <li>
-                                            You can quit the study and the zoom session now, <b>without advancing to the next screen</b>, and send us a message in Prolific to inform us about this.
-                                            If you do so, we will provide you with a <b>partial payment of {getMoneyString(2,currency)}</b> for your effort so far 
+                                            We appreciate your participation and effort. You can quit the study now, <b>without advancing to the next screen</b>, and enter the completion code <b>CNF8D943</b>. If you do so, we will provide you with a <b>partial payment of {getMoneyString(2,props.currency)}</b> for your effort so far. Please send us a chat message in the Zoom session prior to leaving.  
                                         </li>
                                         <li>
                                             This is a one-time offer. If you advance to the next screen and at some point quit the study, we will <b>not</b> be able to provide a partial payment.
@@ -524,7 +613,7 @@ function renderUiFromState(step) {
                                         If you are up to the challenge (and we certainly hope you are!), please note:
                                     </p>
                                     <p>
-                                        <b>It is crucial for our purposes that you complete the study if you advance beyond this point</b>. Making some mistakes in understanding questions along the way will be perfectly normal—please stay with us. Our main objective is that at any given point, you try your best at understanding the game and at playing it.
+                                        <b>It is crucial for our purposes that you complete the study if you advance beyond this point</b>. Making some mistakes in understanding questions along the way will be perfectly normal—please stay with us. Our main objective is that you try your best at understanding and playing the game.
                                     </p>
                                 </div>
                                 {

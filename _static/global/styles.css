@@ -6,6 +6,10 @@
     font-style: italic;
 }
 
+.transparent {
+    background-color: transparent;
+    border : 1px solid #ABD9FF;
+}
 .btn-container {
     text-align: center;
 }
@@ -164,4 +168,8 @@ table {
 
 .error{
     color: red;
+}
+
+h5{
+    font-size: 1rem;
 }

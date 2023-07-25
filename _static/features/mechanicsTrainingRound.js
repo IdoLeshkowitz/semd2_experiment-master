@@ -196,17 +196,26 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome. 
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome. 
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
-                                    </p>
-                                    <p>
-                                        In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
-                                        Please determine whether the following statements are true or false:
                                     </p>
                                 </div>
                             ),
                             type : "information",
                             sectionRef : React.createRef(null),
+                        },
+                        {
+                            id : "questions_intro_2",
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                            content : (
+                                <div class="explain">
+                                    <p>
+                                        In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
+                                        Please determine whether the following statements are true or false:
+                                    </p>
+                                </div>  
+                            ),     
                         },
                         {
                             type : "component",
@@ -234,7 +243,7 @@ function renderPage() {
                                         }
                                         correctFirstMsg= {
                                             <div className="correct-msg">
-                                                Correct! In the allocation process, the computer determines some group of Obtainable Prizes that you might receive, using <b>only the other participants’ rankings and the prize priorities.</b> Then, no ranking would get you a non-Obtainable Prize, and among the Obtainable Prizes, you get the one that you ranked highest.<br/>
+                                                Correct! In the allocation process, the group of Obtainable Prizes that you might receive is determined using only the other participants’ rankings and the prize priorities. Then, from among the Obtainable Prizes, you get the one that you ranked highest.<br/>
                                                 Good job on the first try! This will count for your Understanding Bonus.
                                             </div>
                                         }  
@@ -387,7 +396,7 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                 </div>
@@ -758,7 +767,7 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                 </div>
@@ -986,9 +995,6 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
-                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
-                                    </p>
-                                    <p>
                                         (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)
                                     </p>
                                     <p>
@@ -1132,7 +1138,7 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                 </div>
@@ -1360,9 +1366,6 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
-                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
-                                    </p>
-                                    <p>
                                         (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.)
                                     </p>
                                     <p>
@@ -1389,7 +1392,7 @@ function renderPage() {
                                     }
                                     correctMsg = {
                                         <div className="correct-msg">
-                                            {rankingChangeFeedback(variant,2,"A","B")}
+                                            {rankingChangeFeedback(variant,2,"A","D")}
                                         </div>
                                     }
                                     correctFirstMsg= {
@@ -1506,9 +1509,18 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome. 
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome. 
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
+                                </div>
+                            ),
+                            type : "information",
+                            sectionRef : React.createRef(null),
+                         },
+                        {
+                            id : "questions_intro_2",
+                            content : (
+                                <div class="explain">
                                     <p>
                                         In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
                                         Please determine whether the following statements are true or false:
@@ -1655,12 +1667,12 @@ function renderPage() {
                                             }
                                             correctMsg = {
                                                 <div className="correct-msg">
-                                                    Correct! Submitting a ranking that does not follow the order of the list C–B–A–D could have only gotten you the <b>same prize</b> as when submitting the ranking C–B–A–D, that is, Prize A, or some prize <b>lower</b> on that list—Prize D. In other words, no alternative, different ranking could have gotten you Prize C or Prize B.
+                                                    Correct! Submitting a ranking different from C–B–A–D could have only gotten you the <b>same prize</b> as when submitting the ranking C–B–A–D, that is, Prize A, or some prize <b>lower</b> on the original ranking—Prize D. In other words, no alternative, different ranking could have gotten you Prize C or Prize B.
                                                 </div> 
                                             }
                                             correctFirstMsg= {
                                                 <div className="correct-msg">
-                                                    Correct! Submitting a ranking that does not follow the order of the list C–B–A–D could have only gotten you the <b>same prize</b> as when submitting the ranking C–B–A–D, that is, Prize A, or some prize <b>lower</b> on that list—Prize D. In other words, no alternative, different ranking could have gotten you Prize C or Prize B.<br/>
+                                                    Correct! Submitting a ranking different from C–B–A–D could have only gotten you the <b>same prize</b> as when submitting the ranking C–B–A–D, that is, Prize A, or some prize <b>lower</b> on the original ranking—Prize D. In other words, no alternative, different ranking could have gotten you Prize C or Prize B.<br/>
                                                     Good job on the first try! This will count for your Understanding Bonus.
                                                 </div>
                                             }
@@ -1680,7 +1692,7 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                 </div>
@@ -1908,9 +1920,6 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
-                                        Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
-                                    </p>
-                                    <p>
                                         (Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)
                                     </p>
                                     <p>
@@ -2054,7 +2063,7 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                 </div>
@@ -2282,9 +2291,6 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p> 
                                 <p>
-                                    Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
-                                </p>
-                                <p>
                                     (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)
                                 </p>
                                 <p>
@@ -2428,7 +2434,7 @@ function renderPage() {
                             content : (
                                 <div class="explain">
                                     <p>
-                                        In this training round, you will answer a few questions about the Key Principle of the game and about this round’s outcome.
+                                        In this training round, you will answer a few questions about the Key Principle of your ranking and about this round’s outcome.
                                         Remember: each question will count for your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!
                                     </p>
                                 </div>
@@ -2656,9 +2662,6 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p> 
                                 <p>
-                                    Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
-                                </p>
-                                <p>
                                     (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.)
                                 </p>
                                 <p>
@@ -2685,7 +2688,7 @@ function renderPage() {
                                 }
                                 correctMsg = {
                                     <div className="correct-msg">
-                                        {rankingChangeFeedback(variant,2,"A","B")}
+                                        {rankingChangeFeedback(variant,2,"A","D")}
                                     </div>
                                 }
                                 correctFirstMsg= {
@@ -2870,7 +2873,7 @@ function renderPage() {
                                     { props.treatment === "mechanics" ?
                                         "Click for a reminder on the technical details of the allocation process"
                                         : 
-                                        "Click here for a reminder on the Key Principle of the allocation process"
+                                        "Click here for a reminder on the Key Principle of your ranking"
                                     }
                                 </button>
                             <div style={{display:'flex', gap:'1.5rem',flexDirection:'column'}}>

@@ -94,7 +94,7 @@ function renderCognitiveAbilitiesForm() {
                         ...prevForm,
                         [key]: {
                             ...prevForm[key],
-                            error: "Please enter a value for " + form[key].units
+                            error: "Please enter a value for " + (form[key].units || "probability")
                         }
                     }))
                 }

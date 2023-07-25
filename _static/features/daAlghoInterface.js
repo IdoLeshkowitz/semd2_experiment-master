@@ -68,10 +68,10 @@ function renderDaAlgoPage(props = js_vars) {
                     content :(
                         <>
                             <p>
-                                We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants, using the prize priorities and participants’ rankings.
+                                Now, you will perform all the steps determining the allocation and finally the prize you get.
                             </p>
                             <p>
-                                Now, you will perform all the steps determining the allocation and finally the prize you get.
+                                We will guide you how to use the <b>Allocation Dashboard</b> below to find the allocation of prizes to all participants, using the prize priorities and participants’ rankings.
                             </p>
                         </>
                     )   
@@ -229,7 +229,7 @@ function renderDaAlgoPage(props = js_vars) {
                     expectedAnswerIndex: 3,
                     options :[
                         <span>It is determined at random.</span>,
-                        <span>The participant who got paired to Prize A first .</span>,
+                        <span>The participant who got paired to Prize A first.</span>,
                         <span>The participant for whom Prize A is in is in the highest rank.</span>,
                         <span>The participant highest in Prize A’s priorities.</span>,
                     ],
@@ -319,7 +319,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 Now, let’s solve the conflict.
                             </p>
                             <p>
-                                According to the Prize Priorities, <b>Ruth’s</b> priority for getting <b>Prize A</b> is higher than <b>Shirley’s</b>. Hence, <b>Shirley</b> should get unpaired from <b>Prize A</b> , and then get re-paired to her second highest-rank prize.
+                                According to the Prize Priorities, <b>Ruth’s</b> priority for getting <b>Prize A</b> is higher than <b>Shirley’s</b>. Hence, <b>Shirley</b> should get unpaired from <b>Prize A</b>, and then get re-paired to her second highest-rank prize.
                             </p>
                             <p>
                                 Perform this using the two steps:
@@ -402,7 +402,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <>
                             <p>
-                                Find the next conflict and solve it like before. First, find all prizes that are paired to two (or more) participants. 
+                                Find the next conflict and solve it like before. First, find all prizes that are paired to two (or more) participants. Then, perform the two steps:
                             </p>
                             <ul>
                                 <li>
@@ -1036,7 +1036,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p style={{color : "#0b1ae3"}}>
-                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
+                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -1182,7 +1182,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p style={{color : "#0b1ae3"}}>
-                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
+                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -1328,7 +1328,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p style={{color : "#0b1ae3"}}>
-                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
+                                Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like Training in Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -1851,7 +1851,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <>
                             <p>
-                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
+                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. Then, perform the two steps: 
                             </p>
                             <ul>
                                 <li>
@@ -1939,7 +1939,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <>
                              <p>
-                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
+                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. Then, perform the two steps: 
                             </p>
                             <ul>
                                 <li>
@@ -2025,7 +2025,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                         <>
                            <p>
-                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
+                                Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. Then, perform the two steps: 
                             </p>
                             <ul>
                                 <li>
@@ -2112,7 +2112,7 @@ function renderDaAlgoPage(props = js_vars) {
                     content : (
                     <>
                         <p>
-                            Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. 
+                            Find the next conflict and solve it like before. First, find all participants that are paired to two (or more) prizes. Then, perform the two steps: 
                         </p>
                         <ul>
                             <li>
@@ -2122,7 +2122,7 @@ function renderDaAlgoPage(props = js_vars) {
                         <p>
                         <b>Notice</b>: at this stage, <b>Prize D</b> should be unpaired from Ruth, which is its last priority. Hence, there are no participants left to re-pair it to, and <b>it will remain unpaired</b>.
                         To leave Prize D unpaired, do the following:
-                        After clicking on “D” at the <b>lower</b> part of the dashboard, click on “+” at the bottom Unpaired “U” row.
+                        After clicking on “D” at the <b>lower</b> part of the dashboard, click on “+” at the bottom Unpaired (“U.P”) row.
                         </p>
                         <p>
                             <span style={{color: "#0b1ae3",fontWeight: "bold"}}>Only solve the conflict you see first on this screen! </span>
@@ -2247,7 +2247,7 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     correctMsg:(
                         <p>
-                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. Your own ranking cannot influence which prizes are Obtainable.
+                            Correct! The <b>Obtainable Prizes</b> are determined using the prize priorities and the rankings of all participants except for you. <b>Your own ranking cannot influence which prizes are Obtainable.</b>
                         </p>
                     ),
                     correctFirstMsg:(
@@ -2463,8 +2463,10 @@ function renderDaAlgoPage(props = js_vars) {
                             </p>
                             <p>
                                 Now, your ranking is used to determine which of the Obtainable Prizes you actually get. Out of these <b>Obtainable Prizes,</b> select the prize <b>you (“Y”) ranked the highest</b> from the list below. This is the prize you get.<br/>
-                                Note: Now is the first (and only) time that your own ranking matters! (that is, the “Y” column in the Participant Rankings table).<br/>
-                                (Get it right on first try to increase your bonus)
+                                <span style={{color: "#0b1ae3"}}>
+                                    Note: Now is the first (and only) time that your own ranking matters! (that is, the “Y” column in the Participant Rankings table).<br/>
+                                    (Get it right on first try to increase your bonus)
+                                </span>
                             </p>
                         </>
                     ),
@@ -2520,7 +2522,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p style={{color : "#0b1ae3"}}>
-                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
+                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2596,7 +2598,7 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
+                            Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2675,7 +2677,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p style={{color : "#0b1ae3"}}>
-                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
+                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>
@@ -2751,7 +2753,7 @@ function renderDaAlgoPage(props = js_vars) {
                     ),
                     correctFirstMsg:(
                         <p>
-                            Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.
+                            Correct! The <b>Obtainable Prizes</b> may include any prize which your priority of getting is higher than that of the participant it is temporarily allocated to, and the prize that was left unpaired in the temporary allocation.<br/>
                             Good job on the first try! This will count for your Understanding Bonus.
                         </p>
                     ),
@@ -2832,7 +2834,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                             </p>
                             <p style={{color : "#0b1ae3"}}>
-                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Round 1.
+                                Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                             </p>
                             <p>
                                 Click Submit when you are done.<br/>

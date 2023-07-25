@@ -2,7 +2,7 @@ from os import environ
 
 from otree.project_template.settings import SESSION_CONFIG_DEFAULTS
 SESSION_CONFIG_DEFAULTS = dict(
-    real_world_currency_per_point=1.00, participation_fee=4.5, doc="",currency="GBP",DEBUG=True
+    real_world_currency_per_point=1.00, participation_fee=7, doc="",currency="GBP",DEBUG=True
 )
 SESSION_CONFIGS=[
     {

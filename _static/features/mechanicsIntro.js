@@ -47,9 +47,9 @@ function renderIntroPage(){
             {
                 content : (
                  <section>
-                    <div class="explain">
+                    <div class="explain transparent">
                         <p style={{color : "#0b1ae3"}}>
-                           The important principle: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
+                           <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
                         </p>
                     </div>
                 </section>   
@@ -155,7 +155,6 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <h5><b>Temporary allocation → Obtainable Prizes</b></h5>
                         <div className="explain">
                             <p>
                                 Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
@@ -186,7 +185,7 @@ function renderIntroPage(){
                                     In fact, this is the <b>only</b> time the allocation process uses your ranking. 
                                 </p>    
                                 <p>
-                                    From among the Obtainable Prizes, <b>you get the one that you ranked the highest.</b> 
+                                    From among the Obtainable Prizes, <b>you get the one that you ranked the highest. </b> 
                                     In other words, the computer will look through your ranking from top to bottom, and you will get the first prize that is Obtainable.
                                 </p>
                             </div>
@@ -252,9 +251,18 @@ function renderIntroPage(){
                         <div class="explain">
                             <p>
                                 The allocation process is a multi-step process, as follows:
-                                    <p>
-                                    In the first step, each participant is paired to their <b>highest</b>-rank prize.
-                                    </p>
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div class="explain">
+                            <p>
+                                In the first step, each participant is paired to their <b>highest</b>-rank prize.
                             </p>
                         </div>
                     </section>
@@ -337,15 +345,6 @@ function renderIntroPage(){
                              <p>
                                 We will now tell you a general important principle of how your own ranking affects the allocation process.
                             </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                content : (
-                    <section>
-                        <div className="explain">
                             <p>
                                 <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
                             </p>
@@ -364,7 +363,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div className="explain">
+                        <div className="explain transparent">
                             <p style={{color: "#0b1ae3"}}>
                                 <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest</b>.
                             </p>
@@ -420,6 +419,9 @@ function renderIntroPage(){
                             <p>
                                 We will now tell you a general important principle of how your own ranking affects the allocation process.
                             </p>
+                            <p>
+                                <b>This principle is important to learn</b>: You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                            </p>
                         </div>
                     </section>
                 ),
@@ -430,17 +432,14 @@ function renderIntroPage(){
                     <section>
                         <div className="explain">
                             <p>
-                                <b>This principle is important to learn</b>: You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
-                            </p>
-                            <p>
                                 The prize you get is determined using an <b>allocation process</b> that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>
                                 The following image illustrates this:
                             </p>
                             <img src="https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
-                        </div>
+                        </div>  
                     </section>
                 ),
-                ref: React.createRef()              
+                ref: React.createRef()
             },
             {
                 content : (
@@ -448,7 +447,7 @@ function renderIntroPage(){
                         <div className="explain">
                             <p>
                                 Now, imagine that the computer already determined some prize priorities and rankings of the other, computerized participants. The only component left undecided is your own ranking.<br/>
-                                Now, as you decide which ranking to submit, imagine there is some specific ranking that you are considering submitting.
+                                As you decide which ranking to submit, imagine there is some specific ranking that you are considering submitting.
                                 Let’s call it “the considered ranking”.<br/>
                             </p>    
                         </div>
@@ -459,10 +458,19 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div className="explain">
+                        <div className="explain transparent">
                             <p style={{color: "#0b1ae3"}}>
-                                The important principle: The prize you get if you submit the considered ranking is the highest possible that you could get according to the considered ranking.
+                                <b>The important principle</b>: The prize you get if you submit the considered ranking is the <b>highest possible</b> that you could get <b>according to the considered ranking.</b>
                             </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
                             <p>
                                 In other words, if you submit any alternative ranking, different from the considered ranking, you will either get <b>the same</b> prize you get when submitting the considered ranking, or some prize <b>lower on the considered ranking.</b>
                             </p>

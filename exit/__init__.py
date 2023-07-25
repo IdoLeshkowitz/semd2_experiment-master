@@ -22,7 +22,6 @@ class Group(BaseGroup):
 
 class Player(BasePlayer):
     total_payment = models.FloatField(initial=0)
-    total_payment_corrected = models.FloatField(initial=0)
     start_time = models.StringField(initial=datetime.now(timezone.utc))
     end_time = models.StringField(blank=True, initial="")
 
@@ -32,7 +31,7 @@ def get_understanding_bonus_ratio(understanding_bonus, max_understanding_bonus):
 
 
 def get_understanding_bonus_money(understanding_bonus_ratio):
-    return round((understanding_bonus_ratio / 100) * 4, 2)
+    return round((understanding_bonus_ratio / 100) * 4.5, 2)
 
 
 def get_total_payment(understanding_bonus_money, payoff):
@@ -66,7 +65,7 @@ class EndSurvey(Page):
     @staticmethod
     def js_vars(player: Player):
         return {
-            "totalPayment": player.total_payment,
+            "totalPayment":           player.total_payment,
             "currency":               player.session.config["currency"],
         }
     @staticmethod
@@ -81,10 +80,6 @@ class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.total_payment = get_total_payment(get_understanding_bonus_money(get_understanding_bonus_ratio(player.participant.understanding_bonus, player.participant.understanding_bonus_limit)), player.participant.payoff_plus_participation_fee())
-        if (player.total_payment < C.MINIMUM_PAYMENT):
-            player.total_payment_corrected = C.MINIMUM_PAYMENT
-        else:
-            player.total_payment_corrected = player.total_payment
         player.start_time = str(datetime.now(timezone.utc))
 
 

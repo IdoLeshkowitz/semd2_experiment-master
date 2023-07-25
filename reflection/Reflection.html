@@ -60,7 +60,7 @@ btn.btn-default:hover {
     flex-direction: column;
     gap: .5rem;
 }
-.slider-row > input {
+.slider-row > input required {
     margin-top: 1rem;
 }
 .slider-container >  span{
@@ -145,7 +145,7 @@ btn.btn-default:hover {
         <p>How well do you think you now understand how to <b>best choose</b> your own ranking?</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
-            <input type="range" min="1" max="7" value="1" name="understand_choose_rankings" id="understand_choose_rankings">
+            <input required type="range" min="1" max="7" value="1" name="understand_choose_rankings" id="understand_choose_rankings">
             <span> I understand very well</span>
         </div>
         <span id="understand_choose_rankings_indicator"></span>
@@ -154,10 +154,10 @@ btn.btn-default:hover {
     </div>
     
     <div class="slider-container">
-        <p>How well do you think you now understand the <b>key principle</b> of the allocation process?</p>
+        <p>How well do you think you now understand the <b>key principle</b> of your ranking?</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
-            <input type="range" min="1" max="7" value="1" name="understand_principle" id="understand_principle">
+            <input required type="range" min="1" max="7" value="1" name="understand_principle" id="understand_principle">
             <span> I understand very well</span>
         </div>
         <span id="understand_principle_indicator"></span>
@@ -169,7 +169,7 @@ btn.btn-default:hover {
         <p>How well do you think you now understand how the allocation process <b>works</b>?</p>
         <div class="slider-row">
             <span> I do not understand at all</span>
-            <input type="range" min="1" max="7" value="1" name="understand_allocation" id="understand_allocation">
+            <input required type="range" min="1" max="7" value="1" name="understand_allocation" id="understand_allocation">
             <span> I understand very well</span>
         </div>
         <span id="understand_allocation_indicator"></span>
@@ -186,23 +186,12 @@ btn.btn-default:hover {
         <p>The allocation process always ends with <b>each</b> participant getting a <b>different</b> prize, and <b>each</b> prize given to <b>some</b> participant.</p>
         <div class="slider-row">
             <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="chance_all_allocated" id="chance_all_allocated">
+            <input required type="range" min="0" max="100" value="0" name="chance_all_allocated" id="chance_all_allocated">
             <span> 100%</span>
         </div>
         <span id="chance_all_allocated_indicator"></span>
         {{ formfield_errors 'chance_all_allocated' }}
         <p id="chance_all_allocated_error"></p>
-    </div>
-    <div class="slider-container">
-        <p>After the allocation process, <b>any</b> way to reallocate the prizes will definitely make some participants <b>worse off</b> according to their ranking, relative to the prize they got.</p>
-        <div class="slider-row">
-            <span> 0%</span>
-            <input type="range" min="0" max="100" value="0" name="chance_Pareto" id="chance_Pareto">
-            <span> 100%</span>
-        </div>
-        <span id="chance_Pareto_indicator"></span>
-        {{ formfield_errors 'chance_Pareto' }}
-        <p id="chance_Pareto_error"></p>
     </div>
     <hr/>
     
@@ -212,7 +201,7 @@ btn.btn-default:hover {
         <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>fair.</b></p>
         <div class="slider-row">
             <span>Completely disagree</span>
-            <input type="range" min="1" max="7" value="1" name="agree_allocation_fare" id="agree_allocation_fare">
+            <input required type="range" min="1" max="7" value="1" name="agree_allocation_fare" id="agree_allocation_fare">
             <span>Completely agree</span>
         </div>
         <span id="agree_allocation_fare_indicator"></span>
@@ -224,7 +213,7 @@ btn.btn-default:hover {
         <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>an overall good way</b> to allocate the prizes.</p>
         <div class="slider-row">
             <span>Completely disagree</span>
-            <input type="range" min="1" max="7" value="1" name="agree_allocation_good" id="agree_allocation_good">
+            <input required type="range" min="1" max="7" value="1" name="agree_allocation_good" id="agree_allocation_good">
             <span>Completely agree</span>
         </div>
         <span id="agree_allocation_good_indicator"></span>
@@ -240,7 +229,7 @@ btn.btn-default:hover {
         <p>How much would you be willing to <b>rely on the allocation process</b> in an important situation in real life (for example, assignment of students to public schools)?</p>
         <div class="slider-row">
             <span>Very unwilling</span>
-            <input type="range" min="1" max="7" value="1" name="rely_in_real_life" id="rely_in_real_life">
+            <input required type="range" min="1" max="7" value="1" name="rely_in_real_life" id="rely_in_real_life">
             <span>Very willing</span>
         </div>
         <span id="rely_in_real_life_indicator"></span>
@@ -252,7 +241,7 @@ btn.btn-default:hover {
         <p>How <b>transparent is the allocation process</b>, meaning that you received a full explanation of how the allocation process really works, and no details were kept away from you?</p>
         <div class="slider-row">
             <span>Not transparent at all</span>
-            <input type="range" min="1" max="7" value="1" name="allocation_transparent" id="allocation_transparent">
+            <input required type="range" min="1" max="7" value="1" name="allocation_transparent" id="allocation_transparent">
             <span>Completely transparent</span>
         </div>
         <span id="allocation_transparent_indicator"></span>
@@ -264,7 +253,7 @@ btn.btn-default:hover {
         <p>How <b>predictable</b> is the final allocation?</p>
         <div class="slider-row">
             <span>Not predictable at all</span>
-            <input type="range" min="1" max="7" value="1" name="allocation_predictable" id="allocation_predictable">
+            <input required type="range" min="1" max="7" value="1" name="allocation_predictable" id="allocation_predictable">
             <span>Completely predictable</span>
         </div>
         <span id="allocation_predictable_indicator"></span>
@@ -276,7 +265,7 @@ btn.btn-default:hover {
         <p>To what extent do you think that <b>your submitted ranking matters</b> for the final allocation?</p>
         <div class="slider-row">
             <span>Not at all</span>
-            <input type="range" min="1" max="7" value="1" name="your_ranking_matters" id="your_ranking_matters">
+            <input required type="range" min="1" max="7" value="1" name="your_ranking_matters" id="your_ranking_matters">
             <span>Very much</span>
         </div>
         <span id="your_ranking_matters_indicator"></span>
