@@ -4033,7 +4033,7 @@ function renderDaAlgoPage(props = js_vars) {
                 ref={videoRef}
                 onClick={onVideoClick}
                 >
-                <source src={props.src} type="video/mp4"></source>
+                <source src={props.src ?? url} type="video/mp4"></source>
             </video>
              <button 
                 className="close-button"
