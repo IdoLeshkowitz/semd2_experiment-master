@@ -23,16 +23,16 @@ def generate_prizes_values(round_number, pageName):
         a list of the prizes values
     """
     if pageName == "intro":
-        return {"A": 0.37, "B": 0.07, "C": 0.57, "D": 0.25}
+        return {"A": 0.67, "B": 0.07, "C": 0.95, "D": 0.45}
     # TODO: This function needs to be randomized.
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
     all_rounds = {
-        1: {"A": 0.37, "B": 0.07, "C": 0.25, "D": 0.57},
-        2: {"A": 0.15, "B": 0.58, "C": 0.08, "D": 0.43},
-        3: {"A": 0.32, "B": 0.06, "C": 0.39, "D": 0.58},
-        4: {"A": 0.56, "B": 0.20, "C": 0.06, "D": 0.41},
+        1: {"A": 0.79, "B": 0.09, "C": 0.45, "D": 0.94},
+        2: {"A": 0.30, "B": 0.99, "C": 0.08, "D": 0.86},
+        3: {"A": 0.45, "B": 0, "C": 0.78, "D": 0.96},
+        4: {"A": 0.92, "B": 0.43, "C": 0.01, "D": 0.80},
     }
     return all_rounds[round_number]
 

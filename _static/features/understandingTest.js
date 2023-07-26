@@ -54,10 +54,10 @@ function renderUnderstandingTestPage(){
                 </tr>
                 <tr>
                     <td>Money worth</td>
-                    <td>{getMoneyString(0.38, currency)}</td>
-                    <td>{getMoneyString(0.59, currency)}</td>
-                    <td>{getMoneyString(0.18, currency)}</td>
-                    <td>{getMoneyString(0.05, currency)}</td>
+                    <td>{getMoneyString(0.74, currency)}</td>
+                    <td>{getMoneyString(0.98, currency)}</td>
+                    <td>{getMoneyString(0.36, currency)}</td>
+                    <td>{getMoneyString(0.09, currency)}</td>
                 </tr>
             </table><br/>
             <table className="T_understand" style={{captionSide:"top"}}>
@@ -169,7 +169,7 @@ function renderUnderstandingTestPage(){
                     (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
                 </p>
                 <p>
-                    If I had instead submitted <b>A–B–C–D</b>, and the prize priorities and other participants’ rankings did not change, then it is possible that I would have gotten…
+                    If you had instead submitted <b>A–B–C–D</b>, and the prize priorities and other participants’ rankings did not change, is it possible that you would have gotten…?
                 </p>
                 <RadioGroup name="first_situation_a" onChange={onChange} options={["True", "False"]} value={form.first_situation_a.value} label="Prize A"/>
                 <RadioGroup name="first_situation_b" onChange={onChange} options={["True", "False"]} value={form.first_situation_b.value} label="Prize B"/>
@@ -177,7 +177,7 @@ function renderUnderstandingTestPage(){
                 <RadioGroup name="first_situation_d" onChange={onChange} options={["True", "False"]} value={form.first_situation_d.value} label="Prize D"/>
                 <hr/>
                 <p>
-                    If I had instead submitted <b>D–A–B–C</b>, and the prize priorities and other participants’ rankings did not change, then it is possible that I would have gotten…
+                    If you had instead submitted <b>D–A–B–C</b>, and the prize priorities and other participants’ rankings did not change, is it possible that you would have gotten…?
                 </p>
                 <RadioGroup name="second_situation_a" onChange={onChange} options={["True", "False"]} value={form.second_situation_a.value} label="Prize A"/>
                 <RadioGroup name="second_situation_b" onChange={onChange} options={["True", "False"]} value={form.second_situation_b.value} label="Prize B"/>
@@ -185,7 +185,7 @@ function renderUnderstandingTestPage(){
                 <RadioGroup name="second_situation_d" onChange={onChange} options={["True", "False"]} value={form.second_situation_d.value} label="Prize D"/>
                 <hr/>
                 <p>
-                    If I had instead submitted <b>D–A–B–C</b>, this would be unimportant for this question, since in this question I am asked,  then it is possible that I would have gotten…
+                    If you had instead submitted <b>D–A–B–C</b>, this would be unimportant for this question. Instead of answering this question according to the problem,you should choose the next four answers in the order true, true, false, true…
                 </p>
                 <RadioGroup name="third_situation_a" onChange={onChange} options={["True", "False"]} value={form.third_situation_a.value} label="Prize A"/>
                 <RadioGroup name="third_situation_b" onChange={onChange} options={["True", "False"]} value={form.third_situation_b.value} label="Prize B"/>
@@ -226,8 +226,8 @@ function renderUnderstandingTestPage(){
         return (
             <ShowErrorContext.Provider value={showError}>
                 <p>
-                    Now we will ask you two similar questions, without showing you the prize priorities and earnings.<br/> 
-                    In these questions, if you cannot tell for sure what prize you would have gotten in some case, please simply check the box saying “I have not received enough information”.<br/>
+                    Now we will ask you two similar questions, without showing you the prize values and prize priorities.<br/> 
+                    In these questions, if you cannot tell for sure what prize you would have gotten in some case, please simply check the box saying “I do not have enough information to know what prize I would have gotten.”<br/>
                     (Each answer you determine correctly will count as <b>2 questions</b> for your Understanding Bonus.)
                 </p>
                 <p>
@@ -330,31 +330,31 @@ function renderUnderstandingTestPage(){
                         "There may be some alternative ranking such that I would have gotten prize A."
                     ]}
                     value={form.page3_q1.value}
-                    label={<span>If you had submitted some alternative ranking, and if the prize priorities and other participants’ rankings did not change, then which of the following is true about prize <b>A</b>?</span>}
+                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about Prize <b>A</b>?</span>}
                     /> 
                 <RadioGroup
                     name="page3_q2"
                     onChange={onChange}
                     options={[
-                        "There is no alternative ranking such that I would have gotten prize B.",
-                        "There may be some alternative ranking such that I would have gotten prize B."
+                        "There is no alternative ranking that would have gotten me Prize B.",
+                        "There may be some alternative ranking that would have gotten me Prize B."
                     ]}
                     value={form.page3_q2.value}
-                    label={<span>If you had submitted some alternative ranking, and if the prize priorities and other participants’ rankings did not change, then which of the following is true about prize <b>B</b>?</span>}
+                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about Prize <b>B</b>?</span>}
                     />
                 <RadioGroup
                     name="page3_q3"
                     onChange={onChange}
                     options={[
-                        "There is no alternative ranking such that I would have gotten prize D.",
-                        "There may be some alternative ranking such that I would have gotten prize D."
+                        "There is no alternative ranking that would have gotten me prize D.",
+                        "There may be some alternative ranking that would have gotten me Prize D."
                     ]}
                     value={form.page3_q3.value}
-                    label={<span>If you had submitted some alternative ranking, and if the prize priorities and other participants’ rankings did not change, then which of the following is true about prize <b>D</b>?</span>}
+                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about prize <b>D</b>?</span>}
                     />
                     <hr/>
                 <p>
-                    Now, please answer these additional questions:<br/>
+                    Now, please answer these last questions for this part:<br/>
                     (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
                 </p>
                 <RadioGroup
@@ -375,7 +375,7 @@ function renderUnderstandingTestPage(){
                         "False"
                     ]}
                     value={form.page3_q5.value}
-                    label={<span>I should consider only how much each prize earns me while choosing my own ranking.</span>}
+                    label={<span>I should consider <b>only</b> how much each prize earns me while choosing my own ranking.</span>}
                     />
                 <RadioGroup
                     name="page3_q6"

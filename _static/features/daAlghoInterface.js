@@ -3831,7 +3831,7 @@ function renderDaAlgoPage(props = js_vars) {
                         props.variant === "traditional" && 
                             <div>
                                 <p>
-                                    <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
+                                    <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                                     Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                                 </p><br/>
                                 <h5>Overview of allocation process</h5>
@@ -3884,7 +3884,7 @@ function renderDaAlgoPage(props = js_vars) {
                         props.variant === "menu" &&
                             <div>
                                 <p>
-                                    <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in rounds of this study.<br/>
+                                    <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                                     Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                                 </p><br/>
                                 <h5>Overview of allocation process</h5>

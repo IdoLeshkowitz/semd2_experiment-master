@@ -31,7 +31,7 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return [{"A": 0.37, "B": 0.57, "C": 0.12, "D": 0.6}, {"A": 0.28, "B": 0.56, "C": 0.05, "D": 0.42}]
+    return [{"A": 0.79, "B": 0.09, "C": 0.45, "D": 0.94}, {"A": 0.30, "B": 0.99, "C": 0.08, "D": 0.86}]
 
 
 def generate_priorities(first_group, second_group):

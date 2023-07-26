@@ -25,10 +25,10 @@ def generate_prize_values():
     """
     import random
 
-    v1 = random.uniform(55, 60)
-    v2 = random.uniform(33, 54)
-    v3 = random.uniform(11, 32)
-    v4 = random.uniform(5, 10)
+    v1 = random.uniform(90, 99)
+    v2 = random.uniform(50, 89)
+    v3 = random.uniform(10, 49)
+    v4 = random.uniform(0, 9)
 
     values = [v1, v2, v3, v4]
     random.shuffle(values)
@@ -155,7 +155,7 @@ def da(preferences):
 class C(BaseConstants):
     NAME_IN_URL = 'real_rounds_batch1'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 20  # change to 20 in real pilot
+    NUM_ROUNDS = 10  # change to 20 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
