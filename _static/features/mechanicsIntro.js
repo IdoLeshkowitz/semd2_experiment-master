@@ -61,8 +61,8 @@ function renderIntroPage(){
                     <section>
                         <div class="explain">
                             The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
-                            <img src="https://drive.google.com/uc?export=download&id=1espDo1YsV4LlO9KbEvJtwxa_piBKDBY_" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
                         </div>
+                        <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                     </section>
                 ),
                 ref : React.createRef()
@@ -238,8 +238,8 @@ function renderIntroPage(){
                         <h4>Overview of allocation process</h4>
                             <div class="explain">
                                 The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
-                                <img src="https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
                             </div>
+                            <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                     </section>
                 ),
                 ref: React.createRef()
@@ -378,8 +378,8 @@ function renderIntroPage(){
                         <div className="explain">
                             <p>
                                 The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
-                                <img src="https://drive.google.com/uc?export=download&id=1espDo1YsV4LlO9KbEvJtwxa_piBKDBY_" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>  
                             </p>
+                            <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>  
                         </div>
                     </section>
                 ),
@@ -435,8 +435,8 @@ function renderIntroPage(){
                                 The prize you get is determined using an <b>allocation process</b> that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>
                                 The following image illustrates this:
                             </p>
-                            <img src="https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy" alt="explanation" style={{width:'100%',margin:'2% 0%'}}/>
                         </div>  
+                        <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                     </section>
                 ),
                 ref: React.createRef()
@@ -529,14 +529,10 @@ function renderIntroPage(){
             latestStepRef?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"})
         },[activeSteps])
         React.useEffect(() => {
-            const urls = [
-                "https://drive.google.com/uc?export=download&id=1enjUDw5ZdXdufgxNm0PfC5DNz-NLeFmy",
-                "https://drive.google.com/uc?export=download&id=1espDo1YsV4LlO9KbEvJtwxa_piBKDBY_"
-            ]
-            const images = urls.map(url => {
+            const urls = Object.values(imgUrls)
+            urls.forEach(url => {   
                 const img = new Image()
                 img.src = url
-                return img
             })
         },[])
         return (
