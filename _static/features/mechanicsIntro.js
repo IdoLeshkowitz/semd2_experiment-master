@@ -272,21 +272,21 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                    <div class="explain">
-                        <p>
-                                In the next step, possible conflicts are detected and solved.<br/>
-                                If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
-                                Each conflict is solved in two steps:
-                                    <ul>
-                                        <li>
-                                           <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
-                                        </li>
-                                        <li>
-                                            <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
-                                        </li>
-                                    </ul>
-                        </p>
-                    </div>
+                        <div class="explain">
+                            <p>
+                                    In the next step, possible conflicts are detected and solved.<br/>
+                                    If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                                    Each conflict is solved in two steps:
+                                        <ul>
+                                            <li>
+                                               <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                            </li>
+                                            <li>
+                                                <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                            </li>
+                                        </ul>
+                            </p>
+                        </div>
                     </section>
                 ),
                 ref: React.createRef()
@@ -346,19 +346,28 @@ function renderIntroPage(){
                                 We will now tell you a general important principle of how your own ranking affects the allocation process.
                             </p>
                             <p>
-                                <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
-                            </p>
-                            <p>
-                                The prize you get is determined in two main steps:
-                                <ol>    
-                                    <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
-                                    <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
-                                </ol>
+                                <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                             </p>
                         </div>
                     </section>
                 ),
                 ref: React.createRef()
+            },
+            {
+              content : (
+                  <section>
+                      <div class="explain">
+                        <p>
+                            The prize you get is determined in two main steps:
+                            <ol>    
+                                <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
+                                <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
+                            </ol>
+                        </p>
+                      </div>
+                  </section>
+              ),
+              ref : React.createRef()
             },
             {
                 content : (
@@ -420,7 +429,7 @@ function renderIntroPage(){
                                 We will now tell you a general important principle of how your own ranking affects the allocation process.
                             </p>
                             <p>
-                                <b>This principle is important to learn</b>: You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                                <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                             </p>
                         </div>
                     </section>

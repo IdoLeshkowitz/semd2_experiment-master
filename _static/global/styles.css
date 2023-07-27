@@ -1,6 +1,9 @@
 .explain {
     padding: 2rem 1rem 1rem;
-    margin: 1rem 1rem 2rem 0rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     border-radius: 25px;
     background-color: #ABD9FF;
     font-style: italic;
@@ -8,7 +11,7 @@
 
 .transparent {
     background-color: transparent;
-    border : 1px solid #ABD9FF;
+    border : 2px solid #ABD9FF;
 }
 .btn-container {
     text-align: center;
@@ -175,6 +178,9 @@ table {
     min-width: 7rem;
 }
 
+.custom-select.small{
+    min-width: 3rem; !important;
+}
 .radio-group div{
     display: flex;
     gap: .3rem;

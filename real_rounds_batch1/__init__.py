@@ -30,8 +30,9 @@ def generate_prize_values():
     v3 = random.uniform(10, 49)
     v4 = random.uniform(0, 9)
 
-    values = [v1, v2, v3, v4]
+    values = [round(num / 100,2) for num in [v1, v2, v3, v4]]
     random.shuffle(values)
+    print(values)
     return values
 
 
@@ -209,7 +210,7 @@ class RoundPage(Page):
     def js_vars(player: Player):
         return {
             "prizes":                 C.PRIZES,
-            "prizesValues":           get_prizes_in_round(player.prizes_values, player.round_number),
+            "prizesValues":           C.PRIZES_VALUES[player.round_number -1 ],
             "prizesPriorities":       get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
             "players":                C.PLAYERS,
             "participantsPriorities": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),

@@ -205,6 +205,10 @@ function renderUiFromState(step) {
                     })
                 }
                 if (currentStep.type === "dropdown") {
+                    /* hide all messages */
+                    [questionsRefs[currentStep.id].incorrect.current, questionsRefs[currentStep.id].correct.current, questionsRefs[currentStep.id].correctFirstAttempt.current].forEach((ref) => {
+                        ref?.classList.add("hidden");
+                    })
                     const questionInformation = {
                         is_correct: false,
                         attempt_number: mistakesCounter,
@@ -241,7 +245,6 @@ function renderUiFromState(step) {
                     else {
                         setMistakesCounter(mistakesCounter + 1);
                         const incorrect = questionsRefs[currentStep.id].incorrect.current;
-                        debugger
                         incorrect?.classList.remove("hidden");
                     }
                     liveSend({
@@ -530,7 +533,7 @@ function renderUiFromState(step) {
                                     How many prizes can you get at most at the end of the allocation process? The correct answer is that you <b>always</b> get one prize, no more and no less, so you should enter the number one.<br/> 
                                     (Get it right on first try to increase your bonus)<br/>
                                     Answer:&nbsp;
-                                    <select ref={questionsRefs.how_many_prizes.input} onChange={(e)=>{questionsRefs.how_many_prizes.value.current = e.target.value}} className="custom-select">
+                                    <select ref={questionsRefs.how_many_prizes.input} onChange={(e)=>{questionsRefs.how_many_prizes.value.current = e.target.value}} className="custom-select small">
                                         <option value={-1} selected disabled>---</option>
                                         {
                                             [1,2,3,4,5,6,7,8,9,10].map((number,index) => {
@@ -545,10 +548,10 @@ function renderUiFromState(step) {
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
                                 <div class="correct-msg hidden" ref={questionsRefs.how_many_prizes.correct}>
-                                    <p>Correct! Your own ranking cannot affect the other participants' rankings.</p>
+                                    <p>Correct! You always get one prize at the end of the allocation process.</p>
                                 </div>
                                 <div class="correct-first-msg hidden" ref={questionsRefs.how_many_prizes.correctFirstAttempt}>
-                                    <p>Correct! Your own ranking cannot affect the other participants' rankings.<br/>
+                                    <p>Correct! You always get one prize at the end of the allocation process.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>
                                 { shownSteps.at(-1).id === "how_many_prizes" &&
@@ -592,7 +595,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.exit_point} >
                                 <div
                                     className="explain" 
-                                    style={{fontStyle:"italic",fontWeight:'lighter'}}
+                                    style={{fontStyle:"italic"}}
                                 >
                                     <p>
                                         <b className="mb-3 d-flex justify-content-center">- This is a point of no return -</b>   

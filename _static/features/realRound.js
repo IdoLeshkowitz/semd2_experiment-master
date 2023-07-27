@@ -8,6 +8,7 @@ function RenderRoundPage() {
         return steps.slice(0, activeStepIndex + 1)
     }
     function RoundPage(props){
+        console.log(props)
         const [ranking, setRanking] = React.useState(props.initialRanking)
         const [activeModal,setActiveModal] = React.useState(null)
         const [activeSteps, setActiveSteps] = React.useState(getActiveSteps(props.activeStepIndex))
@@ -39,6 +40,13 @@ function RenderRoundPage() {
             "active_step_index": activeSteps.length - 1,
             })
         },[activeSteps])
+        React.useEffect(()=>{
+            const urls = Object.values(imgUrls);
+            urls.forEach(url=>{
+                const img = new Image();
+                img.src = url;
+            })
+        },[])
         function readyToProceed(){
             const step = activeSteps.at(-1)
             if (step.type === 'rankingForm'){
@@ -452,12 +460,13 @@ function RenderRoundPage() {
             "mechanicsTraditionalAllocation":(
                 <div>
                     <p>
-                        <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
-                        Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
+                       <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
+                       Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                     </p><br/>
                     <h5>Overview of allocation process</h5>
                     <p>
-                        The allocation process will use all <b>participants’ rankings</b> and all prize priorities to determine the allocation of prizes to participants. <b>You will get the prize allocated to you.</b>
+                        The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
+                        <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                     </p><br/>
                     <h5>Details of allocation process</h5>
                     <p>
@@ -465,11 +474,12 @@ function RenderRoundPage() {
                     </p>
                     <ol>
                         <li>
-                        In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                            In the first step, each participant is paired to their <b>highest</b>-rank prize.
                         </li>
                         <li>
                             <p>
-                                In the next step, possible conflicts are detected and solved. If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.
+                                In the next step, possible conflicts are detected and solved.<br/>
+                                If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
                             </p>
                             <p>
                                 Each conflict is solved in two steps:
@@ -509,29 +519,43 @@ function RenderRoundPage() {
                     </p><br/>
                     <h5>Overview of allocation process</h5>
                     <p>
-                        The allocation process will first use <b>all participants’ rankings except for yours,</b> and all the prize priorities, to determine a set of prizes that you can receive, called the <b>Obtainable Prizes.</b> Then, <b>you will get the prize you ranked highest out of these Obtainable Prizes.</b>
+                        The prize you get is determined in two main steps:
+                        <ol>
+                            <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
+                            <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
+                        </ol> 
                     </p><br/>
-                    <h5>Details of allocation process</h5>
                     <p>
-                        The allocation process begins with a multi-step process which <b>does not involve your own submitted ranking, as follows:</b>
+                        <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
+                    </p>
+                    <p>
+                        The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
+                        <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
+                    </p>
+                    <h5>Details of allocation process</h5>
+                    <h6><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h6>
+                    <p>
+                        The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows:
                     </p>
                     <ol>
                         <li>
-                            In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
+                            <p>
+                                 In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>
+                            </p>
                         </li>
                         <li>
                             <p>
-                                 In the next step, possible conflicts are detected and solved.<br/>
-                                 If two (or more) prizes are paired to the same participant, this is a <b>conflict.</b>
+                                In the next step, possible conflicts are detected and solved.<br/>
+                                If two (or more) prizes are paired to the same participant, this is a <b>conflict.</b>
                             </p>
                             <p>
                                 Each conflict is solved in two steps:
-                                 <ul>
+                                <ul>
                                     <li>
-                                        <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
+                                       <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
                                     </li>
                                     <li>
-                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants it <b>was not yet paired with</b> and <b>except for you.</b>
+                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
                                     </li>
                                 </ul>
                             </p>
@@ -543,11 +567,11 @@ function RenderRoundPage() {
                             </p>
                             <p>
                                 A prize can get unpaired from a participant <b>even if it successfully got paired to that participant in a previous step.</b>
-                            </p>
+                            </p>   
                             <p>
                                 There is one <b>important thing to note about</b> the Re-pair step:<br/>
                                 During the process, one prize will encounter a conflict with <b>every</b> participant, except for you, and will eventually get unpaired from all of them. That prize cannot be re-paired and will <b>remain unpaired</b> at the end of the process.
-                            </p>        
+                            </p>
                         </li>
                     </ol>
                     <p>
@@ -556,9 +580,8 @@ function RenderRoundPage() {
                     <p>
                         Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.
                     </p>
-                    <br/><h6><b>Temporary allocation → Obtainable Prizes</b></h6>
                     <p>
-                            We will now tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
+                        Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
                     </p>
                     <p>
                         In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b>
@@ -571,22 +594,16 @@ function RenderRoundPage() {
                         </ol>
                         You cannot obtain any other prizes.
                     </p>
-                    <br/><h6><b>Obtainable Prizes → The prize you get</b></h6>
                     <p>
-                        We will now tell you how the prize you get is selected from among the Obtainable Prizes.
-                    </p>
-                    <p>
-                        At the end, among the Obtainable Prizes, you get the one that you ranked the <b>highest.</b>
-                    </p>
-                </div> 
+                        Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
+                        In fact, this is the <b>only</b> time the allocation process uses your ranking. 
+                    </p>        
+                </div>  
             ),
             "propertiesMenuAllocation":(
                 <div>
                     <p>
-                        We will now tell you a general important principle of how your own ranking affects the allocation process.
-                    </p>
-                    <p>
-                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                     </p>
                     <p>
                         The prize you get is determined in two main steps:
@@ -612,12 +629,9 @@ function RenderRoundPage() {
                 </div>     
             ),
             "propertiesTraditionalAllocation":(
-                  <section>
+                  <section> 
                     <p>
-                        We will now tell you a general important principle of how your own ranking affects the allocation process.
-                    </p> 
-                    <p>
-                        <b>This principle is important to learn</b>: You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                     </p>
                     <p>
                         The prize you get is determined using an <b>allocation process</b> that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>

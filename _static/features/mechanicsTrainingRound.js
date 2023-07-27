@@ -413,7 +413,7 @@ function renderPage() {
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
-                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                        Given the <b>Key Principle</b> of your ranking, which of the following might be true?
                                     </p>    
                                 </>
                             )
@@ -784,7 +784,7 @@ function renderPage() {
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
-                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                        Given the <b>Key Principle</b> of your ranking, which of the following might be true?
                                     </p>    
                                 </>
                             )
@@ -1155,7 +1155,7 @@ function renderPage() {
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
-                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                        Given the <b>Key Principle</b> of your ranking, which of the following might be true?
                                     </p>    
                                 </>
                             )
@@ -1397,7 +1397,7 @@ function renderPage() {
                                     }
                                     correctFirstMsg= {
                                         <div className="correct-msg">
-                                            {rankingChangeFeedback(variant,2,"A","B")}
+                                            {rankingChangeFeedback(variant,2,"A","D")}
                                             <br/>
                                             Good job on the first try! This will count for your Understanding Bonus.
                                         </div>
@@ -1709,7 +1709,7 @@ function renderPage() {
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
-                                        Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                        Given the <b>Key Principle</b> of your ranking, which of the following might be true?
                                     </p>    
                                 </>
                             )
@@ -2080,7 +2080,7 @@ function renderPage() {
                                 </p>
                                 <p>
                                     Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
-                                    Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                    Given the <b>Key Principle</b> of your ranking, which of the following might be true?
                                 </p>    
                             </>
                         )
@@ -2451,7 +2451,7 @@ function renderPage() {
                                 </p>
                                 <p>
                                     Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
-                                    Given the <b>Key Principle</b> of the allocation process, which of the following might be true?
+                                    Given the <b>Key Principle</b> of your ranking, which of the following might be true?
                                 </p>    
                             </>
                         )
@@ -2693,7 +2693,7 @@ function renderPage() {
                                 }
                                 correctFirstMsg= {
                                     <div className="correct-msg">
-                                        {rankingChangeFeedback(variant,2,"A","B")}
+                                        {rankingChangeFeedback(variant,2,"A","D")}
                                         <br/>
                                         Good job on the first try! This will count for your Understanding Bonus.
                                     </div>
@@ -2859,7 +2859,6 @@ function renderPage() {
             latestStep.sectionRef?.current?.scrollIntoView({behavior:"smooth"});
         },[activeStepsIds]) 
         React.useEffect(()=>{
-            /* load the images */
             const urls = Object.values(imgUrls);
             urls.forEach(url=>{
                 const img = new Image();
@@ -3381,12 +3380,9 @@ function renderPage() {
                         <span class="close" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</span>
                         {
                             props.variant === "traditional" && 
-                                <section>
+                                <section> 
                                     <p>
-                                        We will now tell you a general important principle of how your own ranking affects the allocation process.
-                                    </p> 
-                                    <p>
-                                        <b>This principle is important to learn</b>: You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                                     </p>
                                     <p>
                                         The prize you get is determined using an <b>allocation process</b> that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>
@@ -3413,10 +3409,7 @@ function renderPage() {
                             props.variant === "menu" &&
                                 <div>
                                     <p>
-                                        We will now tell you a general important principle of how your own ranking affects the allocation process.
-                                    </p>
-                                    <p>
-                                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in rounds of this study.
+                                        <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                                     </p>
                                     <p>
                                         The prize you get is determined in two main steps:
@@ -3434,10 +3427,6 @@ function renderPage() {
                                     </p>
                                     <p>
                                         For example, imagine that your Obtainable Prizes are C and D. If you submit the ranking A–B–C–D, you will get Prize C, which is the one you ranked highest among the Obtainable Prizes. No ranking you could possibly submit would get you Prize A or Prize B, since the Obtainable Prizes are C and D, and since your own ranking cannot influence the Obtainable Prizes.
-                                    </p>
-                                    <p>
-                                        On the next screens you will play training rounds of the game to master your understanding of this principle.
-                                        Click the button below to proceed to these rounds.
                                     </p>
                                 </div>      
                         }

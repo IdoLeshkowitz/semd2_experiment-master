@@ -24,6 +24,7 @@ function renderUnderstandingTestPage(){
                 "page_index": nextPageIndex
             })
             setPage(nextPageIndex)
+            window.scrollTo(0,0)
         }
         return (
             <CurrencyContext.Provider value={props.currency}>
@@ -41,7 +42,7 @@ function renderUnderstandingTestPage(){
         <>
             <p>
                 You completed all rounds of the game. We will now ask you some final questions about the game and about yourself and some general questions. This will take about 15 more minutes. Please answer thoughtfully.<br/><br/>
-                First, <b>imagine</b> that you have participated in a round with the following scenario
+                First, <b>imagine</b> that you have participated in a round with the following scenario.
             </p>
             <table className="T_understand">
                 <caption style={{color: "#000"}}>The prizes in this imaginary round were:</caption>
@@ -205,7 +206,16 @@ function renderUnderstandingTestPage(){
             },
             page2_q2 : {
                 value: null,
-            }
+            },
+            page3_q1 : {
+                value: null,
+            },
+            page3_q2 : {
+                value: null,
+            },
+            page3_q3 : {
+                value: null,
+            },
         })
         const [showError, setShowError] = React.useState(false)
         const stepForward = React.useContext(StepForwardContext)
@@ -231,7 +241,7 @@ function renderUnderstandingTestPage(){
                     (Each answer you determine correctly will count as <b>2 questions</b> for your Understanding Bonus.)
                 </p>
                 <p>
-                    Imagine that in some round you submit <b>D–C–B–A</b>, and get prize <b>C</b>. 
+                    Imagine that in some round you submit <b>D–C–B–A</b>, and get <b>Prize C</b>. 
                 </p>
                 <RadioGroup 
                     name="page2_q1"
@@ -249,7 +259,7 @@ function renderUnderstandingTestPage(){
                 <hr/>
                 <p>
                     Now, imagine a different round.<br/>
-                    Imagine that you submit C–D–B–A, and get prize B. 
+                    Imagine that you submit C–D–B–A, and get <b>Prize B.</b> 
                 </p>
                 <RadioGroup
                     name="page2_q2"
@@ -264,6 +274,44 @@ function renderUnderstandingTestPage(){
                     value={form.page2_q2.value}
                     label={<span>If you had instead submitted D–C–B–A, and the prize priorities and other participants’ rankings did not change, then which of the following is true?</span>}
                 />
+                <p>
+                    Now we will ask you another type of question.<br/>
+                    (Each answer you determine correctly will count as 2 questions for your Understanding Bonus.)
+                </p>
+                <p>
+                    Imagine that in some round you submit <b>B–D–C–A</b>, and get <b>Prize C.</b> 
+                </p>
+                <RadioGroup
+                    name="page3_q1"
+                    onChange={onChange}
+                    options={[
+                        "There is no alternative ranking such that I would have gotten Prize A.",
+                        "There may be some alternative ranking such that I would have gotten Prize A."
+                    ]}
+                    value={form.page3_q1.value}
+                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about <b>Prize A</b>?</span>}
+                    /> 
+                <RadioGroup
+                    name="page3_q2"
+                    onChange={onChange}
+                    options={[
+                        "There is no alternative ranking that would have gotten me Prize B.",
+                        "There may be some alternative ranking that would have gotten me Prize B."
+                    ]}
+                    value={form.page3_q2.value}
+                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about <b>Prize B</b>?</span>}
+                    />
+                <RadioGroup
+                    name="page3_q3"
+                    onChange={onChange}
+                    options={[
+                        "There is no alternative ranking that would have gotten me Prize D.",
+                        "There may be some alternative ranking that would have gotten me Prize D."
+                    ]}
+                    value={form.page3_q3.value}
+                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about <b>Prize D</b>?</span>}
+                    />
+                <hr/>
                 <div class="btn-container">
                     <button onClick={onSubmit} type="button" className="btn btn-primary">Submit</button>
                 </div>
@@ -272,15 +320,6 @@ function renderUnderstandingTestPage(){
     }
     function ThirdPage(props){
         const [form, setForm] = React.useState({
-            page3_q1 : {
-                value: null,
-            },
-            page3_q2 : {
-                value: null,
-            },
-            page3_q3 : {
-                value: null,
-            },
             page3_q4 : {
                 value: null,
             },
@@ -316,46 +355,9 @@ function renderUnderstandingTestPage(){
         return (
             <ShowErrorContext.Provider value={showError}>
                 <p>
-                    Now we will ask you another type of question.
-                    (Each answer you determine correctly will count as 2 questions for your Understanding Bonus.)
-                </p>
-                <p>
-                    Imagine that in some round you submit B–D–C–A, and get prize C. 
-                </p>
-                <RadioGroup
-                    name="page3_q1"
-                    onChange={onChange}
-                    options={[
-                        "There is no alternative ranking such that I would have gotten prize A.",
-                        "There may be some alternative ranking such that I would have gotten prize A."
-                    ]}
-                    value={form.page3_q1.value}
-                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about Prize <b>A</b>?</span>}
-                    /> 
-                <RadioGroup
-                    name="page3_q2"
-                    onChange={onChange}
-                    options={[
-                        "There is no alternative ranking that would have gotten me Prize B.",
-                        "There may be some alternative ranking that would have gotten me Prize B."
-                    ]}
-                    value={form.page3_q2.value}
-                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about Prize <b>B</b>?</span>}
-                    />
-                <RadioGroup
-                    name="page3_q3"
-                    onChange={onChange}
-                    options={[
-                        "There is no alternative ranking that would have gotten me prize D.",
-                        "There may be some alternative ranking that would have gotten me Prize D."
-                    ]}
-                    value={form.page3_q3.value}
-                    label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about prize <b>D</b>?</span>}
-                    />
-                    <hr/>
-                <p>
                     Now, please answer these last questions for this part:<br/>
-                    (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
+                    (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)<br/>
+                    If I want to maximize my earnings in a given round, then…
                 </p>
                 <RadioGroup
                     name="page3_q4"
@@ -421,7 +423,7 @@ function renderUnderstandingTestPage(){
                 }
                 {props.options.map((option, i)=>(
                     <div key={i}>
-                        <input type="radio" name={props.name} value={option} onChange={(e)=>props.onChange(props.name,i)} id={props.name+"_"+i}/>
+                        <input type="radio" name={props.name} value={i} onChange={(e)=>props.onChange(props.name,i)} id={props.name+"_"+i}/>
                         <label htmlFor={props.name+"_"+i}>{option}</label>
                     </div>
                 ))}
