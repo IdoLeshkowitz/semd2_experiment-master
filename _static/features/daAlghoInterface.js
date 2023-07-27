@@ -744,7 +744,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>Yes</span>,
                             ],
                             expectedAnswerIndex: 1,
-                                   
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_8",
@@ -789,6 +789,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>I will get the prize allocated to me at the end of the allocation process.</span>,
                             ],
                             expectedAnswerIndex: 3,
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_9",
@@ -823,6 +824,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>The prize priorities and all participants’ rankings are used to determine the allocation of prizes.</span>,
                             ],
                             expectedAnswerIndex: 3,
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_allocation_a",
@@ -856,6 +858,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>Y</span>,
                             ],
                             expectedAnswerIndex: 0,
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_allocation_b",
@@ -889,6 +892,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>Y</span>,
                             ],
                             expectedAnswerIndex: 3,
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_allocation_c",
@@ -921,7 +925,8 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>T</span>,
                                 <span>Y</span>,
                             ],
-                            expectedAnswerIndex: 1,                            
+                            expectedAnswerIndex: 1,
+                            dashboardDisabled: true,                            
                         },
                         {
                             id: "question_allocation_d",
@@ -955,6 +960,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>Y</span>,
                             ],
                             expectedAnswerIndex: 2,
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_10",
@@ -987,6 +993,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>I might end up not getting any prize.</span>,
                             ],
                             expectedAnswerIndex: 2,
+                            dashboardDisabled: true,
                         },
                         {
                             id: "allocated_prize",
@@ -1017,10 +1024,12 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>D</span>,
                             ],
                             expectedAnswerIndex: 1,
+                            dashboardDisabled: true,
                         },
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize B.</b>
@@ -1173,6 +1182,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize A.</b>
@@ -1319,6 +1329,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize D.</b>
@@ -1465,6 +1476,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize C.</b>
@@ -2209,12 +2221,13 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>Yes</span>,
                             ],
                             expectedAnswerIndex: 1,
-                                   
+                            dashboardDisabled: true,
                         },
                         {
                             id: "question_8",
                             type: "radio",
                             inputRef: React.createRef(null),
+                            dashboardDisabled: true,
                             content : (
                                 <>
                                     <p>
@@ -2261,6 +2274,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "question_9",
                             type: "radio",
                             inputRef: React.createRef(null),
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     <b>Which of the following is true?</b><br/>
@@ -2294,6 +2308,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id: "question_allocation_a",
                             type: "dropdown",
+                            dashboardDisabled: true,
                             inputRef: React.createRef(null),
                             label: (<span>Prize A : (Get it right on first try to increase your bonus)</span>),
                             content : (
@@ -2328,6 +2343,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id: "question_allocation_b",
                             type: "dropdown",
+                            dashboardDisabled: true,
                             inputRef: React.createRef(null),
                             label: (<span>Prize B : (Get it right on first try to increase your bonus)</span>),
                             content : (
@@ -2362,6 +2378,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id: "question_allocation_c",
                             type: "dropdown",   
+                            dashboardDisabled: true,
                             inputRef: React.createRef(null),
                             label: (<span>Prize C : (Get it right on first try to increase your bonus)</span>),
                             content : (
@@ -2396,6 +2413,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id: "question_allocation_d",
                             type: "dropdown",
+                            dashboardDisabled: true,
                             inputRef: React.createRef(null),
                             label: (<span>Prize D : (Get it right on first try to increase your bonus)</span>),
                             content : (
@@ -2431,6 +2449,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "question_10",
                             inputRef: React.createRef(),
                             type: "radio",
+                            dashboardDisabled: true,
                             content : (
                                 <>
                                     <p>
@@ -2472,6 +2491,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id: "allocated_prize",
                             type: "dropdown",
+                            dashboardDisabled: true,
                             inputRef: React.createRef(),
                             content : (
                                 <>
@@ -2513,6 +2533,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize B.</b>
@@ -2673,6 +2694,7 @@ function renderDaAlgoPage(props = js_vars) {
                         },  
                         {
                             id :"allocation_results",
+                            dashboardDisabled: true,
                             type : "instructions",
                             content : (
                                 <p>
@@ -2831,6 +2853,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize D.</b>
@@ -2988,6 +3011,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id :"allocation_results",
                             type : "instructions",
+                            dashboardDisabled: true,
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize C.</b>
@@ -3516,6 +3540,7 @@ function renderDaAlgoPage(props = js_vars) {
         const props = React.useContext(DashboardContext)
         const tableTitlesDirection = props.variant === "menu" ? "row-reverse" : "row";
         const currentStep = props.steps.find(step => step.id === props.currentStepId)
+        console.log(currentStep)
         const pointerEvents = currentStep.dashboardDisabled ? "none" : "auto"
         return (
             <>

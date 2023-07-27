@@ -76,7 +76,7 @@ class C(BaseConstants):
     TREATMENT = "properties"
     NAME_IN_URL = 'properties_menu'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 4
+    NUM_ROUNDS = 3
     UNDERSTANDING_BONUS_LIMIT = [4,9,9,9]
     PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You", "Unpaired"]
     PRIZES = ["A", "B", "C", "D"]

@@ -71,7 +71,7 @@ class C(BaseConstants):
     TREATMENT = "mechanics"
     NAME_IN_URL = 'mechanics_traditional'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 4
+    NUM_ROUNDS = 3
     PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You"]
     PRIZES = ["A", "B", "C", "D"]
     STEPS_IN_TRAINING_ROUND = ["intro", "prizes_table", "prizes_priorities", "ranking_form", "allocation_results"]
