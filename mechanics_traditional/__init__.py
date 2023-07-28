@@ -131,6 +131,8 @@ class Player(BasePlayer):
     training_end_time = models.StringField(blank=True)
     algo_start_time = models.StringField(blank=True)
     algo_end_time = models.StringField(blank=True)
+    video_modal_opened = models.LongStringField(initial="", blank=True)
+    video_time_stamp = models.LongStringField(initial="", blank=True)
 
 def GetParticpantNumber(char):
     if char == 'R':
@@ -288,6 +290,10 @@ class DAalghoInterface(Page):
         elif data["information_type"] == "step_update":
             step_id = data["step_id"]
             player.current_step_id = step_id
+        elif data["information_type"] == "video_modal_opened":
+            player.video_modal_opened += str(data)
+        elif data["information_type"] == "set_video_time_stamp":
+            player.video_time_stamp = str(data["time_stamp"])
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

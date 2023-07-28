@@ -5,7 +5,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 You will now learn the full technical details of the allocation process.
                             </p>
@@ -17,7 +17,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                                Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
@@ -31,7 +31,7 @@ function renderIntroPage(){
               content : (
                     <section>
                         <h4>Overview of allocation process</h4>
-                            <div class="explain">
+                            <div className="explain">
                                 <p>
                                     The prize you get is determined in two main steps:
                                     <ol>
@@ -47,7 +47,7 @@ function renderIntroPage(){
             {
                 content : (
                  <section>
-                    <div class="explain transparent">
+                    <div className="explain transparent">
                         <p style={{color : "#0b1ae3"}}>
                            <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
                         </p>
@@ -59,7 +59,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                         </div>
                         <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
@@ -72,7 +72,7 @@ function renderIntroPage(){
                     <section>
                         <h4>Details of allocation process</h4>
                         <h5><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h5>
-                        <div class="explain">
+                        <div className="explain">
                             The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows:
                         </div>
                     </section>
@@ -82,7 +82,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             In the first step, each prize is paired to its <b>highest</b>-priority participant, among all participants <b>except for you.</b>          
                         </div>
                     </section>
@@ -92,7 +92,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 <p>
                                     In the next step, possible conflicts are detected and solved.<br/>
@@ -118,7 +118,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                            <p>
                                <p>
                                     Later steps continue in the same way, by detecting and solving new conflicts.
@@ -140,7 +140,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 When there are no more conflicts and when one prize was unpaired from all participants (except for you), the process is over. The result is each prize, except for the unpaired one, being paired to a different participant (except for you).
                             </p>
@@ -179,7 +179,7 @@ function renderIntroPage(){
                 content : (
                     <section>
                         <h5><b>Obtainable Prizes → The prize you get</b></h5>
-                            <div class="explain">
+                            <div className="explain">
                                 <p>
                                     Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
                                     In fact, this is the <b>only</b> time the allocation process uses your ranking. 
@@ -196,7 +196,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section id="step-6">
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
                             </p>
@@ -210,7 +210,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 You will now learn the full technical details of the allocation process.
                             </p>
@@ -222,7 +222,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                    <div class="explain">
+                    <div className="explain">
                         <p>
                            <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                            Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
@@ -236,7 +236,7 @@ function renderIntroPage(){
               content : (
                     <section>
                         <h4>Overview of allocation process</h4>
-                            <div class="explain">
+                            <div className="explain">
                                 The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                             </div>
                             <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
@@ -248,7 +248,7 @@ function renderIntroPage(){
                 content : (
                     <section>
                         <h4>Details of allocation process</h4>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 The allocation process is a multi-step process, as follows:
                             </p>
@@ -260,7 +260,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 In the first step, each participant is paired to their <b>highest</b>-rank prize.
                             </p>
@@ -272,19 +272,19 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
-                                    In the next step, possible conflicts are detected and solved.<br/>
-                                    If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
-                                    Each conflict is solved in two steps:
-                                        <ul>
-                                            <li>
-                                               <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
-                                            </li>
-                                            <li>
-                                                <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
-                                            </li>
-                                        </ul>
+                                In the next step, possible conflicts are detected and solved.<br/>
+                                If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                                Each conflict is solved in two steps:
+                                <ul>
+                                    <li>
+                                       <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                    </li>
+                                    <li>
+                                        <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                    </li>
+                                </ul>
                             </p>
                         </div>
                     </section>
@@ -294,7 +294,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                         <div class="explain">
+                         <div className="explain">
                            <p>
                                 Later steps continue in the same way, by detecting and solving new conflicts.<br/>
                                 Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
@@ -310,7 +310,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
                             </p>
@@ -325,7 +325,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section>
-                         <div class="explain">
+                         <div className="explain">
                             <p>
                                 On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
                             </p>
@@ -356,7 +356,7 @@ function renderIntroPage(){
             {
               content : (
                   <section>
-                      <div class="explain">
+                      <div className="explain">
                         <p>
                             The prize you get is determined in two main steps:
                             <ol>    
@@ -491,7 +491,7 @@ function renderIntroPage(){
             {
                 content : (
                     <content>
-                        <div class="explain">
+                        <div className="explain">
                             For example, imagine that you submitted the ranking A–B–C–D and ended up getting Prize C. This means that Prize C is the highest possible that you could get on the considered ranking A–B–C–D. Submitting any other, alternative ranking different from A–B–C–D could have only gotten you the same prize, Prize C, or possibly a lower-ranked prize on the considered ranking, Prize D. No other alternative ranking could have gotten you Prize A or Prize B.
                         </div>
                     </content>
@@ -501,7 +501,7 @@ function renderIntroPage(){
             {
                 content : (
                     <section id="step-6">
-                        <div class="explain">
+                        <div className="explain">
                             <p>
                                 On the next screens you will play training rounds of the game to master your understanding of the allocation process. Click the button below to proceed to these rounds.
                             </p>

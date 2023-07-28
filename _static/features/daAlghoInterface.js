@@ -7,7 +7,6 @@ function renderDaAlgoPage(props = js_vars) {
     function Stam(){
         return <div></div>
     }
-    
     const DashboardContext = React.createContext()
     function DaAlgoInterface(props){
         const [currentMatching, setCurrentMatching] = React.useState(props.currentMatching)
@@ -1066,7 +1065,19 @@ function renderDaAlgoPage(props = js_vars) {
                                     <p>
                                         In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps.
                                         <div class="btn-container">
-                                            <button className="button-3" type="button" onClick={()=>{setModals({...modals, video : true})}}>Click here for a video with step-by-step explanations</button>
+                                            <button 
+                                                className="button-3"
+                                                type="button"
+                                                onClick={()=>{
+                                                    setModals({...modals, video : true})
+                                                    liveSend({
+                                                        'information_type': 'video_modal_opened',
+                                                        'time': new Date().toUTCString()
+                                                    })
+                                                }}
+                                                >
+                                                Click here for a video with step-by-step explanations
+                                            </button>
                                         </div>
                                     </p>   
                                     <p>
@@ -2309,6 +2320,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "question_allocation_a",
                             type: "dropdown",
                             dashboardDisabled: true,
+                            boldCustomerInProductsTable: "You",
                             inputRef: React.createRef(null),
                             label: (<span>Prize A : (Get it right on first try to increase your bonus)</span>),
                             content : (
@@ -2345,6 +2357,7 @@ function renderDaAlgoPage(props = js_vars) {
                             type: "dropdown",
                             dashboardDisabled: true,
                             inputRef: React.createRef(null),
+                            boldCustomerInProductsTable: "You",
                             label: (<span>Prize B : (Get it right on first try to increase your bonus)</span>),
                             content : (
                                 <p>
@@ -2380,6 +2393,7 @@ function renderDaAlgoPage(props = js_vars) {
                             type: "dropdown",   
                             dashboardDisabled: true,
                             inputRef: React.createRef(null),
+                            boldCustomerInProductsTable: "You",
                             label: (<span>Prize C : (Get it right on first try to increase your bonus)</span>),
                             content : (
                                 <p>
@@ -2416,6 +2430,7 @@ function renderDaAlgoPage(props = js_vars) {
                             dashboardDisabled: true,
                             inputRef: React.createRef(null),
                             label: (<span>Prize D : (Get it right on first try to increase your bonus)</span>),
+                            boldCustomerInProductsTable: "You",
                             content : (
                                 <p>
                                     Now use this rule to determine your Obtainable Prizes.<br/>
@@ -2493,6 +2508,7 @@ function renderDaAlgoPage(props = js_vars) {
                             type: "dropdown",
                             dashboardDisabled: true,
                             inputRef: React.createRef(),
+                            boldColumnInCustomersTable: "You",
                             content : (
                                 <>
                                     <p>
@@ -2534,6 +2550,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id :"allocation_results",
                             type : "instructions",
                             dashboardDisabled: true,
+                            boldColumnInCustomersTable: "You",
                             content : (
                                 <p>
                                     The allocation process is over.<b> You get Prize B.</b>
@@ -3540,8 +3557,11 @@ function renderDaAlgoPage(props = js_vars) {
         const props = React.useContext(DashboardContext)
         const tableTitlesDirection = props.variant === "menu" ? "row-reverse" : "row";
         const currentStep = props.steps.find(step => step.id === props.currentStepId)
-        console.log(currentStep)
-        const pointerEvents = currentStep.dashboardDisabled ? "none" : "auto"
+        const pointerEvents = (()=>{
+            if (currentStep.dashboardDisabled) return "none";
+            if (props.readyToProceed) return "none";
+            currentStep.dashboardDisabled ? "none" : "auto"
+        })()
         return (
             <>
                 <div className="container-fluid" style={{border:'5px solid gray',position:'relative',marginTop:'2rem',pointerEvents:pointerEvents}}>
@@ -3730,7 +3750,8 @@ function renderDaAlgoPage(props = js_vars) {
         )
     }
     function ProductsTable() {
-        const {products,productsPriorities,currentMatching,selectedProduct,maxProductsPerCustomer}= React.useContext(DashboardContext)
+        const {products,productsPriorities,currentMatching,selectedProduct,maxProductsPerCustomer,steps,currentStepId}= React.useContext(DashboardContext)
+        const currentStep = steps.find(steps=>steps.id === currentStepId)
         return(
             <div className="priorities-table-container">
                 {products.map((product,columnIndex)=>{
@@ -3758,12 +3779,20 @@ function renderDaAlgoPage(props = js_vars) {
                                     productPriorities.map((customer,rowIndex)=>{
                                         const isCellHighlight = currentMatching[product] === customer
                                         const isCellFaded =  maxProductsPerCustomer[customer] === 0
+                                        const isCellBold = (() =>{
+                                            const boldCustomer = currentStep.boldCustomerInProductsTable ?? null
+                                            if (!boldCustomer) return false
+                                            return boldCustomer === customer
+                                        })()
                                         const className = () => {
                                            let classNames = "dButton"
                                            if (isCellHighlight) {
                                                classNames += " dButtonMatched"
                                            }
-                                           if (isCellFaded){
+                                           if (isCellBold){
+                                               classNames += " text-bold text-blue"
+                                           }
+                                           else if (isCellFaded){
                                                classNames += " text-faded"
                                            }
                                            return classNames
@@ -3783,13 +3812,15 @@ function renderDaAlgoPage(props = js_vars) {
         )
     }
     function CustomersTable() {
-        const {customers,customersPriorities,currentMatching,highlightedCustomer,variant}= React.useContext(DashboardContext)
+        const {customers, customersPriorities, currentMatching, highlightedCustomer, variant, steps, currentStepId }= React.useContext(DashboardContext)
+        const currentStep = steps.find(steps=>steps.id === currentStepId)
         return(
             <div className="priorities-table-container">
                 {
                     Object.keys(customersPriorities).map((customer,columnIndex)=>{
                         const customerPriorities = customersPriorities[customer]
                         const isColumnHighlighted = customer === highlightedCustomer
+                        const isColumnBold = currentStep.boldColumnInCustomersTable === customer
                         const classNames = () => {
                             let classNames = "table-column flexItemButtonsBackground"
                             if (columnIndex === 0) {
@@ -3804,8 +3835,11 @@ function renderDaAlgoPage(props = js_vars) {
                             if (isColumnHighlighted) {
                                 classNames += " highlited"
                             }
-                            if (variant === "menu" && customer === "You"){
+                            if (variant === "menu" && customer === "You" && !isColumnBold){
                                 classNames += " text-faded"
+                            }
+                            if (isColumnBold){
+                                classNames += " text-bold text-blue"
                             }
                             return classNames
                         }
@@ -4057,6 +4091,10 @@ function renderDaAlgoPage(props = js_vars) {
         }
         function onClose(){
             props.timeStamp.current = videoRef.current.currentTime
+            liveSend({
+                'information_type':'set_video_time_stamp',
+                'time_stamp':videoRef.current.currentTime
+            })
             props.onClose()
         }
         function onVideoClick(e){
@@ -4092,54 +4130,56 @@ function renderDaAlgoPage(props = js_vars) {
     renderReactComponent(jsxCode, "react-root", "DaAlgoInterface", JSON.stringify(getPropsFromJsVars(js_vars)))
 
 }
+
 function getPropsFromJsVars(js_vars) {
-        function parseDictToObject(str) {
-            const validJsonStr = str.replace(/'/g, '"');
-            const obj = JSON.parse(validJsonStr);
-            return obj
-        }
-
-        function parseArray(str) {
-            const validJsonStr = str.replace(/'/g, '"');
-            const obj = JSON.parse(validJsonStr);
-            return obj
-        }
-
-        const variant = js_vars.variant
-        /*
-        because this script is shared between traditional and menu we are not using the terms "participant" and "prize".
-        since their roles are switching between the two variants.
-        the convention for this micro frontend is "products" and ״customers״.
-        the middle row in the dashboard is presenting the products.
-        since a item in the middle row can only be assigned to one customer this convention is correct.
-        in traditional :
-            the middle row represents the participants.
-            so the conversion is as follows :
-                participant -> product
-                prize -> customer
-        in menu :
-            the middle row represents the prizes.
-            so the conversion is as follows :
-                participant -> customer
-                prize -> product
-         */
-        const participants = js_vars.participants
-        const prizes = js_vars.prizes
-        const products = variant === "traditional" ? participants : prizes
-        const customers = variant === "traditional" ? prizes : participants
-        const customersPriorities = variant === "traditional" ? js_vars.prizesPriorities : js_vars.participantsPriorities
-        const productsPriorities = variant === "traditional" ? js_vars.participantsPriorities : js_vars.prizesPriorities
-        return {
-            ...js_vars,
-            products,
-            customers,
-            customersPriorities,
-            productsPriorities,
-            currentMatching: parseDictToObject(js_vars.currentMatching),
-            matchingMemo: parseArray(js_vars.matchingMemo),
-        }
+    function parseDictToObject(str) {
+        const validJsonStr = str.replace(/'/g, '"');
+        const obj = JSON.parse(validJsonStr);
+        return obj
     }
-function liveRecv(data){
+
+    function parseArray(str) {
+        const validJsonStr = str.replace(/'/g, '"');
+        const obj = JSON.parse(validJsonStr);
+        return obj
+    }
+
+    const variant = js_vars.variant
+    /*
+    because this script is shared between traditional and menu we are not using the terms "participant" and "prize".
+    since their roles are switching between the two variants.
+    the convention for this micro frontend is "products" and ״customers״.
+    the middle row in the dashboard is presenting the products.
+    since a item in the middle row can only be assigned to one customer this convention is correct.
+    in traditional :
+        the middle row represents the participants.
+        so the conversion is as follows :
+            participant -> product
+            prize -> customer
+    in menu :
+        the middle row represents the prizes.
+        so the conversion is as follows :
+            participant -> customer
+            prize -> product
+     */
+    const participants = js_vars.participants
+    const prizes = js_vars.prizes
+    const products = variant === "traditional" ? participants : prizes
+    const customers = variant === "traditional" ? prizes : participants
+    const customersPriorities = variant === "traditional" ? js_vars.prizesPriorities : js_vars.participantsPriorities
+    const productsPriorities = variant === "traditional" ? js_vars.participantsPriorities : js_vars.prizesPriorities
+    return {
+        ...js_vars,
+        products,
+        customers,
+        customersPriorities,
+        productsPriorities,
+        currentMatching: parseDictToObject(js_vars.currentMatching),
+        matchingMemo: parseArray(js_vars.matchingMemo),
+    }
+}
+
+function liveRecv(data) {
     const props = getPropsFromJsVars(js_vars)
     // return renderDaAlgoPage()
 }

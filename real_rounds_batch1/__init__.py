@@ -32,7 +32,6 @@ def generate_prize_values():
 
     values = [round(num / 100,2) for num in [v1, v2, v3, v4]]
     random.shuffle(values)
-    print(values)
     return values
 
 

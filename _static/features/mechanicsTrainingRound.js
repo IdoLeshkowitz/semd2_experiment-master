@@ -3395,7 +3395,7 @@ function renderPage() {
                                         Let’s call it “the considered ranking”.<br/>
                                     </p>
                                      <p style={{color: "#0b1ae3"}}>
-                                        The important principle: The prize you get if you submit the considered ranking is the highest possible that you could get according to the considered ranking.
+                                        <b>The important principle:</b> The prize you get if you submit the considered ranking is the <b>highest possible</b> that you could get <b>according to the considered ranking.</b>
                                     </p>
                                     <p>
                                         In other words, if you submit any alternative ranking, different from the considered ranking, you will either get <b>the same</b> prize you get when submitting the considered ranking, or some prize <b>lower on the considered ranking.</b>

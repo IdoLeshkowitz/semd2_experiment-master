@@ -330,3 +330,11 @@ body {
     align-self: start;
     min-width: 7rem;
 }
+
+
+.text-bold{
+    font-weight: bold;
+}
+.text-blue{
+    color: #0b1ae3;
+}
