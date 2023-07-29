@@ -130,7 +130,8 @@ class Player(BasePlayer):
     training_end_time = models.StringField(blank=True)
     algo_start_time = models.StringField(blank=True)
     algo_end_time = models.StringField(blank=True)
-
+    algo_start_time = models.StringField(blank=True)
+    algo_end_time = models.StringField(blank=True)
 
 def GetParticpantNumber(char):
     if char == 'R':
@@ -216,10 +217,15 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_matching_7 += str(data)
             elif matching_id == "matching_all":
                 player.incorrect_seq_matching_all += str(data)
-        elif data['information_type'] == 'question_submission':
-            question_id = data['question_id']
-            understanding_bonus = data['understanding_bonus']
-            player.understanding_bonus += understanding_bonus
+            elif data['information_type'] == 'question_submission':
+                question_id = data['question_id']
+                understanding_bonus = data['understanding_bonus']
+                player.understanding_bonus += understanding_bonus
+            elif data["information_type"] == "video_modal_opened":
+                player.video_modal_opened += str(data)
+            elif data["information_type"] == "set_video_time_stamp":
+                player.video_time_stamp = str(data["time_stamp"])
+
 
             def create_question_submission_string(data):
                 return str(data)
