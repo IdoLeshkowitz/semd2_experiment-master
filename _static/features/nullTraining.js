@@ -530,10 +530,10 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.how_many_prizes}>
                                 <p>Please answer the following question:</p>
                                 <p>
-                                    How many prizes can you get at most at the end of the allocation process? The correct answer is that you <b>always</b> get one prize, no more and no less, so you should enter the number one.<br/> 
+                                    How many prizes can you get at most at the end of the allocation process? The correct answer is that you <b>always</b> get one prize, no more and no less, so you should select the number one.<br/> 
                                     (Get it right on first try to increase your bonus)<br/>
                                     Answer:&nbsp;
-                                    <select ref={questionsRefs.how_many_prizes.input} onChange={(e)=>{questionsRefs.how_many_prizes.value.current = e.target.value}} className="custom-select small">
+                                    <select ref={questionsRefs.how_many_prizes.input} onChange={(e)=>{questionsRefs.how_many_prizes.value.current = e.target.value}} className="custom-select small" name="how_many_prizes">
                                         <option value={-1} selected disabled>---</option>
                                         {
                                             [1,2,3,4,5,6,7,8,9,10].map((number,index) => {
@@ -544,13 +544,13 @@ function renderUiFromState(step) {
                                         }
                                     </select>
                                 </p>
-                                <div class="incorrect-msg hidden" ref={questionsRefs.how_many_prizes.incorrect}>
+                                <div className="incorrect-msg hidden" ref={questionsRefs.how_many_prizes.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
-                                <div class="correct-msg hidden" ref={questionsRefs.how_many_prizes.correct}>
+                                <div className="correct-msg hidden" ref={questionsRefs.how_many_prizes.correct}>
                                     <p>Correct! You always get one prize at the end of the allocation process.</p>
                                 </div>
-                                <div class="correct-first-msg hidden" ref={questionsRefs.how_many_prizes.correctFirstAttempt}>
+                                <div className="correct-first-msg hidden" ref={questionsRefs.how_many_prizes.correctFirstAttempt}>
                                     <p>Correct! You always get one prize at the end of the allocation process.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>

@@ -186,7 +186,7 @@ function renderUnderstandingTestPage(){
                 <RadioGroup name="second_situation_d" onChange={onChange} options={["True", "False"]} value={form.second_situation_d.value} label="Prize D"/>
                 <hr/>
                 <p>
-                    If you had instead submitted <b>D–A–B–C</b>, this would be unimportant for this question. Instead of answering this question according to the problem,you should choose the next four answers in the order true, true, false, true…
+                    If you had instead submitted <b>D–A–B–C</b>, this would be unimportant for this question. Instead of answering this question according to the problem, you should choose the next four answers in the order true, true, false, true…
                 </p>
                 <RadioGroup name="third_situation_a" onChange={onChange} options={["True", "False"]} value={form.third_situation_a.value} label="Prize A"/>
                 <RadioGroup name="third_situation_b" onChange={onChange} options={["True", "False"]} value={form.third_situation_b.value} label="Prize B"/>
@@ -278,6 +278,7 @@ function renderUnderstandingTestPage(){
                     Now we will ask you another type of question.<br/>
                     (Each answer you determine correctly will count as 2 questions for your Understanding Bonus.)
                 </p>
+                <hr/>
                 <p>
                     Imagine that in some round you submit <b>B–D–C–A</b>, and get <b>Prize C.</b> 
                 </p>
@@ -358,7 +359,7 @@ function renderUnderstandingTestPage(){
                     Now, please answer these last questions for this part:<br/>
                     (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)<br/>
                     If I want to maximize my earnings in a given round, then…
-                </p>
+                </p><br/>
                 <RadioGroup
                     name="page3_q4"
                     onChange={onChange}

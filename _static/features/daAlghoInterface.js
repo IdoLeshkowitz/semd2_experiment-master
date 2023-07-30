@@ -2326,7 +2326,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
-                                    Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>   
+                                    Note: Now is the first time that your priority of getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
                                     Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
@@ -2522,7 +2522,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     <p>
                                         Now, your ranking is used to determine which of the Obtainable Prizes you actually get. Out of these <b>Obtainable Prizes,</b> select the prize <b>you (“Y”) ranked the highest</b> from the list below. This is the prize you get.<br/>
                                         <span style={{color: "#0b1ae3"}}>
-                                            Note: Now is the first (and only) time that your own ranking matters! (that is, the “Y” column in the Participant Rankings table).<br/>
+                                            Note: Now is the first (and only) time that <b>your own ranking matters!</b> Remember, it is indicated by the “Y” column in the Participant Rankings table.<br/>
                                         </span><br/>
                                         (Get it right on first try to increase your bonus)
                                     </p>
@@ -2629,6 +2629,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "allocated_all",
                             type:"multiDropdown",
                             dashboardDisabled: true,
+                            boldCustomerInProductsTable: "You",
                             content:(
                                 <>
                                     <p>
@@ -2676,6 +2677,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "allocated_prize",
                             type:"dropdown",
                             dashboardDisabled: true,
+                            boldColumnInCustomersTable: "You",
                             inputRef: React.createRef(),
                             content:(
                                 <> 
@@ -2785,6 +2787,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "allocated_all",
                             type:"multiDropdown",
                             dashboardDisabled: true,
+                            boldCustomerInProductsTable: "You",
                             content:(
                                 <>
                                     <p>
@@ -2832,6 +2835,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "allocated_prize",
                             type:"dropdown",
                             dashboardDisabled: true,
+                            boldColumnInProductsTable: "You",
                             inputRef: React.createRef(),
                             content:(
                                 <> 
@@ -2941,6 +2945,7 @@ function renderDaAlgoPage(props = js_vars) {
                         },
                         {
                             id: "allocated_all",
+                            boldCustomerInProductsTable: "You",
                             type:"multiDropdown",
                             content:(
                                 <>
@@ -2989,6 +2994,7 @@ function renderDaAlgoPage(props = js_vars) {
                         {
                             id: "allocated_prize",
                             type:"dropdown",
+                            boldColumnInProductsTable: "You",
                             inputRef: React.createRef(),
                             content:(
                                <> 
@@ -3211,7 +3217,7 @@ function renderDaAlgoPage(props = js_vars) {
             )
     }
     function Questions(){
-        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter,setMatchingMemo,matchingMemo,setReadyToProceed,readyToProceed} = React.useContext(DashboardContext)
+        const {steps,currentStepId,onProceed,currentMatching,matchingCounter,setCurrentMatching,round,setMatchingCounter,setMatchingMemo,matchingMemo,setReadyToProceed,readyToProceed,setSelectedProduct} = React.useContext(DashboardContext)
         const [message,setMessage] = React.useState(null)
         const [didTouch,setDidTouch] = React.useState(false)
         const currentStep = steps.find(step => step.id === currentStepId)
@@ -3305,6 +3311,7 @@ function renderDaAlgoPage(props = js_vars) {
                     }
                     setMatchingCounter(0)
                     setReadyToProceed(true)
+                    setSelectedProduct(null)
                 }
                 else{
                     const isLastAttempt = currentMatchingCounter >= 2
@@ -3320,6 +3327,7 @@ function renderDaAlgoPage(props = js_vars) {
                         setMessage("incorrectSkipMsg")
                         setCurrentMatching(expectedMatching)
                         setReadyToProceed(true)
+                        setSelectedProduct(null)
                     }
                     else{
                         incrementMatchingCounter()
@@ -3992,7 +4000,7 @@ function renderDaAlgoPage(props = js_vars) {
                                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
                                         </ol> 
                                     </p><br/>
-                                    <p>
+                                    <p style={{color: "#0b1ae3"}}>
                                         <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
                                     </p>
                                     <p>

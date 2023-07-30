@@ -92,7 +92,7 @@ class Understanding_test(Page):
             "third_situation_c":  "1",
             "third_situation_d":  "0",
             "page2_q1":           "0",
-            "page2_q2":           "1",
+            "page2_q2":           "2",
             "page3_q1":           "1",
             "page3_q2":           "0",
             "page3_q3":           "0",

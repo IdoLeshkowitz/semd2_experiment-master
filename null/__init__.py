@@ -222,10 +222,18 @@ class Player(BasePlayer):
     value_table_actions = models.LongStringField(initial="", blank=True)
     self_rank_independence_actions = models.LongStringField(initial="", blank=True)
     competitors_rank_independence_actions = models.LongStringField(initial="", blank=True)
+    how_many_prizes = models.StringField(initial="", blank=True)
+    how_many_prizes_actions = models.StringField(initial="", blank=True)
 
     current_step_id = models.StringField(initial="", blank=True)
     next_step_id = models.StringField(initial="", blank=True)
     mistakes_counter = models.IntegerField(initial=0)
+
+
+class EndTraining(Page):
+    @staticmethod
+    def is_displayed(player: Player):
+        return player.round_number == C.NUM_ROUNDS
 
 
 def convert_participant_index_to_name(index):
@@ -366,6 +374,9 @@ class NullTraining(Page):
                 player.self_rank_independence_actions += str(data)
             elif question_id == "competitors_rank_independence":
                 player.competitors_rank_independence_actions += str(data)
+            elif question_id == "how_many_prizes":
+                player.how_many_prizes_actions += str(data)
+                player.how_many_prizes = data["answer"]
             understanding_bonus_from_question = data['understanding_bonus']
             player.understanding_bonus_from_round += understanding_bonus_from_question
             return {player.id_in_group: data}
@@ -392,4 +403,4 @@ class NullTraining(Page):
         player.end_time_training = str(datetime.now(timezone.utc))
 
 
-page_sequence = [PreProcess, NullIntro, NullTraining]
+page_sequence = [PreProcess, NullIntro, NullTraining, EndTraining]

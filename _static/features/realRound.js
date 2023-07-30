@@ -525,7 +525,7 @@ function RenderRoundPage() {
                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
                         </ol> 
                     </p><br/>
-                    <p>
+                    <p style={{color: "#0b1ae3"}}>
                         <b>The important principle</b>: Your own ranking does <b>not</b> influence what the Obtainable Prizes are, but it <b>does</b> determine what you get from among the Obtainable Prizes—you get the Obtainable Prize that you ranked the <b>highest.</b>
                     </p>
                     <p>

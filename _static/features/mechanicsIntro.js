@@ -385,11 +385,9 @@ function renderIntroPage(){
                 content : (
                     <section>
                         <div className="explain">
-                            <p>
-                                The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
-                            </p>
-                            <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>  
+                            The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                         </div>
+                            <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>  
                     </section>
                 ),
                 ref: React.createRef()
@@ -457,7 +455,7 @@ function renderIntroPage(){
                             <p>
                                 Now, imagine that the computer already determined some prize priorities and rankings of the other, computerized participants. The only component left undecided is your own ranking.<br/>
                                 As you decide which ranking to submit, imagine there is some specific ranking that you are considering submitting.
-                                Let’s call it “the considered ranking”.<br/>
+                                Let’s call it “the considered ranking.”<br/>
                             </p>    
                         </div>
                     </section>
