@@ -2587,7 +2587,19 @@ function renderDaAlgoPage(props = js_vars) {
                                     <p>
                                         In case you are still not sure how to find the temporary allocation by yourself, click on tthe button below to watch a helpful video explaining all the steps.
                                         <div class="btn-container">
-                                            <button className="button-3" type="button" onClick={()=>{setModals({...modals, video : true})}}>Click here for a video with step-by-step explanations</button>
+                                            <button 
+                                                className="button-3"
+                                                type="button"
+                                                onClick={()=>{
+                                                    setModals({...modals, video : true})
+                                                    liveSend({
+                                                        'information_type': 'video_modal_opened',
+                                                        'time': new Date().toUTCString()
+                                                    })
+                                                }}
+                                                >
+                                                Click here for a video with step-by-step explanations
+                                                </button>
                                         </div>
                                     </p>
                                     <p>

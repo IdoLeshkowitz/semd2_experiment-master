@@ -91,6 +91,7 @@ class Player(BasePlayer):
     incorrect_seq_question_8 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_9 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_10 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_11 = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_a = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_b = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_c = models.LongStringField(initial="", blank=True)
@@ -132,6 +133,9 @@ class Player(BasePlayer):
     algo_end_time = models.StringField(blank=True)
     algo_start_time = models.StringField(blank=True)
     algo_end_time = models.StringField(blank=True)
+    video_modal_opened = models.LongStringField(initial="", blank=True)
+    video_time_stamp = models.LongStringField(initial="", blank=True)
+
 
 def GetParticpantNumber(char):
     if char == 'R':
@@ -217,19 +221,13 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_matching_7 += str(data)
             elif matching_id == "matching_all":
                 player.incorrect_seq_matching_all += str(data)
-            elif data['information_type'] == 'question_submission':
-                question_id = data['question_id']
-                understanding_bonus = data['understanding_bonus']
-                player.understanding_bonus += understanding_bonus
-            elif data["information_type"] == "video_modal_opened":
-                player.video_modal_opened += str(data)
-            elif data["information_type"] == "set_video_time_stamp":
-                player.video_time_stamp = str(data["time_stamp"])
-
-
+        elif data['information_type'] == 'question_submission':
+            question_id = data['question_id']
+            print(question_id)
+            understanding_bonus = data['understanding_bonus']
+            player.understanding_bonus += understanding_bonus
             def create_question_submission_string(data):
                 return str(data)
-
             if question_id == "question_1":
                 player.incorrect_seq_question_1 += create_question_submission_string(data)
             elif question_id == "question_2":
@@ -250,6 +248,8 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_question_9 += create_question_submission_string(data)
             elif question_id == "question_10":
                 player.incorrect_seq_question_10 += create_question_submission_string(data)
+            elif question_id == "question_11":
+                player.incorrect_seq_question_11 += create_question_submission_string(data)
             elif question_id == "question_allocation_a":
                 player.incorrect_seq_allocation_a += create_question_submission_string(data)
             elif question_id == "question_allocation_b":
@@ -262,6 +262,10 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_allocated_prize += create_question_submission_string(data)
             elif question_id == "allocated_all":
                 player.incorrect_seq_allocated_all += create_question_submission_string(data)
+        elif data["information_type"] == "video_modal_opened":
+            player.video_modal_opened += str(data)
+        elif data["information_type"] == "set_video_time_stamp":
+            player.video_time_stamp = str(data["time_stamp"])
         elif data['information_type'] == 'matching_update':
             """
             this event is called when the user clicks on a participant to match

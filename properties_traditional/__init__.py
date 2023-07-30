@@ -86,11 +86,20 @@ class C(BaseConstants):
 
 class Player(BasePlayer):
     clicks = models.LongStringField()
-
     incorrect_seq_general_property = models.LongStringField(initial="", blank=True)
     incorrect_seq_mechanism_misconception_1 = models.LongStringField(initial="", blank=True)
     incorrect_seq_mechanism_misconception_2 = models.LongStringField(initial="", blank=True)
     incorrect_seq_different_rank_outcome = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_1 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_2 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_3 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_4 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_ranking_change_5 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_a = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_b = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_c = models.LongStringField(initial="", blank=True)
+    incorrect_seq_brute_force_d = models.LongStringField(initial="", blank=True)
+
     # Player's ranking variables
     first_priority = models.StringField(blank=True)
     second_priority = models.StringField(blank=True)
@@ -128,11 +137,6 @@ def GetParticpantNumber(char):
 
 class TrainingRound(Page):
     form_model = "player"
-
-    @staticmethod
-    def get_form_fields(player: Player):
-        priorities = ["first_priority", "second_priority", "third_priority", "fourth_priority", ]
-        return priorities
 
     @staticmethod
     def js_vars(player: Player):
@@ -184,7 +188,24 @@ class TrainingRound(Page):
                 player.incorrect_seq_mechanism_misconception_2 += str(data)
             elif question_id == "different_rank_outcome":
                 player.incorrect_seq_different_rank_outcome += str(data)
-
+            elif question_id == "ranking_change_1":
+                player.incorrect_seq_ranking_change_1 += str(data)
+            elif question_id == "ranking_change_2":
+                player.incorrect_seq_ranking_change_2 += str(data)
+            elif question_id == "ranking_change_3":
+                player.incorrect_seq_ranking_change_3 += str(data)
+            elif question_id == "ranking_change_4":
+                player.incorrect_seq_ranking_change_4 += str(data)
+            elif question_id == "ranking_change_5":
+                player.incorrect_seq_ranking_change_5 += str(data)
+            elif question_id == "brute_force_a":
+                player.incorrect_seq_brute_force_a += str(data)
+            elif question_id == "brute_force_b":
+                player.incorrect_seq_brute_force_b += str(data)
+            elif question_id == "brute_force_c":
+                player.incorrect_seq_brute_force_c += str(data)
+            elif question_id == "brute_force_d":
+                player.incorrect_seq_brute_force_d += str(data)
 
 class Intro(Page):
     @staticmethod
