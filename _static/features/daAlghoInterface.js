@@ -3099,7 +3099,7 @@ function renderDaAlgoPage(props = js_vars) {
                 },{}))
             }
             setSelectedProduct(null)
-            liveFliSend({information_type : "reset"})  
+            liveSend({information_type : "reset"})  
         }
         function onMatching(matchedProduct, matchedToCustomer){
             const productWasMatched = currentMatching[matchedProduct] !== "none"

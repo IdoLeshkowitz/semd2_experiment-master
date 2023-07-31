@@ -156,7 +156,7 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
-    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [4, 1]
+    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [5, 1]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values()
     PRIZES_PRIORITIES = get_prizes_priorities()

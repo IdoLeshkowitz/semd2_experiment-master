@@ -180,7 +180,7 @@ class C(BaseConstants):
     NUM_ROUNDS = 3
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
-    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [4, 1, 1, 1]
+    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [5, 1, 1, 1]
 
 
 class Subsession(BaseSubsession):
