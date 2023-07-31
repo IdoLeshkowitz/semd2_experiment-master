@@ -1,144 +1,362 @@
-let slidersState = [];
-const errorMessages = {
-    "missing": "Please answer the question.",
-}
-/* on submit */
-document.querySelector("#Next").addEventListener("click", function (e) {
-    let isAllValid = [
-        validateTypicallyRank(),
-        validateIsHighToLow(),
-        validateIsExplainHelp(),
-        validateUnderstandChooseRankings(),
-        validateSliders(slidersState)
-    ].every(isValid => isValid)
-    if (!isAllValid) {
-        /* prevent form submission */
-        e.preventDefault()
-    }
-})
+window.addEventListener('load', renderReflectionPage)
 
-function validateTypicallyRank() {
-    const inputElement = document.querySelector('[name = "typically_rank"]')
-    const errorElement = document.getElementById('typically_rank_error')
-    if (inputElement.value.trim() === "") {
-        /* if no answer is provided */
-        errorElement.innerHTML = errorMessages["missing"]
-        return false
-    } else {
-        /* if answer is provided */
-        errorElement.innerHTML = ""
-    }
-    return true
-}
 
-function validateIsHighToLow() {
-    /*
-    check that at least one radio element is checked.
-    if not then show missing answer error message.
-    if true, clean the error message.
-     */
-    const radioElementsGroup = document.querySelectorAll('[name = "is_high_to_low"]')
-    const errorElement = document.getElementById('is_high_to_low_error')
-    if (Array(...radioElementsGroup).some(radioElement => radioElement.checked)) {
-        /* at least one element is checked */
-        errorElement.innerHTML = ""
-        return true
-    } else {
-        /* no element is checked */
-        errorElement.innerHTML = errorMessages["missing"]
-        return false
+function renderReflectionPage(){
+    const jsxCode =`
+    function Stam(){
+        return <div>hello</div>
     }
-}
-
-function validateIsExplainHelp() {
-    /*
-    check that at least one radio element is checked.
-    if not then show missing answer error message.
-    if true, clean the error message.
-     */
-    const radioElementsGroup = document.querySelectorAll('[name = "is_explain_help"]')
-    const errorElement = document.getElementById('is_explain_help_error')
-    if (Array(...radioElementsGroup).some(radioElement => radioElement.checked)) {
-        /* at least one element is checked */
-        errorElement.innerHTML = ""
-        return true
-    } else {
-        /* no element is checked */
-        errorElement.innerHTML = errorMessages["missing"]
-        return false
-    }
-}
-
-function validateUnderstandChooseRankings() {
-    /*
-    check that input has a value.
-    if not then show missing answer error message.
-    if true, clean the error message.
-     */
-    const inputElement = document.querySelector('[name="understand_choose_ranking"]')
-    const errorElement = document.getElementById('understand_choose_ranking_error')
-
-    if (inputElement.value.trim() === "") {
-        /* if no answer is provided */
-        errorElement.innerHTML = errorMessages["missing"]
-        return false
-    } else {
-        /* if answer is provided */
-        errorElement.innerHTML = ""
-        return true
-    }
-}
-
-function validateSliders(slidersState){
-    /*
-    check that all sliders have been changed.
-    if not then show missing answer error message.
-    if true, clean the error message.
-     */
-    let isAllValid = true
-    for (let sliderState of slidersState) {
-        /* check if slider has been changed */
-        if (sliderState.didChange) {
-            /* slider has been changed */
-            /* reset error message */
-            sliderState.errorElement.innerHTML = ""
-        }
-        else {
-            /* slider has not been changed */
-            /* set error message */
-            sliderState.errorElement.innerHTML = errorMessages["missing"]
-            /* set isAllValid to false */
-            isAllValid = false
-        }
-    }
-    return isAllValid
-}
-/* sliders */
-window.onload = function () {
-    const allSliders = getAllSliders()
-    /* add event listener to all sliders */
-    allSliders.forEach(slider => {
-        const sliderIndicator = document.getElementById(slider.id + "_indicator")
-        slider.addEventListener("input", function () {
-            /* update slider indicator */
-            sliderIndicator.innerHTML = slider.value
-            /* update slider state */
-            const sliderState = slidersState.find(sliderState => sliderState.element === slider)
-            sliderState.didChange = true
+    const optionalRegex = /^.*\\S.*$/;
+    const stringRegex = /^.+$/;
+    function ReflectionPage(props){
+        const [form, setForm] = useState({
+            typically_rank: {
+                value: null,
+                error: null,
+                match : stringRegex,
+            },
+            did_change: {
+                value: null,
+                error: null,
+                match : stringRegex,
+            },
+            is_explain_help: {
+                value: null,
+                error: null,
+                match : /^1|0$/,
+            },
+            why_not: {
+                value: null,
+                error: null,
+                match : optionalRegex,
+            },
+            why_yes: {
+                value: null,
+                error: null,
+                allowEmpty: true,
+                match : optionalRegex,
+            },
+            understand_choose_rankings: {
+                value: null,
+                error: null,
+                match : /^1|2|3|4|5|6|7$/,
+            },
+            understand_principle: {
+                value: null,
+                error: null,
+                match : /^1|2|3|4|5|6|7$/,
+            },
+            understand_allocation: {
+                value: null,
+                error: null,
+                match : /^1|2|3|4|5|6|7$/,
+            },
+            chance_all_allocated: {
+                value: null,
+                error: null,
+                match : /^(?:100|[1-9][0-9]?|0)$/,
+            },
+            agree_allocation_fare: {
+                value: null,
+                error: null,
+                match : /^1|2|3|4|5|6|7$/,
+            },
+            agree_allocation_good: {
+                value: null,
+                error: null,
+                match: /^1|2|3|4|5|6|7$/,
+            },
+            rely_in_real_life: {
+                value: null,
+                error: null,
+                match: /^1|2|3|4|5|6|7$/,
+            },
+            allocation_transparent: {
+                value: null,
+                error: null,
+                match: /^1|2|3|4|5|6|7$/,
+            },      
+            allocation_predictable: {
+                value: null,
+                error: null,
+                match: /^1|2|3|4|5|6|7$/,
+            },
+            your_ranking_matters: {
+                value: null,
+                error: null,
+                match: /^1|2|3|4|5|6|7$/,
+            },
         })
-    })
-    /* initialize sliders state */
-    slidersState = allSliders.map(slider => {
-        return {
-            element: slider,
-            didChange: false,
-            indicatorElement: document.getElementById(slider.id + "_indicator"),
-            errorElement: document.getElementById(slider.id + "_error")
+        function handleChange(field, value){
+            const isValid = () =>{
+                if (form[field]?.hasOwnProperty('match')){
+                    return form[field].value.match(form[field].match)
+                }
+                return true
+            }
+            setForm({
+                ...form,
+                [field]: {
+                    value: value,
+                    error: isValid() ? null : "Invalid input",
+                    ...form[field]
+                }
+            })
         }
-    })
-}
-
-function getAllSliders() {
-    const allSliders = document.querySelectorAll("[type=range]")
-    return Array(...allSliders)
+        function handleSubmit(){
+            const isValid = () =>{
+                for (const field in form){
+                    if (form[field].hasOwnProperty('match')){
+                        if (!form[field].value.match(form[field].match)){
+                            return false
+                        }
+                    }
+                }
+                return true
+            }
+            if (isValid()){
+            }
+            else{
+                for (const field in form){
+                    if (form[field].hasOwnProperty('match')){
+                        if (!form[field].value.match(form[field].match)){
+                            setForm({
+                                ...form,
+                                [field]: {
+                                    ...form[field],
+                                    error: "Invalid input"
+                                }
+                            })
+                        }
+                    }
+                }
+            }
+        }
+        
+                    
+        return (
+            <div className="instructions">
+            <p>From this point on we no longer care about right or wrong answers, we are only interested in your <b>honest</b> reflections and opinions.</p>
+            <p> Please answer the following questions about your experience playing the game. </p>
+            <label for="typically_rank"> We'll start with a general question: <b>How did you typically rank the four prizes</b> in the 10 real rounds? Please share with us your main considerations, even if you are not sure that you always thought about them all. </label>
+            <textarea id="typically_rank" name="typically_rank" rows=3 style={{width: "100%", border:"1px solid lightgrey"}}></textarea>
+            { form.typically_rank.error &&
+                <span id="typically_rank_error" className="text-danger">
+                    {form.typically_rank.error}
+                </span>
+            }
+            <label for="did_change">Did you <b>change</b> the way you rank throughout the game? If so, in which way and at which point</label>
+            <textarea id="did_change" name="did_change" rows=3 style={{width: "100%", border:"1px solid lightgrey"}}></textarea>
+            { form.did_change.error &&
+                <span id="did_change_error" className="text-danger">
+                    {form.did_change.error}
+                </span>
+            }
+            <hr/>
+            <div>
+                <div className="form-group">
+                    <label for="is_explain_help">In your view, did the explanations given during the game <b>lead you to use a specific method</b> of ranking the four prizes?</label>
+                    <div>
+                        <input 
+                            type="radio" 
+                            value={0}
+                            onChange={()=>{handleChange("is_explain_help", 0)}}
+                            name="is_explain_help"    
+                        />
+                        <label for="is_explain_help">No</label>
+                    </div>
+                    <div>
+                        <input
+                            type="radio"
+                            value={1}
+                            onChange={()=>{handleChange("is_explain_help", 1)}}
+                            name="is_explain_help"
+                        />
+                        <label for="is_explain_help">Yes</label>
+                    </div>
+                </div>
+                { form.is_explain_help.error &&
+                    <span id="is_explain_help_error" className="text-danger">
+                        {form.is_explain_help.error}
+                    </span>
+                }
+            </div>
+            <div>
+                <label for="why_not">
+                    <b>If you answered “No” above:</b> Why do you think the explanations did not lead you to use a specific method of ranking the four prizes?
+                </label>
+                <textarea onChange={(e)=>handleChange("why_not", e.target.value)} id="why_not" name="why_not" rows=3 style={{width: "100%", border:"1px solid lightgrey"}}></textarea>
+            </div>
+            <div>
+                <label for="why_yes">
+                    <b>If you answered “Yes” above:</b> What was that specific ranking method?
+                </label>
+                <textarea id="why_yes" name="why_yes" rows=3 style={{width: "100%", border:"1px solid lightgrey"}}></textarea>
+            </div>
+            <hr/>
+            <div className="slider-container">
+                <p>How well do you think you now understand how to <b>best choose</b> your own ranking?</p>
+                <div className="slider-row">
+                    <span> I do not understand at all</span>
+                    <input required type="range" min="1" max="7" value="1" name="understand_choose_rankings" id="understand_choose_rankings" onChange={(e)=>handleChange("understand_choose_rankings", e.target.value)} >
+                    <span> I understand very well</span>
+                </div>
+                <span id="understand_choose_rankings_indicator"></span>
+                { form.understand_choose_rankings.error &&
+                    <span id="understand_choose_rankings_error" className="text-danger">
+                        {form.understand_choose_rankings.error}
+                    </span>
+                }
+            </div>
+            
+            <div className="slider-container">
+                <p>How well do you think you now understand the <b>key principle</b> of your ranking?</p>
+                <div className="slider-row">
+                    <span> I do not understand at all</span>
+                    <input required type="range" min="1" max="7" value="1" name="understand_principle" id="understand_principle" onChange={(e)=>handleChange("understand_principle", e.target.value)}>
+                    <span> I understand very well</span>
+                </div>
+                <span id="understand_principle_indicator"></span>
+                { form.understand_principle.error &&
+                    <span id="understand_principle_error" className="text-danger">
+                        {form.understand_principle.error}
+                    </span>
+                }
+            </div>
+            <div className="slider-container">
+                <p>How well do you think you now understand how the allocation process <b>works</b>?</p>
+                <div className="slider-row">
+                    <span> I do not understand at all</span>
+                    <input required type="range" min="1" max="7" value="1" name="understand_allocation" id="understand_allocation" onChange={(e)=>handleChange("understand_allocation", e.target.value)}>
+                    <span> I understand very well</span>
+                </div>
+                <span id="understand_allocation_indicator"></span>
+                { form.understand_allocation.error &&
+                    <span id="understand_allocation_error" className="text-danger">
+                        {form.understand_allocation.error}
+                    </span>
+                }
+            </div>
+            <hr/>
+            <p>
+                Imagine that the allocation process was used to give prizes to real people in a real-world setting. In particular, suppose that each participant is separately awarded prizes in the same way you were awarded prizes.<br/>
+            </p>
+            <p> With what percent chance do you believe the following statement is <b>always</b> true (regardless of the round’s details)?</p>
+            <div className="slider-container">
+                <p>The allocation process always ends with <b>each</b> participant getting a <b>different</b> prize, and <b>each</b> prize given to <b>some</b> participant.</p>
+                <div className="slider-row">
+                    <span> 0%</span>
+                    <input required type="range" min="0" max="100" value="0" name="chance_all_allocated" id="chance_all_allocated" onChange={(e)=>handleChange("chance_all_allocated", e.target.value)}>
+                    <span> 100%</span>
+                </div>
+                <span id="chance_all_allocated_indicator"></span>
+                { form.chance_all_allocated.error &&
+                    <span id="chance_all_allocated_error" className="text-danger">
+                        {form.chance_all_allocated.error}
+                    </span>
+                }
+            </div>
+            <hr/>
+            
+        <p className="QuestionHead"> To what extent do you agree with the following statements?</p>
+            
+            <div className="slider-container">
+                <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>fair.</b></p>
+                <div className="slider-row">
+                    <span>Completely disagree</span>
+                    <input required type="range" min="1" max="7" value="1" name="agree_allocation_fare" id="agree_allocation_fare" onChange={(e)=>handleChange("agree_allocation_fare", e.target.value)}>
+                    <span>Completely agree</span>
+                </div>
+                <span id="agree_allocation_fare_indicator"></span>
+                { form.agree_allocation_fare.error &&
+                    <span id="agree_allocation_fare_error" className="text-danger">
+                        {form.agree_allocation_fare.error}
+                    </span>
+                }
+            </div>
+            
+            <div className="slider-container">
+                <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>an overall good way</b> to allocate the prizes.</p>
+                <div className="slider-row">
+                    <span>Completely disagree</span>
+                    <input required type="range" min="1" max="7" value="1" name="agree_allocation_good" id="agree_allocation_good" onChange={(e)=>handleChange("agree_allocation_good", e.target.value)}>
+                    <span>Completely agree</span>
+                </div>
+                <span id="agree_allocation_good_indicator"></span>
+                { form.agree_allocation_good.error &&
+                    <span id="agree_allocation_good_error" className="text-danger">
+                        {form.agree_allocation_good.error}
+                    </span>
+                }
+            </div>
+            <div className="slider-container">
+                <p>How much would you be willing to <b>rely on the allocation process</b> in an important situation in real life (for example, assignment of students to public schools)?</p>
+                <div className="slider-row">
+                    <span>Very unwilling</span>
+                    <input required type="range" min="1" max="7" value="1" name="rely_in_real_life" id="rely_in_real_life" onChange={(e)=>handleChange("rely_in_real_life", e.target.value)}>
+                    <span>Very willing</span>
+                </div>
+                <span id="rely_in_real_life_indicator"></span>
+                { form.rely_in_real_life.error &&
+                    <span id="rely_in_real_life_error" className="text-danger">
+                        {form.rely_in_real_life.error}
+                    </span>
+                }
+            </div>
+            
+            <div className="slider-container">
+                <p>How <b>transparent is the allocation process</b>, meaning that you received a full explanation of how the allocation process really works, and no details were kept away from you?</p>
+                <div className="slider-row">
+                    <span>Not transparent at all</span>
+                    <input required type="range" min="1" max="7" value="1" name="allocation_transparent" id="allocation_transparent" onChange={(e)=>handleChange("allocation_transparent", e.target.value)}>
+                    <span>Completely transparent</span>
+                </div>
+                <span id="allocation_transparent_indicator"></span>
+                { form.allocation_transparent.error &&
+                    <span id="allocation_transparent_error" className="text-danger">
+                    {form.allocation_transparent.error}
+                    </span>
+                }
+            </div>
+            
+            <div className="slider-container">
+                <p>How <b>predictable</b> is the final allocation?</p>
+                <div className="slider-row">
+                    <span>Not predictable at all</span>
+                    <input required type="range" min="1" max="7" value="1" name="allocation_predictable" id="allocation_predictable" onChange={(e)=>handleChange("allocation_predictable", e.target.value)}>
+                    <span>Completely predictable</span>
+                </div>
+                <span id="allocation_predictable_indicator"></span>
+                { form.allocation_predictable.error &&
+                    <span id="allocation_predictable_error" className="text-danger">
+                        {form.allocation_predictable.error}
+                    </span>
+                }
+            </div>
+            
+            <div className="slider-container">
+                <p>To what extent do you think that <b>your submitted ranking matters</b> for the final allocation?</p>
+                <div className="slider-row">
+                    <span>Not at all</span>
+                    <input required type="range" min="1" max="7" value="1" name="your_ranking_matters" id="your_ranking_matters" onChange={(e)=>handleChange("your_ranking_matters", e.target.value)}>
+                    <span>Very much</span>
+                </div>
+                <span id="your_ranking_matters_indicator"></span>
+                { form.your_ranking_matters.error &&
+                    <span id="your_ranking_matters_error" className="text-danger">
+                        {form.your_ranking_matters.error}
+                    </span>
+                }
+            </div>
+            <hr/>
+        <div style={{text-align: "center"}}>
+            <button className="btn btn-default" id="Next">
+                Next
+            </button>
+        </div>
+        </div>
+        )
+    }
+    `
+    renderReactComponent(jsxCode,"react-root", "Stam", JSON.stringify({...js_vars}))
 }
