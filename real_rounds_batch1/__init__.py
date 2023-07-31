@@ -158,9 +158,6 @@ class C(BaseConstants):
     NUM_ROUNDS = 10  # change to 20 in real pilot
     PLAYERS = ["You", "Ruth", "Shirley", "Theresa"]
     PRIZES = ["A", "B", "C", "D"]
-    PRIZES_VALUES = generate_prizes_values_list(NUM_ROUNDS)
-    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PLAYERS, NUM_ROUNDS)
-    PLAYERS_RANKINGS = generate_priorities_list(PLAYERS[1:], PRIZES, NUM_ROUNDS)
 
 
 class Subsession(BaseSubsession):
@@ -189,6 +186,7 @@ class Player(BasePlayer):
 
 
 def get_prizes_in_round(prizes_by_round_str, round_number):
+    print(round_number,eval(prizes_by_round_str)[round_number - 1])
     return eval(prizes_by_round_str)[round_number - 1]
 
 
@@ -209,7 +207,7 @@ class RoundPage(Page):
     def js_vars(player: Player):
         return {
             "prizes":                 C.PRIZES,
-            "prizesValues":           C.PRIZES_VALUES[player.round_number -1 ],
+            "prizesValues":           get_prizes_in_round(player.prizes_values, player.round_number),
             "prizesPriorities":       get_prizes_priorities_in_round(player.prizes_priorities, player.round_number),
             "players":                C.PLAYERS,
             "participantsPriorities": get_players_rankings_in_round(player.other_participants_rankings, player.round_number),
@@ -286,28 +284,6 @@ class RoundPage(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.end_time = str(datetime.now(timezone.utc))
-
-
-########################################################################################################################
-
-def randomize_prize_values():
-    """
-    Ranodmizes 4 prizes value
-    """
-    import random
-
-    v1 = round(random.uniform(55, 60)) / 100
-    v2 = round(random.uniform(33, 54)) / 100
-    v3 = round(random.uniform(11, 32)) / 100
-    v4 = round(random.uniform(5, 10)) / 100
-
-    values = [v1, v2, v3, v4]
-    random.shuffle(values)
-    return values
-
-
-### helping functions ###
-#########################
 
 def randomize_permutation(r, kind):
     """
@@ -397,7 +373,7 @@ class PreProcess(Page):
     def before_next_page(player: Player, timeout_happened):
         player.start_time = str(datetime.now(timezone.utc))
         if (player.round_number == 1):
-            player.prizes_values = str([randomize_prize_values() for i in range(C.NUM_ROUNDS)])
+            player.prizes_values = str(generate_prizes_values_list(C.NUM_ROUNDS))
             player.prizes_priorities = str([randomize_prize_priorities(get_prizes_in_round(player.prizes_values, i + 1)) for i in range(C.NUM_ROUNDS)])
             player.other_participants_rankings = str([randomize_others_rankings(get_prizes_in_round(player.prizes_values, i + 1)) for i in range(C.NUM_ROUNDS)])
         else:
