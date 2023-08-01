@@ -324,12 +324,12 @@ function renderPage() {
                                         }
                                         correctMsg = {
                                             <div className="correct-msg">
-                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes, and cannot get you neither of these prizes. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b>
+                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes, and cannot get you neither of these prizes. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your specific priorities for getting these prizes.</b>
                                             </div>
                                         }
                                         correctFirstMsg= {
                                             <div className="correct-msg">
-                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes, and cannot get you neither of these prizes. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b><br/>
+                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. This means that both Prize A and Prize B are <b>non-Obtainable</b>. Remember that submitting different, alternative rankings would have no effect on your Obtainable Prizes, and cannot get you neither of these prizes. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your specific priorities for getting these prizes.</b><br/>
                                                 Good job on the first try! This will count for your Understanding Bonus.
                                             </div>
                                         }
@@ -426,7 +426,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -464,7 +464,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize D.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -502,7 +502,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -540,7 +540,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -578,7 +578,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -797,7 +797,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -835,7 +835,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize D.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -873,7 +873,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -911,7 +911,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -949,7 +949,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1168,7 +1168,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1206,7 +1206,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize D.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1244,7 +1244,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1282,7 +1282,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1320,7 +1320,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1620,12 +1620,12 @@ function renderPage() {
                                         }
                                         correctMsg = {
                                             <div className="correct-msg">
-                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. Remember that submitting different, alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b>
+                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. Remember that submitting different, alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your specific priorities for getting these prizes.</b>
                                             </div>
                                         }
                                         correctFirstMsg= {
                                             <div className="correct-msg">
-                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. Remember that submitting different, alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your priorities at these prizes.</b><br/>
+                                                Correct! Imagine submitting a ranking that places Prize A first and Prize B second, but getting some prize other than Prize A or Prize B. Remember that submitting different, alternative rankings can only get you that <b>same prize</b>, or some other <b>lower prize</b> according to your original ranking. Hence, no alternative ranking can get you Prize A or Prize B. This is true <b>regardless of your specific priorities for getting these prizes.</b><br/>
                                                 Good job on the first try! This will count for your Understanding Bonus.
                                             </div>
                                         }
@@ -1722,7 +1722,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1760,7 +1760,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                            If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                            If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize D.<br/>
                                             (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1798,7 +1798,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1836,7 +1836,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -1874,7 +1874,7 @@ function renderPage() {
                                 <>
                                     <div className="question">
                                         <p>
-                                        If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                         </p>
                                         <Question
@@ -2093,7 +2093,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2131,7 +2131,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize D.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2169,7 +2169,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                    If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                    If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                     (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2207,7 +2207,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                    If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                    If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                     (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2245,7 +2245,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                    If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                    If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                     (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2464,7 +2464,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize A.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2502,7 +2502,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize D.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize D.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2540,7 +2540,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                        If I had instead submitted A–D–B–C, then it is possible that I would have gotten Prize C.<br/>
+                                        If I had instead submitted A–D–B–C, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                         (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2578,7 +2578,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                    If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize A.<br/>
+                                    If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize A.<br/>
                                     (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2616,7 +2616,7 @@ function renderPage() {
                             <>
                                 <div className="question">
                                     <p>
-                                    If I had instead submitted C–A–B–D, then it is possible that I would have gotten Prize C.<br/>
+                                    If I had instead submitted C–A–B–D, then it is possible (or certain) that I would have gotten Prize C.<br/>
                                     (Get it right on first try to increase your bonus)
                                     </p>
                                     <Question
@@ -2957,7 +2957,7 @@ function renderPage() {
                                         if (step.type === "allocationResults"){
                                             return (
                                                 <section ref={step.sectionRef}>
-                                                    <AllocationResults onClick={onProceed} treatment={props.treatment} allocatedPrize={props.allocatedPrize}/>
+                                                    <AllocationResults onClick={onProceed} treatment={props.treatment} allocatedPrize={props.allocatedPrize} roundNumber={props.roundNumber}/>
                                                     {index === activeStepsIds.length-1 && <Button onClick={onProceed} text="Proceed" buttonRef={step.buttonRef}/>}
                                                 </section>
                                             )
@@ -2995,6 +2995,9 @@ function renderPage() {
                 { props.treatment === "mechanics" ? 
                     <p>
                         You are going to perform the allocation process by yourself, according to what you learned.<br/>
+                        { props.roundNumber === 1 && 
+                            <><span>Since this is the first time, we will help with hints along the way.</span><br/></>
+                        }
                         Click on the button below to start.
                     </p>
                     : 
@@ -3043,7 +3046,7 @@ function renderPage() {
                     You and the computerized participants will each rank the four prizes in any order you wish.<br/>
                     Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
                     </p>
-                    <p>The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.</p>
+                    <p>The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.</p>
                 </div>
             </div>
         )
@@ -3058,9 +3061,9 @@ function renderPage() {
                     These priorities can affect the allocation of prizes.
                     </p>
                     <p>
-                    The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+                    The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process.
                     </p>
-                    <p>Each column shows the priorities of all participants at some prize, written from highest to lowest.</p>
+                    <p>Each column shows the priorities of all participants for getting some prize, written from highest to lowest.</p>
                     <p>The prize priorities can be different in different rounds of the game,
                     and they were <b>determined beforehand</b>. <br/>
                     You and the other participants <b>cannot affect the prize priorities</b>.</p>

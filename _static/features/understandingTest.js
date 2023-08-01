@@ -7,6 +7,7 @@ function renderUnderstandingTestPage(){
         <FirstPage/>,
         <SecondPage/>,
         <ThirdPage/>,
+        <FourthPage/>,
     ]
     const CurrencyContext = React.createContext(props.currency)
     const StepForwardContext = React.createContext(null)
@@ -170,28 +171,28 @@ function renderUnderstandingTestPage(){
                     (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
                 </p>
                 <p>
-                    If you had instead submitted <b>A–B–C–D</b>, and the prize priorities and other participants’ rankings did not change, is it possible that you would have gotten…?
+                    If you had instead submitted <b>A–B–C–D</b>, and the prize priorities and other participants’ rankings did not change, is it possible (or certain) that you would have gotten…?
                 </p>
-                <RadioGroup name="first_situation_a" onChange={onChange} options={["True", "False"]} value={form.first_situation_a.value} label="Prize A"/>
-                <RadioGroup name="first_situation_b" onChange={onChange} options={["True", "False"]} value={form.first_situation_b.value} label="Prize B"/>
-                <RadioGroup name="first_situation_c" onChange={onChange} options={["True", "False"]} value={form.first_situation_c.value} label="Prize C"/>
-                <RadioGroup name="first_situation_d" onChange={onChange} options={["True", "False"]} value={form.first_situation_d.value} label="Prize D"/>
+                <RadioGroup name="first_situation_a" onChange={onChange} options={["Yes", "No"]} value={form.first_situation_a.value} label="Prize A"/>
+                <RadioGroup name="first_situation_b" onChange={onChange} options={["Yes", "No"]} value={form.first_situation_b.value} label="Prize B"/>
+                <RadioGroup name="first_situation_c" onChange={onChange} options={["Yes", "No"]} value={form.first_situation_c.value} label="Prize C"/>
+                <RadioGroup name="first_situation_d" onChange={onChange} options={["Yes", "No"]} value={form.first_situation_d.value} label="Prize D"/>
                 <hr/>
                 <p>
-                    If you had instead submitted <b>D–A–B–C</b>, and the prize priorities and other participants’ rankings did not change, is it possible that you would have gotten…?
+                    If you had instead submitted <b>D–A–B–C</b>, and the prize priorities and other participants’ rankings did not change, is it possible (or certain) that you would have gotten…?
                 </p>
-                <RadioGroup name="second_situation_a" onChange={onChange} options={["True", "False"]} value={form.second_situation_a.value} label="Prize A"/>
-                <RadioGroup name="second_situation_b" onChange={onChange} options={["True", "False"]} value={form.second_situation_b.value} label="Prize B"/>
-                <RadioGroup name="second_situation_c" onChange={onChange} options={["True", "False"]} value={form.second_situation_c.value} label="Prize C"/>
-                <RadioGroup name="second_situation_d" onChange={onChange} options={["True", "False"]} value={form.second_situation_d.value} label="Prize D"/>
+                <RadioGroup name="second_situation_a" onChange={onChange} options={["Yes", "No"]} value={form.second_situation_a.value} label="Prize A"/>
+                <RadioGroup name="second_situation_b" onChange={onChange} options={["Yes", "No"]} value={form.second_situation_b.value} label="Prize B"/>
+                <RadioGroup name="second_situation_c" onChange={onChange} options={["Yes", "No"]} value={form.second_situation_c.value} label="Prize C"/>
+                <RadioGroup name="second_situation_d" onChange={onChange} options={["Yes", "No"]} value={form.second_situation_d.value} label="Prize D"/>
                 <hr/>
                 <p>
-                    If you had instead submitted <b>D–A–B–C</b>, this would be unimportant for this question. Instead of answering this question according to the problem, you should choose the next four answers in the order true, true, false, true…
+                    If you had instead submitted <b>D–A–B–C</b>, this would be unimportant for this question. Instead of answering this question according to the problem, you should choose the next four answers in the order yes, yes, no, yes…
                 </p>
-                <RadioGroup name="third_situation_a" onChange={onChange} options={["True", "False"]} value={form.third_situation_a.value} label="Prize A"/>
-                <RadioGroup name="third_situation_b" onChange={onChange} options={["True", "False"]} value={form.third_situation_b.value} label="Prize B"/>
-                <RadioGroup name="third_situation_c" onChange={onChange} options={["True", "False"]} value={form.third_situation_c.value} label="Prize C"/>
-                <RadioGroup name="third_situation_d" onChange={onChange} options={["True", "False"]} value={form.third_situation_d.value} label="Prize D"/>
+                <RadioGroup name="third_situation_a" onChange={onChange} options={["Yes", "No"]} value={form.third_situation_a.value} label="Prize A"/>
+                <RadioGroup name="third_situation_b" onChange={onChange} options={["Yes", "No"]} value={form.third_situation_b.value} label="Prize B"/>
+                <RadioGroup name="third_situation_c" onChange={onChange} options={["Yes", "No"]} value={form.third_situation_c.value} label="Prize C"/>
+                <RadioGroup name="third_situation_d" onChange={onChange} options={["Yes", "No"]} value={form.third_situation_d.value} label="Prize D"/>
                 <hr/>
                 <div class="btn-container">
                     <button onClick={onSubmit} type="button" className="btn btn-primary">Submit</button>
@@ -206,16 +207,7 @@ function renderUnderstandingTestPage(){
             },
             page2_q2 : {
                 value: null,
-            },
-            page3_q1 : {
-                value: null,
-            },
-            page3_q2 : {
-                value: null,
-            },
-            page3_q3 : {
-                value: null,
-            },
+            }
         })
         const [showError, setShowError] = React.useState(false)
         const stepForward = React.useContext(StepForwardContext)
@@ -236,8 +228,8 @@ function renderUnderstandingTestPage(){
         return (
             <ShowErrorContext.Provider value={showError}>
                 <p>
-                    Now we will ask you two similar questions, without showing you the prize values and prize priorities.<br/> 
-                    In these questions, if you cannot tell for sure what prize you would have gotten in some case, please simply check the box saying “I do not have enough information to know what prize I would have gotten.”<br/>
+                    Now we will ask you several similar questions. In each of these questions, the prize values and prize priorities will be different, but we will now <b>only</b> show you <b>which ranking you submit</b> and <b>which prize you get</b>.<br/> 
+                    In these next two questions, if you cannot tell for sure what prize you would have gotten in some case, please simply check the box saying “I do not have enough information to know what prize I would have gotten.”<br/>
                     (Each answer you determine correctly will count as <b>2 questions</b> for your Understanding Bonus.)
                 </p>
                 <p>
@@ -254,12 +246,12 @@ function renderUnderstandingTestPage(){
                         "I would have gotten prize D.",
                     ]}
                     value={form.page2_q1.value}
-                    label={<span>If you had instead submitted D–B–C–A, and the prize priorities and other participants’ rankings did not change, then which of the following is true?</span>}
+                    label={<span>If you had instead submitted <b>D–B–C–A</b>, and the prize priorities and other participants’ rankings did not change, then which of the following is true?</span>}
                 />  
                 <hr/>
                 <p>
                     Now, imagine a different round.<br/>
-                    Imagine that you submit C–D–B–A, and get <b>Prize B.</b> 
+                    Imagine that you submit <b>C–D–B–A</b>, and get <b>Prize B.</b> 
                 </p>
                 <RadioGroup
                     name="page2_q2"
@@ -274,11 +266,46 @@ function renderUnderstandingTestPage(){
                     value={form.page2_q2.value}
                     label={<span>If you had instead submitted D–C–B–A, and the prize priorities and other participants’ rankings did not change, then which of the following is true?</span>}
                 />
+                <div class="btn-container">
+                    <button onClick={onSubmit} type="button" className="btn btn-primary">Submit</button>
+                </div>
+            </ShowErrorContext.Provider>
+        )
+    }
+    function ThirdPage(props){
+        const [form, setForm] = React.useState({
+            page3_q1 : {
+                value: null,
+            },
+            page3_q2 : {
+                value: null,
+            },
+            page3_q3 : {
+                value: null,
+            }
+        })
+        const [showError, setShowError] = React.useState(false)
+        const stepForward = React.useContext(StepForwardContext)
+        function onChange(field, value){
+            setForm({...form, [field]: {value}})
+        }
+        function onSubmit(){
+            setShowError(true)
+            if(Object.values(form).some((field)=>field.value === null)){
+                return
+            }
+            liveSend({
+                "action": "set_form_fields",
+                "form_fields": JSON.stringify(form)
+            })
+            stepForward()
+        }
+        return (
+            <ShowErrorContext.Provider value={showError}>
                 <p>
-                    Now we will ask you another type of question.<br/>
+                    Now we will ask you three questions concerning one possible round. <br/>
                     (Each answer you determine correctly will count as 2 questions for your Understanding Bonus.)
                 </p>
-                <hr/>
                 <p>
                     Imagine that in some round you submit <b>B–D–C–A</b>, and get <b>Prize C.</b> 
                 </p>
@@ -287,7 +314,7 @@ function renderUnderstandingTestPage(){
                     onChange={onChange}
                     options={[
                         "There is no alternative ranking such that I would have gotten Prize A.",
-                        "There may be some alternative ranking such that I would have gotten Prize A."
+                        "There may be (or there definitely is) some alternative ranking such that I would have gotten Prize A."
                     ]}
                     value={form.page3_q1.value}
                     label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about <b>Prize A</b>?</span>}
@@ -297,7 +324,7 @@ function renderUnderstandingTestPage(){
                     onChange={onChange}
                     options={[
                         "There is no alternative ranking that would have gotten me Prize B.",
-                        "There may be some alternative ranking that would have gotten me Prize B."
+                        "There may be (or there definitely is) some alternative ranking that would have gotten me Prize B."
                     ]}
                     value={form.page3_q2.value}
                     label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about <b>Prize B</b>?</span>}
@@ -307,19 +334,18 @@ function renderUnderstandingTestPage(){
                     onChange={onChange}
                     options={[
                         "There is no alternative ranking that would have gotten me Prize D.",
-                        "There may be some alternative ranking that would have gotten me Prize D."
+                        "There may be (or there definitely is) some alternative ranking that would have gotten me Prize D."
                     ]}
                     value={form.page3_q3.value}
                     label={<span>If you had submitted some alternative ranking, and the prize priorities and other participants’ rankings did not change, then which of the following is true about <b>Prize D</b>?</span>}
                     />
-                <hr/>
                 <div class="btn-container">
                     <button onClick={onSubmit} type="button" className="btn btn-primary">Submit</button>
                 </div>
-            </ShowErrorContext.Provider>
+                </ShowErrorContext.Provider>
         )
     }
-    function ThirdPage(props){
+    function FourthPage(props){
         const [form, setForm] = React.useState({
             page3_q4 : {
                 value: null,
@@ -358,8 +384,10 @@ function renderUnderstandingTestPage(){
                 <p>
                     Now, please answer these last questions for this part:<br/>
                     (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)<br/>
-                    If I want to maximize my earnings in a given round, then…
-                </p><br/>
+                </p>
+                <p>
+                    If I want to <b>maximize my earnings</b> in a given round, then…
+                </p>
                 <RadioGroup
                     name="page3_q4"
                     onChange={onChange}

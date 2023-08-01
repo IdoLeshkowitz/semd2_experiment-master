@@ -165,7 +165,9 @@ class TrainingRound(Page):
             "currentStep":            player.current_step_id,
             "variant":                C.VARIANT,
             "treatment":              C.TREATMENT,
+            "roundNumber":            player.round_number,
         }
+
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):

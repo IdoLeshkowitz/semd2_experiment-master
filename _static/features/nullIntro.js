@@ -32,11 +32,10 @@ function renderIntroPage() {
                         <section>
                             <div class="explain">
                                 <p>
-                                    The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
-                                    while taking into account the rankings of all participants.
+                                    The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
                                 </p>
                                 <p>
-                                    You will now learn about the game and allocation process while playing a training round of the game.
+                                    You will now learn about the game and allocation process.
                                     The text in blue bubbles, such as this text, provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
                                 </p>
                             </div>
@@ -112,7 +111,7 @@ function renderIntroPage() {
                                 </p>
                                 <p>
                                     These priorities can affect the allocation of prizes. <br/>
-                                    The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+                                    The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process.
                                 </p>
                             </div>
                         </section>
@@ -193,11 +192,11 @@ function renderIntroPage() {
                                     Remember:
                                 </p>
                                 <p>
-                                    The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
+                                    The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
                                 </p>
                                 <p>
-                                    The prize priorities can affect the allocation of prizes.<br/>
-                                    The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+                                    Additionally, the prize priorities can affect the allocation of prizes. <br/>
+                                    The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process. 
                                 </p>
                             </div>
                         </section>
@@ -218,7 +217,7 @@ function renderIntroPage() {
                         <section>
                             <div class="explain">
                                 <p>
-                                    That's it! <br/>Click on the button below to proceed to more training rounds.
+                                    That's it! <br/>Click on the button below to proceed to training rounds.
                                 </p>
                             </div>
                         </section>

@@ -73,7 +73,7 @@ function renderIntroPage(){
                         <h4>Details of allocation process</h4>
                         <h5><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h5>
                         <div className="explain">
-                            The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows:
+                            The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                         </div>
                     </section>
                 ),
@@ -105,7 +105,7 @@ function renderIntroPage(){
                                            <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
                                         </li>
                                         <li>
-                                            <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
+                                            <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before, and who are not you. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
                                         </li>
                                     </ul>
                                 </p>
@@ -145,7 +145,9 @@ function renderIntroPage(){
                                 When there are no more conflicts and when one prize was unpaired from all participants (except for you), the process is over. The result is each prize, except for the unpaired one, being paired to a different participant (except for you).
                             </p>
                             <p>
-                                Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.
+                                Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.<br/>
+                                The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
+                                Instead, the temporary allocation is used to determine your Obtainable Prizes.
                             </p>
                         </div>
                     </section>
@@ -165,7 +167,7 @@ function renderIntroPage(){
                             <p>
                                 You can obtain two kinds of prizes:
                                 <ol>
-                                    <li><b>Any prize that your priority of getting is higher</b> than that of the participant it is temporarily allocated to.</li>
+                                    <li>Any prize for which <b>your priority is higher</b> than that of the participant temporarily allocated the prize.</li>
                                     <li><b>The prize that was left unpaired in the temporary allocation.</b></li>
                                 </ol>
                                 You cannot obtain any other prizes.
@@ -250,7 +252,7 @@ function renderIntroPage(){
                         <h4>Details of allocation process</h4>
                         <div className="explain">
                             <p>
-                                The allocation process is a multi-step process, as follows:
+                                The allocation process is a multi-step process, as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                             </p>
                         </div>
                     </section>
@@ -315,7 +317,9 @@ function renderIntroPage(){
                                 When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
                             </p>
                             <p>
-                                Each prize is then allocated to the participant paired to it.
+                                Each prize is then allocated to the participant paired to it.<br/>
+                                The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
+                                Instead, the temporary allocation is used to determine your Obtainable Prizes.
                             </p>
                         </div>
                     </section>

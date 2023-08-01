@@ -430,10 +430,10 @@ function RenderRoundPage() {
                         These priorities can affect the allocation of prizes.
                     </p>
                     <p>
-                        The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
+                        The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process.
                     </p>
                     <p>
-                        Each column shows the priorities of all participants at some prize, written from highest to lowest.
+                        Each column shows the priorities of all participants for getting some prize, written from highest to lowest.
                     </p>
                     <p>
                         The prize priorities can be different in different rounds of the game,
@@ -453,7 +453,7 @@ function RenderRoundPage() {
                         Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
                     </p>
                     <p>
-                        The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
+                        The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
                     </p>
                 </>
             ),

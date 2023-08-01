@@ -31,13 +31,13 @@ class Player(BasePlayer):
     understand_choose_rankings = models.LongStringField(blank=True, initial='')
     understand_principle = models.LongStringField(blank=True, initial='')
     understand_allocation = models.LongStringField(blank=True, initial='')
-    chance_all_allocated = models.LongStringField(blank=True, initial='')
     agree_allocation_fare = models.LongStringField(blank=True, initial='')
     agree_allocation_good = models.LongStringField(blank=True, initial='')
     rely_in_real_life = models.LongStringField(blank=True, initial='')
     allocation_transparent = models.LongStringField(blank=True, initial='')
     allocation_predictable = models.LongStringField(blank=True, initial='')
     your_ranking_matters = models.LongStringField(blank=True, initial='')
+    agree_allocation_different = models.LongStringField(blank=True, initial='')
 
     start_time = models.StringField(blank=True)
     end_time = models.StringField(blank=True)
@@ -53,7 +53,7 @@ class Reflection(Page):
         'understand_choose_rankings',
         'understand_principle',
         'understand_allocation',
-        'chance_all_allocated',
+        'agree_allocation_different',
         'agree_allocation_fare',
         'agree_allocation_good',
         'rely_in_real_life',

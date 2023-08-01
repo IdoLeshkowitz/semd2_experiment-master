@@ -203,7 +203,10 @@ function renderReflectionPage(){
             </div>
             <hr/>
             <div className="slider-container">
-                <p>How well do you think you now understand how to <b>best choose</b> your own ranking?</p>
+                <p>
+                    How well do you think you now understand how to <b>best choose</b> your own ranking?<br/>
+                    (Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.)
+                </p>
                 <div className="slider-row">
                     <span> I do not understand at all</span>
                     <input required type="range" min={1} max={7} value={parseInt(form.understand_choose_rankings.value) || 1} name="understand_choose_rankings" id="understand_choose_rankings" onChange={(e)=>handleChange("understand_choose_rankings", e.target.value)} />
@@ -223,7 +226,10 @@ function renderReflectionPage(){
                 </div>
             </div>
             <div className="slider-container">
-                <p>How well do you think you now understand the <b>key principle</b> of your ranking?</p>
+                <p>
+                    How well do you think you now understand the <b>key principle</b> of your ranking?<br/>
+                    (Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.)
+                </p>
                 <div className="slider-row">
                     <span> I do not understand at all</span>
                     <input required type="range" min={1} max={7} value={parseInt(form.understand_principle.value) || 1} name="understand_principle" id="understand_principle" onChange={(e)=>handleChange("understand_principle", e.target.value)}/>
@@ -243,7 +249,10 @@ function renderReflectionPage(){
                 </div>
             </div>
             <div className="slider-container">
-                <p>How well do you think you now understand how the allocation process <b>works</b>?</p>
+                <p>
+                    How well do you think you now understand how the allocation process <b>works</b>?<br/>
+                    (Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.)
+                </p>
                 <div className="slider-row">
                     <span> I do not understand at all</span>
                     <input required type="range" min={1} max={7} value={parseInt(form.understand_allocation.value) || 1} name="understand_allocation" id="understand_allocation" onChange={(e)=>handleChange("understand_allocation", e.target.value)}/>
@@ -266,27 +275,25 @@ function renderReflectionPage(){
             <p>
                 Imagine that the allocation process was used to give prizes to real people in a real-world setting. In particular, suppose that each participant is separately awarded prizes in the same way you were awarded prizes.<br/>
             </p>
-            <p> With what percent chance do you believe the following statement is <b>always</b> true (regardless of the round’s details)?</p>
+            <p className="QuestionHead"> To what extent do you agree with the following statements?</p>
             <div className="slider-container">
                 <p>The allocation process always ends with <b>each</b> participant getting a <b>different</b> prize, and <b>each</b> prize given to <b>some</b> participant.</p>
                 <div className="slider-row">
-                    <span> 0%</span>
-                    <input required type="range" min={0} max={100} value={parseInt(form.chance_all_allocated.value) || 0} name="chance_all_allocated" id="chance_all_allocated" onChange={(e)=>handleChange("chance_all_allocated", e.target.value)}/>
-                    <span> 100%</span>
+                    <span>Completely disagree</span>
+                    <input required type="range" min={1} max={7} value={parseInt(form.agree_allocation_different.value) || 1} name="agree_allocation_different" id="agree_allocation_different" onChange={(e)=>handleChange("agree_allocation_different", e.target.value)}/>
+                    <span>Completely agree</span>
                 </div>
-                <span id="chance_all_allocated_indicator">
-                    { form.chance_all_allocated.value &&
-                        <span>{form.chance_all_allocated.value}%</span>
+                <span id="agree_allocation_different_indicator">
+                    { form.agree_allocation_different.value &&
+                        <span>{form.agree_allocation_different.value}</span>
                     }
                 </span>
-                { form.chance_all_allocated.error &&
-                    <span id="chance_all_allocated_error" className="text-danger">
-                        {form.chance_all_allocated.error}
+                { form.agree_allocation_different.error &&
+                    <span id="agree_allocation_different_error" className="text-danger">
+                        {form.agree_allocation_different.error}
                     </span>
-                }
+                }    
             </div>
-            <hr/>
-            <p className="QuestionHead"> To what extent do you agree with the following statements?</p>
             <div className="slider-container">
                 <p>For a process that has to produce an allocation from given prize priorities and participants’ rankings, the allocation process is <b>fair.</b></p>
                 <div className="slider-row">
