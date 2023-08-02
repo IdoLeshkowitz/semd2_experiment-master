@@ -47,17 +47,17 @@ function renderReflectionPage(){
                 error: null,
                 match : /^1|2|3|4|5|6|7$/,
             },
-            chance_all_allocated: {
-                value: null,
-                error: null,
-                match : /^(?:100|[1-9][0-9]?|0)$/,
-            },
             agree_allocation_fare: {
                 value: null,
                 error: null,
                 match : /^1|2|3|4|5|6|7$/,
             },
             agree_allocation_good: {
+                value: null,
+                error: null,
+                match: /^1|2|3|4|5|6|7$/,
+            },
+            agree_allocation_different: {
                 value: null,
                 error: null,
                 match: /^1|2|3|4|5|6|7$/,
@@ -129,7 +129,6 @@ function renderReflectionPage(){
                 currentForm[field] = fieldState
             }
             if (allCorrect){
-                console.log("submitting")
                 document.querySelector("form").submit()
             }
             setForm(currentForm)
@@ -140,7 +139,7 @@ function renderReflectionPage(){
             <p>None of the questions from this point on will count for your Understanding Bonus.</p>
             <p> Please answer the following questions about your experience playing the game. </p>
             <label htmlFor="typically_rank"> We'll start with a general question: <b>How did you typically rank the four prizes</b> in the 10 real rounds? Please share with us your main considerations, even if you are not sure that you always thought about them all. </label>
-            <textarea id="typically_rank" name="typically_rank" rows={3} style={{width: "100%", border:"1px solid lightgrey"}} onChange={()=>{handleChange("typically_rank", document.getElementById("typically_rank").value)}}></textarea>
+            <textarea id="typically_rank" name="typically_rank" rows={3} style={{width: "100%", border:"1px solid lightgrey"}} onChange={(e)=>{handleChange("typically_rank", e.target.value)}}></textarea>
             <div className="btn-container">
                 { form.typically_rank.error &&
                     <span id="typically_rank_error" className="text-danger">
@@ -149,7 +148,7 @@ function renderReflectionPage(){
                 }
             </div>
             <label htmlFor="did_change">Did you <b>change</b> the way you rank throughout the game? If so, in which way and at which point</label>
-            <textarea id="did_change" name="did_change" rows={3} style={{width: "100%", border:"1px solid lightgrey"}} onChange={()=>{handleChange("did_change", document.getElementById("did_change").value)}}></textarea>
+            <textarea id="did_change" name="did_change" rows={3} style={{width: "100%", border:"1px solid lightgrey"}} onChange={(e)=>{handleChange("did_change", e.target.value)}}></textarea>
             <div className="btn-container">
                 { form.did_change.error &&
                     <span id="did_change_error" className="text-danger">
