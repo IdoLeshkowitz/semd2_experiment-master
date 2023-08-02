@@ -3378,6 +3378,7 @@ function renderPage() {
                                     </ol>
                                     You cannot obtain any other prizes.
                                 </p>
+                                <h5><b>Obtainable Prizes → The prize you get</b></h5>
                                 <p>
                                     Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
                                     In fact, this is the <b>only</b> time the allocation process uses your ranking. 

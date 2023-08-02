@@ -1080,8 +1080,10 @@ function renderDaAlgoPage(props = js_vars) {
                                                 Click here for a video with step-by-step explanations
                                             </button>
                                         </div>
-                                        to restart the video, please refresh the page
                                     </p>   
+                                    <p>
+                                        to restart the video, please refresh the page
+                                    </p>
                                     <p>
                                         Click Submit when you are done.<br/>
                                         (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
@@ -2610,8 +2612,10 @@ function renderDaAlgoPage(props = js_vars) {
                                                 >
                                                 Click here for a video with step-by-step explanations
                                                 </button>
-                                            to restart the video, please refresh the page
                                         </div>
+                                    </p>
+                                    <p>
+                                        to restart the video, please refresh the page
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -4092,6 +4096,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         </ol>
                                         You cannot obtain any other prizes.
                                     </p>
+                                    <h5><b>Obtainable Prizes → The prize you get</b></h5>
                                     <p>
                                         Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
                                         In fact, this is the <b>only</b> time the allocation process uses your ranking. 
