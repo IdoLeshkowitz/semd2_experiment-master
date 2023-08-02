@@ -33,7 +33,7 @@ function renderIntroPage(){
                         <h4>Overview of allocation process</h4>
                             <div className="explain">
                                 <p>
-                                    The prize you get is determined in two main steps:
+                                    The prize you get is determined using an allocation process with two main steps:
                                     <ol>
                                         <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                                         <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
@@ -167,7 +167,7 @@ function renderIntroPage(){
                             <p>
                                 You can obtain two kinds of prizes:
                                 <ol>
-                                    <li>Any prize for which <b>your priority is higher</b> than that of the participant temporarily allocated the prize.</li>
+                                    <li>Any prize for which <b>your priority is higher</b> than that of the participant it is temporarily allocated to.</li>
                                     <li><b>The prize that was left unpaired in the temporary allocation.</b></li>
                                 </ol>
                                 You cannot obtain any other prizes.
@@ -362,7 +362,7 @@ function renderIntroPage(){
                   <section>
                       <div className="explain">
                         <p>
-                            The prize you get is determined in two main steps:
+                            The prize you get is determined using an allocation process with two main steps:
                             <ol>    
                                 <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                                 <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
@@ -443,7 +443,7 @@ function renderIntroPage(){
                     <section>
                         <div className="explain">
                             <p>
-                                The prize you get is determined using an <b>allocation process</b> that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>
+                                The prize you get is determined using an allocation process that uses your own ranking, the rankings of the other participants, and the prize priorities.<br/>
                                 The following image illustrates this:
                             </p>
                         </div>  
@@ -471,7 +471,7 @@ function renderIntroPage(){
                     <section>
                         <div className="explain transparent">
                             <p style={{color: "#0b1ae3"}}>
-                                <b>The important principle</b>: The prize you get if you submit the considered ranking is the <b>highest possible</b> that you could get <b>according to the considered ranking.</b>
+                                <b>The important principle</b>: The prize you get if you submit the considered ranking is the <b>highest</b> that submitting any ranking could get you, <b>according to the considered ranking.</b>
                             </p>
                         </div>
                     </section>
@@ -484,6 +484,18 @@ function renderIntroPage(){
                         <div className="explain">
                             <p>
                                 In other words, if you submit any alternative ranking, different from the considered ranking, you will either get <b>the same</b> prize you get when submitting the considered ranking, or some prize <b>lower on the considered ranking.</b>
+                            </p>
+                        </div>
+                    </section>
+                ),
+                ref: React.createRef()
+            },
+            {
+                content : (
+                    <section>
+                        <div className="explain">
+                            <p>
+                                No alternative ranking can get you a prize which you rank higher on the considered ranking, compared to the prize you get when you submit the considered ranking.
                             </p>
                         </div>
                     </section>

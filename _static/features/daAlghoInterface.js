@@ -421,7 +421,8 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <ul>
                                         <li>
-                                            <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
+                                            <b>Unpair:</b> for each such prize, keep only the participant with the highest priority for getting that prize paired to it.<br/>
+                                            <b>Unpair</b> the other participants  from that prize.
                                         </li>
                                         <li>
                                             <p>
@@ -1079,6 +1080,7 @@ function renderDaAlgoPage(props = js_vars) {
                                                 Click here for a video with step-by-step explanations
                                             </button>
                                         </div>
+                                        to restart the video, please refresh the page
                                     </p>   
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1123,6 +1125,14 @@ function renderDaAlgoPage(props = js_vars) {
                                 <>
                                     <p>
                                         For each of the four prizes below, click on <b>the participant to whom this prize is allocated,</b> based on the result of the allocation process.
+                                        <Accordion title="Click here for a hint:... [expandable]">
+                                            <p>
+                                                The allocation process ended with each prize allocated to a different participant.
+                                            </p>
+                                            <p>
+                                                Notice in the Prize Priorities table below (on the left) that Prize A is now allocated to You, Prize B is allocated to Shirley, Prize C is allocated to Theresa and Prize D is allocated to Ruth.
+                                            </p>
+                                        </Accordion>
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1269,7 +1279,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content:(
                                 <>
                                     <p>
-                                    For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                        For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1416,7 +1426,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content:(
                                 <>
                                     <p>
-                                    For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                        For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1900,7 +1910,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <ul>
                                         <li>
-                                            <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                            <b>Unpair:</b> for each such participant, keep only the prize with the highest rank by that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
                                         </li>
                                         <li>
                                             <p>
@@ -1988,7 +1998,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <ul>
                                         <li>
-                                            <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                            <b>Unpair:</b> for each such participant, keep only the prize with the highest rank by that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
                                         </li>
                                         <li>
                                             <p>
@@ -2074,7 +2084,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <ul>
                                         <li>
-                                            <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                            <b>Unpair:</b> for each such participant, keep only the prize with the highest rank by that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
                                         </li>
                                         <li>
                                             <p>
@@ -2161,7 +2171,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 </p>
                                 <ul>
                                     <li>
-                                        <b>Unpair</b>: for each such participant, keep only the prize with the highest rank at that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
+                                        <b>Unpair:</b> for each such participant, keep only the prize with the highest rank by that participant paired to her. <b>Unpair</b> the other prizes  from that participant.
                                     </li>
                                 </ul>
                                 <p>
@@ -2326,7 +2336,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
-                                    Note: Now is the first time that your priority of getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
+                                    Note: Now is the first time that your priority for getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
                                     Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
@@ -2362,7 +2372,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now use this rule to determine your Obtainable Prizes.<br/>
-                                    Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
+                                    Note: Now is the first time that your priority for getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
                                     Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
@@ -2398,7 +2408,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now use this rule to determine your Obtainable Prizes.<br/>
-                                    Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
+                                    Note: Now is the first time that your priority for getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
                                     Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>    
                             ),
@@ -2434,7 +2444,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now use this rule to determine your Obtainable Prizes.<br/>
-                                    Note: Now is the first time that your priority of getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
+                                    Note: Now is the first time that your priority for getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
                                     Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
@@ -2600,6 +2610,7 @@ function renderDaAlgoPage(props = js_vars) {
                                                 >
                                                 Click here for a video with step-by-step explanations
                                                 </button>
+                                            to restart the video, please refresh the page
                                         </div>
                                     </p>
                                     <p>
@@ -4006,7 +4017,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p><br/>
                                     <h5>Overview of allocation process</h5>
                                     <p>
-                                        The prize you get is determined in two main steps:
+                                        The prize you get is determined using an allocation process with two main steps:
                                         <ol>
                                             <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>

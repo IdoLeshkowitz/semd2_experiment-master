@@ -209,7 +209,7 @@ function renderPage() {
                             type : "information",
                             sectionRef : React.createRef(null),
                             content : (
-                                <div class="explain">
+                                <div>
                                     <p>
                                         In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
                                         Please determine whether the following statements are true or false:
@@ -349,7 +349,7 @@ function renderPage() {
                                             Please answer the following question:          
                                         </p>
                                         <p>
-                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
+                                            <b>Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A</b>. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
                                             Which of the following might be true? (select one answer)<br/>
                                             (Hint: think about what the set of Obtainable Prizes could possibly be.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
@@ -409,7 +409,7 @@ function renderPage() {
                             content :(
                                 <>
                                     <p>
-                                        Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.
+                                        <b>Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.</b>
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
@@ -624,7 +624,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
-                                        (Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)
+                                        <b>(Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)</b>
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -780,7 +780,7 @@ function renderPage() {
                             content :(
                                 <>
                                     <p>
-                                        Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.
+                                        <b>Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.</b>
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
@@ -995,7 +995,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
-                                        (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)
+                                        <b>(Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)</b>
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -1151,7 +1151,7 @@ function renderPage() {
                             content :(
                                 <>
                                     <p>
-                                        Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.
+                                        <b>Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.</b>
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
@@ -1520,7 +1520,7 @@ function renderPage() {
                         {
                             id : "questions_intro_2",
                             content : (
-                                <div class="explain">
+                                <div>
                                     <p>
                                         In all the following questions, imagine the computer has already determined some prize priorities and rankings of the other, computerized participants, so that the only component left undecided is your own ranking.<br/>
                                         Please determine whether the following statements are true or false:
@@ -1645,7 +1645,7 @@ function renderPage() {
                                             Please answer the following question:          
                                         </p>
                                         <p>
-                                            Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
+                                            <b>Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A</b>. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
                                             Which of the following might be true? (select one answer)<br/>
                                             (Hint: think about a considered ranking and alternative rankings.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
@@ -1705,7 +1705,7 @@ function renderPage() {
                             content :(
                                 <>
                                     <p>
-                                        Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.
+                                        <b>Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.</b>
                                     </p>
                                     <p>
                                         Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
@@ -1920,7 +1920,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                     </p> 
                                     <p>
-                                        (Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)
+                                        <b>(Remember: You submitted the ranking A–B–D–C, and ended up getting Prize B.)</b>
                                     </p>
                                     <p>
                                         Choose the correct answer below:
@@ -2076,7 +2076,7 @@ function renderPage() {
                         content :(
                             <>
                                 <p>
-                                    Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.
+                                    <b>Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.</b>
                                 </p>
                                 <p>
                                     Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
@@ -2291,7 +2291,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p> 
                                 <p>
-                                    (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)
+                                    <b>(Remember: You submitted the ranking D–B–C–A, and ended up getting Prize A.)</b>
                                 </p>
                                 <p>
                                     Choose the correct answer below:
@@ -2447,7 +2447,7 @@ function renderPage() {
                         content :(
                             <>
                                 <p>
-                                    Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.
+                                    <b>Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.</b>
                                 </p>
                                 <p>
                                     Imagine you had instead submitted a different ranking, while all prize priorities and other participants’ rankings remained the same.<br/>
@@ -2662,7 +2662,7 @@ function renderPage() {
                                         Think about each of the prizes: is that prize <b>definitely</b> included in the log, <b>possibly</b> included in the log, or <b>definitely not</b> included in the log?
                                 </p> 
                                 <p>
-                                    (Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.)
+                                    <b>(Remember: You submitted the ranking D–B–C–A, and ended up getting Prize D.)</b>
                                 </p>
                                 <p>
                                     Choose the correct answer below:
@@ -3303,7 +3303,7 @@ function renderPage() {
                                 </p><br/>
                                 <h5>Overview of allocation process</h5>
                                 <p>
-                                    The prize you get is determined in two main steps:
+                                    The prize you get is determined using an allocation process with two main steps:
                                     <ol>
                                         <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                                         <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
@@ -3410,10 +3410,13 @@ function renderPage() {
                                         Let’s call it “the considered ranking”.<br/>
                                     </p>
                                      <p style={{color: "#0b1ae3"}}>
-                                        <b>The important principle:</b> The prize you get if you submit the considered ranking is the <b>highest possible</b> that you could get <b>according to the considered ranking.</b>
+                                        <b>The important principle</b>: The prize you get if you submit the considered ranking is the <b>highest</b> that submitting any ranking could get you, <b>according to the considered ranking.</b>
                                     </p>
                                     <p>
                                         In other words, if you submit any alternative ranking, different from the considered ranking, you will either get <b>the same</b> prize you get when submitting the considered ranking, or some prize <b>lower on the considered ranking.</b>
+                                    </p>
+                                    <p>
+                                        No alternative ranking can get you a prize which you rank higher on the considered ranking, compared to the prize you get when you submit the considered ranking.
                                     </p>
                                     <p>
                                         For example, imagine that you submitted the ranking A–B–C–D and ended up getting Prize C. This means that Prize C is the highest possible that you could get on the considered ranking A–B–C–D. Submitting any other, alternative ranking different from A–B–C–D could have only gotten you the same prize, Prize C, or possibly a lower-ranked prize on the considered ranking, Prize D. No other alternative ranking could have gotten you Prize A or Prize B.
@@ -3427,7 +3430,7 @@ function renderPage() {
                                         <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                                     </p>
                                     <p>
-                                        The prize you get is determined in two main steps:
+                                        The prize you get is determined using an allocation process with two main steps:
                                         <ol>    
                                             <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>

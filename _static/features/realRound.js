@@ -519,7 +519,7 @@ function RenderRoundPage() {
                     </p><br/>
                     <h5>Overview of allocation process</h5>
                     <p>
-                        The prize you get is determined in two main steps:
+                        The prize you get is determined using an allocation process with two main steps:
                         <ol>
                             <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
@@ -606,7 +606,7 @@ function RenderRoundPage() {
                         <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                     </p>
                     <p>
-                        The prize you get is determined in two main steps:
+                        The prize you get is determined using an allocation process with two main stepsÏ:
                         <ol>    
                             <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>
@@ -644,10 +644,13 @@ function RenderRoundPage() {
                         Let’s call it “the considered ranking”.<br/>
                     </p>
                      <p style={{color: "#0b1ae3"}}>
-                        <b>The important principle:</b> The prize you get if you submit the considered ranking is the <b>highest possible</b> that you could get <b>according to the considered ranking.</b>
+                        <b>The important principle</b>: The prize you get if you submit the considered ranking is the <b>highest</b> that submitting any ranking could get you, <b>according to the considered ranking.</b>
                     </p>
                     <p>
                         In other words, if you submit any alternative ranking, different from the considered ranking, you will either get <b>the same</b> prize you get when submitting the considered ranking, or some prize <b>lower on the considered ranking.</b>
+                    </p>
+                    <p>
+                        No alternative ranking can get you a prize which you rank higher on the considered ranking, compared to the prize you get when you submit the considered ranking.
                     </p>
                     <p>
                         For example, imagine that you submitted the ranking A–B–C–D and ended up getting Prize C. This means that Prize C is the highest possible that you could get on the considered ranking A–B–C–D. Submitting any other, alternative ranking different from A–B–C–D could have only gotten you the same prize, Prize C, or possibly a lower-ranked prize on the considered ranking, Prize D. No other alternative ranking could have gotten you Prize A or Prize B.

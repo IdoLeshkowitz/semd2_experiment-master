@@ -137,6 +137,7 @@ function renderReflectionPage(){
         return (
             <div className="instructions">
             <p>From this point on we no longer care about right or wrong answers, we are only interested in your <b>honest</b> reflections and opinions.</p>
+            <p>None of the questions from this point on will count for your Understanding Bonus.</p>
             <p> Please answer the following questions about your experience playing the game. </p>
             <label htmlFor="typically_rank"> We'll start with a general question: <b>How did you typically rank the four prizes</b> in the 10 real rounds? Please share with us your main considerations, even if you are not sure that you always thought about them all. </label>
             <textarea id="typically_rank" name="typically_rank" rows={3} style={{width: "100%", border:"1px solid lightgrey"}} onChange={()=>{handleChange("typically_rank", document.getElementById("typically_rank").value)}}></textarea>
