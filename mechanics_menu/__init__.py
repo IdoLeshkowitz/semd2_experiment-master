@@ -314,7 +314,7 @@ class DAalghoInterface(Page):
 
         def get_understanding_bonus_limit_by_round(round):
             if round == 1:
-                return 22
+                return 23
             else:
                 return 7
 

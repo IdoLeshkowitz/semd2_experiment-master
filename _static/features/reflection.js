@@ -147,7 +147,7 @@ function renderReflectionPage(){
                     </span>
                 }
             </div>
-            <label htmlFor="did_change">Did you <b>change</b> the way you rank throughout the game? If so, in which way and at which point</label>
+            <label htmlFor="did_change">Did you <b>change</b> the way you rank throughout the game? If so, in which way and at which point?</label>
             <textarea id="did_change" name="did_change" rows={3} style={{width: "100%", border:"1px solid lightgrey"}} onChange={(e)=>{handleChange("did_change", e.target.value)}}></textarea>
             <div className="btn-container">
                 { form.did_change.error &&
@@ -225,6 +225,9 @@ function renderReflectionPage(){
                     }
                 </div>
             </div>
+            <p>
+                Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.
+            </p>
             <div className="slider-container">
                 <p>
                     How well do you think you now understand the <b>key principle</b> of your ranking?<br/>

@@ -168,7 +168,7 @@ function renderUnderstandingTestPage(){
                 </p>
                 <p>
                     Please answer the following questions. <br/>
-                    (Each True/False you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
+                    (Each Yes/No you determine correctly will count as <b>2 questions</b> for your Understanding Bonus)
                 </p>
                 <p>
                     If you had instead submitted <b>A–B–C–D</b>, and the prize priorities and other participants’ rankings did not change, is it possible (or certain) that you would have gotten…?
@@ -264,7 +264,7 @@ function renderUnderstandingTestPage(){
                         "I would have gotten prize D.",
                     ]}
                     value={form.page2_q2.value}
-                    label={<span>If you had instead submitted D–C–B–A, and the prize priorities and other participants’ rankings did not change, then which of the following is true?</span>}
+                    label={<span>If you had instead submitted <b>D–C–B–A</b>, and the prize priorities and other participants’ rankings did not change, then which of the following is true?</span>}
                 />
                 <div class="btn-container">
                     <button onClick={onSubmit} type="button" className="btn btn-primary">Submit</button>

@@ -43,6 +43,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id:"question_11",
                             type: "radio",
                             inputRef: React.createRef(null),
+                            dashboardDisabled: true,
                             content : (
                                 <>
                                     <p>
@@ -510,7 +511,8 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <ul>
                                         <li>
-                                            <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
+                                            <b>Unpair:</b> for each such prize, keep only the participant with the highest priority for getting that prize paired to it.<br/>
+                                            <b>Unpair</b> the other participants  from that prize.
                                         </li>
                                         <li>
                                             <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
@@ -592,7 +594,8 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <ul>
                                         <li>
-                                            <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
+                                            <b>Unpair:</b> for each such prize, keep only the participant with the highest priority for getting that prize paired to it.<br/>
+                                            <b>Unpair</b> the other participants  from that prize.
                                         </li>
                                         <li>
                                             <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
@@ -675,7 +678,8 @@ function renderDaAlgoPage(props = js_vars) {
                                 </p>
                                 <ul>
                                     <li>
-                                        <b>Unpair</b>: for each such prize, keep only the participant with the highest priority at that prize paired to it. <b>Unpair</b> the other participants from that prize.
+                                        <b>Unpair:</b> for each such prize, keep only the participant with the highest priority for getting that prize paired to it.<br/>
+                                        <b>Unpair</b> the other participants  from that prize.
                                     </li>
                                     <li>
                                         <p><b>Re-pair:</b> re-pair these participants to their highest-rank prize among the prizes they were <b>not yet paired with</b>.</p>
@@ -1065,25 +1069,25 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <p>
                                         In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you like, you can close and re-open the video while following along step-by-step.
-                                        <div class="btn-container">
-                                            <button 
-                                                className="button-3"
-                                                type="button"
-                                                onClick={()=>{
-                                                    setModals({...modals, video : true})
-                                                    liveSend({
-                                                        'information_type': 'video_modal_opened',
-                                                        'time': new Date().toUTCString()
-                                                    })
-                                                }}
-                                                >
-                                                Click here for a video with step-by-step explanations
-                                            </button>
+                                        <div style={{display:'flex', flexDirection : "column", justifyContent:'center', alignItems:'center'}}>
+                                            <div class="btn-container">
+                                                <button 
+                                                    className="button-3"
+                                                    type="button"
+                                                    onClick={()=>{
+                                                        setModals({...modals, video : true})
+                                                        liveSend({
+                                                            'information_type': 'video_modal_opened',
+                                                            'time': new Date().toUTCString()
+                                                        })
+                                                    }}
+                                                    >
+                                                    Click here for a video with step-by-step explanations
+                                                </button>
+                                            </div>
+                                            <span>(To restart the video, please refresh the page)</span>
                                         </div>
                                     </p>   
-                                    <p>
-                                        to restart the video, please refresh the page
-                                    </p>
                                     <p>
                                         Click Submit when you are done.<br/>
                                         (Get it right on first try to increase your bonus; it will count as <b>5 questions</b>.<br/>
@@ -1690,7 +1694,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         Now do the same for the three other prizes. One by one, pair each of them to its <b>highest-priority</b> participant, except for you.
                                     </p>
                                     <p>
-                                        Hint: The highest-priority participant at Prize D is You, but cannot be paired with you during this stage of the process.<br/> 
+                                        Hint: The highest-priority participant at Prize D is You, but You cannot be paired with you during this stage of the process.<br/> 
                                         Who is Prize D’s highest-priority participant, <b>except for you</b>? (Another hint: it is Theresa)
                                     </p>
                                     <p>
@@ -1728,9 +1732,9 @@ function renderDaAlgoPage(props = js_vars) {
                             expectedAnswerIndex: 3,
                             options :[
                                 <span>It is determined at random.</span>,
-                                <span>The prize that got paired to Ruth first .</span>,
+                                <span>The prize that got paired to Ruth first.</span>,
                                 <span>The prize where Ruth has higher priority.</span>,
-                                <span>The prize highest in Ruth’s ranking</span>,
+                                <span>The prize highest in Ruth’s ranking.</span>,
                             ],
                             content : (
                                 <>
@@ -2339,7 +2343,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <p>
                                     Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
                                     Note: Now is the first time that your priority for getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
-                                    Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                                    Choose “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
                             correctMsg:(
@@ -2373,9 +2377,9 @@ function renderDaAlgoPage(props = js_vars) {
                             label: (<span>Prize B : (Get it right on first try to increase your bonus)</span>),
                             content : (
                                 <p>
-                                    Now use this rule to determine your Obtainable Prizes.<br/>
-                                    Note: Now is the first time that your priority for getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
-                                    Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                                    Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
+                                    Note: Now is the first time that your priority for getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
+                                    Choose “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
                             correctMsg:(
@@ -2409,9 +2413,9 @@ function renderDaAlgoPage(props = js_vars) {
                             label: (<span>Prize C : (Get it right on first try to increase your bonus)</span>),
                             content : (
                                 <p>
-                                    Now use this rule to determine your Obtainable Prizes.<br/>
-                                    Note: Now is the first time that your priority for getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
-                                    Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                                    Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
+                                    Note: Now is the first time that your priority for getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
+                                    Choose “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>    
                             ),
                             correctMsg:(
@@ -2445,9 +2449,9 @@ function renderDaAlgoPage(props = js_vars) {
                             boldCustomerInProductsTable: "You",
                             content : (
                                 <p>
-                                    Now use this rule to determine your Obtainable Prizes.<br/>
-                                    Note: Now is the first time that your priority for getting the different prizes matter (that is, the “Y”s in the Prize Priorities table).<br/>
-                                    Click on “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
+                                    Now use this rule to determine your <b>Obtainable Prizes.</b><br/>
+                                    Note: Now is the first time that your priority for getting the different prizes matters. Remember, it is indicated by the <span style={{color: "#0b1ae3"}}>“Y”s in the Prize Priorities table</span>, which are now colored blue.<br/>   
+                                    Choose “Obtainable” or “Unobtainable” next to all the prizes below:<br/>
                                 </p>
                             ),
                             correctMsg:(
@@ -2511,7 +2515,7 @@ function renderDaAlgoPage(props = js_vars) {
                                 <span>The prize that was left unpaired in the temporary allocation.</span>,
                                 <span>The prize that other participants placed last in rankings on average.</span>,
                                 <span>The prize that I ranked the highest.</span>,
-                                <span>The prize where I have the highest priority.</span>,
+                                <span>The prize which I have the highest priority for getting.</span>,
                             ],
                             expectedAnswerIndex: 2,
                         },
@@ -2598,24 +2602,24 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p>
                                     <p>
                                         In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you like, you can close and re-open the video while following along step-by-step.
-                                        <div class="btn-container">
-                                            <button 
-                                                className="button-3"
-                                                type="button"
-                                                onClick={()=>{
-                                                    setModals({...modals, video : true})
-                                                    liveSend({
-                                                        'information_type': 'video_modal_opened',
-                                                        'time': new Date().toUTCString()
-                                                    })
-                                                }}
-                                                >
-                                                Click here for a video with step-by-step explanations
-                                                </button>
+                                        <div style={{display:'flex', flexDirection : "column", justifyContent:'center', alignItems:'center'}}>
+                                            <div class="btn-container">
+                                                <button 
+                                                    className="button-3"
+                                                    type="button"
+                                                    onClick={()=>{
+                                                        setModals({...modals, video : true})
+                                                        liveSend({
+                                                            'information_type': 'video_modal_opened',
+                                                            'time': new Date().toUTCString()
+                                                        })
+                                                    }}
+                                                    >
+                                                    Click here for a video with step-by-step explanations
+                                                    </button>
+                                            </div>
+                                            <span>(To restart the video, please refresh the page)</span>
                                         </div>
-                                    </p>
-                                    <p>
-                                        to restart the video, please refresh the page
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -3971,7 +3975,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     </p><br/>
                                     <h5>Details of allocation process</h5>
                                     <p>
-                                        The allocation process is a multi-step process , as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
+                                        The allocation process is a multi-step process, as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                                     </p>
                                     <ol>
                                         <li>
@@ -3986,10 +3990,10 @@ function renderDaAlgoPage(props = js_vars) {
                                                 Each conflict is solved in two steps:
                                                  <ul>
                                                     <li>
-                                                        <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                                        <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
                                                     </li>
                                                     <li>
-                                                        <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                                        <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
                                                     </li>
                                                 </ul>
                                             </p>
@@ -4008,7 +4012,9 @@ function renderDaAlgoPage(props = js_vars) {
                                         When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
                                     </p>
                                     <p>
-                                        Each prize is then <b>allocated</b> to the participant paired to it.
+                                        Each prize is then allocated to the participant paired to it.<br/>
+                                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
+                                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
                                     </p>
                                 </div>
                         }
@@ -4037,7 +4043,7 @@ function renderDaAlgoPage(props = js_vars) {
                                     <h5>Details of allocation process</h5>
                                     <h6><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h6>
                                     <p>
-                                        The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows:
+                                        The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                                     </p>
                                     <ol>
                                         <li>
@@ -4057,7 +4063,7 @@ function renderDaAlgoPage(props = js_vars) {
                                                        <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
                                                     </li>
                                                     <li>
-                                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
+                                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before, and who are not you. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
                                                     </li>
                                                 </ul>
                                             </p>
@@ -4080,27 +4086,34 @@ function renderDaAlgoPage(props = js_vars) {
                                         When there are no more conflicts and when one prize was unpaired from all participants (except for you), the process is over. The result is each prize, except for the unpaired one, being paired to a different participant (except for you).
                                     </p>
                                     <p>
-                                        Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.
+                                        Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.<br/>
                                     </p>
                                     <p>
-                                        Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
+                                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
                                     </p>
                                     <p>
-                                        In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b>
+                                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
                                     </p>
                                     <p>
+                                        Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.<br/>
+                                        In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b><br/>
                                         You can obtain two kinds of prizes:
                                         <ol>
-                                            <li><b>Any prize that your priority of getting is higher</b> than that of the participant it is temporarily allocated to.</li>
+                                            <li>Any prize for which <b>your priority is higher</b> than that of the participant it is temporarily allocated to.</li>
                                             <li><b>The prize that was left unpaired in the temporary allocation.</b></li>
                                         </ol>
                                         You cannot obtain any other prizes.
                                     </p>
-                                    <h5><b>Obtainable Prizes → The prize you get</b></h5>
+                                    <h6><b>Obtainable Prizes → The prize you get</b></h6>
+                                    
                                     <p>
                                         Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
                                         In fact, this is the <b>only</b> time the allocation process uses your ranking. 
-                                    </p>        
+                                    </p>   
+                                    <p>
+                                        From among the Obtainable Prizes, <b>you get the one that you ranked the highest. </b><br/>
+                                        In other words, the computer will look through your ranking from top to bottom, and you will get the first prize that is Obtainable.
+                                    </p>     
                                 </div>      
                         }
                 </div>

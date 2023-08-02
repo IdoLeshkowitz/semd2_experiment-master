@@ -470,7 +470,7 @@ function RenderRoundPage() {
                     </p><br/>
                     <h5>Details of allocation process</h5>
                     <p>
-                        The allocation process is a multi-step process , as follows:
+                        The allocation process is a multi-step process, as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                     </p>
                     <ol>
                         <li>
@@ -485,10 +485,10 @@ function RenderRoundPage() {
                                 Each conflict is solved in two steps:
                                  <ul>
                                     <li>
-                                        <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
+                                        <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
                                     </li>
                                     <li>
-                                        <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
+                                        <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
                                     </li>
                                 </ul>
                             </p>
@@ -507,7 +507,9 @@ function RenderRoundPage() {
                         When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
                     </p>
                     <p>
-                        Each prize is then <b>allocated</b> to the participant paired to it.
+                        Each prize is then allocated to the participant paired to it.<br/>
+                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
+                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
                     </p>
                 </div>
             ),
@@ -535,7 +537,7 @@ function RenderRoundPage() {
                     <h5>Details of allocation process</h5>
                     <h6><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h6>
                     <p>
-                        The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows:
+                        The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                     </p>
                     <ol>
                         <li>
@@ -555,7 +557,7 @@ function RenderRoundPage() {
                                        <b>Unpair:</b> only the prize highest in that participant’s ranking  remains paired to that participant. The others get unpaired.
                                     </li>
                                     <li>
-                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
+                                        <b>Re-pair:</b> all unpaired prizes can only get re-paired to participants that they were not paired with before, and who are not you. Each unpaired prize is re-paired to its <b>highest</b>-priority participant, among the participants they <b>were not yet paired with</b> and <b>except for you.</b>
                                     </li>
                                 </ul>
                             </p>
@@ -578,28 +580,35 @@ function RenderRoundPage() {
                         When there are no more conflicts and when one prize was unpaired from all participants (except for you), the process is over. The result is each prize, except for the unpaired one, being paired to a different participant (except for you).
                     </p>
                     <p>
-                        Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.
+                        Each prize except for the unpaired one is then <b>temporarily allocated</b> to the participant it is paired to.<br/>
                     </p>
                     <p>
-                        Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.
+                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
                     </p>
                     <p>
-                        In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b>
+                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
                     </p>
                     <p>
+                        Next, we will tell you how the <b>Obtainable Prizes</b> are determined from the temporary allocation.<br/>
+                        In this temporary allocation, no prize was allocated to you. To determine which prize is allocated to you, the computer first determines which prizes you can obtain in principle. These are the <b>Obtainable Prizes.</b><br/>
                         You can obtain two kinds of prizes:
                         <ol>
-                            <li><b>Any prize that your priority of getting is higher</b> than that of the participant it is temporarily allocated to.</li>
+                            <li>Any prize for which <b>your priority is higher</b> than that of the participant it is temporarily allocated to.</li>
                             <li><b>The prize that was left unpaired in the temporary allocation.</b></li>
                         </ol>
                         You cannot obtain any other prizes.
                     </p>
-                    <h5><b>Obtainable Prizes → The prize you get</b></h5>
+                    <h6><b>Obtainable Prizes → The prize you get</b></h6>
+                    
                     <p>
                         Finally, we will remind you how the prize you get is selected from among the Obtainable Prizes, using your ranking.<br/>
                         In fact, this is the <b>only</b> time the allocation process uses your ranking. 
-                    </p>        
-                </div>  
+                    </p>   
+                    <p>
+                        From among the Obtainable Prizes, <b>you get the one that you ranked the highest. </b><br/>
+                        In other words, the computer will look through your ranking from top to bottom, and you will get the first prize that is Obtainable.
+                    </p>     
+                </div>      
             ),
             "propertiesMenuAllocation":(
                 <div>

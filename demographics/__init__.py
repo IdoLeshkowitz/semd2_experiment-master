@@ -76,7 +76,7 @@ class Player(BasePlayer):
         blank=True
     )
     deferred_acceptance = models.StringField(
-        label="How would you describe your knowledge of the Deferred Acceptance (DA) matching mechanism, also known as the Gale-Shapley mechanism? Please mark all the boxes that apply:",
+        label="How would you describe your knowledge of the Deferred Acceptance (DA) matching mechanism, also known as the Gale-Shapley mechanism?",
         choices=[
             "I have never heard of it",
             "I heard of it but I don’t know/remember what it is",

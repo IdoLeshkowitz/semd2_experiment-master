@@ -514,8 +514,7 @@ function renderUiFromState(step) {
                                                 Remember:
                                             </p>
                                             <p>
-                                                The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
-                                                while taking into account the rankings of all participants.
+                                                The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
                                             </p>
                                             <p>
                                                 The prize priorities can affect the allocation of prizes. <br/>
@@ -643,7 +642,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.exit_point_3} >
                                 <div className="explain">
                                     <p>
-                                        If you do not wish to exit early for the partial payment of {getMoneyString(2,props.currency)}, and if you are ready for a difficult additional 50-60 minute study, please press proceed below.
+                                        If you do not wish to exit early for the partial payment of {getMoneyString(2,props.currency)}, and if you are ready for a difficult additional 50-60 minute study, please press Ïroceed below.
                                     </p>
                                 </div>
                                 {
