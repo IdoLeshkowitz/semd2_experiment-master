@@ -245,7 +245,7 @@ function renderDaAlgoPage(props = js_vars) {
                             expectedAnswerIndex: 3,
                             options :[
                                 <span>It is determined at random.</span>,
-                                <span>The participant who got paired to Prize A first .</span>,
+                                <span>The participant who got paired to Prize A first.</span>,
                                 <span>The participant for whom Prize A is ranked higher.</span>,
                                 <span>The participant highest in Prize A’s priorities.</span>,
                             ],
@@ -838,7 +838,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now please verify you understand what participant each prize is allocated to.
-                                    Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                                    Choose the participant that each prize is allocated to next to all the prizes below:<br/>
                                 </p>
                             ),
                             correctMsg:(
@@ -872,7 +872,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now please verify you understand what participant each prize is allocated to.
-                                    Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                                    Choose the participant that each prize is allocated to next to all the prizes below:<br/>
                                 </p>
                             ),
                             correctMsg:(
@@ -906,7 +906,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now please verify you understand what participant each prize is allocated to.
-                                    Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                                    Choose the participant that each prize is allocated to next to all the prizes below:<br/>
                                 </p>    
                             ),
                             correctMsg:(
@@ -940,7 +940,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content : (
                                 <p>
                                     Now please verify you understand what participant each prize is allocated to.
-                                    Click on the participant that each prize is allocated to next to all the prizes below:<br/>
+                                    Choose the participant that each prize is allocated to next to all the prizes below:<br/>
                                 </p>
                             ),
                             correctMsg:(
@@ -1065,10 +1065,10 @@ function renderDaAlgoPage(props = js_vars) {
                                         Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
                                     </p>
                                     <p style={{color : "#0b1ae3"}}>
-                                        Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
+                                        Note: In this round, you should only submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
-                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you like, you can close and re-open the video while following along step-by-step.
+                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you'd like, you can close and re-open the video while following along step-by-step.
                                         <div style={{display:'flex', flexDirection : "column", justifyContent:'center', alignItems:'center'}}>
                                             <div class="btn-container">
                                                 <button 
@@ -1130,15 +1130,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content:(
                                 <>
                                     <p>
-                                        For each of the four prizes below, click on <b>the participant to whom this prize is allocated,</b> based on the result of the allocation process.
-                                        <Accordion title="Click here for a hint:... [expandable]">
-                                            <p>
-                                                The allocation process ended with each prize allocated to a different participant.
-                                            </p>
-                                            <p>
-                                                Notice in the Prize Priorities table below (on the left) that Prize A is now allocated to You, Prize B is allocated to Shirley, Prize C is allocated to Theresa and Prize D is allocated to Ruth.
-                                            </p>
-                                        </Accordion>
+                                        For each of the four prizes below, choose <b>the participant to whom this prize is allocated,</b> based on the result of the allocation process.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1241,7 +1233,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
                                     </p>
                                     <p style={{color : "#0b1ae3"}}>
-                                        Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
+                                        Note: In this round, you should only submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1285,7 +1277,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content:(
                                 <>
                                     <p>
-                                        For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                        For each of the four prizes below, choose the participant to whom this prize is allocated, based on the result of the allocation process.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1388,7 +1380,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         Find the <b>allocation</b> of prizes to participants using the Allocation Dashboard below. Use the multi-step process you learned.
                                     </p>
                                     <p style={{color : "#0b1ae3"}}>
-                                        Note: In this round, you should only Submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like Training in Round 1.
+                                        Note: In this round, you should only submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like Training in Round 1.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1432,7 +1424,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content:(
                                 <>
                                     <p>
-                                        For each of the four prizes below, click on the participant to whom this prize is allocated, based on the result of the allocation process.
+                                        For each of the four prizes below, choose the participant to whom this prize is allocated, based on the result of the allocation process.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -1532,6 +1524,7 @@ function renderDaAlgoPage(props = js_vars) {
                             id: "question_11",
                             type: "radio",
                             inputRef: React.createRef(null),
+                            dashboardDisabled: true,
                             content : (
                                 <>
                                     <p>
@@ -1694,7 +1687,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         Now do the same for the three other prizes. One by one, pair each of them to its <b>highest-priority</b> participant, except for you.
                                     </p>
                                     <p>
-                                        Hint: The highest-priority participant at Prize D is You, but You cannot be paired with you during this stage of the process.<br/> 
+                                        Hint: The highest-priority participant at Prize D is You, but You cannot be paired with it during this stage of the process.<br/> 
                                         Who is Prize D’s highest-priority participant, <b>except for you</b>? (Another hint: it is Theresa)
                                     </p>
                                     <p>
@@ -2598,10 +2591,10 @@ function renderDaAlgoPage(props = js_vars) {
                                         First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                                     </p>
                                     <p style={{color : "#0b1ae3"}}>
-                                        Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
+                                        Note: In this round, you should only submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
-                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you like, you can close and re-open the video while following along step-by-step.
+                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you'd like, you can close and re-open the video while following along step-by-step.
                                         <div style={{display:'flex', flexDirection : "column", justifyContent:'center', alignItems:'center'}}>
                                             <div class="btn-container">
                                                 <button 
@@ -2777,7 +2770,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                                     </p>
                                     <p style={{color : "#0b1ae3"}}>
-                                        Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
+                                        Note: In this round, you should only submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -2937,7 +2930,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         First, find the <b>temporary allocation</b> of prizes to all participants <b>except for you</b> using the Allocation Dashboard below. Use the multi-step process you learned.
                                     </p>
                                     <p style={{color : "#0b1ae3"}}>
-                                        Note: In this round, you should only Submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
+                                        Note: In this round, you should only submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>

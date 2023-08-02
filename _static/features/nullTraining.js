@@ -518,7 +518,7 @@ function renderUiFromState(step) {
                                             </p>
                                             <p>
                                                 The prize priorities can affect the allocation of prizes. <br/>
-                                                The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.
+                                                The higher your priority is at some prize, the more likely you generally are to get that prize at the end of the process.
                                             </p>
                                         </div>
                                     }
@@ -642,7 +642,7 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.exit_point_3} >
                                 <div className="explain">
                                     <p>
-                                        If you do not wish to exit early for the partial payment of {getMoneyString(2,props.currency)}, and if you are ready for a difficult additional 50-60 minute study, please press Ïroceed below.
+                                        If you do not wish to exit early for the partial payment of {getMoneyString(2,props.currency)}, and if you are ready for a difficult additional 50-60 minute study, please press Proceed below.
                                     </p>
                                 </div>
                                 {

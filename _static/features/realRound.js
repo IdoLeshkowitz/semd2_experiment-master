@@ -91,7 +91,7 @@ function RenderRoundPage() {
                     {
                         props.treatment === "properties" && 
                             <>
-                                <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "propertiesMenuAllocation":"propertiesTraditionalAllocation")}}>Click here for a reminder on the Key Principle of the allocation process</button><br/>
+                                <button className="button-2" type="button" onClick={()=>{setActiveModal(props.variant === "menu"? "propertiesMenuAllocation":"propertiesTraditionalAllocation")}}>Click for a reminder on the Key Principle of the allocation process</button><br/>
                             </>
                     }
                     {
@@ -616,7 +616,7 @@ function RenderRoundPage() {
                         <b>This principle is important to learn:</b> You may be able to apply your knowledge of it to choose your rankings in the upcoming real rounds of this study.
                     </p>
                     <p>
-                        The prize you get is determined using an allocation process with two main stepsÏ:
+                        The prize you get is determined using an allocation process with two main steps:
                         <ol>    
                             <li>The computer determines some group of <b>Obtainable Prizes</b> that you might receive. Your own ranking does not influence the Obtainable Prizes. Instead, they are determined using only the prize priorities and the rankings of the other participants.</li>
                             <li>You get the Obtainable Prize that you <b>ranked highest</b> (in the ranking you submitted).</li>

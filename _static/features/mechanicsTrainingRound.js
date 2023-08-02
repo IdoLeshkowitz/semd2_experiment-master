@@ -350,7 +350,7 @@ function renderPage() {
                                         </p>
                                         <p>
                                             <b>Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A</b>. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
-                                            Which of the following might be true? (select one answer)<br/>
+                                            Which of the following is true? (select one answer)<br/>
                                             (Hint: think about what the set of Obtainable Prizes could possibly be.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
                                         </p>
@@ -1646,7 +1646,7 @@ function renderPage() {
                                         </p>
                                         <p>
                                             <b>Remember: You submitted the ranking C–B–A–D, and ended up getting Prize A</b>. Imagine you had instead submitted a different ranking (while all prize priorities and other participants’ rankings remained the same).
-                                            Which of the following might be true? (select one answer)<br/>
+                                            Which of the following is true? (select one answer)<br/>
                                             (Hint: think about a considered ranking and alternative rankings.)<br/>
                                             (Get it right on first try to increase your bonus)<br/>
                                         </p>
@@ -3246,12 +3246,12 @@ function renderPage() {
                                    <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                                    Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                                 </p><br/>
-                                <h5>Overview of allocation process</h5>
+                                <h5 style={{fontSize:'1.25rem'}}>Overview of allocation process</h5>
                                 <p>
                                     The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                                     <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                                 </p><br/>
-                                <h5>Details of allocation process</h5>
+                                <h5 style={{fontSize:'1.25rem'}}>Details of allocation process</h5>
                                 <p>
                                     The allocation process is a multi-step process , as follows:
                                 </p>
@@ -3301,7 +3301,7 @@ function renderPage() {
                                     <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                                     Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                                 </p><br/>
-                                <h5>Overview of allocation process</h5>
+                                <h5 style={{fontSize:'1.25rem'}}>Overview of allocation process</h5>
                                 <p>
                                     The prize you get is determined using an allocation process with two main steps:
                                     <ol>
@@ -3316,7 +3316,7 @@ function renderPage() {
                                     The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                                     <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                                 </p>
-                                <h5>Details of allocation process</h5>
+                                <h5 style={{fontSize:'1.25rem'}}>Details of allocation process</h5>
                                 <h6><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h6>
                                 <p>
                                     The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):

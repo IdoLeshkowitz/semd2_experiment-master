@@ -225,13 +225,9 @@ function renderReflectionPage(){
                     }
                 </div>
             </div>
-            <p>
-                Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.
-            </p>
             <div className="slider-container">
                 <p>
-                    How well do you think you now understand the <b>key principle</b> of your ranking?<br/>
-                    (Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.)
+                    How well do you think you now understand the <b>key principle</b> of your ranking?
                 </p>
                 <div className="slider-row">
                     <span> I do not understand at all</span>
@@ -253,8 +249,7 @@ function renderReflectionPage(){
             </div>
             <div className="slider-container">
                 <p>
-                    How well do you think you now understand how the allocation process <b>works</b>?<br/>
-                    (Note: you have to drag the sliders below to fill in a response. In case you want to keep a slider in the leftmost position, please drag it and return it to that position.)
+                    How well do you think you now understand how the allocation process <b>works</b>?
                 </p>
                 <div className="slider-row">
                     <span> I do not understand at all</span>
