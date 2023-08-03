@@ -1068,7 +1068,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         Note: In this round, you should only submit once you find the <b>final allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
-                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you'd like, you can close and re-open the video while following along step-by-step.
+                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. Clicking on the video will pause/unpause it, and if you close and re-open the video, it will continue from the same point.
                                         <div style={{display:'flex', flexDirection : "column", justifyContent:'center', alignItems:'center'}}>
                                             <div class="btn-container">
                                                 <button 
@@ -1130,7 +1130,7 @@ function renderDaAlgoPage(props = js_vars) {
                             content:(
                                 <>
                                     <p>
-                                        For each of the four prizes below, choose <b>the participant to whom this prize is allocated,</b> based on the result of the allocation process.
+                                        For each of the four prizes below, choose <b>the participant to whom this prize is allocated,</b> based on the result of the allocation process.Ï
                                     </p>
                                     <p>
                                         Click Submit when you are done.<br/>
@@ -2594,7 +2594,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         Note: In this round, you should only submit once you find the <b>final temporary allocation</b>. Do <b>not</b> separately submit steps of the process like in Training Round 1.
                                     </p>
                                     <p>
-                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. If you'd like, you can close and re-open the video while following along step-by-step.
+                                        In case you are still not sure how to find the allocation by yourself, click on the button below to watch a helpful video explaining all the steps. Clicking on the video will pause/unpause it, and if you close and re-open the video, it will continue from the same point.
                                         <div style={{display:'flex', flexDirection : "column", justifyContent:'center', alignItems:'center'}}>
                                             <div class="btn-container">
                                                 <button 

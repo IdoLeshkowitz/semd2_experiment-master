@@ -2880,7 +2880,7 @@ function renderPage() {
                                     { props.treatment === "mechanics" ?
                                         "Click for a reminder on the technical details of the allocation process"
                                         : 
-                                        "Click here for a reminder on the Key Principle of your ranking"
+                                        "Click for a reminder on the Key Principle of your ranking"
                                     }
                                 </button>
                             <div style={{display:'flex', gap:'1.5rem',flexDirection:'column'}}>

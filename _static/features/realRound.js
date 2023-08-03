@@ -463,12 +463,12 @@ function RenderRoundPage() {
                        <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                        Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                     </p><br/>
-                    <h5>Overview of allocation process</h5>
+                    <h5 style={{fontSize:'1.25rem'}}>Overview of allocation process</h5>
                     <p>
                         The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                         <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                     </p><br/>
-                    <h5>Details of allocation process</h5>
+                    <h5 style={{fontSize:'1.25rem'}}>Details of allocation process</h5>
                     <p>
                         The allocation process is a multi-step process, as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
                     </p>
@@ -507,9 +507,7 @@ function RenderRoundPage() {
                         When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
                     </p>
                     <p>
-                        Each prize is then allocated to the participant paired to it.<br/>
-                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
-                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
+                        Each prize is then allocated to the participant paired to it.
                     </p>
                 </div>
             ),
@@ -519,7 +517,7 @@ function RenderRoundPage() {
                         <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
                         Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
                     </p><br/>
-                    <h5>Overview of allocation process</h5>
+                    <h5 style={{fontSize:'1.25rem'}}>Overview of allocation process</h5>
                     <p>
                         The prize you get is determined using an allocation process with two main steps:
                         <ol>
@@ -534,7 +532,7 @@ function RenderRoundPage() {
                         The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
                         <img src={imgUrls.menu} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
                     </p>
-                    <h5>Details of allocation process</h5>
+                    <h5 style={{fontSize:'1.25rem'}}>Details of allocation process</h5>
                     <h6><b>Priorities and rankings → Temporary allocation → Obtainable Prizes</b></h6>
                     <p>
                         The allocation process begins with a multi-step process. This process  determines a “temporary allocation” of prizes to all participants <b>except for you</b>, and then determines your Obtainable Prizes based on this temporary allocation. This process <b>does not involve your own submitted ranking</b>, and works as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
@@ -631,10 +629,6 @@ function RenderRoundPage() {
                     </p>
                     <p>
                         For example, imagine that your Obtainable Prizes are C and D. If you submit the ranking A–B–C–D, you will get Prize C, which is the one you ranked highest among the Obtainable Prizes. No ranking you could possibly submit would get you Prize A or Prize B, since the Obtainable Prizes are C and D, and since your own ranking cannot influence the Obtainable Prizes.
-                    </p>
-                    <p>
-                        On the next screens you will play training rounds of the game to master your understanding of this principle.
-                        Click the button below to proceed to these rounds.
                     </p>
                 </div>     
             ),
