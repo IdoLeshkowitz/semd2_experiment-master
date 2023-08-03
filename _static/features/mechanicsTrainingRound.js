@@ -3242,57 +3242,59 @@ function renderPage() {
                         {
                             props.variant === "traditional" && 
                              <div>
-                                <p>
-                                   <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
-                                   Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
-                                </p><br/>
-                                <h5 style={{fontSize:'1.25rem'}}>Overview of allocation process</h5>
-                                <p>
-                                    The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
-                                    <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
-                                </p><br/>
-                                <h5 style={{fontSize:'1.25rem'}}>Details of allocation process</h5>
-                                <p>
-                                    The allocation process is a multi-step process , as follows:
-                                </p>
-                                <ol>
+                    <p>
+                       <b>These details are important to learn:</b> You may be able to apply your knowledge of them to make better decisions in the upcoming real rounds of this study.<br/>
+                       Some details may seem confusing at first. This is quite natural! But don’t worry, we will show you step-by-step examples. Things will become clearer along the way.
+                    </p><br/>
+                    <h5 style={{fontSize:'1.25rem'}}>Overview of allocation process</h5>
+                    <p>
+                        The following image illustrates how your own ranking, the rankings of the other participants and the prize priorities affect the prize you get:
+                        <img src={imgUrls.trad} alt="explanation" style={{width:'100%',padding:'5% 10%'}}/>
+                    </p><br/>
+                    <h5 style={{fontSize:'1.25rem'}}>Details of allocation process</h5>
+                    <p>
+                        The allocation process is a multi-step process, as follows (it may look complicated, but don’t worry, we will rehearse this in a moment):
+                    </p>
+                    <ol>
+                        <li>
+                            In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                        </li>
+                        <li>
+                            <p>
+                                In the next step, possible conflicts are detected and solved.<br/>
+                                If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
+                            </p>
+                            <p>
+                                Each conflict is solved in two steps:
+                                 <ul>
                                     <li>
-                                        In the first step, each participant is paired to their <b>highest</b>-rank prize.
+                                        <b>Unpair</b>: only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
                                     </li>
                                     <li>
-                                        <p>
-                                            In the next step, possible conflicts are detected and solved.<br/>
-                                            If two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/>
-                                        </p>
-                                        <p>
-                                            Each conflict is solved in two steps:
-                                             <ul>
-                                                <li>
-                                                    <b>Unpair:</b> only the participant highest in that prize’s priorities remains paired to that prize. The others get unpaired.
-                                                </li>
-                                                <li>
-                                                    <b>Re-pair:</b> all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
-                                                </li>
-                                            </ul>
-                                        </p>
+                                        <b>Re-pair</b>: all unpaired participants can only get re-paired to prizes that they were not paired with before. Each unpaired participant is re-paired to their <b>highest-rank</b> prize among the prizes they <b>were not yet paired with</b>.
                                     </li>
-                                    <li>
-                                        <p>
-                                            Later steps continue in the same way, by detecting and solving new conflicts.<br/>
-                                            Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
-                                        </p>
-                                        <p>
-                                            A participant can get unpaired from a prize <b>even if they successfully got paired to that prize in a previous step.</b>
-                                        </p>
-                                    </li>
-                                </ol>
-                                <p>
-                                    When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
-                                </p>
-                                <p>
-                                    Each prize is then <b>allocated</b> to the participant paired to it.
-                                </p>
-                            </div>
+                                </ul>
+                            </p>
+                        </li>
+                        <li>
+                            <p>
+                                Later steps continue in the same way, by detecting and solving new conflicts.<br/>
+                                Like before, if two (or more) participants are paired to the same prize, this is a <b>conflict</b>.<br/> The conflict is solved using the same <b>Unpair</b> and <b>Re-pair</b> steps from above. 
+                            </p>
+                            <p>
+                                A participant can get unpaired from a prize <b>even if they successfully got paired to that prize in a previous step.</b>
+                            </p>
+                        </li>
+                    </ol>
+                    <p>
+                        When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
+                    </p>
+                    <p>
+                        Each prize is then allocated to the participant paired to it.<br/>
+                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
+                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
+                    </p>
+                </div>
                         }
                         {
                             props.variant === "menu" &&
