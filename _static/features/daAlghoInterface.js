@@ -4005,9 +4005,7 @@ function renderDaAlgoPage(props = js_vars) {
                                         When there are no more conflicts, the process is over. The result is each participant being paired to a different prize.
                                     </p>
                                     <p>
-                                        Each prize is then allocated to the participant paired to it.<br/>
-                                        The other participants do not get their prize from the temporary allocation; their prizes are determined by some other process.
-                                        Instead, the temporary allocation is used to determine your Obtainable Prizes.
+                                        Each prize is then allocated to the participant paired to it.
                                     </p>
                                 </div>
                         }

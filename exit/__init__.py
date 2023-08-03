@@ -27,6 +27,8 @@ class Player(BasePlayer):
 
 
 def get_understanding_bonus_ratio(understanding_bonus, max_understanding_bonus):
+    if max_understanding_bonus == 0:
+        return 0
     return round(understanding_bonus / max_understanding_bonus * 100, 1)
 
 
