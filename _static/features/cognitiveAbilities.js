@@ -72,10 +72,11 @@ function renderCognitiveAbilitiesForm() {
             "choir":{
                 value: "",
                 error: "",
-                isPositiveNumber: true,
-                label:<label>Out of 1,000 people in a small town 500 are members of a choir. Out of these 500 members in the choir 100 are men. <br/>Out of the 500 inhabitants that are not in the choir 300 are men. What is the probability that a randomly drawn man is a member of the choir? Please enter a probability between 0 and 1:</label>,                            
+                label:<label>Out of 1,000 people in a small town 500 are members of a choir. Out of these 500 members in the choir 100 are men. <br/>Out of the 500 inhabitants that are not in the choir 300 are men. What is the probability that a randomly drawn man is a member of the choir? Please enter a percent chance between 0 and 100:</label>,
+                'units' : 'percent chance',                            
+                isRoundNumber: true,
                 min: 0,
-                max: 1,
+                max: 100,
             },
         })
         function onSubmit (){

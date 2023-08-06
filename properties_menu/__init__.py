@@ -187,7 +187,7 @@ class TrainingRound(Page):
         if action == "submit_question":
             question_id = data["question_id"]
             if question_id == "general_property":
-                player.incorrect_seq_general_property = str(data)
+                player.incorrect_seq_general_property += str(data)
             elif question_id == "mechanism_misconception_1":
                 player.incorrect_seq_mechanism_misconception_1 += str(data)
             elif question_id == "mechanism_misconception_2":
