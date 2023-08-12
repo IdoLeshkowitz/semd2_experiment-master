@@ -101,6 +101,7 @@ function renderCognitiveAbilitiesForm() {
                 }
             });
             if (isValid){
+                document.querySelector("#form-valid").click()
                 document.querySelector("form").submit();
             }
         }
@@ -155,6 +156,7 @@ function renderCognitiveAbilitiesForm() {
                                             type="text"
                                             value={form[key].value}
                                             onChange={handleChange}
+                                            required
                                         />&nbsp;
                                         {form[key].units}
                                     </div>

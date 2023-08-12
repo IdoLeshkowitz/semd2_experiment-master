@@ -8,7 +8,6 @@ function RenderRoundPage() {
         return steps.slice(0, activeStepIndex + 1)
     }
     function RoundPage(props){
-        console.log(props)
         const [ranking, setRanking] = React.useState(props.initialRanking)
         const [activeModal,setActiveModal] = React.useState(null)
         const [activeSteps, setActiveSteps] = React.useState(getActiveSteps(props.activeStepIndex))
