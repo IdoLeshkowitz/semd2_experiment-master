@@ -106,7 +106,7 @@ class Player(BasePlayer):
     )
     employment = models.StringField(
         label="Which of the following best describes your main activity or your employment status?",
-        choices=["Working (other than your work at Prolific)", "Unemployed", "Retired", "Stay-at-home parent",
+        choices=["Working", "Unemployed", "Retired", "Stay-at-home parent",
                  "Student", "Other"],
         widget=widgets.RadioSelect,
         blank=True
