@@ -887,7 +887,6 @@ function renderUiFromState(step) {
             )
         }
     `
-
     function getInitialStepId(currentStepId, nextStepId) {
         /* if there is current step return it */
         if (currentStepId) {
@@ -902,7 +901,6 @@ function renderUiFromState(step) {
             return stepsIdsInRound[0];
         }
     }
-
     const stepsIdsInRound = getSteps(js_vars.variant,js_vars.appName,js_vars.roundNumber);
     const initialStepId = getInitialStepId(js_vars.currentStepId, js_vars.nextStepId);
     const initialStep = steps.find((step) => step.id === initialStepId);
