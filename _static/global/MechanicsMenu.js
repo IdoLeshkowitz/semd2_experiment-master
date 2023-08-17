@@ -679,7 +679,6 @@ function openPlus() {
 }
 
 function liveRecv(data) {
-    console.log(data)
     if (data['information_type'] === 'student_matching') { // An unmatched student's button was pressed.
         currentPickedPrize = data['student'];
         updateCurrentMatching(); // It is important for this function to be executed before the rest!! Yet after student is defined.

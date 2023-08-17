@@ -28,13 +28,17 @@ class Player(BasePlayer):
     full_training = models.BooleanField()
 
 
-# PAGES
+
 class PassVars(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.trajectory_num = C.trajectory_num
         player.participant.full_training = True
+        player.participant.understanding_bonus = 0
+        player.participant.understanding_bonus_limit = 0
         player.full_training = player.participant.full_training
+        player.participant.runtime__variant = "menu"
+        player.participant.runtime__treatment = "properties"
 
 
 page_sequence = [PassVars]

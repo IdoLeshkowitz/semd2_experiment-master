@@ -1,4 +1,5 @@
 const steps = [
+    {id: "repeatedStep", type: "instructions"},
     {id: "intro", type: "instructions", expectedAnswerIndex: 0},
     {id: "prize_table", type: "instructions"},
     {id: "independence", type: "radio", expectedAnswerIndex: 1},
@@ -8,12 +9,32 @@ const steps = [
     {id: 'ranking_form', type: 'rankingForm'},
     {id: 'allocation_results', type: 'allocationResults'},
     {id: 'competitors_rank_independence', type: 'radio', expectedAnswerIndex: 1},
+    {id: 'exit_point', type: 'instructions'},
+    {id: 'exit_point_2', type: 'instructions'},
+    {id: 'exit_point_3', type: 'instructions'},
     {id: 'end', type: 'end'},
+    {id: 'how_many_prizes', type: 'dropdown', expectedAnswerIndex: 0, options:[1,2,3,4,5,6,7,8,9,10]},
 ]
-const stepsDividedToRounds = [
-    ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'competitors_rank_independence', "end"],
-    ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"],
-]
+const getSteps = (variant, appName, roundNumber) => {
+    if (appName === "null_training") {
+        if (roundNumber === 1) {
+            return ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'how_many_prizes', 'competitors_rank_independence', "end"]
+        } else {
+            // return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "exit_point", "exit_point_2", "exit_point_3", "end"] Prolific
+            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
+        }
+    }
+    if (variant === "null") {
+        if (appName === "null") {
+            if (roundNumber === 1) {
+                return ['repeatedStep', 'intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'how_many_prizes', 'competitors_rank_independence', "end"]
+            }
+            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
+        }
+    }
+    if (variant )
+    return []
+}
 window.addEventListener("load", () => {
     renderUiFromState();
 })
@@ -29,12 +50,14 @@ function renderUiFromState(step) {
             const [prizesModal, setPrizesModal] = React.useState(false);
             const [studyModal, setStudyModal] = React.useState(false);
             const [rankingModal, setRankingModal] = React.useState(false);
+            const [prizesPrioritiesModal, setPrizesPrioritiesModal] = React.useState(false);
             const [ranking, setRanking] = React.useState(null);
             const [shownSteps, setShownSteps] = React.useState([initialStep])
             const latestStep = shownSteps.at(-1);
-            const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions");
+            const [readyToProceed, setReadyToProceed] = React.useState(latestStep.type === "instructions" || latestStep.type === "end" || latestStep.type === "allocationResults");
             const sectionsRefs = {
                 "intro": React.useRef(null),
+                "repeatedStep": React.useRef(null),
                 "prize_table": React.useRef(null),
                 "independence": React.useRef(null),
                 "value_table": React.useRef(null),
@@ -43,6 +66,10 @@ function renderUiFromState(step) {
                 "ranking_form": React.useRef(null),
                 "allocation_results": React.useRef(null),
                 "competitors_rank_independence": React.useRef(null),
+                "exit_point": React.useRef(null),
+                "exit_point_2": React.useRef(null),
+                "exit_point_3": React.useRef(null),
+                "how_many_prizes": React.useRef(null),
             }
             const questionsRefs = {
                 independence: {
@@ -73,6 +100,13 @@ function renderUiFromState(step) {
                     correct: React.useRef(null),
                     correctFirstAttempt: React.useRef(null),
                 },
+                how_many_prizes: {
+                    input: React.useRef(null),
+                    value: React.useRef(null),
+                    incorrect: React.useRef(null),
+                    correct: React.useRef(null),
+                    correctFirstAttempt: React.useRef(null),
+                }
             }
             const rankingFormRefs = {
                 "first_priority": React.useRef(null),
@@ -89,7 +123,7 @@ function renderUiFromState(step) {
                 const latestStep = shownSteps.at(-1);
                 const latestStepRef = sectionsRefs[latestStep.id];
                 if (latestStepRef.current === null) return ;
-                latestStepRef.current.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
+                latestStepRef.current?.scrollIntoView({behavior: "smooth", block: "start", inline: "nearest"});
             },[shownSteps])
             React.useEffect(()=>{
                 const currentStepId = shownSteps.at(-1).id;
@@ -175,6 +209,54 @@ function renderUiFromState(step) {
                         ...questionInformation
                     })
                 }
+                if (currentStep.type === "dropdown") {
+                    /* hide all messages */
+                    [questionsRefs[currentStep.id].incorrect.current, questionsRefs[currentStep.id].correct.current, questionsRefs[currentStep.id].correctFirstAttempt.current].forEach((ref) => {
+                        ref?.classList.add("hidden");
+                    })
+                    const questionInformation = {
+                        is_correct: false,
+                        attempt_number: mistakesCounter,
+                        understanding_bonus: 0,
+                        answer: null,
+                        question_id: currentStep.id,
+                        expected_answer: null,
+                        time : new Date().toUTCString()
+                    }
+                    const correctAnswer = currentStep.expectedAnswerIndex;
+                    const userAnswer = questionsRefs[currentStep.id]?.value?.current;
+                    const isCorrect = correctAnswer === parseInt(userAnswer);
+                    questionInformation.expected_answer = correctAnswer;
+                    questionInformation.answer = userAnswer;
+                    questionInformation.is_correct = isCorrect;
+                    if (isCorrect) {
+                        if (mistakesCounter === 0) {
+                            const correctFirstAttempt = questionsRefs[currentStep.id].correctFirstAttempt.current;
+                            correctFirstAttempt?.classList.remove("hidden");
+                            questionInformation.understanding_bonus = 1;
+                        }
+                        else {
+                            const correct = questionsRefs[currentStep.id].correct.current;
+                            correct?.classList.remove("hidden");
+                        }
+                        const parentElement = questionsRefs[currentStep.id].input.current;
+                        const inputs = parentElement?.querySelectorAll("input");
+                        inputs?.forEach((input) => {
+                            input.disabled = true;
+                        })
+                        setReadyToProceed(true);
+                        setMistakesCounter(0);
+                    }
+                    else {
+                        setMistakesCounter(mistakesCounter + 1);
+                        const incorrect = questionsRefs[currentStep.id].incorrect.current;
+                        incorrect?.classList.remove("hidden");
+                    }
+                    liveSend({
+                        "information_type" :"question_submission",
+                        ...questionInformation
+                    })
+                }
                 if (currentStep.type === "rankingForm") {
                     const firstPriority = props.prizes[rankingFormRefs.first_priority.current - 1];
                     const secondPriority = props.prizes[rankingFormRefs.second_priority.current - 1];
@@ -203,8 +285,11 @@ function renderUiFromState(step) {
             function onNext(){
                 const currentStep = shownSteps.at(-1);
                 const stepIndex = stepsInRound.findIndex((possibleStep) => possibleStep === currentStep.id);
-                const stepToBeStarted = steps.find((step) => step.id === stepsInRound[stepIndex + 1])
+                const stepToBeStarted = steps.find((step) => step.id === stepsInRound[stepIndex + 1]);
                 if (stepToBeStarted.type === "radio") {
+                    setReadyToProceed(false)
+                }
+                if (stepToBeStarted.type === "dropdown") {
                     setReadyToProceed(false)
                 }
                 if (stepToBeStarted.type === "instructions") {
@@ -226,9 +311,27 @@ function renderUiFromState(step) {
                     <div>
                         {rankingModal && <RankingModal onClose={()=>{setRankingModal(false)}}/>}
                         {studyModal && <StudyModal onClose={()=>{setStudyModal(false)}}/>}
+                        { prizesPrioritiesModal && <PrizesPrioritiesModal onClose={()=>{setPrizesPrioritiesModal(false)}}/>}
+                        <button className="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button>
+                        { shownSteps.some(step => step.id === "repeatedStep") &&
+                            <>
+                                <section ref={sectionsRefs.repeatedStep} className="explain">
+                                    <p>
+                                        Note: This training round includes the exact questions that you already answered before. Nevertheless, please read them and answer again to make sure you understand.
+                                    </p>
+                                </section>
+                                {
+                                        shownSteps.at(-1).id === "repeatedStep" && 
+                                            <Button 
+                                                onClick={onClick} 
+                                                text="Proceed"
+                                                className="btn-primary"
+                                            />
+                                }
+                            </>
+                        }
                         { shownSteps.some(step => step.id === "intro") &&
                             <>
-                                 <button class="button-2" type="button" onClick={()=>{setStudyModal(true)}}>Click for a general reminder on this study</button> 
                                  <section ref={sectionsRefs.intro} className="explain">
                                     <p>
                                         This is a training round.<br/>
@@ -242,15 +345,15 @@ function renderUiFromState(step) {
                                     {
                                         roundNumber === 1 && <p>Remember: each question increases your Understanding Bonus only if you answer it correctly on your first attempt. Think about your answers carefully!</p>
                                     }
-                                    {
-                                        shownSteps.at(-1).id === "intro" && 
-                                            <Button 
-                                                onClick={onClick} 
-                                                text="Proceed"
-                                                className="btn-primary"
-                                            />
-                                    }
                                 </section>
+                                {
+                                    shownSteps.at(-1).id === "intro" && 
+                                        <Button 
+                                            onClick={onClick} 
+                                            text="Proceed"
+                                            className="btn-primary"
+                                        />
+                                }
                            </> 
                         }
                         { shownSteps.some(step => step.id === "prize_table") &&
@@ -260,7 +363,7 @@ function renderUiFromState(step) {
                             
                                 <PrizesTable prizesValues={props.prizesValues}/>
                                 <br/>
-                                <button class="button-2" id="GenBtn1" onClick={()=>{setPrizesModal(true)}} type="button">Click for a reminder on what the prizes mean</button><br/>
+                                <button className="button-2" id="GenBtn1" onClick={()=>{setPrizesModal(true)}} type="button">Click for a reminder on what the prizes mean</button><br/>
                                 {prizesModal === true && <PrizesModal onClose={()=>{setPrizesModal(false)}}/>}
                                 {
                                     shownSteps.at(-1).id === "prize_table" &&
@@ -289,15 +392,15 @@ function renderUiFromState(step) {
                                         <label htmlFor="independence-1">False</label>
                                     </div>
                                 </p>
-                                <div class="incorrect-msg hidden" ref={questionsRefs.independence.incorrect}>
+                                <div className="incorrect-msg hidden" ref={questionsRefs.independence.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
-                                <div class="correct-msg hidden" ref={questionsRefs.independence.correct}>
+                                <div className="correct-msg hidden" ref={questionsRefs.independence.correct}>
                                     <p>
                                         Correct! Your own ranking cannot affect the money worth of prizes shown in your table, which are determined beforehand.
                                     </p>
                                 </div>
-                                <div class="correct-first-msg hidden" ref={questionsRefs.independence.correctFirstAttempt}>
+                                <div className="correct-first-msg hidden" ref={questionsRefs.independence.correctFirstAttempt}>
                                     <p>
                                         Correct! Your own ranking cannot affect the money worth of prizes shown in your table, which are determined beforehand.<br/>
                                         Good job on the first try! This will count for your Understanding Bonus.
@@ -326,13 +429,13 @@ function renderUiFromState(step) {
                                         <label htmlFor="value_table-1">False</label>
                                     </div>
                                 </p>
-                                <div class="incorrect-msg hidden" ref={questionsRefs.value_table.incorrect}>
+                                <div className="incorrect-msg hidden" ref={questionsRefs.value_table.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
-                                <div class="correct-msg hidden" ref={questionsRefs.value_table.correct}>
+                                <div className="correct-msg hidden" ref={questionsRefs.value_table.correct}>
                                     <p>Correct! Each prize might be worth a different amount for each participant.</p>
                                 </div>
-                                <div class="correct-first-msg hidden" ref={questionsRefs.value_table.correctFirstAttempt}>
+                                <div className="correct-first-msg hidden" ref={questionsRefs.value_table.correctFirstAttempt}>
                                     <p>Correct! Each prize might be worth a different amount for each participant.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>
@@ -348,6 +451,9 @@ function renderUiFromState(step) {
                                 <p>
                                     <PrizesPrioritiesTable prizesPriorities={props.prizesPriorities}/>
                                 </p>
+                                <p>
+                                    <button className="button-2" type="button" onClick={()=>{setPrizesPrioritiesModal(true)}}>Click here for a reminder on what the priorities mean</button><br/>
+                                </p>    
                                 {
                                     shownSteps.at(-1).id === "prize_priorities" &&
                                         <Button className="btn-primary" onClick={onClick} text={readyToProceed ? "Proceed" : "Submit"}/>
@@ -371,13 +477,13 @@ function renderUiFromState(step) {
                                         <label htmlFor="self_rank_independence-1">False</label>
                                     </div>
                                 </p>
-                                <div class="incorrect-msg hidden" ref={questionsRefs.self_rank_independence.incorrect}>
+                                <div className="incorrect-msg hidden" ref={questionsRefs.self_rank_independence.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
-                                <div class="correct-msg hidden" ref={questionsRefs.self_rank_independence.correct}>
+                                <div className="correct-msg hidden" ref={questionsRefs.self_rank_independence.correct}>
                                     <p>Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.</p>
                                 </div>
-                                <div class="correct-first-msg hidden" ref={questionsRefs.self_rank_independence.correctFirstAttempt}>
+                                <div className="correct-first-msg hidden" ref={questionsRefs.self_rank_independence.correctFirstAttempt}>
                                     <p>Correct! Your own ranking cannot affect the prize priorities. Instead, they are determined beforehand.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>
@@ -404,25 +510,57 @@ function renderUiFromState(step) {
                             <section ref={sectionsRefs.allocation_results}>
                                 <h4>Step 3: Allocation Process</h4>
                                     { props.roundNumber === 1 &&
-                                        <div class="explain">
+                                        <div className="explain">
                                             <p>
                                                 Remember:
                                             </p>
                                             <p>
-                                                The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
-                                                while taking into account the rankings of all participants.
+                                                The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
                                             </p>
                                             <p>
                                                 The prize priorities can affect the allocation of prizes. <br/>
-                                                The higher your priority is at some prize, the more likely you are to get that prize at the end of the process.
+                                                The higher your priority is at some prize, the more likely you generally are to get that prize at the end of the process.
                                             </p>
                                         </div>
                                     }
                                         <div  id="round-results" onClick={onClick} style={{pointerEvents:'none'}}>
                                             <p>
-                                                Allocation process working… <i class="fa-regular fa-hourglass-half fa-spin"></i>
+                                                Allocation process working… <i className="fa-regular fa-hourglass-half fa-spin"></i>
                                             </p>
                                         </div> 
+                            </section>
+                        }
+                        { shownSteps.some(step=>step.id === "how_many_prizes") &&
+                            <section ref={sectionsRefs.how_many_prizes}>
+                                <p>Please answer the following question:</p>
+                                <p>
+                                    How many prizes can you get at most at the end of the allocation process? The correct answer is that you <b>always</b> get one prize, no more and no less, so you should select the number one.<br/> 
+                                    (Get it right on first try to increase your bonus)<br/>
+                                    Answer:&nbsp;
+                                    <select ref={questionsRefs.how_many_prizes.input} onChange={(e)=>{questionsRefs.how_many_prizes.value.current = e.target.value}} className="custom-select small" name="how_many_prizes">
+                                        <option value={-1} selected disabled>---</option>
+                                        {
+                                            [1,2,3,4,5,6,7,8,9,10].map((number,index) => {
+                                                return (
+                                                    <option value={index}>{number}</option>
+                                                )
+                                            })
+                                        }
+                                    </select>
+                                </p>
+                                <div className="incorrect-msg hidden" ref={questionsRefs.how_many_prizes.incorrect}>
+                                    <p>Incorrect answer. Please try again.</p>
+                                </div>
+                                <div className="correct-msg hidden" ref={questionsRefs.how_many_prizes.correct}>
+                                    <p>Correct! You always get one prize at the end of the allocation process.</p>
+                                </div>
+                                <div className="correct-first-msg hidden" ref={questionsRefs.how_many_prizes.correctFirstAttempt}>
+                                    <p>Correct! You always get one prize at the end of the allocation process.<br/>
+                                    Good job on the first try! This will count for your Understanding Bonus.</p>
+                                </div>
+                                { shownSteps.at(-1).id === "how_many_prizes" &&
+                                    <Button className="btn-primary" onClick={onClick} text="Submit"/>
+                                }
                             </section>
                         }
                         { shownSteps.some(step=>step.id === "competitors_rank_independence") &&
@@ -442,13 +580,13 @@ function renderUiFromState(step) {
                                         <label htmlFor="competitors_rank_independence-1">False</label>
                                     </div>
                                 </p>
-                                <div class="incorrect-msg hidden" ref={questionsRefs.competitors_rank_independence.incorrect}>
+                                <div className="incorrect-msg hidden" ref={questionsRefs.competitors_rank_independence.incorrect}>
                                     <p>Incorrect answer. Please try again.</p>
                                 </div>
-                                <div class="correct-msg hidden" ref={questionsRefs.competitors_rank_independence.correct}>
+                                <div className="correct-msg hidden" ref={questionsRefs.competitors_rank_independence.correct}>
                                      <p>Correct! Your own ranking cannot affect the other participants' rankings.</p>
                                 </div>
-                                <div class="correct-first-msg hidden" ref={questionsRefs.competitors_rank_independence.correctFirstAttempt}>
+                                <div className="correct-first-msg hidden" ref={questionsRefs.competitors_rank_independence.correctFirstAttempt}>
                                     <p>Correct! Your own ranking cannot affect the other participants' rankings.<br/>
                                     Good job on the first try! This will count for your Understanding Bonus.</p>
                                 </div>                                 
@@ -457,6 +595,63 @@ function renderUiFromState(step) {
                                 }
                            </section> 
                         }
+                        { shownSteps.some(step=>step.id === "exit_point") &&
+                            <section ref={sectionsRefs.exit_point} >
+                                <div
+                                    className="explain" 
+                                    style={{fontStyle:"italic"}}
+                                >
+                                    <p>
+                                        <b className="mb-3 d-flex justify-content-center">- This is a point of no return -</b>   
+                                        On the next screens you will continue to read long and detailed explanations, which may be more complicated than those you just learned. You will complete many tasks that depend on your understanding of these explanations.
+                                    </p>    
+                                    <p>
+                                        If you feel that you currently lack sufficient time or mental resources for additional highly demanding 50-60 minutes, no worries!
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            We appreciate your participation and effort. You can quit the study now, <b>without advancing to the next screen</b>, and enter the completion code <b>CNF8D943</b>. If you do so, we will provide you with a <b>partial payment of {getMoneyString(2,props.currency)}</b> for your effort so far. Please send us a chat message in the Zoom session prior to leaving.  
+                                        </li>
+                                        <li>
+                                            This is a one-time offer. If you advance to the next screen and at some point quit the study, we will <b>not</b> be able to provide a partial payment.
+                                        </li>
+                                    </ul>  
+                                </div>
+                                {
+                                    shownSteps.at(-1).id === "exit_point" &&
+                                    <Button className="btn-primary" onClick={onClick} text="Proceed"/>   
+                                }
+                            </section>
+                        }
+                        { shownSteps.some(step=>step.id === "exit_point_2") &&
+                            <section ref={sectionsRefs.exit_point_2} >
+                                <div className="explain">
+                                    <p>
+                                        If you are up to the challenge (and we certainly hope you are!), please note:
+                                    </p>
+                                    <p>
+                                        <b>It is crucial for our purposes that you complete the study if you advance beyond this point</b>. Making some mistakes in understanding questions along the way will be perfectly normal—please stay with us. Our main objective is that you try your best at understanding and playing the game.
+                                    </p>
+                                </div>
+                                {
+                                    shownSteps.at(-1).id === "exit_point_2" &&
+                                    <Button className="btn-primary" onClick={onClick} text="Proceed"/>
+                                }
+                            </section>
+                        }
+                        { shownSteps.some(step=>step.id === "exit_point_3") &&
+                            <section ref={sectionsRefs.exit_point_3} >
+                                <div className="explain">
+                                    <p>
+                                        If you do not wish to exit early for the partial payment of {getMoneyString(2,props.currency)}, and if you are ready for a difficult additional 50-60 minute study, please press Proceed below.
+                                    </p>
+                                </div>
+                                {
+                                    shownSteps.at(-1).id === "exit_point_3" &&
+                                    <Button className="btn-primary" onClick={onClick} text="Proceed"/>
+                                }
+                            </section>
+                        }           
                     </div>
                 </CurrencyContext.Provider>
             )
@@ -528,21 +723,45 @@ function renderUiFromState(step) {
         function Button(props){
             const {onClick,text ,className} = props;
             return (
-                <div class="btn-container">
+                <div className="btn-container">
                     <button className={"btn btn-primary "+className} onClick={onClick} disabled={props.disabled || false}>{text ?? "Proceed"}</button>
                 </div>
             )
         }
         function PrizesModal(props){
             return (
-                    <div class="modal" style={{display:"flex"}} onClick={props.onClose}>
-                        <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>
-                            <i class="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
+                    <div className="modal" style={{display:"flex"}} onClick={props.onClose}>
+                        <div className="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                            <i className="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
                             <p>In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>. In the table, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings if <b>you get it</b>.</p>
                             <p>Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn you a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.</p>
                             <p>The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.</p>
                         </div>
                     </div>
+            )
+        }
+        function PrizesPrioritiesModal(props){
+            return (
+                <div className="modal" style={{display:"flex"}} onClick={props.onClose}>
+                    <div className="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                        <i className="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
+                        <p>
+                            All four participants have some <b>priority</b> for getting each of the four prizes.
+                            These priorities can affect the allocation of prizes.
+                        </p>
+                        <p>
+                            The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process.
+                        </p>
+                        <p>
+                            Each column shows the priorities of all participants for getting some prize, written from highest to lowest.
+                        </p>
+                        <p>
+                            The prize priorities can be different in different rounds of the game,
+                            and they were <b>determined beforehand</b>. <br/>
+                            You and the other participants <b>cannot affect the prize priorities</b>.
+                        </p>
+                    </div>
+                </div>
             )
         }
         function RankingModal(props){
@@ -559,9 +778,9 @@ function renderUiFromState(step) {
         }
         function StudyModal(props){
             return (
-                <div class="modal" style={{display:'flex'}} onClick={props.onClose} >
-                    <div class="modal-content" onClick={(e)=>{e.stopPropagation()}}>
-                        <i class="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
+                <div className="modal" style={{display:'flex'}} onClick={props.onClose} >
+                    <div className="modal-content" onClick={(e)=>{e.stopPropagation()}}>
+                        <i className="close1" onClick={props.onClose} style={{cursor:'pointer'}}>&times;</i>
                         <p>
                         In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.<br/>
                         Each prize is worth money, but might be worth a different amount of money for each participant.
@@ -570,7 +789,7 @@ function renderUiFromState(step) {
                         You and the computerized participants will each rank the four prizes in any order you wish.<br/>
                         Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
                         </p>
-                        <p>The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.</p>
+                        <p>The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.</p>
                     </div>
                 </div>
             )
@@ -669,7 +888,6 @@ function renderUiFromState(step) {
             )
         }
     `
-
     function getInitialStepId(currentStepId, nextStepId) {
         /* if there is current step return it */
         if (currentStepId) {
@@ -684,13 +902,16 @@ function renderUiFromState(step) {
             return stepsIdsInRound[0];
         }
     }
-
-    const roundNumber = js_vars.roundNumber;
-    const stepsIdsInRound = stepsDividedToRounds[roundNumber - 1];
+    const stepsIdsInRound = getSteps(js_vars.variant,js_vars.appName,js_vars.roundNumber);
     const initialStepId = getInitialStepId(js_vars.currentStepId, js_vars.nextStepId);
     const initialStep = steps.find((step) => step.id === initialStepId);
-    const props = {initialStep, stepsInRound: stepsIdsInRound, roundNumber, ...js_vars};
+    const props = {initialStep, stepsInRound: stepsIdsInRound, ...js_vars};
     renderReactComponent(jsxCode, "content", "NullTrainingPage", JSON.stringify(props))
+    if (js_vars.allocatedPrize) {
+        const allocatedPrizeValue = js_vars.prizesValues[js_vars.allocatedPrize];
+        renderAllocationResults(js_vars.allocatedPrize, allocatedPrizeValue);
+    }
+
 }
 
 function renderAllocationResults(prizeName, prizeValue) {
@@ -725,15 +946,14 @@ function renderAllocationResults(prizeName, prizeValue) {
              <p>
                 <b>You get Prize <span id="prize-won">{props.prizeName}</span></b>.<br/>
                 If this were a real round, your total earning would increase by <span id="points-won">{moneyString}</span>.<br/>
-                { props.roundNumber === 1 &&
+                { (props.roundNumber === 1) ?
                     <span>Since this is a training round, the questions you answer correctly on the first attempt count for your Understanding Bonus.</span>
-                }
-                { props.roundNumber !== 1 &&
-                   <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
+                    :
+                    <span> Since this is a training round, it will count for your Understanding Bonus like answering one question correctly.</span>
                 }
             </p>
             <div className="btn-container" style={{pointerEvents:'auto'}}>
-                <button class="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
+                <button className="btn btn-primary" type="button" onClick={()=>{buttonRef.current.classList.add("hidden")}} ref={buttonRef}>Proceed</button>
             </div>
         </>
         )

@@ -1,7 +1,7 @@
 {{ block title }}
 {{ include "components/bonus_indicator.html" }}
 <!-- this is where it is most updated!! change all other round pages from here-->
-Round {{ player.round_number }}/20
+Round {{ player.round_number }}/10
 <!--there is a difference between double and single treatments in the overall number of rounds-->
 {{ endblock }}
 
@@ -10,6 +10,7 @@ Round {{ player.round_number }}/20
     <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script> <!-- Font Awesome -->
 {{ endblock }}
 {{ block scripts }}
+    <script src="{{ static 'util/imgUrls.js' }}"></script>
     <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
     <script src="{{ static 'util/getMoneyString.js'}}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/redux/4.1.1/redux.min.js"></script>

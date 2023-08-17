@@ -22,22 +22,22 @@ def get_customers_priorities_by_round(round):
         "D": ["You", "Theresa", "Shirley", "Ruth"]
     }
     second_round_priorities = {
-        "A": ["Theresa", "You", "Shirley", "Ruth"],
+        "A": ["Shirley", "You", "Ruth", "Theresa"],
         "B": ["Shirley", "Theresa", "You", "Ruth"],
-        "C": ["Shirley", "You", "Ruth", "Theresa"],
+        "C": ["Theresa", "You", "Ruth", "Shirley"],
         "D": ["Theresa", "Ruth", "You", "Shirley"]
     }
     third_round_priorities = {
-        "A": ["Ruth", "Shirley", "Theresa", "You"],
-        "B": ["Ruth", "You", "Shirley", "Theresa"],
-        "C": ["Theresa", "You", "Shirley", "Ruth"],
-        "D": ["Theresa", "Shirley", "Ruth", "You"]
+        "A": ["You", "Theresa", "Shirley", "Ruth"],
+        "B": ["Ruth", "You", "Theresa", "Shirley"],
+        "C": ["Shirley", "Ruth", "Theresa", "You"],
+        "D": ["Ruth", "You", "Shirley", "Theresa"]
     }
     fourth_round_priorities = {
-        "A": ["Ruth", "You", "Shirley", "Theresa"],
-        "B": ["Shirley", "You", "Theresa", "Ruth"],
+        "A": ["Ruth", "Shirley", "Theresa", "You"],
+        "B": ["Ruth", "Shirley", "Theresa", "You"],
         "C": ["Ruth", "You", "Theresa", "Shirley"],
-        "D": ["Shirley", "Theresa", "You", "Ruth"]
+        "D": ["Shirley", "You", "Ruth", "Theresa"]
     }
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
@@ -45,18 +45,18 @@ def get_customers_priorities_by_round(round):
 
 def get_products_priorities_by_round(round):
     first_round_priorities = {"Ruth": ["A", "C", "D", "B"], "Shirley": ["A", "C", "D", "B"], "Theresa": ["B", "A", "D", "C"], "You": ["C", "A", "B", "D"]}
-    second_round_priorities = {"Ruth": ["D", "C", "B", "A"], "Shirley": ["B", "C", "A", "D"], "Theresa": ["B", "A", "D", "C"], "You": ["D", "A", "C", "B"]}
-    third_round_priorities = {"Ruth": ["D", "A", "B", "C"], "Shirley": ["C", "B", "A", "D"], "Theresa": ["C", "D", "A", "B"], "You": ["D", "C", "B", "A"]}
-    fourth_round_priorities = {"Ruth": ["C", "A", "B", "D"], "Shirley": ["A", "D", "C", "B"], "Theresa": ["A", "D", "B", "C"], "You": ["C", "D", "A", "B"]}
+    second_round_priorities = {"Ruth": ["D", "A", "B", "C"], "Shirley": ["B", "A", "C", "D"], "Theresa": ["B", "C", "D", "A"], "You": ["D", "C", "B", "A"]}
+    third_round_priorities = {"Ruth": ["A", "B", "D", "C"], "Shirley": ["B", "A", "D", "C"], "Theresa": ["D", "B", "A", "C"], "You": ["D", "B", "C", "A"]}
+    fourth_round_priorities = {"Ruth": ["D", "A", "C", "B"], "Shirley": ["C", "A", "B", "D"], "Theresa": ["A", "C", "B", "D"], "You": ["A", "C", "B", "D"]}
     priorities = [first_round_priorities, second_round_priorities, third_round_priorities, fourth_round_priorities]
     return priorities[round - 1]
 
 
 def get_expected_prizes_ranking_by_round(round):
     first_round_ranking = ["C", "A", "B", "D"]
-    second_round_ranking = ["D", "A", "C", "B"]
-    third_round_ranking = ["D", "C", "B", "A"]
-    fourth_round_ranking = ["C", "D", "A", "B"]
+    second_round_ranking = ["D", "C", "B", "A"]
+    third_round_ranking = ["D", "B", "C", "A"]
+    fourth_round_ranking = ["A", "C", "B", "D"]
     rankings = [first_round_ranking, second_round_ranking, third_round_ranking, fourth_round_ranking]
     return rankings[round - 1]
 
@@ -68,9 +68,10 @@ def get_correct_answers_by_round(round):
 
 class C(BaseConstants):
     VARIANT = "traditional"
+    TREATMENT = "mechanics"
     NAME_IN_URL = 'mechanics_traditional'
     PLAYERS_PER_GROUP = None
-    NUM_ROUNDS = 4
+    NUM_ROUNDS = 3
     PARTICIPANTS = ["Ruth", "Shirley", "Theresa", "You"]
     PRIZES = ["A", "B", "C", "D"]
     STEPS_IN_TRAINING_ROUND = ["intro", "prizes_table", "prizes_priorities", "ranking_form", "allocation_results"]
@@ -89,6 +90,8 @@ class Player(BasePlayer):
     incorrect_seq_question_7 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_8 = models.LongStringField(initial="", blank=True)
     incorrect_seq_question_9 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_10 = models.LongStringField(initial="", blank=True)
+    incorrect_seq_question_11 = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_a = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_b = models.LongStringField(initial="", blank=True)
     incorrect_seq_allocation_c = models.LongStringField(initial="", blank=True)
@@ -113,8 +116,6 @@ class Player(BasePlayer):
     current_step_id = models.LongStringField(blank=True, initial="")
     understanding_bonus = models.IntegerField(initial=0, blank=True)
     understanding_bonus_limit = models.IntegerField(initial="", blank=True)
-    start_time = models.StringField(initial=datetime.now(timezone.utc))
-    end_time = models.StringField(blank=True)
     matching_memo = models.LongStringField(initial=str([]), blank=True)
     current_matching = models.LongStringField(initial="", blank=True)
     prizes_priorities = models.LongStringField(initial="", blank=True)
@@ -122,6 +123,16 @@ class Player(BasePlayer):
     matching_counter = models.IntegerField(initial=0, blank=True)
     expected_ranking = models.StringField(initial="", blank=True)
 
+    start_time = models.StringField(initial=datetime.now(timezone.utc))
+    end_time = models.StringField(blank=True)
+    intro_start_time = models.StringField(blank=True)
+    intro_end_time = models.StringField(blank=True)
+    training_start_time = models.StringField(blank=True)
+    training_end_time = models.StringField(blank=True)
+    algo_start_time = models.StringField(blank=True)
+    algo_end_time = models.StringField(blank=True)
+    video_modal_opened = models.LongStringField(initial="", blank=True)
+    video_time_stamp = models.LongStringField(initial="", blank=True)
 
 def GetParticpantNumber(char):
     if char == 'R':
@@ -132,41 +143,6 @@ def GetParticpantNumber(char):
         return 3
     else:
         return 4
-
-
-class DAalghoIntro(Page):
-    form_model = 'player'
-    form_fields = ['SchoolsNumber', 'StudentsNumber', ]
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):  # EXPLANATION:
-        player.time_stamps = 'L:'  # Setting the field so that it is not empty.
-        player.clicks = '||'  # Setting the field so that it is not empty.
-        player.participant.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
-        # the priorities of each participant .
-        player.participant.participants_priorities = str(get_products_priorities_by_round(player.round_number))
-        # set expected ranking
-        player.participant.expected_ranking = get_expected_prizes_ranking_by_round(player.round_number)
-
-
-class DAalghoIntro2(Page):
-    form_model = 'player'
-
-    @staticmethod
-    def get_form_fields(player):
-        max_list = ['MaxStudentsA', 'MaxStudentsB', 'MaxStudentsC', 'MaxStudentsD', 'MaxStudentsE']
-        n = player.number_of_Schools
-        return max_list[0:n]
-
-    @staticmethod
-    def before_next_page(player: Player, timeout_happened):  # EXPLANATION:
-        # the priorities of each prize .
-        player.participant.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
-        # the priorities of each participant .
-        player.paticipant.participants_priorities = str(get_products_priorities_by_round(player.round_number))
-        # set expected ranking
-        player.paticipant.expected_ranking = get_expected_prizes_ranking_by_round(player.round_number)
-
 
 class TrainingRound(Page):
     form_model = "player"
@@ -187,22 +163,16 @@ class TrainingRound(Page):
             "prizes":                 C.PRIZES,
             "participants":           C.PARTICIPANTS,
             "currentStep":            player.current_step_id,
+            "variant":                C.VARIANT,
+            "treatment":              C.TREATMENT,
+            "roundNumber":            player.round_number,
         }
+
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        player.clicks = ''
-        player.current_matching = str({participant_name: 'none' for participant_name in C.PARTICIPANTS})
-        player.matching_memo = str([])
-        def get_understanding_bonus_limit_by_round(round_number):
-            if round ==1 :
-                return 4
-            else :
-                return 1
-        player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
-        player.participant.understanding_bonus_limit += player.understanding_bonus_limit
-
-
+        player.training_end_time = str(datetime.now(timezone.utc))
+        player.algo_start_time = str(datetime.now(timezone.utc))
 class DAalghoInterface(Page):
     form_model = "player"
 
@@ -273,6 +243,8 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_question_9 += create_question_submission_string(data)
             elif question_id == "question_10":
                 player.incorrect_seq_question_10 += create_question_submission_string(data)
+            elif question_id == "question_11":
+                player.incorrect_seq_question_11 += create_question_submission_string(data)
             elif question_id == "question_allocation_a":
                 player.incorrect_seq_allocation_a += create_question_submission_string(data)
             elif question_id == "question_allocation_b":
@@ -320,14 +292,19 @@ class DAalghoInterface(Page):
         elif data["information_type"] == "step_update":
             step_id = data["step_id"]
             player.current_step_id = step_id
+        elif data["information_type"] == "video_modal_opened":
+            player.video_modal_opened += str(data)
+        elif data["information_type"] == "set_video_time_stamp":
+            player.video_time_stamp = str(data["time_stamp"])
 
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.participant.understanding_bonus += player.understanding_bonus
         player.end_time = str(datetime.now(timezone.utc))
+        player.algo_end_time = str(datetime.now(timezone.utc))
         def get_understanding_bonus_limit_by_round(round):
             if round == 1:
-                return 21
+                return 23
             else :
                 return 7
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
@@ -339,10 +316,13 @@ class MechanicsIntro(Page):
         return player.round_number == 1
 
     @staticmethod
+    def js_vars(player: Player):
+        return {"treatment":C.TREATMENT,"variant":C.VARIANT}
+    @staticmethod
     def before_next_page(player: Player, timeout_happened):
-        player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
-        player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
-        player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
+        player.intro_end_time = str(datetime.now(timezone.utc))
+        player.training_start_time = str(datetime.now(timezone.utc))
+
 
 class EndTraining(Page):
     @staticmethod
@@ -353,6 +333,13 @@ class PreProcess(Page):
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.start_time = str(datetime.now(timezone.utc))
+        player.intro_start_time = str(datetime.now(timezone.utc))
+        player.prizes_priorities = str(get_customers_priorities_by_round(player.round_number))
+        player.participants_priorities = str(get_products_priorities_by_round(player.round_number))
+        player.expected_ranking = str(get_expected_prizes_ranking_by_round(player.round_number))
+        player.clicks = ''
+        player.current_matching = str({participant_name: 'none' for participant_name in C.PARTICIPANTS})
+        player.matching_memo = str([])
 
 
 page_sequence = [PreProcess,MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]

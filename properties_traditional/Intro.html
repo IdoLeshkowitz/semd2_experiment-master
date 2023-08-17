@@ -1,0 +1,23 @@
+{{ block title }}
+    The Key Principle of Your Ranking
+{{ endblock }}
+
+{{ block styles}}
+    <link rel="stylesheet" href="{{ static 'global/styles.css' }}">
+<!-- Font Awesome -->
+    <script src="https://kit.fontawesome.com/f5aad88875.js" crossorigin="anonymous"></script>
+{{ endblock }}
+
+{{ block content }}
+<div id="react-root"></div>
+{{ endblock }}
+
+{{ block scripts }}
+<script src="{{ static 'util/imgUrls.js' }}"></script>
+ <script crossorigin src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+    <script src="{{ static 'util/renderReactComponent.js' }}"></script>
+    <script src="{{ static 'util/processDecimalMoney.js'}}"></script>
+    <script src="{{ static 'features/mechanicsIntro.js' }}"></script>
+{{ endblock }}

@@ -24,6 +24,10 @@
     line-height: 0.7;
     background-color: transparent;
 }
+
+.text-blue .dButtonTop{
+    font-weight:bolder !important ;
+}
 .dButtonMatched {
     @extend .btn;
     text-align: center;

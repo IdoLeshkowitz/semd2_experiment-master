@@ -6,230 +6,247 @@ function renderIntroPage() {
         function Stam(){
             return <div></div>
         }
-        const steps = [
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <div class="explain">
-                            <p>
-                                In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.
-                                Each prize is worth money, but might be worth a different amount of money for each participant.
-                            </p>
-                            <p>
-                               You and the computerized participants will each rank the four prizes in any order you wish.<br/>
-                                Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <div class="explain">
-                            <p>
-                                The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower,
-                                while taking into account the rankings of all participants.
-                            </p>
-                            <p>
-                                You will now learn about the game and allocation process while playing a training round of the game.
-                                The text in blue bubbles, such as this text, provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <div class="explain">
-                            <p>
-                                A round of the game has three steps.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <h4>Step 1: Round Information</h4>
-                        <div class="explain">
-                            <p>
-                                In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type:'prizesTable',
-                content: (
-                    <p>
-                        In this round, the <b>prizes</b> are:
-                    </p>
-                ),
-                ref: React.createRef()    
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <div class="explain">
-                            <p>
-                                In the table above, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.
-                            </p>
-                            <p>
-                                Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn <b>you</b> a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
-                            </p>
-                            <p>
-                              The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                         <div class="explain">
-                            <p>
-                                Still in Step 1, you see next what we call the <b>prize priorities</b>.
-                            </p>
-                            <p>
-                                All four participants have some <b>priority</b> for getting each of the four prizes.
-                            </p>
-                            <p>
-                                These priorities can affect the allocation of prizes. <br/>
-                                The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type:'prizePrioritiesTable',
-                content: (
-                     <p>
-                        In this round, the <b>prize priorities</b> for you and for the other participants are:
-                    </p>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                         <div class="explain">
-                            <p>
-                               Each column shows the priorities of all participants for getting some prize, written from highest to lowest. <br/>
-                                For example, the column under <b>Prize A</b> shows its priorities. Prize A has Ruth in the 1st priority (the highest),
-                                Shirley in the 2nd priority, You in the 3rd priority and Theresa in the 4th priority (the lowest).
-                                So, for example, it is easier for Ruth to get Prize A this round, and harder for Theresa to get Prize A this round.
-                            </p>
-                            <p>
-                                The prize priorities can be different in different rounds of the game, and they were <b>determined beforehand</b>.<br/>
-                                You and the other participants <b>cannot affect the prize priorities</b>.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'rankingForm',
-                content: (
-                    <>
-                        <h4>Step 2: Submit Your Ranking</h4>
-                        <div class="explain">
-                            <p>
-                                In Step 2, you are asked to <b>rank the four prizes</b>.
-                            </p>
-                            <p>
-                                Please type your ranking of the four prizes in an order of your choice in the box below.<br/>
-                                For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D,” and then click “Submit Ranking.”
-                            </p>
-                        </div>
-                    </>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                         <div class="explain">
-                            <p>
-                                The computerized participants simultaneously submit their own rankings. They <b>do not know your own ranking</b>.
-                            </p>
-                            <p>
-                                Their rankings are aimed at getting them their high-earning prizes. Your own ranking <b>cannot affect the computerized participants’ rankings.</b>
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <h4>Step 3: Allocation Process</h4>
-                        <div class="explain">
-                            <p>
-                                In Step 3, the allocation process allocates the prizes to participants.<br/>
-                                Then, you get the prize that was allocated to you.
-                            </p>
-                            <p>
-                                Remember:
-                            </p>
-                            <p>
-                                The allocation process tries to give each participant a prize that they ranked higher rather than a prize that they ranked lower, while taking into account the rankings of all participants.
-                            </p>
-                            <p>
-                                The prize priorities can affect the allocation of prizes.<br/>
-                                The higher your priority is for getting some prize, the more likely you are to get that prize at the end of the process.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
-            },
-            {
-                type: 'allocationLoader',
-                ref: React.createRef()
-            },
-            {
-                type: 'allocationResults',
-                ref: React.createRef()
-            },
-            {
-                type: 'instructions',
-                content: (
-                    <section>
-                        <div class="explain">
-                            <p>
-                                That's it! <br/>Click on the button below to proceed to more training rounds.
-                            </p>
-                        </div>
-                    </section>
-                ),
-                ref: React.createRef()
+        const getSteps = (variant,appName) => {            
+            const output =  [
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <div class="explain">
+                                <p>
+                                    In this study, you and three computerized participants, Ruth, Shirley, and Theresa, are going to play a game for four prizes.
+                                    Each prize is worth money, but might be worth a different amount of money for each participant.
+                                </p>
+                                <p>
+                                   You and the computerized participants will each rank the four prizes in any order you wish.<br/>
+                                    Then, an <b>allocation process</b> will use these rankings to allocate the prizes—one prize for each participant.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <div class="explain">
+                                <p>
+                                    The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
+                                </p>
+                                <p>
+                                    You will now learn about the game and allocation process.
+                                    The text in blue bubbles, such as this text, provides explanations about the game and allocation process. <b>Make sure you read it carefully</b>.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <div class="explain">
+                                <p>
+                                    A round of the game has three steps.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <h4>Step 1: Round Information</h4>
+                            <div class="explain">
+                                <p>
+                                    In Step 1, you first see the <b>prizes</b> you can get in this round and how much money they are worth to <b>you</b>.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type:'prizesTable',
+                    content: (
+                        <p>
+                            In this round, the <b>prizes</b> are:
+                        </p>
+                    ),
+                    ref: React.createRef()    
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <div class="explain">
+                                <p>
+                                    In the table above, under each prize A, B, C or D, you can see how much money it would add to <b>your</b> earnings.
+                                </p>
+                                <p>
+                                    Each prize might be worth a <b>different</b> amount of money for each participant, and each participant can only see the money amounts relevant to <b>themselves</b>. However, the prizes that earn <b>you</b> a large amount of money are also likely to earn the <b>other participants</b> a large amount of money. There is more likely to be <b>competition</b> for the high-earning prizes.
+                                </p>
+                                <p>
+                                  The money worth of prizes for you and for the other participants can be different in different rounds of the game, and they were <b>determined beforehand</b>. You and the other participants <b>cannot affect the money worth of prizes</b>.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                             <div class="explain">
+                                <p>
+                                    Still in Step 1, you see next what we call the <b>prize priorities</b>.
+                                </p>
+                                <p>
+                                    All four participants have some <b>priority</b> for getting each of the four prizes.
+                                </p>
+                                <p>
+                                    These priorities can affect the allocation of prizes. <br/>
+                                    The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type:'prizePrioritiesTable',
+                    content: (
+                         <p>
+                            In this round, the <b>prize priorities</b> for you and for the other participants are:
+                        </p>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                             <div class="explain">
+                                <p>
+                                   Each column shows the priorities of all participants for getting some prize, written from highest to lowest
+                                </p>
+                                <p>
+                                    The prize priorities can be different in different rounds of the game, and they were <b>determined beforehand</b>.<br/>
+                                    You and the other participants <b>cannot affect the prize priorities</b>.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'rankingForm',
+                    content: (
+                        <>
+                            <h4>Step 2: Submit Your Ranking</h4>
+                            <div class="explain">
+                                <p>
+                                    In Step 2, you are asked to <b>rank the four prizes</b>.
+                                </p>
+                                <p>
+                                    Please type your ranking of the four prizes in an order of your choice in the box below.<br/>
+                                    For example, if you want to rank Prize A first, Prize B second, Prize C third and Prize D fourth, type “A” followed by “B” followed by “C” followed by “D,” and then click “Submit Ranking.”
+                                </p>
+                            </div>
+                        </>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                             <div class="explain">
+                                <p>
+                                    The computerized participants simultaneously submit their own rankings. They <b>do not know your own ranking</b>.
+                                </p>
+                                <p>
+                                    Their rankings are aimed at getting them their high-earning prizes. Your own ranking <b>cannot affect the computerized participants’ rankings.</b>
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <h4>Step 3: Allocation Process</h4>
+                            <div class="explain">
+                                <p>
+                                    In Step 3, the allocation process allocates the prizes to participants.<br/>
+                                    Then, you get the prize that was allocated to you.
+                                </p>
+                                <p>
+                                    Remember:
+                                </p>
+                                <p>
+                                    The allocation process attempts to give each participant a prize that they ranked higher rather than a prize that they ranked lower. However, this is not always possible, since the allocation process must take into account the rankings of all participants.
+                                </p>
+                                <p>
+                                    Additionally, the prize priorities can affect the allocation of prizes. <br/>
+                                    The higher your priority is for getting some prize, the more likely you generally are to get that prize at the end of the process. 
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                },
+                {
+                    type: 'allocationLoader',
+                    ref: React.createRef()
+                },
+                {
+                    type: 'allocationResults',
+                    ref: React.createRef()
+                },
+                {
+                    type: 'instructions',
+                    content: (
+                        <section>
+                            <div class="explain">
+                                <p>
+                                    That's it! <br/>Click on the button below to proceed to training rounds.
+                                </p>
+                            </div>
+                        </section>
+                    ),
+                    ref: React.createRef()
+                }
+            ]
+            if (appName === "null"){
+               output.unshift({
+                    type: 'instructions',
+                    content :(
+                        <section>
+                            <div class="explain" style={{"fontStyle": "italic"}}>
+                               <p>
+                                   We will now remind you of the general details of the game and allocation process. This page includes the <b>exact same text</b> you read at the beginning of the study. Please read it again to make sure you understand.
+                               </p> 
+                            </div>
+                        </section>
+                    ),  
+                    ref: React.createRef()
+                })
             }
-        ]
-        const CurrencyContext = React.createContext(null);
+            return output
+        }
+        const CurrencyContext = React.createContext(null);       
         function IntroPage(props){
+            const steps = React.useMemo(() => {
+                return getSteps(props.variant, props.appName)
+            }, [props.variant, props.appName])
             const [ranking, setRanking] = React.useState([])
             const [activeSteps, setActiveSteps] = React.useState([steps[0]])
             function onNext(){
@@ -267,7 +284,7 @@ function renderIntroPage() {
                                     return (
                                         <section ref={step.ref}>
                                             {step.content}
-                                            <RankingForm onNext={onNext} setRanking={setRanking} participantsRankings={props.players_rankings} prizesPriorities={js_vars.prizes_priorities} prizes={props.prizes} prizesValues={props.prizes_values} />
+                                            <RankingForm onNext={onNext} setRanking={setRanking} participantsRankings={props.participants_priorities} prizesPriorities={js_vars.prizes_priorities} prizes={props.prizes} prizesValues={props.prizes_values} participants={props.participants} />
                                         </section>
                                     )
                                 }
@@ -297,7 +314,7 @@ function renderIntroPage() {
                                         <>
                                         <section ref={step.ref}>
                                             {step.content}
-                                            <PrizesPrioritiesTable prizesPriorities={props.prizes_priorities}/>
+                                            <PrizesPrioritiesTable prizesPriorities={props.prizes_priorities} participants={props.participants}/>
                                             <br/>
                                         </section>
                                         </>
@@ -383,9 +400,7 @@ function renderIntroPage() {
                 return description;
             }  
             const {prizesPriorities} = props;
-            const prizes = ["A","B","C","D"];
-            const participantsNames=["You","Ruth","Shirley","Theresa"]
-            const numberOfRows = 4;
+            const prizes = Object.keys(prizesPriorities)
             return (
                  <table id="priorities-table">
                     <thead>
@@ -396,31 +411,29 @@ function renderIntroPage() {
                     </thead>
                     <tbody>
                         { 
-                            Array(numberOfRows).fill(0).map((_,rowIndex)=>{
+                            props.participants.map((_,rowIndex)=>{
                                 return (
                                     <tr key={rowIndex}> 
                                         {/* description cell */}
-                                        <td>{getRowDescription(rowIndex,numberOfRows)}</td>
+                                        <td>{getRowDescription(rowIndex,4)}</td>
                                         {/* priorities cells */}
                                         {prizes.map((prize,columnIndex)=>{
                                             return (
-                                                <td key={columnIndex}>{participantsNames[prizesPriorities[columnIndex][rowIndex]]}</td>
+                                                <td key={columnIndex}>{prizesPriorities[prize][rowIndex]}</td>
                                             )
                                         })}
                                     </tr>
                                 )
                             })
                         }
-                    </tbody>
+                    </tbody> 
                 </table>
             )
         }
         function PrizesTable(props){
             const prizesNames = ["A","B","C","D"];
             const currency = React.useContext(CurrencyContext);
-            const prizesValues = props.prizesValues.map((prizeValue) => {
-                return  (parseInt(prizeValue) /100).toFixed(2)
-             })
+            const prizesValues = Object.values(props.prizesValues)
             return ( 
                 <table id="prize-table">
                     <thead>
@@ -506,10 +519,19 @@ function renderIntroPage() {
                 inputRef.current.disabled = true;
                 props.onNext()
                 const humanPlayerRanking = convertInputToRanking(inputValue);
-                const otherPlayersRankings = props.participantsRankings
+                const otherPlayersRankings = Object.keys(props.participantsRankings).map(participant =>{
+                    return props.participantsRankings[participant].map((ranking) => {
+                    return replaceCharWithNumericValue(ranking)-1; 
+                    });
+                });
                 const playersRankings = [humanPlayerRanking].concat(otherPlayersRankings);
+                const prizesPriorities = props.prizes.map((prize) => {
+                    return props.prizesPriorities[prize].map((priority) => {
+                        return props.participants.indexOf(priority);
+                    });
+                }); 
                 liveSend({
-                     "preferences": [playersRankings, props.prizesPriorities], "prizes": props.prizes, "values": props.prizesValues
+                     "preferences": [playersRankings,prizesPriorities], "prizes": props.prizes, "values": props.prizesValues
                 });
             }
             return (
@@ -548,7 +570,6 @@ function renderIntroPage() {
     `
 
     function getPropsFormJsVars() {
-        console.log(js_vars)
         return {
             ...js_vars
         }
@@ -582,7 +603,7 @@ function renderAllocationResults(prizeName = state.prize, prizeValue = state.val
             }
     }
     function AllocationResults(props){
-    const moneyString = getMoneyString((props.prizeValue/100).toFixed(2), props.currency);
+    const moneyString = getMoneyString((props.prizeValue)?.toFixed(2), props.currency);
     const buttonRef = React.useRef(null);
         return (
         <>

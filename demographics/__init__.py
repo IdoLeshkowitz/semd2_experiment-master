@@ -34,8 +34,8 @@ class Player(BasePlayer):
                  "Washington, D.C.", "Puerto Rico"],
         blank=True
     )
-    zip_code = models.IntegerField(
-        label= "What is your zip code? (5 digits)?", min=10000, max=99999, blank=True
+    zip_code = models.StringField(
+        label= "What is your zip code? (5 digits)?", blank=True, max_length=6, min_length=5
     )
     household_size = models.IntegerField(
         label= "Including you, how many people live in your household?", min=1, blank=True
@@ -76,7 +76,7 @@ class Player(BasePlayer):
         blank=True
     )
     deferred_acceptance = models.StringField(
-        label="How would you describe your knowledge of the Deferred Acceptance (DA) matching mechanism, also known as the Gale-Shapley mechanism? Please mark all the boxes that apply:",
+        label="How would you describe your knowledge of the Deferred Acceptance (DA) matching mechanism, also known as the Gale-Shapley mechanism?",
         choices=[
             "I have never heard of it",
             "I heard of it but I don’t know/remember what it is",

@@ -1,11 +1,18 @@
 .explain {
     padding: 2rem 1rem 1rem;
-    margin: 1rem 1rem 2rem 0rem;
+    margin-top: 1rem;
+    margin-bottom: .5rem;
+    margin-left: 2rem;
+    margin-right: 2rem;
     border-radius: 25px;
     background-color: #ABD9FF;
     font-style: italic;
 }
 
+.transparent {
+    background-color: transparent;
+    border : 2px solid #ABD9FF;
+}
 .btn-container {
     text-align: center;
 }
@@ -99,6 +106,25 @@ table {
     margin-bottom: .5rem;
 }
 
+.button-3{
+    align-self: start;
+    background-color: #2ecc71;
+    border-radius: 8px;
+    border-width: 0;
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    list-style: none;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-bottom: .5rem;
+}
 .indent {
     margin-left: 25px;
 }
@@ -137,4 +163,38 @@ table {
 
 .hidden{
     display: none;
+}
+
+.custom-select {
+  /* Define desired styles for the select element */
+  /* For example: */
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background-color: #fff;
+  color: #333;
+  font-size: 14px;
+  align-self: start;
+    min-width: 7rem;
+}
+
+.custom-select.small{
+    min-width: 3rem; !important;
+}
+.radio-group div{
+    display: flex;
+    gap: .3rem;
+    align-items: center;
+}
+
+.radio-group{
+    margin-bottom: 1rem;
+}
+
+.error{
+    color: red;
+}
+
+h5{
+    font-size: 1rem;
 }

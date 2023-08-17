@@ -31,34 +31,30 @@ def generate_prizes_values():
     #       I also think it would be more robust to get the
     #       get the list of prizes (or just its length) and
     #       adjust the values list accordingly.
-    return [{"A": 0.37, "B": 0.57, "C": 0.12, "D": 0.6},{"A": 0.28, "B": 0.56, "C": 0.05, "D": 0.42}]
+    return [{"A": 0.79, "B": 0.09, "C": 0.45, "D": 0.94}, {"A": 0.30, "B": 0.99, "C": 0.08, "D": 0.86}]
 
 
-def generate_priorities(first_group, second_group):
-    """
-    Returns a randomly generated list of preferences of the first group
-    on the second group.
+def get_prizes_priorities():
+    return {
+        1: {
+            "A": ["You", "Shirley", "Theresa", "Ruth"],
+            "B": ["Theresa", "You", "Shirley", "Ruth"],
+            "C": ["Shirley", "Ruth", "Theresa", "You"],
+            "D": ["Ruth", "You", "Theresa", "Shirley"]
+        },
+        2: {
+            "A": ["You", "Shirley", "Theresa", "Ruth"],
+            "B": ["You", "Theresa", "Shirley", "Ruth"],
+            "C": ["Shirley", "Ruth", "Theresa", "You"],
+            "D": ["Theresa", "Ruth", "You", "Shirley"]
+        },
+    }
 
-    Parameters
-    ----------
-    first_group: list
-        An ordered list of objects where each elements represent an individual.
-    second_group: list
-        An ordered list of objects where each elements represent an individual.
-
-    Returns
-    -------
-    list
-        a list of lists of indices where each index is the location of individual i
-        in second_group.
-    """
-    return {item: random.sample(second_group, len(second_group)) for item in first_group}
-
-
-def generate_priorities_list(first_group, second_group, num_rounds):
-    return [generate_priorities(first_group, second_group) for _ in range(num_rounds)]
-
-
+def get_participants_priorities():
+    return {
+        1: {"Ruth": ["D", "A", "C", "B"], "Shirley": ["D", "C", "A", "B"], "Theresa": ["A", "B", "C", "D"]},
+        2: {"Ruth": ["D", "A", "C", "B"], "Shirley": ["D", "C", "A", "B"], "Theresa": ["A", "B", "C", "D"]},
+    }
 def convert_priorities_dict_to_list(priorities_dict):
     return [[priorities_dict[key][i] for i in range(len(priorities_dict[key]))] for key in priorities_dict.keys()]
 
@@ -160,11 +156,11 @@ class C(BaseConstants):
     PLAYERS_PER_GROUP = None
     NUM_ROUNDS = 2
     PARTICIPANTS = ["You", "Ruth", "Shirley", "Theresa"]
-    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [4, 1]
+    UNDERSTANDING_BONUS_LIMIT_BY_ROUND = [5, 1]
     PRIZES = ["A", "B", "C", "D"]
     PRIZES_VALUES = generate_prizes_values()
-    PRIZES_PRIORITIES = generate_priorities_list(PRIZES, PARTICIPANTS, NUM_ROUNDS)
-    PARTICIPANTS_PRIORITIES = generate_priorities_list(PARTICIPANTS[1:], PRIZES, NUM_ROUNDS)  # for all participants except the player "You"
+    PRIZES_PRIORITIES = get_prizes_priorities()
+    PARTICIPANTS_PRIORITIES = get_participants_priorities()
     QUESTIONS_ANSWERS = {"independence": "False", "value_table": "False", "self_rank_independence": "False", "competitors_rank_independence": "False"}
 
 
@@ -191,12 +187,14 @@ class Player(BasePlayer):
     prizes_values = models.LongStringField(initial="", blank=True)
     prizes_priorities = models.LongStringField(initial="", blank=True)
     participants_priorities = models.LongStringField(initial="", blank=True)
+    how_many_prizes = models.StringField(initial="", blank=True)
 
     # Fields for saving each question's incorrect submitted answers
     independence_actions = models.LongStringField(blank=True, initial="")
     value_table_actions = models.LongStringField(initial="", blank=True)
     self_rank_independence_actions = models.LongStringField(initial="", blank=True)
     competitors_rank_independence_actions = models.LongStringField(initial="", blank=True)
+    how_many_prizes_actions = models.LongStringField(initial="", blank=True)
 
     current_step_id = models.StringField(initial="", blank=True)
     next_step_id = models.StringField(initial="", blank=True)
@@ -223,14 +221,16 @@ class NullTraining(Page):
             "roundNumber":            player.round_number,
             "prizes":                 C.PRIZES,
             "participants":           C.PARTICIPANTS,
-            "prizesPriorities":       C.PRIZES_PRIORITIES[player.round_number - 1],
-            "participantsPriorities": C.PARTICIPANTS_PRIORITIES[player.round_number - 1],
+            "prizesPriorities":       C.PRIZES_PRIORITIES[player.round_number],
+            "participantsPriorities": C.PARTICIPANTS_PRIORITIES[player.round_number],
             "roundNumber":            player.round_number,
             "currency":               player.session.config["currency"],
             "prizesValues":           C.PRIZES_VALUES[player.round_number - 1],
             "currentStepId":          player.current_step_id,
             "nextStepId":             player.next_step_id,
             "mistakesCounter":        player.mistakes_counter,
+            "allocatedPrize":         player.field_maybe_none("allocated_prize"),
+            "appName":                "null_training",
         }
 
     @staticmethod
@@ -270,6 +270,9 @@ class NullTraining(Page):
                 player.self_rank_independence_actions += str(data)
             elif question_id == "competitors_rank_independence":
                 player.competitors_rank_independence_actions += str(data)
+            elif question_id == "how_many_prizes":
+                player.how_many_prizes_actions += str(data)
+                player.how_many_prizes = data["answer"]
             understanding_bonus_from_question = data['understanding_bonus']
             player.understanding_bonus_from_round += understanding_bonus_from_question
             return {player.id_in_group: data}
@@ -280,16 +283,19 @@ class NullTraining(Page):
         if data["information_type"] == "set_mistakes_counter":
             player.mistakes_counter = data["mistakes_counter"]
 
+    @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.understanding_bonus_limit = C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
+        print(f"player.understanding_bonus_limit: {player.understanding_bonus_limit}")
         player.participant.understanding_bonus_limit += player.understanding_bonus_limit
-        player.prizes_values += str(C.PRIZES_VALUES[player.round_number - 1])
-        player.prizes_priorities += str(C.PRIZES_PRIORITIES[player.round_number - 1])
-        player.participants_priorities += str(C.PARTICIPANTS_PRIORITIES[player.round_number - 1])
+        player.prizes_values += str(C.PRIZES_VALUES[player.round_number -1 ])
+        player.prizes_priorities += str(C.PRIZES_PRIORITIES[player.round_number])
+        player.participants_priorities += str(C.PARTICIPANTS_PRIORITIES[player.round_number])
         if player.round_number > 1:
             player.understanding_bonus_from_round += C.UNDERSTANDING_BONUS_LIMIT_BY_ROUND[player.round_number - 1]
         player.participant.understanding_bonus += player.understanding_bonus_from_round
         player.end_time = str(datetime.now(timezone.utc))
+
 
 class PreProcess(Page):
     @staticmethod

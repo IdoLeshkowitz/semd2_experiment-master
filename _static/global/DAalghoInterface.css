@@ -16,7 +16,6 @@ body {
     vert-align: middle;
 }
 
-
 .dButtonBottomBox {
     padding-top: 0.2rem;
     padding-bottom: unset;
@@ -100,6 +99,48 @@ body {
     background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 }
 
+.video-modal {
+    position: fixed;
+    z-index: 1;
+    display: flex;
+    justify-content: center;
+    top: 0;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    padding: 5%;
+    background: rgba(0, 0, 0, 0.6);
+    backdrop-filter: blur(5px);
+    animation:.2s ease-out fade-in;
+}
+
+.video-modal video {
+    border-radius: 0.5rem;
+}
+
+.video-modal .close-button {
+    width: 0.5rem;
+    height: 0.5rem;
+    appearance: none;
+    border: none;
+    background: none;
+    padding: 0;
+    cursor: pointer;
+    z-index: 100;
+    right:0;
+    transform: translateX(-20px);
+}
+@keyframes fade-in {
+    0%{
+        opacity: 0;
+        transform: scale(1.1);
+    }
+    100%{
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
 /* Modal Content */
 .modal-content {
     background-color: #fefefe;
@@ -143,6 +184,26 @@ body {
     margin-bottom: .6rem;
 }
 
+.button-3{
+    align-self: start;
+    background-color: #2ecc71;
+    border-radius: 8px;
+    border-width: 0;
+    color: #333333;
+    cursor: pointer;
+    display: inline-block;
+    list-style: none;
+    padding: 10px 12px;
+    text-align: center;
+    transition: all 200ms;
+    vertical-align: baseline;
+    white-space: nowrap;
+    user-select: none;
+    -webkit-user-select: none;
+    touch-action: manipulation;
+    margin-bottom: .5rem;
+}
+
 .correct-second-msg {
     color: green;
     text-align: center;
@@ -184,6 +245,7 @@ body {
 .text-faded {
     color: var(--light-grey) !important;
 }
+
 .flexItemButtonsBackground.highlited {
     background-color: #92c6e5;
     transition: background-color .2s ease-in-out;
@@ -216,14 +278,15 @@ body {
 }
 
 
-.customers-rows-container span{
+.customers-rows-container span {
     display: flex;
     justify-content: center;
     font-weight: bold;
     border-right: .5px solid grey;
     align-items: center;
 }
-.legend-container{
+
+.legend-container {
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
@@ -234,12 +297,12 @@ body {
     border-left: .5px solid black;
 }
 
-.offButton{
+.offButton {
     display: none;
 }
 
-.products-row{
-    display:grid;
+.products-row {
+    display: grid;
     grid-auto-flow: column;
     grid-auto-columns: 2.5rem;
     grid-gap: 1rem;
@@ -247,22 +310,30 @@ body {
     padding-top: .4rem;
     box-sizing: border-box;
 }
+
 #third-row .products-row {
     border: .5px solid grey;
-    border-radius:.5rem;
+    border-radius: .5rem;
     padding-left: .2rem;
 }
 
 .custom-select {
-  /* Define desired styles for the select element */
-  /* For example: */
-  padding: 0.5rem;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  background-color: #fff;
-  color: #333;
-  font-size: 14px;
-  align-self: start;
+    /* Define desired styles for the select element */
+    /* For example: */
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background-color: #fff;
+    color: #333;
+    font-size: 14px;
+    align-self: start;
     min-width: 7rem;
+}
 
+
+.text-bold{
+    font-weight: bold;
+}
+.text-blue{
+    color: #0b1ae3;
 }
