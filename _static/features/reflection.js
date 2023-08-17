@@ -197,7 +197,7 @@ function renderReflectionPage(){
             </div>
             <div>
                 <label htmlFor="why_yes">
-                    <b>If you answered “Yes” above:</b> What was that specific ranking method?
+                    <b>If you answered “Yes” above:</b> What was that specific ranking method, and why did you use it?
                 </label>
                 <textarea id="why_yes" name="why_yes" rows={3} style={{width: "100%", border:"1px solid lightgrey"}}></textarea>
             </div>
