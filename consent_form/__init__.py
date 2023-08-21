@@ -25,7 +25,7 @@ class Player(BasePlayer):
     end_time = models.StringField(blank=True, initial="")
     consent = models.BooleanField(label="Confirmation:", choices=[[True, "Yes, I agree to participate in the study"],
         [False, "No, I do not agree to participate in the study"]])
-    prolific_id = models.StringField(label="Please enter your SONA ID:", initial="")
+    prolific_id = models.StringField(label="Please enter your Cornell email address:", initial="")
 
 
 # PAGES
