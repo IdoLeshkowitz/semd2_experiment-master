@@ -62,7 +62,7 @@ def get_expected_prizes_ranking_by_round(round):
 
 
 def get_correct_answers_by_round(round):
-    CORRECT_ANSWERS_BY_ROUND = [[ 1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [3, 2, 4, 1, 3], [2, 4, 3, 1, 2], [4, 3, 1, 2, 1]]
+    CORRECT_ANSWERS_BY_ROUND = [[1, 4, 2, 3, 2, 2, 1, 4, 2, 3, 2, 2], [3, 2, 4, 1, 3], [2, 4, 3, 1, 2], [4, 3, 1, 2, 1]]
     return CORRECT_ANSWERS_BY_ROUND[round - 1]
 
 
@@ -134,6 +134,7 @@ class Player(BasePlayer):
     video_modal_opened = models.LongStringField(initial="", blank=True)
     video_time_stamp = models.LongStringField(initial="", blank=True)
 
+
 def GetParticpantNumber(char):
     if char == 'R':
         return 1
@@ -143,6 +144,7 @@ def GetParticpantNumber(char):
         return 3
     else:
         return 4
+
 
 class TrainingRound(Page):
     form_model = "player"
@@ -168,11 +170,12 @@ class TrainingRound(Page):
             "roundNumber":            player.round_number,
         }
 
-
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.training_end_time = str(datetime.now(timezone.utc))
         player.algo_start_time = str(datetime.now(timezone.utc))
+
+
 class DAalghoInterface(Page):
     form_model = "player"
 
@@ -219,44 +222,128 @@ class DAalghoInterface(Page):
                 player.incorrect_seq_matching_all += str(data)
         elif data['information_type'] == 'question_submission':
             question_id = data['question_id']
-            understanding_bonus = data['understanding_bonus']
-            player.understanding_bonus += understanding_bonus
+
             def create_question_submission_string(data):
                 return str(data)
+
+            def read_submition_string(submition_string):
+                """
+                Parameters
+                ----------
+                submition_string -> "{...}{...}"
+
+                Returns --> list of dictionaries
+                -------
+                """
+                return eval(f"[{submition_string.replace('}{', '},{')}]")
+
+            def did_answer_correctly(incorrect_seq):
+                for question in incorrect_seq:
+                    if question['is_correct'] == True:
+                        return True
+
             if question_id == "question_1":
-                player.incorrect_seq_question_1 += create_question_submission_string(data)
+                did_answer_correctly_question_1 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_1))
+                if not did_answer_correctly_question_1:
+                    player.incorrect_seq_question_1 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_2":
-                player.incorrect_seq_question_2 += create_question_submission_string(data)
+                did_answer_correctly_question_2 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_2))
+                if not did_answer_correctly_question_2:
+                    player.incorrect_seq_question_2 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_3":
-                player.incorrect_seq_question_3 += create_question_submission_string(data)
+                did_answer_correctly_question_3 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_3))
+                if not did_answer_correctly_question_3:
+                    player.incorrect_seq_question_3 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_4":
-                player.incorrect_seq_question_4 += create_question_submission_string(data)
+                did_answer_correctly_question_4 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_4))
+                if not did_answer_correctly_question_4:
+                    player.incorrect_seq_question_4 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_5":
-                player.incorrect_seq_question_5 += create_question_submission_string(data)
+                did_answer_correctly_question_5 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_5))
+                if not did_answer_correctly_question_5:
+                    player.incorrect_seq_question_5 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_6":
-                player.incorrect_seq_question_6 += create_question_submission_string(data)
+                did_answer_correctly_question_6 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_6))
+                if not did_answer_correctly_question_6:
+                    player.incorrect_seq_question_6 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_7":
-                player.incorrect_seq_question_7 += create_question_submission_string(data)
+                did_answer_correctly_question_7 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_7))
+                if not did_answer_correctly_question_7:
+                    player.incorrect_seq_question_7 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_8":
-                player.incorrect_seq_question_8 += create_question_submission_string(data)
+                did_answer_correctly_question_8 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_8))
+                if not did_answer_correctly_question_8:
+                    player.incorrect_seq_question_8 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_9":
-                player.incorrect_seq_question_9 += create_question_submission_string(data)
+                did_answer_correctly_question_9 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_9))
+                if not did_answer_correctly_question_9:
+                    player.incorrect_seq_question_9 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_10":
-                player.incorrect_seq_question_10 += create_question_submission_string(data)
+                did_answer_correctly_question_10 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_10))
+                if not did_answer_correctly_question_10:
+                    player.incorrect_seq_question_10 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_11":
-                player.incorrect_seq_question_11 += create_question_submission_string(data)
+                did_answer_correctly_question_11 = did_answer_correctly(read_submition_string(player.incorrect_seq_question_11))
+                if not did_answer_correctly_question_11:
+                    player.incorrect_seq_question_11 += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_allocation_a":
-                player.incorrect_seq_allocation_a += create_question_submission_string(data)
+                did_answer_correctly_question_allocation_a = did_answer_correctly(read_submition_string(player.incorrect_seq_allocation_a))
+                if not did_answer_correctly_question_allocation_a:
+                    player.incorrect_seq_allocation_a += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_allocation_b":
-                player.incorrect_seq_allocation_b += create_question_submission_string(data)
+                did_answer_correctly_question_allocation_b = did_answer_correctly(read_submition_string(player.incorrect_seq_allocation_b))
+                if not did_answer_correctly_question_allocation_b:
+                    player.incorrect_seq_allocation_b += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_allocation_c":
-                player.incorrect_seq_allocation_c += create_question_submission_string(data)
+                did_answer_correctly_question_allocation_c = did_answer_correctly(read_submition_string(player.incorrect_seq_allocation_c))
+                if not did_answer_correctly_question_allocation_c:
+                    player.incorrect_seq_allocation_c += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "question_allocation_d":
-                player.incorrect_seq_allocation_d += create_question_submission_string(data)
+                did_answer_correctly_question_allocation_d = did_answer_correctly(read_submition_string(player.incorrect_seq_allocation_d))
+                if not did_answer_correctly_question_allocation_d:
+                    player.incorrect_seq_allocation_d += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "allocated_prize":
-                player.incorrect_seq_allocated_prize += create_question_submission_string(data)
+                did_answer_correctly_question_allocated_prize = did_answer_correctly(read_submition_string(player.incorrect_seq_allocated_prize))
+                if not did_answer_correctly_question_allocated_prize:
+                    player.incorrect_seq_allocated_prize += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
             elif question_id == "allocated_all":
-                player.incorrect_seq_allocated_all += create_question_submission_string(data)
+                did_answer_correctly_question_allocated_all = did_answer_correctly(read_submition_string(player.incorrect_seq_allocated_all))
+                if not did_answer_correctly_question_allocated_all:
+                    player.incorrect_seq_allocated_all += create_question_submission_string(data)
+                    understanding_bonus = data['understanding_bonus']
+                    player.understanding_bonus += understanding_bonus
         elif data['information_type'] == 'matching_update':
             """
             this event is called when the user clicks on a participant to match
@@ -264,12 +351,14 @@ class DAalghoInterface(Page):
                 1. participant_to_match
                 2. match_to_prize
             """
+
             def find_diff_in_matching(old_matching, new_matching):
                 old_matching = eval(old_matching)
                 for product in old_matching:
                     if old_matching[product] != new_matching[product]:
                         return [product, new_matching[product]]
                 return None
+
             if find_diff_in_matching(player.current_matching, data["current_matching"]) == None:
                 return
             [participant_to_match, match_to_prize] = find_diff_in_matching(player.current_matching, data["current_matching"])
@@ -281,7 +370,7 @@ class DAalghoInterface(Page):
             pass
         elif data['information_type'] == "reset":
             player.clicks += '|reset'
-            player.current_matching =str({participant_name: 'none' for participant_name in C.PARTICIPANTS})
+            player.current_matching = str({participant_name: 'none' for participant_name in C.PARTICIPANTS})
             player.matching_memo = str([])
         elif data["information_type"] == "matching_memo_update":
             new_memo = data["matching_memo"]
@@ -302,13 +391,16 @@ class DAalghoInterface(Page):
         player.participant.understanding_bonus += player.understanding_bonus
         player.end_time = str(datetime.now(timezone.utc))
         player.algo_end_time = str(datetime.now(timezone.utc))
+
         def get_understanding_bonus_limit_by_round(round):
             if round == 1:
                 return 23
-            else :
+            else:
                 return 7
+
         player.understanding_bonus_limit = get_understanding_bonus_limit_by_round(player.round_number)
         player.participant.understanding_bonus_limit += player.understanding_bonus_limit
+
 
 class MechanicsIntro(Page):
     @staticmethod
@@ -317,7 +409,8 @@ class MechanicsIntro(Page):
 
     @staticmethod
     def js_vars(player: Player):
-        return {"treatment":C.TREATMENT,"variant":C.VARIANT}
+        return {"treatment": C.TREATMENT, "variant": C.VARIANT}
+
     @staticmethod
     def before_next_page(player: Player, timeout_happened):
         player.intro_end_time = str(datetime.now(timezone.utc))
@@ -328,6 +421,7 @@ class EndTraining(Page):
     @staticmethod
     def is_displayed(player: Player):
         return player.round_number == C.NUM_ROUNDS
+
 
 class PreProcess(Page):
     @staticmethod
@@ -342,4 +436,4 @@ class PreProcess(Page):
         player.matching_memo = str([])
 
 
-page_sequence = [PreProcess,MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]
+page_sequence = [PreProcess, MechanicsIntro, TrainingRound, DAalghoInterface, EndTraining]
