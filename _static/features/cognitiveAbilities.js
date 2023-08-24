@@ -101,7 +101,6 @@ function renderCognitiveAbilitiesForm() {
                 }
             });
             if (isValid){
-                document.querySelector("#form-valid").click()
                 document.querySelector("form").submit();
             }
         }

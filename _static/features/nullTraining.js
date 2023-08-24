@@ -20,7 +20,8 @@ const getSteps = (variant, appName, roundNumber) => {
         if (roundNumber === 1) {
             return ['intro', 'prize_table', 'independence', 'value_table', 'prize_priorities', 'self_rank_independence', 'ranking_form', 'allocation_results', 'how_many_prizes', 'competitors_rank_independence', "end"]
         } else {
-            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "exit_point", "exit_point_2", "exit_point_3", "end"]
+            // return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "exit_point", "exit_point_2", "exit_point_3", "end"]
+            return ['intro', 'prize_table', 'prize_priorities', 'ranking_form', 'allocation_results', "end"]
         }
     }
     if (variant === "null") {
@@ -887,7 +888,6 @@ function renderUiFromState(step) {
             )
         }
     `
-
     function getInitialStepId(currentStepId, nextStepId) {
         /* if there is current step return it */
         if (currentStepId) {
@@ -902,7 +902,6 @@ function renderUiFromState(step) {
             return stepsIdsInRound[0];
         }
     }
-
     const stepsIdsInRound = getSteps(js_vars.variant,js_vars.appName,js_vars.roundNumber);
     const initialStepId = getInitialStepId(js_vars.currentStepId, js_vars.nextStepId);
     const initialStep = steps.find((step) => step.id === initialStepId);
